@@ -1,7 +1,7 @@
 <?php
 namespace KmbPuppetTest\View\Decorator;
 
-use KmbCoreTest\View\Decorator\AbstractDecoratorTestCase;
+use KmbBaseTest\View\Decorator\AbstractDecoratorTestCase;
 use KmbPuppet\View\Decorator\ReportHourDecorator;
 use KmbPuppetDb\Model\Report;
 use KmbPuppetTest\Bootstrap;
