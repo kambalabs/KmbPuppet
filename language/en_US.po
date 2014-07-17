@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-11 15:25+0100\n"
-"PO-Revision-Date: 2014-07-11 15:25+0100\n"
+"POT-Creation-Date: 2014-07-17 22:59+0100\n"
+"PO-Revision-Date: 2014-07-17 22:59+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,31 +17,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/Puppet/View/Decorator/ReportTitleDecorator.php:33
+#: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
 msgid "Title"
 msgstr ""
 
-#: ../src/Puppet/View/Decorator/ReportMessageDecorator.php:33
+#: ../src/KmbPuppet/View/Decorator/ReportMessageDecorator.php:33
 msgid "Message"
 msgstr ""
 
-#: ../src/Puppet/View/Decorator/ReportNodeNameDecorator.php:33
+#: ../src/KmbPuppet/View/Decorator/ReportNodeNameDecorator.php:33
 msgid "Server"
 msgstr ""
 
-#: ../src/Puppet/View/Decorator/ReportHourDecorator.php:33
+#: ../src/KmbPuppet/View/Decorator/ReportHourDecorator.php:33
 msgid "Hour"
 msgstr ""
 
-#: ../src/Puppet/View/Decorator/ReportTypeDecorator.php:33
+#: ../src/KmbPuppet/View/Decorator/ReportTypeDecorator.php:33
 msgid "Type"
 msgstr ""
 
-#: ../src/Puppet/View/Decorator/ReportClassNameDecorator.php:33
+#: ../src/KmbPuppet/View/Decorator/ReportClassNameDecorator.php:33
 msgid "Class"
 msgstr ""
 
-#: ../view/puppet/reports/index.phtml:2
+#: ../view/kmb-puppet/reports/index.phtml:2
 msgid "Day reports"
 msgstr ""
 
