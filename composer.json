@@ -1,0 +1,41 @@
+{
+    "name": "kambalabs/kmb-puppet",
+    "description": "Kamba core module for Puppet views",
+    "keywords": [
+        "kamba",
+        "module"
+    ],
+    "homepage": "http://github.com/kambalabs/KmbPuppet",
+    "license": "GPL V2",
+    "authors": [
+        {
+            "name": "Emmanuel Bouton",
+            "email": "goten4@gmail.com",
+            "homepage": "http://github.com/goten4",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "kambalabs/kmb-core": "dev-master",
+        "kambalabs/kmb-authentication": "dev-master",
+        "kambalabs/kmb-permission": "dev-master",
+        "kambalabs/kmb-puppetdb": "dev-master",
+        "kambalabs/kmb-dashboard": "dev-master",
+        "kambalabs/kmb-servers": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/PHPUnit": "3.7.*",
+        "kambalabs/kmb-fake-authentication": "dev-master",
+        "zendframework/zend-developer-tools": "dev-master",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "KmbPuppet": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}

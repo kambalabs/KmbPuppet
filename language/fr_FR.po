@@ -1,0 +1,97 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kamba\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-11 15:25+0100\n"
+"PO-Revision-Date: 2014-07-11 15:25+0100\n"
+"Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
+"Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate;translatePlural:1,2\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/Puppet/View/Decorator/ReportTitleDecorator.php:33
+msgid "Title"
+msgstr "Titre"
+
+#: ../src/Puppet/View/Decorator/ReportMessageDecorator.php:33
+msgid "Message"
+msgstr "Message"
+
+#: ../src/Puppet/View/Decorator/ReportNodeNameDecorator.php:33
+msgid "Server"
+msgstr "Serveur"
+
+#: ../src/Puppet/View/Decorator/ReportHourDecorator.php:33
+msgid "Hour"
+msgstr "Heure"
+
+#: ../src/Puppet/View/Decorator/ReportTypeDecorator.php:33
+msgid "Type"
+msgstr "Type"
+
+#: ../src/Puppet/View/Decorator/ReportClassNameDecorator.php:33
+msgid "Class"
+msgstr "Classe"
+
+#: ../view/puppet/reports/index.phtml:2
+msgid "Day reports"
+msgstr "Rapports du jour"
+
+#~ msgid "Filter servers by fact"
+#~ msgstr "Filtrer les serveurs par fact"
+
+#~ msgid "Fact"
+#~ msgstr "Fact"
+
+#~ msgid "Select a fact..."
+#~ msgstr "Sélectionnez un fact..."
+
+#~ msgid "Value"
+#~ msgstr "Valeur"
+
+#~ msgid "Enter a value for the fact"
+#~ msgstr "Saisissez une valeur pour le fact"
+
+#~ msgid "Search"
+#~ msgstr "Rechercher"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
+
+#~ msgid "Platf"
+#~ msgstr "PF"
+
+#~ msgid "OS"
+#~ msgstr "OS"
+
+#~ msgid "Kernel"
+#~ msgstr "Kernel"
+
+#~ msgid "Distro"
+#~ msgstr "Distrib"
+
+#~ msgid "# CPU"
+#~ msgstr "# CPU"
+
+#~ msgid "RAM"
+#~ msgstr "RAM"
+
+#~ msgid "Uptime"
+#~ msgstr "Uptime"
+
+#~ msgid "Patchs"
+#~ msgstr "Patchs"
+
+#~ msgid "Puppet"
+#~ msgstr "Puppet"
+
+#~ msgid "Remove server"
+#~ msgstr "Supprimer le serveur"
