@@ -45,7 +45,8 @@ return [
     ],
     'controllers' => [
         'invokables' => [
-            'KmbPuppet\Controller\Reports' => 'KmbPuppet\Controller\ReportsController'
+            'KmbPuppet\Controller\Reports' => 'KmbPuppet\Controller\ReportsController',
+            'KmbPuppet\Controller\Environments' => 'KmbPuppet\Controller\EnvironmentsController',
         ],
     ],
     'view_helpers' => [
@@ -61,6 +62,8 @@ return [
         ],
         'template_map' => [
             'kmb-puppet/reports/index' => __DIR__ . '/../view/kmb-puppet/reports/index.phtml',
+            'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
+            'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
@@ -73,7 +76,12 @@ return [
                     'controller' => 'KmbPuppet\Controller\Reports',
                     'actions' => ['index'],
                     'roles' => ['user']
-                ]
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Environments',
+                    'actions' => ['index'],
+                    'roles' => ['admin']
+                ],
             ]
         ],
     ],
@@ -108,6 +116,16 @@ return [
                     'key' => 'certname',
                 ],
             ]
+        ]
+    ],
+    'zenddb_repositories' => [
+        'EnvironmentRepository' => [
+            'aggregate_root_class' => 'KmbPuppet\Model\Environment',
+            'aggregate_root_proxy_factory' => 'KmbPuppet\Service\EnvironmentProxyFactory',
+            'table_name' => 'environments',
+            'paths_table_name' => 'environments_paths',
+            'factory' => 'KmbPuppet\Infrastructure\ZendDb\EnvironmentRepositoryFactory',
+            'repository_class' => 'KmbPuppet\Infrastructure\ZendDb\EnvironmentRepository',
         ]
     ],
 ];

@@ -1,0 +1,19 @@
+<ul>
+    <?php foreach ($this->environments as $environment): ?>
+        <li>
+            <?php if ($environment->hasChildren()): ?>
+                <span>
+            <i class="glyphicon glyphicon-minus-sign"></i>
+            <a href=""><i class="glyphicon glyphicon-zoom-in"></i></a>
+            <a href=""><?php echo $environment->getName() ?></a>
+        </span>
+                <? echo $this->partial('kmb-puppet/environments/environments', ['environments' => $environment->getChildren()]) ?>
+            <?php else: ?>
+                <span>
+            <a href=""><i class="glyphicon glyphicon-zoom-in"></i></a>
+            <a href=""><?php echo $environment->getName() ?></a>
+        </span>
+            <?php endif ?>
+        </li>
+    <?php endforeach ?>
+</ul>

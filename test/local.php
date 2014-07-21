@@ -1,12 +1,16 @@
 <?php
-return array(
-    'log' => array(
-        'Logger' => array(
-            'writers' => array(
-                'null' => array(
+return [
+    'log' => [
+        'Logger' => [
+            'writers' => [
+                'null' => [
                     'name' => 'null',
-                ),
-            ),
-        ),
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+    'db' => [
+        'driver' => 'Pdo',
+        'dsn' => 'sqlite::memory:'
+    ],
+];

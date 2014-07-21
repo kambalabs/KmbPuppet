@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<dataset>
+    <environments id="1" name="STABLE" />
+    <environments id="2" name="UNSTABLE" />
+    <environments id="3" name="DEFAULT" />
+    <environments id="4" name="PF1" />
+    <environments id="5" name="PF2" />
+    <environments id="6" name="PF3" />
+    <environments id="7" name="ITG" />
+    <environments id="8" name="PRP" />
+    <environments id="9" name="PROD" />
+    <environments id="10" name="ITG" />
+    <environments id="11" name="PRP" />
+    <environments id="12" name="PROD" />
+    <environments id="13" name="PROD" />
+    <environments id="14" name="PF1" />
+    <environments id="15" name="PF2" />
+    <environments id="16" name="PF3" />
+    <environments_paths ancestor_id="1" descendant_id="1" length="0" />
+    <environments_paths ancestor_id="1" descendant_id="4" length="1" />
+    <environments_paths ancestor_id="1" descendant_id="5" length="1" />
+    <environments_paths ancestor_id="1" descendant_id="6" length="1" />
+    <environments_paths ancestor_id="1" descendant_id="7" length="2" />
+    <environments_paths ancestor_id="1" descendant_id="8" length="2" />
+    <environments_paths ancestor_id="1" descendant_id="9" length="2" />
+    <environments_paths ancestor_id="1" descendant_id="10" length="2" />
+    <environments_paths ancestor_id="1" descendant_id="11" length="2" />
+    <environments_paths ancestor_id="1" descendant_id="12" length="2" />
+    <environments_paths ancestor_id="1" descendant_id="13" length="2" />
+    <environments_paths ancestor_id="2" descendant_id="2" length="0" />
+    <environments_paths ancestor_id="2" descendant_id="14" length="1" />
+    <environments_paths ancestor_id="2" descendant_id="15" length="1" />
+    <environments_paths ancestor_id="2" descendant_id="16" length="1" />
+    <environments_paths ancestor_id="3" descendant_id="3" length="0" />
+    <environments_paths ancestor_id="4" descendant_id="4" length="0" />
+    <environments_paths ancestor_id="4" descendant_id="7" length="1" />
+    <environments_paths ancestor_id="4" descendant_id="8" length="1" />
+    <environments_paths ancestor_id="4" descendant_id="9" length="1" />
+    <environments_paths ancestor_id="5" descendant_id="5" length="0" />
+    <environments_paths ancestor_id="5" descendant_id="10" length="1" />
+    <environments_paths ancestor_id="5" descendant_id="11" length="1" />
+    <environments_paths ancestor_id="5" descendant_id="12" length="1" />
+    <environments_paths ancestor_id="6" descendant_id="6" length="0" />
+    <environments_paths ancestor_id="6" descendant_id="13" length="1" />
+    <environments_paths ancestor_id="14" descendant_id="14" length="0" />
+    <environments_paths ancestor_id="15" descendant_id="15" length="0" />
+    <environments_paths ancestor_id="16" descendant_id="16" length="0" />
+</dataset>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-17 22:59+0100\n"
-"PO-Revision-Date: 2014-07-17 22:59+0100\n"
+"POT-Creation-Date: 2014-07-21 16:25+0100\n"
+"PO-Revision-Date: 2014-07-21 16:25+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -43,5 +43,32 @@ msgstr ""
 
 #: ../view/kmb-puppet/reports/index.phtml:2
 msgid "Day reports"
+msgstr ""
+
+#: ../view/kmb-puppet/environments/index.phtml:5
+msgid "Environments"
+msgstr ""
+
+#: ../view/kmb-puppet/environments/index.phtml:5
+msgid "Create an environment"
+msgstr ""
+
+#: ../view/kmb-puppet/environments/index.phtml:9
+msgid "Search"
+msgstr ""
+
+#: ../view/kmb-puppet/environments/index.phtml:25
+#, php-format
+msgid "Filter the list by typing your terms in the search field, then click on the button %s."
+msgstr ""
+
+#: ../view/kmb-puppet/environments/index.phtml:28
+#, php-format
+msgid "You can expand / collapse the children of each environment by clicking on the buttons %s."
+msgstr ""
+
+#: ../view/kmb-puppet/environments/index.phtml:31
+#, php-format
+msgid "View the detail of an environment by clicking on its name or on the associated button %s."
 msgstr ""
 
