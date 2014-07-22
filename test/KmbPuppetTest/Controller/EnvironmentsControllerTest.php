@@ -36,4 +36,30 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Environments');
     }
+
+    /** @test */
+    public function canRemove()
+    {
+        $this->dispatch('/puppet/environments/10/remove');
+
+        $this->assertRedirectTo('/puppet/environments');
+        $this->assertControllerName('KmbPuppet\Controller\Environments');
+        $this->assertEquals(17, intval($this->connection->query('SELECT COUNT(*) FROM environments')->fetchColumn()));
+    }
+
+    /** @test */
+    public function cannotRemoveUnknown()
+    {
+        $this->dispatch('/puppet/environments/99999/remove');
+
+        $this->assertResponseStatusCode(404);
+    }
+
+    /** @test */
+    public function cannotRemoveEnvironmentWithChildren()
+    {
+        $this->dispatch('/puppet/environments/1/remove');
+
+        $this->assertApplicationException('ZfcRbac\Exception\UnauthorizedException');
+    }
 }

@@ -25,10 +25,8 @@ use GtnPersistZendDb\Infrastructure\ZendDbRepository;
 use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
-use KmbPuppetDb\OrderBy;
 use Zend\Db\Adapter\Driver\StatementInterface;
 use Zend\Db\Sql\Predicate\IsNull;
-use Zend\Db\Sql\Predicate\Predicate;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Where;
 
@@ -68,12 +66,15 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
     {
         parent::remove($aggregateRoot);
 
-        $select = new Select($this->getPathsTableName());
-        $select->columns(['descendant_id'])->where->equalTo('ancestor_id', $aggregateRoot->getId());
-
-        $delete = $this->getMasterSql()->delete($this->getPathsTableName());
-        $delete->where->in('descendant_id', $select);
-        $this->performWrite($delete);
+        /** @var StatementInterface $statement */
+        $statement = $this->getDbAdapter()->query(
+            'DELETE FROM ' . $this->getPathsTableName() . ' ' .
+            'WHERE descendant_id IN ' .
+            '(SELECT * FROM ' .
+            '(SELECT descendant_id FROM ' . $this->getPathsTableName() . ' WHERE ancestor_id = ?)' .
+            'AS tmp)'
+        );
+        $statement->execute([$aggregateRoot->getId()]);
 
         return $this;
     }

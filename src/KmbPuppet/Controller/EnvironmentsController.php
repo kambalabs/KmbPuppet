@@ -20,8 +20,11 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbPuppet\Model\EnvironmentInterface;
+use KmbPuppet\Model\EnvironmentRepositoryInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use ZfcRbac\Exception\UnauthorizedException;
 
 class EnvironmentsController extends AbstractActionController
 {
@@ -30,5 +33,25 @@ class EnvironmentsController extends AbstractActionController
         $model = new ViewModel();
         $model->setVariable('environments', $this->getServiceLocator()->get('EnvironmentRepository')->getAllRoots());
         return $model;
+    }
+
+    public function removeAction()
+    {
+        /** @var EnvironmentRepositoryInterface $repository */
+        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
+        /** @var EnvironmentInterface $aggregateRoot */
+        $aggregateRoot = $repository->getById($this->params()->fromRoute('id'));
+
+        if ($aggregateRoot === null) {
+            return $this->notFoundAction();
+        }
+
+        if ($aggregateRoot->hasChildren()) {
+            throw new UnauthorizedException();
+        }
+
+        $repository->remove($aggregateRoot);
+
+        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }
 }

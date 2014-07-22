@@ -2,10 +2,6 @@
 return [
     'router' => [
         'routes' => [
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /puppet/:controller/:action
             'puppet' => [
                 'type' => 'Literal',
                 'options' => [
@@ -21,10 +17,11 @@ return [
                     'default' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/[:controller[/:action]]',
+                            'route' => '/[:controller[/:id][/:action]]',
                             'constraints' => [
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]*',
                             ],
                             'defaults' => [
                             ],
@@ -79,7 +76,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Environments',
-                    'actions' => ['index'],
+                    'actions' => ['index', 'remove', 'update'],
                     'roles' => ['admin']
                 ],
             ]
