@@ -4,6 +4,7 @@ CREATE TABLE `environments` (
   `name` VARCHAR(256)
 );
 
+DROP TABLE IF EXISTS `environments_paths`;
 CREATE TABLE `environments_paths` (
   `ancestor_id`   INT NOT NULL DEFAULT 0,
   `descendant_id` INT NOT NULL DEFAULT 0,
