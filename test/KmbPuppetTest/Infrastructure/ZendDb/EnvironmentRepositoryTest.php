@@ -2,10 +2,12 @@
 namespace KmbPuppetTest\Infrastructure\ZendDb;
 
 use KmbPuppet\Infrastructure\ZendDb\EnvironmentRepository;
+use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppetTest\Bootstrap;
 use PHPUnit_Extensions_Database_DataSet_IDataSet;
 use PHPUnit_Extensions_Database_DB_IDatabaseConnection;
+use PHPUnit_Extensions_Database_Operation_DatabaseOperation;
 use Zend\Db\Adapter\AdapterInterface;
 
 class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
@@ -46,6 +48,39 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
     protected function getDataSet()
     {
         return $this->createFlatXMLDataSet(Bootstrap::rootPath() . '/test/data/fixtures.xml');
+    }
+
+    /** @test */
+    public function canAdd()
+    {
+        /** @var EnvironmentInterface $parent */
+        $parent = static::$repository->getById(4);
+        $environment = new Environment();
+        $environment->setName('BETA');
+        $environment->setParent($parent);
+
+        static::$repository->add($environment);
+
+        $this->assertEquals(19, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn(0)));
+        $this->assertEquals(
+            [
+                [19, 19, 0],
+                [4, 19, 1],
+                [1, 19, 2],
+            ],
+            static::$connection->query('SELECT * FROM environments_paths WHERE descendant_id = 19 ORDER BY length')->fetchAll(\PDO::FETCH_NUM)
+        );
+    }
+
+    /** @test */
+    public function canRemove()
+    {
+        $aggregateRoot = static::$repository->getById(4);
+
+        static::$repository->remove($aggregateRoot);
+
+        $this->assertEquals(17, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn(0)));
+        $this->assertEquals(25, intval(static::$connection->query('SELECT count(*) FROM environments_paths')->fetchColumn(0)));
     }
 
     /** @test */

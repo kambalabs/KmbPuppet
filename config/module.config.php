@@ -122,6 +122,7 @@ return [
         'EnvironmentRepository' => [
             'aggregate_root_class' => 'KmbPuppet\Model\Environment',
             'aggregate_root_proxy_factory' => 'KmbPuppet\Service\EnvironmentProxyFactory',
+            'aggregate_root_hydrator_class' => 'KmbPuppet\Infrastructure\ZendDb\EnvironmentHydrator',
             'table_name' => 'environments',
             'paths_table_name' => 'environments_paths',
             'factory' => 'KmbPuppet\Infrastructure\ZendDb\EnvironmentRepositoryFactory',

@@ -20,10 +20,15 @@
  */
 namespace KmbPuppet\Infrastructure\ZendDb;
 
+use GtnPersistBase\Model\AggregateRootInterface;
 use GtnPersistZendDb\Infrastructure\ZendDbRepository;
+use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
+use KmbPuppetDb\OrderBy;
+use Zend\Db\Adapter\Driver\StatementInterface;
 use Zend\Db\Sql\Predicate\IsNull;
+use Zend\Db\Sql\Predicate\Predicate;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Where;
 
@@ -31,6 +36,47 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
 {
     /** @var string */
     protected $pathsTableName;
+
+    /**
+     * @param AggregateRootInterface $aggregateRoot
+     * @return \GtnPersistBase\Model\RepositoryInterface
+     */
+    public function add(AggregateRootInterface $aggregateRoot)
+    {
+        /** @var Environment $aggregateRoot */
+        parent::add($aggregateRoot);
+
+        /** @var StatementInterface $statement */
+        $statement = $this->getDbAdapter()->query(
+            'INSERT INTO ' . $this->getPathsTableName() . ' ' .
+            'SELECT ?, ?, 0 UNION ALL ' .
+            'SELECT ancestor_id, ?, length+1 FROM ' . $this->getPathsTableName() . ' WHERE descendant_id = ?'
+        );
+
+        $id = $aggregateRoot->getId();
+        $parentId = $aggregateRoot->getParent()->getId();
+        $statement->execute([$id, $id, $id, $parentId]);
+
+        return $this;
+    }
+
+    /**
+     * @param AggregateRootInterface $aggregateRoot
+     * @return \GtnPersistBase\Model\RepositoryInterface
+     */
+    public function remove(AggregateRootInterface $aggregateRoot)
+    {
+        parent::remove($aggregateRoot);
+
+        $select = new Select($this->getPathsTableName());
+        $select->columns(['descendant_id'])->where->equalTo('ancestor_id', $aggregateRoot->getId());
+
+        $delete = $this->getMasterSql()->delete($this->getPathsTableName());
+        $delete->where->in('descendant_id', $select);
+        $this->performWrite($delete);
+
+        return $this;
+    }
 
     /**
      * @return array
