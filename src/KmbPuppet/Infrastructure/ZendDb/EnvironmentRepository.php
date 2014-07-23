@@ -22,7 +22,6 @@ namespace KmbPuppet\Infrastructure\ZendDb;
 
 use GtnPersistBase\Model\AggregateRootInterface;
 use GtnPersistZendDb\Infrastructure\ZendDbRepository;
-use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
 use Zend\Db\Adapter\Driver\StatementInterface;
@@ -40,21 +39,19 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
      */
     public function add(AggregateRootInterface $aggregateRoot)
     {
-        /** @var Environment $aggregateRoot */
         parent::add($aggregateRoot);
+        return $this->addPaths($aggregateRoot);
+    }
 
-        /** @var StatementInterface $statement */
-        $statement = $this->getDbAdapter()->query(
-            'INSERT INTO ' . $this->getPathsTableName() . ' ' .
-            'SELECT ?, ?, 0 UNION ALL ' .
-            'SELECT ancestor_id, ?, length+1 FROM ' . $this->getPathsTableName() . ' WHERE descendant_id = ?'
-        );
+    /**
+     * @param AggregateRootInterface $aggregateRoot
+     * @return \GtnPersistBase\Model\RepositoryInterface
+     */
+    public function update(AggregateRootInterface $aggregateRoot)
+    {
+        parent::update($aggregateRoot);
+        return $this->removePaths($aggregateRoot)->addPaths($aggregateRoot);
 
-        $id = $aggregateRoot->getId();
-        $parentId = $aggregateRoot->hasParent() ? $aggregateRoot->getParent()->getId() : 0;
-        $statement->execute([$id, $id, $id, $parentId]);
-
-        return $this;
     }
 
     /**
@@ -64,18 +61,7 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
     public function remove(AggregateRootInterface $aggregateRoot)
     {
         parent::remove($aggregateRoot);
-
-        /** @var StatementInterface $statement */
-        $statement = $this->getDbAdapter()->query(
-            'DELETE FROM ' . $this->getPathsTableName() . ' ' .
-            'WHERE descendant_id IN ' .
-            '(SELECT * FROM ' .
-            '(SELECT descendant_id FROM ' . $this->getPathsTableName() . ' WHERE ancestor_id = ?)' .
-            'AS tmp)'
-        );
-        $statement->execute([$aggregateRoot->getId()]);
-
-        return $this;
+        return $this->removePaths($aggregateRoot);
     }
 
     /**
@@ -150,20 +136,6 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
 
     /**
      * @param EnvironmentInterface $environment
-     * @param array                $allChildrenGroupedByParentId
-     */
-    protected function setAllChildren($environment, $allChildrenGroupedByParentId)
-    {
-        if (array_key_exists($environment->getId(), $allChildrenGroupedByParentId)) {
-            foreach ($allChildrenGroupedByParentId[$environment->getId()] as $child) {
-                $this->setAllChildren($child, $allChildrenGroupedByParentId);
-                $environment->addChild($child);
-            }
-        }
-    }
-
-    /**
-     * @param EnvironmentInterface $environment
      * @return EnvironmentInterface
      */
     public function getParent(EnvironmentInterface $environment)
@@ -200,20 +172,6 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
     }
 
     /**
-     * @param EnvironmentInterface $environment
-     * @param array                $parents
-     */
-    protected function setAllParents($environment, $parents)
-    {
-        if (empty($parents)) {
-            return;
-        }
-        $parent = array_shift($parents);
-        $environment->setParent($parent);
-        $this->setAllParents($parent, $parents);
-    }
-
-    /**
      * Set PathsTableName.
      *
      * @param string $pathsTableName
@@ -233,5 +191,72 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
     public function getPathsTableName()
     {
         return $this->pathsTableName;
+    }
+
+    /**
+     * @param AggregateRootInterface $aggregateRoot
+     * @return EnvironmentRepository
+     */
+    protected function addPaths(AggregateRootInterface $aggregateRoot)
+    {
+        /** @var StatementInterface $statement */
+        $statement = $this->getDbAdapter()->query(
+            'INSERT INTO ' . $this->getPathsTableName() . ' ' .
+            'SELECT ?, ?, 0 UNION ALL ' .
+            'SELECT ancestor_id, ?, length+1 FROM ' . $this->getPathsTableName() . ' WHERE descendant_id = ?'
+        );
+
+        $id = $aggregateRoot->getId();
+        $parentId = $aggregateRoot->hasParent() ? $aggregateRoot->getParent()->getId() : 0;
+        $statement->execute([$id, $id, $id, $parentId]);
+
+        return $this;
+    }
+
+    /**
+     * @param AggregateRootInterface $aggregateRoot
+     * @return EnvironmentRepository
+     */
+    protected function removePaths(AggregateRootInterface $aggregateRoot)
+    {
+        /** @var StatementInterface $statement */
+        $statement = $this->getDbAdapter()->query(
+            'DELETE FROM ' . $this->getPathsTableName() . ' ' .
+            'WHERE descendant_id IN ' .
+            '(SELECT * FROM ' .
+            '(SELECT descendant_id FROM ' . $this->getPathsTableName() . ' WHERE ancestor_id = ?)' .
+            'AS tmp)'
+        );
+        $statement->execute([$aggregateRoot->getId()]);
+
+        return $this;
+    }
+
+    /**
+     * @param EnvironmentInterface $environment
+     * @param array                $allChildrenGroupedByParentId
+     */
+    protected function setAllChildren($environment, $allChildrenGroupedByParentId)
+    {
+        if (array_key_exists($environment->getId(), $allChildrenGroupedByParentId)) {
+            foreach ($allChildrenGroupedByParentId[$environment->getId()] as $child) {
+                $this->setAllChildren($child, $allChildrenGroupedByParentId);
+                $environment->addChild($child);
+            }
+        }
+    }
+
+    /**
+     * @param EnvironmentInterface $environment
+     * @param array                $parents
+     */
+    protected function setAllParents($environment, $parents)
+    {
+        if (empty($parents)) {
+            return;
+        }
+        $parent = array_shift($parents);
+        $environment->setParent($parent);
+        $this->setAllParents($parent, $parents);
     }
 }

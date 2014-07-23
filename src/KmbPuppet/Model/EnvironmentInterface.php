@@ -57,7 +57,7 @@ interface EnvironmentInterface extends AggregateRootInterface
     /**
      * Set Parent.
      *
-     * @param \KmbPuppet\Model\Environment $parent
+     * @param \KmbPuppet\Model\EnvironmentInterface $parent
      * @return EnvironmentInterface
      */
     public function setParent($parent);
@@ -65,7 +65,7 @@ interface EnvironmentInterface extends AggregateRootInterface
     /**
      * Get Parent.
      *
-     * @return \KmbPuppet\Model\Environment
+     * @return \KmbPuppet\Model\EnvironmentInterface
      */
     public function getParent();
 

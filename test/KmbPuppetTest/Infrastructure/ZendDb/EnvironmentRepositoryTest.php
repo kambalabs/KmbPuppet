@@ -82,9 +82,25 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
         $this->assertEquals(19, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn(0)));
         $this->assertEquals(45, intval(static::$connection->query('SELECT count(*) FROM environments_paths')->fetchColumn(0)));
         $this->assertEquals(
-            [ [20, 20, 0] ],
+            [[20, 20, 0]],
             static::$connection->query('SELECT * FROM environments_paths WHERE descendant_id = 20 ORDER BY length')->fetchAll(\PDO::FETCH_NUM)
         );
+    }
+
+    /** @test */
+    public function canUpdate()
+    {
+        /** @var EnvironmentInterface $aggregateRoot */
+        $aggregateRoot = static::$repository->getById(4);
+        /** @var EnvironmentInterface $newParent */
+        $newParent = static::$repository->getById(2);
+        $aggregateRoot->setParent($newParent);
+        $aggregateRoot->setName('PF4');
+
+        static::$repository->update($aggregateRoot);
+
+        $this->assertEquals('PF4', static::$connection->query('SELECT name FROM environments WHERE id = 4')->fetchColumn(0));
+        $this->assertEquals('UNSTABLE', static::$connection->query('select name from environments join environments_paths on id = ancestor_id where length = 1 and descendant_id = 4')->fetchColumn(0));
     }
 
     /** @test */
