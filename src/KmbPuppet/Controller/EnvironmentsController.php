@@ -38,6 +38,39 @@ class EnvironmentsController extends AbstractActionController
         return $model;
     }
 
+    public function createAction()
+    {
+        /** @var EnvironmentRepositoryInterface $repository */
+        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
+
+        /** @var EnvironmentInterface $parent */
+        $parent = $repository->getById($this->params()->fromPost('parent'));
+        $aggregateRoot = new Environment();
+        $aggregateRoot->setName($this->params()->fromPost('name'));
+        $aggregateRoot->setParent($parent);
+
+        $repository->add($aggregateRoot);
+
+        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+    }
+
+    public function updateAction()
+    {
+        /** @var EnvironmentRepositoryInterface $repository */
+        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
+
+        /** @var EnvironmentInterface $parent */
+        $parent = $repository->getById($this->params()->fromPost('parent'));
+        /** @var EnvironmentInterface $aggregateRoot */
+        $aggregateRoot = $repository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot->setName($this->params()->fromPost('name'));
+        $aggregateRoot->setParent($parent);
+
+        $repository->update($aggregateRoot);
+
+        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+    }
+
     public function removeAction()
     {
         /** @var EnvironmentRepositoryInterface $repository */
@@ -54,22 +87,6 @@ class EnvironmentsController extends AbstractActionController
         }
 
         $repository->remove($aggregateRoot);
-
-        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
-    }
-
-    public function createAction()
-    {
-        /** @var EnvironmentRepositoryInterface $repository */
-        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
-
-        /** @var EnvironmentInterface $parent */
-        $parent = $repository->getById($this->params()->fromPost('parent'));
-        $aggregateRoot = new Environment();
-        $aggregateRoot->setName($this->params()->fromPost('name'));
-        $aggregateRoot->setParent($parent);
-
-        $repository->add($aggregateRoot);
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }

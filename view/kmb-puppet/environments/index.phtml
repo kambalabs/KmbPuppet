@@ -26,24 +26,57 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h1 class="modal-title" id="createEnvironmentLabel"><?php echo $this->translate('Create an environment') ?></h1>
                 </div>
-                <form class="" role="form" id="form-create-environment" action="<?php echo $this->url('puppet/default', ['controller' => 'environments', 'action' => 'create']) ?>" method="post">
+                <form class="" role="form" action="<?php echo $this->url('puppet/default', ['controller' => 'environments', 'action' => 'create']) ?>" method="post">
                     <div class="modal-body">
                         <blockquote>
                             <p><?php echo $this->translate('You have to choose a parent and a name for this environment.') ?></p>
                             <p><?php echo $this->translate('It will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
                         </blockquote>
                             <div class="form-group">
-                                <label for="parent-select"><?php echo $this->translate('Select a parent') ?></label>
-                                <select id="parent-select" class="form-control" name="parent" data-rel="chosen" style="display: none;">
+                                <label for="create-parent-select"><?php echo $this->translate('Select a parent') ?></label>
+                                <select id="create-parent-select" class="form-control" name="parent" data-rel="chosen" style="display: none;">
                                     <option value="0">-</option>
                                     <?php echo $this->partial('kmb-puppet/environments/environments-options', ['environments' => $this->environments]) ?>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="environment-name"><?php echo $this->translate('Choose a name') ?></label>
+                                <label for="create-environment-name"><?php echo $this->translate('Choose a name') ?></label>
                                 <p><?php echo $this->translate('The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore).') ?></p>
-                                <input type="text" class="form-control" name="name" id="environment-name" />
+                                <input type="text" class="form-control" name="name" id="create-environment-name" />
                             </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                        <button type="submit" class="btn btn-primary"><?php echo $this->translate('Save') ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="update-environment" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateEnvironmentLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="updateEnvironmentLabel"><?php echo $this->translate('Update an environment') ?></h1>
+                </div>
+                <form class="" role="form" action="" method="post">
+                    <div class="modal-body">
+                        <blockquote>
+                            <p><strong><?php echo $this->translate('REMINDER') ?></strong> : <?php echo $this->translate('The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
+                        </blockquote>
+                        <div class="form-group">
+                            <label for="update-parent-select"><?php echo $this->translate('Select a parent') ?></label>
+                            <select id="update-parent-select" class="form-control" name="parent" data-rel="chosen" style="display: none;">
+                                <option value="0">-</option>
+                                <?php echo $this->partial('kmb-puppet/environments/environments-options', ['environments' => $this->environments]) ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="environment-name"><?php echo $this->translate('Choose a name') ?></label>
+                            <p><?php echo $this->translate('The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore).') ?></p>
+                            <input type="text" class="form-control" name="name" id="update-environment-name" />
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
@@ -55,8 +88,7 @@
     </div>
     <div class="col-sm-7">
         <div class="panel panel-default">
-            <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span><span
-                    class="panel-break"></span><?php echo $this->translate('Environments') ?><a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#create-environment"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<?php echo $this->translate('Create an environment') ?></a></div>
+            <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span><?php echo $this->translate('Environments') ?><a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#create-environment"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<?php echo $this->translate('Create an environment') ?></a></div>
             <div class="panel-body">
                 <form class="navbar-form" role="search">
                     <div class="input-group">

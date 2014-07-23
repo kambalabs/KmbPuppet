@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-23 17:46+0100\n"
-"PO-Revision-Date: 2014-07-23 17:46+0100\n"
+"POT-Creation-Date: 2014-07-23 23:35+0100\n"
+"PO-Revision-Date: 2014-07-23 23:35+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -59,7 +59,8 @@ msgid "Do you want to proceed ?"
 msgstr "Êtes-vous sûr de vouloir continuer ?"
 
 #: ../view/kmb-puppet/environments/index.phtml:16
-#: ../view/kmb-puppet/environments/index.phtml:51
+#: ../view/kmb-puppet/environments/index.phtml:49
+#: ../view/kmb-puppet/environments/index.phtml:82
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -68,7 +69,7 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: ../view/kmb-puppet/environments/index.phtml:27
-#: ../view/kmb-puppet/environments/index.phtml:61
+#: ../view/kmb-puppet/environments/index.phtml:91
 msgid "Create an environment"
 msgstr "Créer un environnement"
 
@@ -81,43 +82,68 @@ msgid "It will automatically inherits of all the modules (in the same version) p
 msgstr "Il va automatiquement hériter de tous les modules (dans la même version) présents dans chacun de ses ancêtres."
 
 #: ../view/kmb-puppet/environments/index.phtml:36
+#: ../view/kmb-puppet/environments/index.phtml:69
 msgid "Select a parent"
 msgstr "Sélectionner un parent"
 
-#: ../view/kmb-puppet/environments/index.phtml:45
+#: ../view/kmb-puppet/environments/index.phtml:43
+#: ../view/kmb-puppet/environments/index.phtml:76
 msgid "Choose a name"
 msgstr "Choisir un nom"
 
-#: ../view/kmb-puppet/environments/index.phtml:46
+#: ../view/kmb-puppet/environments/index.phtml:44
+#: ../view/kmb-puppet/environments/index.phtml:77
 msgid "The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore)."
 msgstr "Le nom doit impérativement être <strong>alphanumérique</strong> ! Tout caractère spécial est interdit (y compris l'underscore)."
 
-#: ../view/kmb-puppet/environments/index.phtml:52
+#: ../view/kmb-puppet/environments/index.phtml:50
+#: ../view/kmb-puppet/environments/index.phtml:83
 msgid "Save"
 msgstr "Enregistrer"
 
 #: ../view/kmb-puppet/environments/index.phtml:61
+msgid "Update an environment"
+msgstr "Modifier un environnement"
+
+#: ../view/kmb-puppet/environments/index.phtml:66
+msgid "REMINDER"
+msgstr "RAPPEL"
+
+#: ../view/kmb-puppet/environments/index.phtml:66
+msgid "The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors."
+msgstr "L'environnement va automatiquement hériter de tous les modules (dans la même version) présents dans chacun de ses ancêtres."
+
+#: ../view/kmb-puppet/environments/index.phtml:91
 msgid "Environments"
 msgstr "Environnements"
 
-#: ../view/kmb-puppet/environments/index.phtml:65
+#: ../view/kmb-puppet/environments/index.phtml:95
 msgid "Search"
 msgstr "Rechercher"
 
-#: ../view/kmb-puppet/environments/index.phtml:81
+#: ../view/kmb-puppet/environments/index.phtml:111
 #, php-format
 msgid "Filter the list by typing your terms in the search field, then click on the button %s."
 msgstr "Pour filtrer la liste, saisissez votre recherche dans le champ prévu à cet effet puis cliquez sur le bouton %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:84
+#: ../view/kmb-puppet/environments/index.phtml:114
 #, php-format
 msgid "You can expand / collapse the children of each environment by clicking on the buttons %s."
 msgstr "Vous pouvez plier / déplier les enfants de chaque environnement en cliquant sur les boutons %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:87
+#: ../view/kmb-puppet/environments/index.phtml:117
 #, php-format
 msgid "View the detail of an environment by clicking on its name or on the associated button %s."
 msgstr "Accéder au détail d'un environnement en cliquant sur son nom ou sur l'icône %s associée."
+
+#~ msgid ""
+#~ "<strong>REMINDER</strong> : The environment will automatically inherits "
+#~ "of all the modules (in the same version) presents in each of its "
+#~ "ancestors."
+#~ msgstr ""
+#~ "<strong>RAPPEL</strong> : L'environnement va automatiquement hériter de "
+#~ "tous les modules (dans la même version) présents dans chacun de ses "
+#~ "ancêtres."
 
 #~ msgid "Parent of environment"
 #~ msgstr "Parent de l'environnement"

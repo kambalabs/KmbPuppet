@@ -60,7 +60,7 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
         static::$repository->add($environment);
 
-        $this->assertEquals(19, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn(0)));
+        $this->assertEquals(19, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn()));
         $this->assertEquals(
             [
                 [19, 19, 0],
@@ -79,8 +79,8 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
         static::$repository->add($environment);
 
-        $this->assertEquals(19, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn(0)));
-        $this->assertEquals(45, intval(static::$connection->query('SELECT count(*) FROM environments_paths')->fetchColumn(0)));
+        $this->assertEquals(19, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn()));
+        $this->assertEquals(45, intval(static::$connection->query('SELECT count(*) FROM environments_paths')->fetchColumn()));
         $this->assertEquals(
             [[20, 20, 0]],
             static::$connection->query('SELECT * FROM environments_paths WHERE descendant_id = 20 ORDER BY length')->fetchAll(\PDO::FETCH_NUM)
@@ -99,8 +99,8 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
         static::$repository->update($aggregateRoot);
 
-        $this->assertEquals('PF4', static::$connection->query('SELECT name FROM environments WHERE id = 4')->fetchColumn(0));
-        $this->assertEquals('UNSTABLE', static::$connection->query('select name from environments join environments_paths on id = ancestor_id where length = 1 and descendant_id = 4')->fetchColumn(0));
+        $this->assertEquals('PF4', static::$connection->query('SELECT name FROM environments WHERE id = 4')->fetchColumn());
+        $this->assertEquals('UNSTABLE', static::$connection->query('select name from environments join environments_paths on id = ancestor_id where length = 1 and descendant_id = 4')->fetchColumn());
     }
 
     /** @test */
@@ -110,8 +110,8 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
         static::$repository->remove($aggregateRoot);
 
-        $this->assertEquals(17, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn(0)));
-        $this->assertEquals(25, intval(static::$connection->query('SELECT count(*) FROM environments_paths')->fetchColumn(0)));
+        $this->assertEquals(17, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn()));
+        $this->assertEquals(25, intval(static::$connection->query('SELECT count(*) FROM environments_paths')->fetchColumn()));
     }
 
     /** @test */

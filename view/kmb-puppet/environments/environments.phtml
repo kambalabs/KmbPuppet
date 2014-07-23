@@ -4,14 +4,14 @@
         <?php if ($environment->hasChildren()): ?>
             <span>
                 <i class="glyphicon glyphicon-minus-sign"></i>
-                <a href=""><i class="glyphicon glyphicon-pencil icon-grey"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet/withid', ['controller' => 'environments', 'action' => 'update', 'id' => $environment->getId()]) ?>" data-toggle="modal" data-target="#update-environment" data-name="<?php echo $environment->getName() ?>" data-parent-id="<?php echo $environment->hasParent() ? $environment->getParent()->getId() : 0 ?>"><i class="glyphicon glyphicon-pencil icon-grey"></i></a>
                 <?php echo $environment->getName() ?>
             </span>
             <? echo $this->partial('kmb-puppet/environments/environments', ['environments' => $environment->getChildren()]) ?>
         <?php else: ?>
             <span>
                 <a href="#" data-href="<?php echo $this->url('puppet/withid', ['controller' => 'environments', 'action' => 'remove', 'id' => $environment->getId()]) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $environment->getName() ?>"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-                <a href=""><i class="glyphicon glyphicon-pencil icon-grey"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet/withid', ['controller' => 'environments', 'action' => 'update', 'id' => $environment->getId()]) ?>" data-toggle="modal" data-target="#update-environment" data-name="<?php echo $environment->getName() ?>" data-parent-id="<?php echo $environment->hasParent() ? $environment->getParent()->getId() : 0 ?>"><i class="glyphicon glyphicon-pencil icon-grey"></i></a>
                 <?php echo $environment->getName() ?>
             </span>
         <?php endif ?>
