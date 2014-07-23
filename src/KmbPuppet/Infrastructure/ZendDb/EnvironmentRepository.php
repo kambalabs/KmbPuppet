@@ -193,7 +193,7 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
 
         $parent = null;
         if (!empty($parents)) {
-            $parent = array_pop($parents);
+            $parent = array_shift($parents);
             $this->setAllParents($parent, $parents);
         }
         return $parent;
@@ -208,7 +208,7 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
         if (empty($parents)) {
             return;
         }
-        $parent = array_pop($parents);
+        $parent = array_shift($parents);
         $environment->setParent($parent);
         $this->setAllParents($parent, $parents);
     }
