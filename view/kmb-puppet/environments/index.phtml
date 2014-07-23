@@ -26,7 +26,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h1 class="modal-title" id="createEnvironmentLabel"><?php echo $this->translate('Create an environment') ?></h1>
                 </div>
-                <form class="" role="form" id="form-create-environment">
+                <form class="" role="form" id="form-create-environment" action="<?php echo $this->url('puppet/default', ['controller' => 'environments', 'action' => 'create']) ?>" method="post">
                     <div class="modal-body">
                         <blockquote>
                             <p><?php echo $this->translate('You have to choose a parent and a name for this environment.') ?></p>
@@ -36,9 +36,7 @@
                                 <label for="parent-select"><?php echo $this->translate('Select a parent') ?></label>
                                 <select id="parent-select" class="form-control" name="parent" data-rel="chosen" style="display: none;">
                                     <option value="0">-</option>
-                                <?php foreach ($this->environments as $environment): ?>
-                                    <option value="<?php echo $environment->getId() ?>"><?php echo $this->formatAncestorsNames($environment) ?></option>
-                                <?php endforeach ?>
+                                    <?php echo $this->partial('kmb-puppet/environments/environments-options', ['environments' => $this->environments]) ?>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -49,7 +47,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
-                        <a href="#" class="btn btn-primary"><?php echo $this->translate('Save') ?></a>
+                        <button type="submit" class="btn btn-primary"><?php echo $this->translate('Save') ?></button>
                     </div>
                 </form>
             </div>
@@ -69,7 +67,7 @@
                     </div>
                 </form>
                 <div class="tree ">
-                    <?php echo $this->partial('kmb-puppet/environments/environments', ['environments' => $this->roots]) ?>
+                    <?php echo $this->partial('kmb-puppet/environments/environments', ['environments' => $this->environments]) ?>
                 </div>
             </div>
         </div>

@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -33,9 +34,7 @@ class EnvironmentsController extends AbstractActionController
         $model = new ViewModel();
         /** @var EnvironmentRepositoryInterface $environmentRepository */
         $environmentRepository = $this->getServiceLocator()->get('EnvironmentRepository');
-        $model->setVariable('roots', $environmentRepository->getAllRoots());
-        $environments = $environmentRepository->getAll();
-        $model->setVariable('environments', $environments);
+        $model->setVariable('environments', $environmentRepository->getAllRoots());
         return $model;
     }
 
@@ -55,6 +54,22 @@ class EnvironmentsController extends AbstractActionController
         }
 
         $repository->remove($aggregateRoot);
+
+        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+    }
+
+    public function createAction()
+    {
+        /** @var EnvironmentRepositoryInterface $repository */
+        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
+
+        /** @var EnvironmentInterface $parent */
+        $parent = $repository->getById($this->params()->fromPost('parent'));
+        $aggregateRoot = new Environment();
+        $aggregateRoot->setName($this->params()->fromPost('name'));
+        $aggregateRoot->setParent($parent);
+
+        $repository->add($aggregateRoot);
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }

@@ -17,6 +17,18 @@ return [
                     'default' => [
                         'type' => 'Segment',
                         'options' => [
+                            'route' => '/[:controller[/:action]]',
+                            'constraints' => [
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ],
+                            'defaults' => [
+                            ],
+                        ],
+                    ],
+                    'withid' => [
+                        'type' => 'Segment',
+                        'options' => [
                             'route' => '/[:controller[/:id][/:action]]',
                             'constraints' => [
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -62,6 +74,7 @@ return [
             'kmb-puppet/reports/index' => __DIR__ . '/../view/kmb-puppet/reports/index.phtml',
             'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
             'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
+            'kmb-puppet/environments/environments-options' => __DIR__ . '/../view/kmb-puppet/environments/environments-options.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
@@ -77,7 +90,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Environments',
-                    'actions' => ['index', 'remove', 'update'],
+                    'actions' => ['index', 'create', 'remove', 'update'],
                     'roles' => ['admin']
                 ],
             ]

@@ -11,7 +11,7 @@
             <? echo $this->partial('kmb-puppet/environments/environments', ['environments' => $environment->getChildren()]) ?>
         <?php else: ?>
             <span>
-                <a href="#" data-href="<?php echo $this->url('puppet/default', ['controller' => 'environments', 'action' => 'remove', 'id' => $environment->getId()]) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $environment->getName() ?>"><i class="glyphicon glyphicon-remove icon-red"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet/withid', ['controller' => 'environments', 'action' => 'remove', 'id' => $environment->getId()]) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $environment->getName() ?>"><i class="glyphicon glyphicon-remove icon-red"></i></a>
                 <a href=""><i class="glyphicon glyphicon-plus icon-blue"></i></a>
                 <a href=""><i class="glyphicon glyphicon-pencil icon-grey"></i></a>
                 <?php echo $environment->getName() ?>
