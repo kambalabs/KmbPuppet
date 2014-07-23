@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-23 23:35+0100\n"
-"PO-Revision-Date: 2014-07-23 23:35+0100\n"
+"POT-Creation-Date: 2014-07-23 23:45+0100\n"
+"PO-Revision-Date: 2014-07-23 23:46+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -75,11 +75,12 @@ msgstr "Créer un environnement"
 
 #: ../view/kmb-puppet/environments/index.phtml:32
 msgid "You have to choose a parent and a name for this environment."
-msgstr "Vous devez choisir un parent et un nom pour le nouvel environnement"
+msgstr "Vous devez choisir un parent et un nom pour le nouvel environnement."
 
 #: ../view/kmb-puppet/environments/index.phtml:33
-msgid "It will automatically inherits of all the modules (in the same version) presents in each of its ancestors."
-msgstr "Il va automatiquement hériter de tous les modules (dans la même version) présents dans chacun de ses ancêtres."
+#: ../view/kmb-puppet/environments/index.phtml:66
+msgid "The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors."
+msgstr "L'environnement va automatiquement hériter de tous les modules (dans la même version) présents dans chacun de ses ancêtres."
 
 #: ../view/kmb-puppet/environments/index.phtml:36
 #: ../view/kmb-puppet/environments/index.phtml:69
@@ -109,10 +110,6 @@ msgstr "Modifier un environnement"
 msgid "REMINDER"
 msgstr "RAPPEL"
 
-#: ../view/kmb-puppet/environments/index.phtml:66
-msgid "The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors."
-msgstr "L'environnement va automatiquement hériter de tous les modules (dans la même version) présents dans chacun de ses ancêtres."
-
 #: ../view/kmb-puppet/environments/index.phtml:91
 msgid "Environments"
 msgstr "Environnements"
@@ -135,6 +132,13 @@ msgstr "Vous pouvez plier / déplier les enfants de chaque environnement en cliq
 #, php-format
 msgid "View the detail of an environment by clicking on its name or on the associated button %s."
 msgstr "Accéder au détail d'un environnement en cliquant sur son nom ou sur l'icône %s associée."
+
+#~ msgid ""
+#~ "It will automatically inherits of all the modules (in the same version) "
+#~ "presents in each of its ancestors."
+#~ msgstr ""
+#~ "Il va automatiquement hériter de tous les modules (dans la même version) "
+#~ "présents dans chacun de ses ancêtres."
 
 #~ msgid ""
 #~ "<strong>REMINDER</strong> : The environment will automatically inherits "

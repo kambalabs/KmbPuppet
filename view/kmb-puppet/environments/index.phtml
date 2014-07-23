@@ -30,7 +30,7 @@
                     <div class="modal-body">
                         <blockquote>
                             <p><?php echo $this->translate('You have to choose a parent and a name for this environment.') ?></p>
-                            <p><?php echo $this->translate('It will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
+                            <p><?php echo $this->translate('The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
                         </blockquote>
                             <div class="form-group">
                                 <label for="create-parent-select"><?php echo $this->translate('Select a parent') ?></label>
@@ -88,7 +88,7 @@
     </div>
     <div class="col-sm-7">
         <div class="panel panel-default">
-            <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span><?php echo $this->translate('Environments') ?><a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#create-environment"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<?php echo $this->translate('Create an environment') ?></a></div>
+            <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span><?php echo $this->translate('Environments') ?><a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#create-environment" data-parent-id="0"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<?php echo $this->translate('Create an environment') ?></a></div>
             <div class="panel-body">
                 <form class="navbar-form" role="search">
                     <div class="input-group">
