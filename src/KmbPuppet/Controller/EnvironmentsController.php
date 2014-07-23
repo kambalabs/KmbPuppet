@@ -31,7 +31,11 @@ class EnvironmentsController extends AbstractActionController
     public function indexAction()
     {
         $model = new ViewModel();
-        $model->setVariable('environments', $this->getServiceLocator()->get('EnvironmentRepository')->getAllRoots());
+        /** @var EnvironmentRepositoryInterface $environmentRepository */
+        $environmentRepository = $this->getServiceLocator()->get('EnvironmentRepository');
+        $model->setVariable('roots', $environmentRepository->getAllRoots());
+        $environments = $environmentRepository->getAll();
+        $model->setVariable('environments', $environments);
         return $model;
     }
 

@@ -28,7 +28,6 @@ use KmbPuppet\Model\EnvironmentRepositoryInterface;
 use Zend\Db\Adapter\Driver\StatementInterface;
 use Zend\Db\Sql\Predicate\IsNull;
 use Zend\Db\Sql\Select;
-use Zend\Db\Sql\Where;
 
 class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepositoryInterface
 {
@@ -52,7 +51,7 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
         );
 
         $id = $aggregateRoot->getId();
-        $parentId = $aggregateRoot->getParent()->getId();
+        $parentId = $aggregateRoot->hasParent() ? $aggregateRoot->getParent()->getId() : 0;
         $statement->execute([$id, $id, $id, $parentId]);
 
         return $this;
@@ -107,15 +106,60 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
      */
     public function getAllChildren(EnvironmentInterface $environment)
     {
-        $predicate = new Where();
         $select = $this->getSelect()
             ->join(
-                ['p' => $this->getPathsTableName()],
-                $this->getTableName() . '.id = p.descendant_id',
-                []
+                ['children' => $this->getPathsTableName()],
+                $this->getTableName() . '.id = children.descendant_id',
+                [],
+                Select::JOIN_LEFT
             )
-            ->where([$predicate->equalTo('p.ancestor_id', $environment->getId()), 'p.length = 1']);
-        return $this->hydrateAggregateRootsFromResult($this->performRead($select));
+            ->join(
+                ['parent' => $this->getPathsTableName()],
+                'children.descendant_id = parent.descendant_id',
+                ['parent_id' => 'ancestor_id'],
+                Select::JOIN_LEFT
+            );
+
+        $select
+            ->where
+            ->equalTo('parent.length', 1)
+            ->and
+            ->equalTo('children.ancestor_id', $environment->getId())
+            ->and
+            ->notEqualTo($this->getTableName() . '.id', $environment->getId());
+
+        $result = $this->performRead($select);
+
+        $className = $this->getAggregateRootClass();
+        $allChildrenGroupedByParentId = [];
+        foreach ($result as $row) {
+            $aggregateRoot = new $className;
+            $this->getAggregateRootHydrator()->hydrate($row, $aggregateRoot);
+            $allChildrenGroupedByParentId[$row['parent_id']][] = $this->aggregateRootProxyFactory->createProxy($aggregateRoot);
+        }
+
+        $children = [];
+        if (array_key_exists($environment->getId(), $allChildrenGroupedByParentId)) {
+            $children = $allChildrenGroupedByParentId[$environment->getId()];
+            foreach ($children as $child) {
+                $this->setAllChildren($child, $allChildrenGroupedByParentId);
+            }
+        }
+        return $children;
+    }
+
+    /**
+     * @param EnvironmentInterface $environment
+     * @param array                $allChildrenGroupedByParentId
+     */
+    protected function setAllChildren($environment, $allChildrenGroupedByParentId)
+    {
+        if (array_key_exists($environment->getId(), $allChildrenGroupedByParentId)) {
+            foreach ($allChildrenGroupedByParentId[$environment->getId()] as $child) {
+                $this->setAllChildren($child, $allChildrenGroupedByParentId);
+                $environment->addChild($child);
+            }
+        }
     }
 
     /**
@@ -124,16 +168,49 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
      */
     public function getParent(EnvironmentInterface $environment)
     {
-        $predicate = new Where();
-        $select = $this->getSelect()
-            ->join(
-                ['p' => $this->getPathsTableName()],
-                $this->getTableName() . '.id = p.ancestor_id',
-                []
-            )
-            ->where([$predicate->equalTo('p.descendant_id', $environment->getId()), 'p.length = 1']);
-        $aggregateRoots = $this->hydrateAggregateRootsFromResult($this->performRead($select));
-        return empty($aggregateRoots) ? null : $aggregateRoots[0];
+        $select = $this->getSelect()->join(
+            ['parent' => $this->getPathsTableName()],
+            $this->getTableName() . '.id = parent.ancestor_id',
+            [],
+            Select::JOIN_LEFT
+        );
+
+        $select
+            ->where
+            ->equalTo('parent.descendant_id', $environment->getId())
+            ->and
+            ->notEqualTo($this->getTableName() . '.id', $environment->getId());
+
+        $result = $this->performRead($select->order('parent.length'));
+
+        $className = $this->getAggregateRootClass();
+        $parents = [];
+        foreach ($result as $row) {
+            $aggregateRoot = new $className;
+            $this->getAggregateRootHydrator()->hydrate($row, $aggregateRoot);
+            $parents[] = $this->aggregateRootProxyFactory->createProxy($aggregateRoot);
+        }
+
+        $parent = null;
+        if (!empty($parents)) {
+            $parent = array_pop($parents);
+            $this->setAllParents($parent, $parents);
+        }
+        return $parent;
+    }
+
+    /**
+     * @param EnvironmentInterface $environment
+     * @param array                $parents
+     */
+    protected function setAllParents($environment, $parents)
+    {
+        if (empty($parents)) {
+            return;
+        }
+        $parent = array_pop($parents);
+        $environment->setParent($parent);
+        $this->setAllParents($parent, $parents);
     }
 
     /**

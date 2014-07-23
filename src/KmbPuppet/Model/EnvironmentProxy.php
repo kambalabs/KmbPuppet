@@ -31,6 +31,12 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
     /** @var EnvironmentRepositoryInterface */
     protected $environmentRepository;
 
+    /** @var EnvironmentProxy */
+    protected $parent;
+
+    /** @var array */
+    protected $children;
+
     /**
      * @param AggregateRootInterface $aggregateRoot
      * @return AggregateRootProxyInterface
@@ -112,15 +118,19 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
     }
 
     /**
-     * Set NormalizedName.
+     * Get all ancestors names.
+     * It includes the name of the object itself.
      *
-     * @param string $normalizedName
-     * @return EnvironmentProxy
+     * @return array
      */
-    public function setNormalizedName($normalizedName)
+    public function getAncestorsNames()
     {
-        $this->aggregateRoot->setNormalizedName($normalizedName);
-        return $this;
+        $names = [];
+        if ($this->hasParent()) {
+            $names = $this->getParent()->getAncestorsNames();
+        }
+        $names[] = $this->getName();
+        return $names;
     }
 
     /**
@@ -130,18 +140,18 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
      */
     public function getNormalizedName()
     {
-        return $this->aggregateRoot->getNormalizedName();
+        return implode('_', $this->getAncestorsNames());
     }
 
     /**
      * Set Parent.
      *
-     * @param \KmbPuppet\Model\Environment $parent
+     * @param \KmbPuppet\Model\EnvironmentInterface $parent
      * @return EnvironmentProxy
      */
     public function setParent($parent)
     {
-        $this->aggregateRoot->setParent($parent);
+        $this->parent = $parent;
         return $this;
     }
 
@@ -152,10 +162,10 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
      */
     public function getParent()
     {
-        if ($this->aggregateRoot->getParent() === null) {
-            $this->aggregateRoot->setParent($this->environmentRepository->getParent($this->aggregateRoot));
+        if ($this->parent === null) {
+            $this->setParent($this->environmentRepository->getParent($this));
         }
-        return $this->aggregateRoot->getParent();
+        return $this->parent;
     }
 
     /**
@@ -174,7 +184,17 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
      */
     public function setChildren($children)
     {
-        $this->aggregateRoot->setChildren($children);
+        $this->children = $children;
+        return $this;
+    }
+
+    /**
+     * @param EnvironmentInterface $child
+     * @return EnvironmentProxy
+     */
+    public function addChild($child)
+    {
+        $this->children[] = $child;
         return $this;
     }
 
@@ -185,10 +205,10 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
      */
     public function getChildren()
     {
-        if ($this->aggregateRoot->getChildren() === null) {
-            $this->aggregateRoot->setChildren($this->environmentRepository->getAllChildren($this->aggregateRoot));
+        if ($this->children === null) {
+            $this->setChildren($this->environmentRepository->getAllChildren($this));
         }
-        return $this->aggregateRoot->getChildren();
+        return $this->children;
     }
 
     /**

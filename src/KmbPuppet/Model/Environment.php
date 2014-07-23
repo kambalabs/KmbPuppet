@@ -78,25 +78,32 @@ class Environment implements EnvironmentInterface
     }
 
     /**
-     * Set NormalizedName.
-     *
-     * @param string $normalizedName
-     * @return Environment
-     */
-    public function setNormalizedName($normalizedName)
-    {
-        $this->normalizedName = $normalizedName;
-        return $this;
-    }
-
-    /**
      * Get NormalizedName.
      *
      * @return string
      */
     public function getNormalizedName()
     {
+        if ($this->normalizedName === null) {
+            $this->normalizedName = implode('_', $this->getAncestorsNames());
+        }
         return $this->normalizedName;
+    }
+
+    /**
+     * Get all ancestors names.
+     * It includes the name of the object itself.
+     *
+     * @return array
+     */
+    public function getAncestorsNames()
+    {
+        $names = [];
+        if ($this->hasParent()) {
+            $names = $this->getParent()->getAncestorsNames();
+        }
+        $names[] = $this->getName();
+        return $names;
     }
 
     /**
@@ -138,6 +145,16 @@ class Environment implements EnvironmentInterface
     public function setChildren($children)
     {
         $this->children = $children;
+        return $this;
+    }
+
+    /**
+     * @param EnvironmentInterface $child
+     * @return Environment
+     */
+    public function addChild($child)
+    {
+        $this->children[] = $child;
         return $this;
     }
 

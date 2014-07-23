@@ -40,19 +40,19 @@ interface EnvironmentInterface extends AggregateRootInterface
     public function getName();
 
     /**
-     * Set NormalizedName.
-     *
-     * @param string $normalizedName
-     * @return EnvironmentInterface
-     */
-    public function setNormalizedName($normalizedName);
-
-    /**
      * Get NormalizedName.
      *
      * @return string
      */
     public function getNormalizedName();
+
+    /**
+     * Get all ancestors names.
+     * It includes the name of the object itself.
+     *
+     * @return array
+     */
+    public function getAncestorsNames();
 
     /**
      * Set Parent.
@@ -81,6 +81,12 @@ interface EnvironmentInterface extends AggregateRootInterface
      * @return EnvironmentInterface
      */
     public function setChildren($children);
+
+    /**
+     * @param EnvironmentInterface $child
+     * @return EnvironmentInterface
+     */
+    public function addChild($child);
 
     /**
      * Get Children.

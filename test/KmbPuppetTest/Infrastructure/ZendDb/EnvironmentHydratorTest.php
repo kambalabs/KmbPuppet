@@ -12,7 +12,6 @@ class EnvironmentHydratorTest extends \PHPUnit_Framework_TestCase
         $environment = new Environment();
         $environment->setId(1);
         $environment->setName('STABLE');
-        $environment->setNormalizedName('STABLE');
         $hydrator = new EnvironmentHydrator();
 
         $this->assertEquals([
@@ -30,11 +29,9 @@ class EnvironmentHydratorTest extends \PHPUnit_Framework_TestCase
         $hydratedEnvironment = $hydrator->hydrate([
             'id' => 1,
             'name' => 'STABLE',
-            'normalized_name' => 'STABLE',
         ], $environment);
 
         $this->assertEquals(1, $hydratedEnvironment->getId());
         $this->assertEquals('STABLE', $hydratedEnvironment->getName());
-        $this->assertEquals('STABLE', $hydratedEnvironment->getNormalizedName());
     }
 }

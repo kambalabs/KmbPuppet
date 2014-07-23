@@ -49,7 +49,6 @@ class EnvironmentHydrator implements HydratorInterface
     {
         $object->setId($data['id']);
         $object->setName($data['name']);
-        $object->setNormalizedName(isset($data['normalized_name']) ? $data['normalized_name'] : null);
         return $object;
     }
 }

@@ -7,7 +7,6 @@ use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppetTest\Bootstrap;
 use PHPUnit_Extensions_Database_DataSet_IDataSet;
 use PHPUnit_Extensions_Database_DB_IDatabaseConnection;
-use PHPUnit_Extensions_Database_Operation_DatabaseOperation;
 use Zend\Db\Adapter\AdapterInterface;
 
 class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
@@ -69,6 +68,22 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
                 [1, 19, 2],
             ],
             static::$connection->query('SELECT * FROM environments_paths WHERE descendant_id = 19 ORDER BY length')->fetchAll(\PDO::FETCH_NUM)
+        );
+    }
+
+    /** @test */
+    public function canAddRoot()
+    {
+        $environment = new Environment();
+        $environment->setName('TESTING');
+
+        static::$repository->add($environment);
+
+        $this->assertEquals(19, intval(static::$connection->query('SELECT count(*) FROM environments')->fetchColumn(0)));
+        $this->assertEquals(45, intval(static::$connection->query('SELECT count(*) FROM environments_paths')->fetchColumn(0)));
+        $this->assertEquals(
+            [ [20, 20, 0] ],
+            static::$connection->query('SELECT * FROM environments_paths WHERE descendant_id = 20 ORDER BY length')->fetchAll(\PDO::FETCH_NUM)
         );
     }
 

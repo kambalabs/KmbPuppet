@@ -51,6 +51,7 @@ return [
             'reportLabelClass' => 'KmbPuppet\View\Helper\ReportLabelClass',
             'filterReportMessage' => 'KmbPuppet\View\Helper\FilterReportMessage',
             'shortHostname' => 'KmbPuppet\View\Helper\ShortHostname',
+            'formatAncestorsNames' => 'KmbPuppet\View\Helper\FormatAncestorsNames',
         ],
     ],
     'view_manager' => [
