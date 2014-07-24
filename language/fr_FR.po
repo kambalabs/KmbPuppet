@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-24 17:47+0100\n"
-"PO-Revision-Date: 2014-07-24 17:47+0100\n"
+"POT-Creation-Date: 2014-07-24 23:56+0100\n"
+"PO-Revision-Date: 2014-07-24 23:57+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -37,17 +37,17 @@ msgstr "L'environnement %s a bien été supprimé !"
 msgid "'%s' is not a valid name (alphanumeric only) !"
 msgstr "'%s' n'est pas un nom valide (alphanumérique uniquement) !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:131
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:132
 #, php-format
-msgid "For obvious reasons, %s can't be the parent of %s !"
-msgstr "Pour des raisons évidentes, %s ne peut pas être le parent de %s !"
+msgid "For obvious reasons, environment %s can't be the parent of %s !"
+msgstr "Pour des raisons évidentes, l'environnement %s ne peut pas être le parent de %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:134
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:141
 #, php-format
 msgid "Environment %s has already a child named %s !"
 msgstr "L'environnement %s a déjà un fils nommé %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:137
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:144
 #, php-format
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
