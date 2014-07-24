@@ -249,16 +249,16 @@ class EnvironmentRepository extends ZendDb\Repository implements EnvironmentRepo
      */
     protected function addPaths(AggregateRootInterface $aggregateRoot)
     {
+        $id = $aggregateRoot->getId();
         /** @var StatementInterface $statement */
         $statement = $this->getDbAdapter()->query(
-            'INSERT INTO ' . $this->getPathsTableName() . ' ' .
-            'SELECT ?, ?, 0 UNION ALL ' .
-            'SELECT ancestor_id, ?, length+1 FROM ' . $this->getPathsTableName() . ' WHERE descendant_id = ?'
+            'INSERT INTO ' . $this->getPathsTableName() . ' (ancestor_id, descendant_id, length) ' .
+            "SELECT $id, $id, 0 UNION ALL " .
+            "SELECT ancestor_id, $id, length+1 FROM " . $this->getPathsTableName() . ' WHERE descendant_id = ?'
         );
 
-        $id = $aggregateRoot->getId();
         $parentId = $aggregateRoot->hasParent() ? $aggregateRoot->getParent()->getId() : 0;
-        $statement->execute([$id, $id, $id, $parentId]);
+        $statement->execute([$parentId]);
 
         return $this;
     }
@@ -315,7 +315,7 @@ class EnvironmentRepository extends ZendDb\Repository implements EnvironmentRepo
         $statement = $this->getDbAdapter()->query(
             'INSERT INTO ' . $this->getPathsTableName() . ' (ancestor_id, descendant_id, length) ' .
             'SELECT supertree.ancestor_id, subtree.descendant_id, supertree.length + subtree.length + 1 ' .
-            'FROM ' . $this->getPathsTableName() . ' AS supertree JOIN ' . $this->getPathsTableName() . ' AS subtree ' .
+            'FROM ' . $this->getPathsTableName() . ' AS supertree CROSS JOIN ' . $this->getPathsTableName() . ' AS subtree ' .
             'WHERE subtree.ancestor_id = ? AND supertree.descendant_id = ?'
         );
 
