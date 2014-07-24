@@ -101,6 +101,7 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
 
         $this->assertEquals('PF4', static::$connection->query('SELECT name FROM environments WHERE id = 4')->fetchColumn());
         $this->assertEquals('UNSTABLE', static::$connection->query('select name from environments join environments_paths on id = ancestor_id where length = 1 and descendant_id = 4')->fetchColumn());
+        $this->assertEquals('PF4', static::$connection->query('select name from environments join environments_paths on id = ancestor_id where length = 1 and descendant_id = 7')->fetchColumn());
     }
 
     /** @test */

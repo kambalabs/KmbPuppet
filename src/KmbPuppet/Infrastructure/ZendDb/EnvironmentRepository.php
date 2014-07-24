@@ -50,8 +50,7 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
     public function update(AggregateRootInterface $aggregateRoot)
     {
         parent::update($aggregateRoot);
-        return $this->removePaths($aggregateRoot)->addPaths($aggregateRoot);
-
+        return $this->movePaths($aggregateRoot);
     }
 
     /**
@@ -228,6 +227,50 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
             'AS tmp)'
         );
         $statement->execute([$aggregateRoot->getId()]);
+
+        return $this;
+    }
+
+    /**
+     * @param AggregateRootInterface $aggregateRoot
+     * @return EnvironmentRepository
+     */
+    protected function movePaths(AggregateRootInterface $aggregateRoot)
+    {
+        /** Awful hack to support both MySQL and SQLite ... */
+        if ($this->getDbAdapter()->getDriver()->getDatabasePlatformName() == 'Mysql') {
+            /** @var StatementInterface $statement */
+            $statement = $this->getDbAdapter()->query(
+                'DELETE a FROM ' . $this->getPathsTableName() . ' AS a ' .
+                'JOIN ' . $this->getPathsTableName() . ' AS d ON a.descendant_id = d.descendant_id ' .
+                'LEFT JOIN ' . $this->getPathsTableName() . ' AS x ON x.ancestor_id = d.ancestor_id ' .
+                'AND x.descendant_id = a.ancestor_id ' .
+                'WHERE d.ancestor_id = ? AND x.ancestor_id IS NULL'
+            );
+            $statement->execute([$aggregateRoot->getId()]);
+        } else {
+            /** @var StatementInterface $statement */
+            $statement = $this->getDbAdapter()->query(
+                'DELETE FROM ' . $this->getPathsTableName() . ' ' .
+                'WHERE descendant_id IN ' .
+                '(SELECT descendant_id FROM ' . $this->getPathsTableName() . ' WHERE ancestor_id = ?) ' .
+                'AND ancestor_id NOT IN ' .
+                '(SELECT descendant_id FROM ' . $this->getPathsTableName() . ' WHERE ancestor_id = ?)'
+            );
+            $statement->execute([$aggregateRoot->getId(), $aggregateRoot->getId()]);
+        }
+
+        /** @var StatementInterface $statement */
+        $statement = $this->getDbAdapter()->query(
+            'INSERT INTO ' . $this->getPathsTableName() . ' (ancestor_id, descendant_id, length) ' .
+            'SELECT supertree.ancestor_id, subtree.descendant_id, supertree.length + subtree.length + 1 ' .
+            'FROM ' . $this->getPathsTableName() . ' AS supertree JOIN ' . $this->getPathsTableName() . ' AS subtree ' .
+            'WHERE subtree.ancestor_id = ? AND supertree.descendant_id = ?'
+        );
+
+        $id = $aggregateRoot->getId();
+        $parentId = $aggregateRoot->hasParent() ? $aggregateRoot->getParent()->getId() : 0;
+        $statement->execute([$id, $parentId]);
 
         return $this;
     }
