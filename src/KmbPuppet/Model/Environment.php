@@ -137,6 +137,18 @@ class Environment implements EnvironmentInterface
     }
 
     /**
+     * @param \KmbPuppet\Model\EnvironmentInterface $environment
+     * @return bool
+     */
+    public function isAncestorOf($environment)
+    {
+        if ($environment === null || !$environment->hasParent()) {
+            return false;
+        }
+        return $this->getId() === $environment->getParent()->getId() || $this->isAncestorOf($environment->getParent());
+    }
+
+    /**
      * Set Children.
      *
      * @param array $children
@@ -175,5 +187,21 @@ class Environment implements EnvironmentInterface
     {
         $children = $this->getChildren();
         return !empty($children);
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function hasChildWithName($name)
+    {
+        if ($this->hasChildren()) {
+            foreach ($this->getChildren() as $child) {
+                if ($child->getName() === $name) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

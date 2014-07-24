@@ -101,6 +101,39 @@ class EnvironmentProxyTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($children, $this->proxy->getChildren());
     }
 
+    /** @test */
+    public function canCheckIfIsNotAncestorOf()
+    {
+        $this->assertFalse($this->proxy->isAncestorOf($this->grandpa));
+    }
+
+    /** @test */
+    public function canCheckIfIsAncestorOf()
+    {
+        $this->parent->setParent($this->grandpa);
+        $this->proxy->setParent($this->parent);
+
+        $this->assertTrue($this->grandpa->isAncestorOf($this->proxy));
+    }
+
+    /** @test */
+    public function canCheckIfHasNotChildWithName()
+    {
+        $this->assertFalse($this->proxy->hasChildWithName('ITG'));
+    }
+
+    /** @test */
+    public function canCheckIfHasChildWithName()
+    {
+        $children = $this->getChildren();
+        $this->environmentRepository->expects($this->any())
+            ->method('getAllChildren')
+            ->with($this->equalTo($this->proxy))
+            ->will($this->returnValue($children));
+
+        $this->assertTrue($this->proxy->hasChildWithName('PROD'));
+    }
+
     /**
      * @return array
      */

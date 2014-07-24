@@ -23,60 +23,62 @@ namespace KmbPuppet\Controller;
 use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
+use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
 class EnvironmentsController extends AbstractActionController
 {
+    /** @var EnvironmentRepositoryInterface */
+    protected $repository;
+
     public function indexAction()
     {
-        $model = new ViewModel();
-        /** @var EnvironmentRepositoryInterface $environmentRepository */
-        $environmentRepository = $this->getServiceLocator()->get('EnvironmentRepository');
-        $model->setVariable('environments', $environmentRepository->getAllRoots());
-        return $model;
+        return new ViewModel(['environments' => $this->repository->getAllRoots()]);
     }
 
     public function createAction()
     {
-        /** @var EnvironmentRepositoryInterface $repository */
-        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
-
         /** @var EnvironmentInterface $parent */
-        $parent = $repository->getById($this->params()->fromPost('parent'));
+        $parent = $this->repository->getById($this->params()->fromPost('parent'));
         $aggregateRoot = new Environment();
-        $aggregateRoot->setName($this->params()->fromPost('name'));
-        $aggregateRoot->setParent($parent);
 
-        $repository->add($aggregateRoot);
+        if ($this->validate($aggregateRoot, $parent)) {
+            $aggregateRoot->setName($this->params()->fromPost('name'));
+            $aggregateRoot->setParent($parent);
+            $this->repository->add($aggregateRoot);
+            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
+        }
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }
 
     public function updateAction()
     {
-        /** @var EnvironmentRepositoryInterface $repository */
-        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
-
         /** @var EnvironmentInterface $parent */
-        $parent = $repository->getById($this->params()->fromPost('parent'));
+        $parent = $this->repository->getById($this->params()->fromPost('parent'));
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $repository->getById($this->params()->fromRoute('id'));
-        $aggregateRoot->setName($this->params()->fromPost('name'));
-        $aggregateRoot->setParent($parent);
+        $aggregateRoot = $this->repository->getById($this->params()->fromRoute('id'));
 
-        $repository->update($aggregateRoot);
+        if ($aggregateRoot === null) {
+            return $this->notFoundAction();
+        }
+
+        if ($this->validate($aggregateRoot, $parent)) {
+            $aggregateRoot->setName($this->params()->fromPost('name'));
+            $aggregateRoot->setParent($parent);
+            $this->repository->update($aggregateRoot);
+            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
+        }
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }
 
     public function removeAction()
     {
-        /** @var EnvironmentRepositoryInterface $repository */
-        $repository = $this->getServiceLocator()->get('EnvironmentRepository');
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $repository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->repository->getById($this->params()->fromRoute('id'));
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
@@ -86,8 +88,52 @@ class EnvironmentsController extends AbstractActionController
             throw new UnauthorizedException();
         }
 
-        $repository->remove($aggregateRoot);
+        $this->repository->remove($aggregateRoot);
+        $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+    }
+
+    /**
+     * Set Repository.
+     *
+     * @param \KmbPuppet\Model\EnvironmentRepositoryInterface $repository
+     * @return EnvironmentsController
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+        return $this;
+    }
+
+    /**
+     * Get Repository.
+     *
+     * @return \KmbPuppet\Model\EnvironmentRepositoryInterface
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * @param EnvironmentInterface $aggregateRoot
+     * @param EnvironmentInterface $parent
+     * @return bool
+     */
+    protected function validate($aggregateRoot, $parent)
+    {
+        $validator = new Alnum();
+        if (!$validator->isValid($this->params()->fromPost('name'))) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("%s is not a valid name (alphanumeric only) !"), $this->params()->fromPost('name')));
+        }
+        if ($aggregateRoot->isAncestorOf($parent) || ($parent !== null && $aggregateRoot->getId() == $parent->getId())) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("For obvious reasons, %s can't be the parent of %s !"), $parent->getNormalizedName(), $aggregateRoot->getNormalizedName()));
+        }
+        if ($aggregateRoot->hasParent() && $parent !== null && $aggregateRoot->getParent()->getId() != $parent->getId() && $parent->hasChildWithName($this->params()->fromPost('name'))) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s has already a child named %s !"), $parent->getName(), $aggregateRoot->getName()));
+        }
+
+        return !$this->flashMessenger()->hasCurrentErrorMessages();
     }
 }

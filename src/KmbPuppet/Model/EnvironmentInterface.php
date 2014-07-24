@@ -75,6 +75,12 @@ interface EnvironmentInterface extends AggregateRootInterface
     public function hasParent();
 
     /**
+     * @param \KmbPuppet\Model\EnvironmentInterface $environment
+     * @return bool
+     */
+    public function isAncestorOf($environment);
+
+    /**
      * Set Children.
      *
      * @param array $children
@@ -99,4 +105,10 @@ interface EnvironmentInterface extends AggregateRootInterface
      * @return bool
      */
     public function hasChildren();
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function hasChildWithName($name);
 }

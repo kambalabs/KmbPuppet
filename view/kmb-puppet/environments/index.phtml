@@ -105,6 +105,8 @@
         </div>
     </div>
     <div class="col-sm-5">
+        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
+        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
         <h1>Aide</h1>
         <blockquote>
             <p>

@@ -177,6 +177,15 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
     }
 
     /**
+     * @param \KmbPuppet\Model\EnvironmentInterface $environment
+     * @return bool
+     */
+    public function isAncestorOf($environment)
+    {
+        return $this->aggregateRoot->isAncestorOf($environment);
+    }
+
+    /**
      * Set Children.
      *
      * @param array $children
@@ -218,5 +227,21 @@ class EnvironmentProxy implements EnvironmentInterface, AggregateRootProxyInterf
     {
         $children = $this->getChildren();
         return !empty($children);
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function hasChildWithName($name)
+    {
+        if ($this->hasChildren()) {
+            foreach ($this->getChildren() as $child) {
+                if ($child->getName() === $name) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
