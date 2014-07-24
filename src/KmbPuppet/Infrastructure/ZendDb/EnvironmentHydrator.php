@@ -32,10 +32,12 @@ class EnvironmentHydrator implements HydratorInterface
      */
     public function extract($object)
     {
-        return [
-            'id'   => $object->getId(),
-            'name' => $object->getName(),
-        ];
+        $data = [];
+        if ($object->getId() !== null) {
+            $data['id'] = $object->getId();
+        }
+        $data['name'] = $object->getName();
+        return $data;
     }
 
     /**

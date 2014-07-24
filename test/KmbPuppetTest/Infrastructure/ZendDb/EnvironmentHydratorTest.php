@@ -21,6 +21,18 @@ class EnvironmentHydratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function canExtractWithNullId()
+    {
+        $environment = new Environment();
+        $environment->setName('STABLE');
+        $hydrator = new EnvironmentHydrator();
+
+        $this->assertEquals([
+            'name' => 'STABLE'
+        ], $hydrator->extract($environment));
+    }
+
+    /** @test */
     public function canHydrate()
     {
         $environment = new Environment();
