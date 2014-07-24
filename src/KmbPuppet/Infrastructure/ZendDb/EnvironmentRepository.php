@@ -80,9 +80,33 @@ class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepos
                 'root.descendant_id = parent.descendant_id AND parent.ancestor_id <> parent.descendant_id',
                 [],
                 Select::JOIN_LEFT
-            )
-            ->where(new IsNull('parent.descendant_id'));
+            );
+        $select->where->isNull('parent.descendant_id');
         return $this->hydrateAggregateRootsFromResult($this->performRead($select));
+    }
+
+    /**
+     * @param string $name
+     * @return EnvironmentInterface
+     */
+    public function getRootByName($name)
+    {
+        $select = $this->getSelect()
+            ->join(
+                ['root' => $this->getPathsTableName()],
+                $this->getTableName() . '.id = root.descendant_id',
+                [],
+                Select::JOIN_LEFT
+            )
+            ->join(
+                ['parent' => $this->getPathsTableName()],
+                'root.descendant_id = parent.descendant_id AND parent.ancestor_id <> parent.descendant_id',
+                [],
+                Select::JOIN_LEFT
+            );
+        $select->where->isNull('parent.descendant_id')->and->equalTo('name', $name);
+        $aggregateRoots = $this->hydrateAggregateRootsFromResult($this->performRead($select));
+        return empty($aggregateRoots) ? null : $aggregateRoots[0];
     }
 
     /**

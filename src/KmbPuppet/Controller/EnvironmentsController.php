@@ -125,13 +125,16 @@ class EnvironmentsController extends AbstractActionController
     {
         $validator = new Alnum();
         if (!$validator->isValid($this->params()->fromPost('name'))) {
-            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("%s is not a valid name (alphanumeric only) !"), $this->params()->fromPost('name')));
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("'%s' is not a valid name (alphanumeric only) !"), $this->params()->fromPost('name')));
         }
         if ($aggregateRoot->isAncestorOf($parent) || ($parent !== null && $aggregateRoot->getId() == $parent->getId())) {
             $this->flashMessenger()->addErrorMessage(sprintf($this->translate("For obvious reasons, %s can't be the parent of %s !"), $parent->getNormalizedName(), $aggregateRoot->getNormalizedName()));
         }
         if ($aggregateRoot->hasParent() && $parent !== null && $aggregateRoot->getParent()->getId() != $parent->getId() && $parent->hasChildWithName($this->params()->fromPost('name'))) {
-            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s has already a child named %s !"), $parent->getName(), $aggregateRoot->getName()));
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s has already a child named %s !"), $parent->getName(), $this->params()->fromPost('name')));
+        }
+        if ($aggregateRoot->hasParent() && $parent === null && $this->repository->getRootByName($this->params()->fromPost('name')) !== null) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Root environment %s already exists !"), $this->params()->fromPost('name')));
         }
 
         return !$this->flashMessenger()->hasCurrentErrorMessages();

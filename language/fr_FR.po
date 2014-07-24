@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-24 14:59+0100\n"
-"PO-Revision-Date: 2014-07-24 14:59+0100\n"
+"POT-Creation-Date: 2014-07-24 17:47+0100\n"
+"PO-Revision-Date: 2014-07-24 17:47+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,35 +17,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:59
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:51
 #, php-format
 msgid "Environment %s has been successfully created !"
 msgstr "L'environnement %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:77
-#, php-format
-msgid "For obvious reasons, %s can't be the parent of %s !"
-msgstr "Pour des raisons évidentes, %s ne peut pas être le parent de %s !"
-
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:79
-#, php-format
-msgid "Environment %s has already a child named %s !"
-msgstr "L'environnement %s a déjà un fils nommé %s !"
-
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:86
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:72
 #, php-format
 msgid "Environment %s has been successfully updated !"
 msgstr "L'environnement %s a bien été modifié !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:109
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:92
 #, php-format
 msgid "Environment %s has been successfully removed !"
 msgstr "L'environnement %s a bien été supprimé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:117
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:128
 #, php-format
-msgid "%s is not a valid name (alphanumeric only) !"
-msgstr "%s n'est pas un nom valide (alphanumérique uniquement) !"
+msgid "'%s' is not a valid name (alphanumeric only) !"
+msgstr "'%s' n'est pas un nom valide (alphanumérique uniquement) !"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:131
+#, php-format
+msgid "For obvious reasons, %s can't be the parent of %s !"
+msgstr "Pour des raisons évidentes, %s ne peut pas être le parent de %s !"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:134
+#, php-format
+msgid "Environment %s has already a child named %s !"
+msgstr "L'environnement %s a déjà un fils nommé %s !"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:137
+#, php-format
+msgid "Root environment %s already exists !"
+msgstr "L'environnement racine %s existe déjà !"
 
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
 msgid "Title"
@@ -160,8 +165,25 @@ msgstr "Vous pouvez plier / déplier les enfants de chaque environnement en cliq
 
 #: ../view/kmb-puppet/environments/index.phtml:119
 #, php-format
-msgid "View the detail of an environment by clicking on its name or on the associated button %s."
-msgstr "Accéder au détail d'un environnement en cliquant sur son nom ou sur l'icône %s associée."
+msgid "Click on %s to add a child to the environment."
+msgstr "Cliquer sur %s pour ajouter un fils à l'environnement."
+
+#: ../view/kmb-puppet/environments/index.phtml:122
+#, php-format
+msgid "Remove the environment by clicking on %s."
+msgstr "Supprimer l'environnement en cliquant sur %s."
+
+#: ../view/kmb-puppet/environments/index.phtml:125
+#, php-format
+msgid "Click on %s to update the name and/or the parent of the environment."
+msgstr "Cliquer sur %s pour modifier le nom et/ou le parent de l'environnement."
+
+#~ msgid ""
+#~ "View the detail of an environment by clicking on its name or on the "
+#~ "associated button %s."
+#~ msgstr ""
+#~ "Accéder au détail d'un environnement en cliquant sur son nom ou sur "
+#~ "l'icône %s associée."
 
 #~ msgid ""
 #~ "It will automatically inherits of all the modules (in the same version) "

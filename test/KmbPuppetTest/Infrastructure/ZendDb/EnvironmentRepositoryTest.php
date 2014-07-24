@@ -128,6 +128,22 @@ class EnvironmentRepositoryTest extends \PHPUnit_Extensions_Database_TestCase
     }
 
     /** @test */
+    public function cannotGetRootByUnknownRootName()
+    {
+        $environment = static::$repository->getRootByName('PF1');
+
+        $this->assertNull($environment);
+    }
+
+    /** @test */
+    public function canGetRootByName()
+    {
+        $environment = static::$repository->getRootByName('STABLE');
+
+        $this->assertEquals(1, $environment->getId());
+    }
+
+    /** @test */
     public function canGetAllChildren()
     {
         $environment = static::$repository->getById(1);
