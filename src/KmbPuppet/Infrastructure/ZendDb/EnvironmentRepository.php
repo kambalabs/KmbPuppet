@@ -26,6 +26,7 @@ use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
 use Zend\Db\Adapter\Driver\StatementInterface;
 use Zend\Db\Sql\Select;
+use Zend\Db\Exception\ExceptionInterface;
 
 class EnvironmentRepository extends ZendDb\Repository implements EnvironmentRepositoryInterface
 {
@@ -35,31 +36,58 @@ class EnvironmentRepository extends ZendDb\Repository implements EnvironmentRepo
     /**
      * @param AggregateRootInterface $aggregateRoot
      * @return \GtnPersistBase\Model\RepositoryInterface
+     * @throws \Zend\Db\Exception\ExceptionInterface
      */
     public function add(AggregateRootInterface $aggregateRoot)
     {
-        parent::add($aggregateRoot);
-        return $this->addPaths($aggregateRoot);
+        $connection = $this->getDbAdapter()->getDriver()->getConnection()->beginTransaction();
+        try {
+            parent::add($aggregateRoot);
+            $this->addPaths($aggregateRoot);
+            $connection->commit();
+        } catch (ExceptionInterface $e) {
+            $connection->rollback();
+            throw $e;
+        }
+        return $this;
     }
 
     /**
      * @param AggregateRootInterface $aggregateRoot
      * @return \GtnPersistBase\Model\RepositoryInterface
+     * @throws \Zend\Db\Exception\ExceptionInterface
      */
     public function update(AggregateRootInterface $aggregateRoot)
     {
-        parent::update($aggregateRoot);
-        return $this->movePaths($aggregateRoot);
+        $connection = $this->getDbAdapter()->getDriver()->getConnection()->beginTransaction();
+        try {
+            parent::update($aggregateRoot);
+            $this->movePaths($aggregateRoot);
+            $connection->commit();
+        } catch (ExceptionInterface $e) {
+            $connection->rollback();
+            throw $e;
+        }
+        return $this;
     }
 
     /**
      * @param AggregateRootInterface $aggregateRoot
      * @return \GtnPersistBase\Model\RepositoryInterface
+     * @throws \Zend\Db\Exception\ExceptionInterface
      */
     public function remove(AggregateRootInterface $aggregateRoot)
     {
-        parent::remove($aggregateRoot);
-        return $this->removePaths($aggregateRoot);
+        $connection = $this->getDbAdapter()->getDriver()->getConnection()->beginTransaction();
+        try {
+            parent::remove($aggregateRoot);
+            $this->removePaths($aggregateRoot);
+            $connection->commit();
+        } catch (ExceptionInterface $e) {
+            $connection->rollback();
+            throw $e;
+        }
+        return $this;
     }
 
     /**
