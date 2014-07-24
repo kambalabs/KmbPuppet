@@ -20,10 +20,10 @@
  */
 namespace KmbPuppet\Infrastructure\ZendDb;
 
-use GtnPersistZendDb\Service\ZendDbRepositoryFactory;
+use GtnPersistZendDb\Infrastructure\ZendDb;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class EnvironmentRepositoryFactory extends ZendDbRepositoryFactory
+class EnvironmentRepositoryFactory extends ZendDb\RepositoryFactory
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

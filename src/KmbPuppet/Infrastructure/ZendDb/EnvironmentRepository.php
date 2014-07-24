@@ -21,14 +21,13 @@
 namespace KmbPuppet\Infrastructure\ZendDb;
 
 use GtnPersistBase\Model\AggregateRootInterface;
-use GtnPersistZendDb\Infrastructure\ZendDbRepository;
+use GtnPersistZendDb\Infrastructure\ZendDb;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
 use Zend\Db\Adapter\Driver\StatementInterface;
-use Zend\Db\Sql\Predicate\IsNull;
 use Zend\Db\Sql\Select;
 
-class EnvironmentRepository extends ZendDbRepository implements EnvironmentRepositoryInterface
+class EnvironmentRepository extends ZendDb\Repository implements EnvironmentRepositoryInterface
 {
     /** @var string */
     protected $pathsTableName;
