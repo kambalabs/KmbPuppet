@@ -38,7 +38,7 @@ class PmProxyTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException RuntimeException
-     * @expectedExceptionMessage HTTP/1.0 500 Internal Server Error
+     * @expectedExceptionMessage Save error
      */
     public function cannotSaveWhenRequestFails()
     {
@@ -46,8 +46,8 @@ class PmProxyTest extends \PHPUnit_Framework_TestCase
             ->method('isSuccess')
             ->will($this->returnValue(false));
         $this->httpResponse->expects($this->any())
-            ->method('renderStatusLine')
-            ->will($this->returnValue('HTTP/1.0 500 Internal Server Error'));
+            ->method('getBody')
+            ->will($this->returnValue('{"message":"Save error"}'));
 
         $this->pmProxyService->save($this->createEnvironment(1, 'STABLE'));
     }
@@ -65,13 +65,33 @@ class PmProxyTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException RuntimeException
-     * @expectedExceptionMessage HTTP/1.0 500 Internal Server Error
+     * @expectedExceptionMessage Remove error
      */
     public function cannotRemoveWhenRequestFails()
     {
         $this->httpResponse->expects($this->any())
             ->method('isSuccess')
             ->will($this->returnValue(false));
+        $this->httpResponse->expects($this->any())
+            ->method('getBody')
+            ->will($this->returnValue('{"message":"Remove error"}'));
+
+        $this->pmProxyService->remove($this->createEnvironment(1, 'STABLE'));
+    }
+
+    /**
+     * @test
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage HTTP/1.0 500 Internal Server Error
+     */
+    public function cannotRemoveWhenRequestFailsWithoutMessage()
+    {
+        $this->httpResponse->expects($this->any())
+            ->method('isSuccess')
+            ->will($this->returnValue(false));
+        $this->httpResponse->expects($this->any())
+            ->method('getBody')
+            ->will($this->returnValue(''));
         $this->httpResponse->expects($this->any())
             ->method('renderStatusLine')
             ->will($this->returnValue('HTTP/1.0 500 Internal Server Error'));

@@ -59,8 +59,8 @@ class EnvironmentsController extends AbstractActionController
             } catch (RuntimeException $e) {
                 $this->repository->remove($aggregateRoot);
                 $this->flashMessenger()->addErrorMessage(
-                    sprintf($this->translate("Environment %s could no be created on the puppet master :"), $aggregateRoot->getName()) .
-                    '<pre>' . $e->getMessage() . '</pre>'
+                    sprintf($this->translate("Environment %s could no be created on the puppet master"), $aggregateRoot->getName()) .
+                    ' : ' . $e->getMessage()
                 );
             }
         }
@@ -88,8 +88,8 @@ class EnvironmentsController extends AbstractActionController
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
             } catch (RuntimeException $e) {
                 $this->flashMessenger()->addErrorMessage(
-                    sprintf($this->translate("Environment %s could no be updated on the puppet master :"), $aggregateRoot->getName()) .
-                    '<pre>' . $e->getMessage() . '</pre>'
+                    sprintf($this->translate("Environment %s could no be updated on the puppet master"), $aggregateRoot->getName()) .
+                    ' : ' . $e->getMessage()
                 );
             }
         }
@@ -116,8 +116,8 @@ class EnvironmentsController extends AbstractActionController
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
         } catch (RuntimeException $e) {
             $this->flashMessenger()->addErrorMessage(
-                sprintf($this->translate("Environment %s could no be removed on the puppet master :"), $aggregateRoot->getName()) .
-                '<pre>' . $e->getMessage() . '</pre>'
+                sprintf($this->translate("Environment %s could no be removed on the puppet master"), $aggregateRoot->getName()) .
+                ' : ' . $e->getMessage()
             );
         }
 

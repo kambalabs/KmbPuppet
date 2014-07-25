@@ -206,7 +206,7 @@ class PmProxy implements PmProxyInterface
             $body = $httpResponse->getBody();
             $this->getLogger()->err('[' . $httpResponse->renderStatusLine() . '] ' . $body);
             $result = Json::decode($body);
-            throw new RuntimeException(isset($result['message']) ? $result['message'] : $httpResponse->renderStatusLine());
+            throw new RuntimeException($result !== null && !empty($result->message) ? $result->message : $httpResponse->renderStatusLine());
         }
 
         return $this;
