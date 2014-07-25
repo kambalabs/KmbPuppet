@@ -27,6 +27,6 @@ class EnvironmentHydratorTest extends \PHPUnit_Framework_TestCase
         $environment->setParent($parent);
         $hydrator = new EnvironmentHydrator();
 
-        $this->assertEquals(['name' => 'STABLE_PF1', 'parent' => 1], $hydrator->extract($environment));
+        $this->assertEquals(['name' => 'STABLE_PF1', 'parent' => '1'], $hydrator->extract($environment));
     }
 }
