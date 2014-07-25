@@ -51,8 +51,8 @@ class EnvironmentsController extends AbstractActionController
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
-            $this->repository->add($aggregateRoot);
             $this->pmProxyService->save($aggregateRoot);
+            $this->repository->add($aggregateRoot);
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
         }
 
@@ -73,8 +73,8 @@ class EnvironmentsController extends AbstractActionController
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
-            $this->repository->update($aggregateRoot);
             $this->pmProxyService->save($aggregateRoot);
+            $this->repository->update($aggregateRoot);
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
         }
 
@@ -94,8 +94,8 @@ class EnvironmentsController extends AbstractActionController
             throw new UnauthorizedException();
         }
 
-        $this->repository->remove($aggregateRoot);
         $this->pmProxyService->remove($aggregateRoot);
+        $this->repository->remove($aggregateRoot);
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
