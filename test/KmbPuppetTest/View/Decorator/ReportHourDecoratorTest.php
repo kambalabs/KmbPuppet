@@ -25,6 +25,7 @@ class ReportHourDecoratorTest extends AbstractDecoratorTestCase
     {
         $report = new Report();
         $report->setCreatedAt(new \DateTime('2014-03-31T13:38:32'));
+        \Locale::setDefault('fr_FR');
 
         $this->assertEquals('13:38:32', $this->decorator->decorateValue($report));
     }
