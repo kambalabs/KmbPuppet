@@ -19,9 +19,7 @@
         "kambalabs/kmb-base": "dev-master",
         "kambalabs/kmb-authentication": "dev-master",
         "kambalabs/kmb-permission": "dev-master",
-        "kambalabs/kmb-puppetdb": "dev-master",
-        "kambalabs/kmb-dashboard": "dev-master",
-        "kambalabs/kmb-servers": "dev-master"
+        "kambalabs/kmb-puppetdb": "dev-master"
     },
     "require-dev": {
         "phpunit/PHPUnit": "3.7.*",

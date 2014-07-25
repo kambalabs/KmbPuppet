@@ -34,10 +34,7 @@
                         </blockquote>
                             <div class="form-group">
                                 <label for="create-parent-select"><?php echo $this->translate('Select a parent') ?></label>
-                                <select id="create-parent-select" class="form-control" name="parent" data-rel="chosen" style="display: none;">
-                                    <option value="0">-</option>
-                                    <?php echo $this->partial('kmb-puppet/environments/environments-options', ['environments' => $this->environments]) ?>
-                                </select>
+                                <?php echo $this->environmentSelect('create-parent-select', 'parent') ?>
                             </div>
                             <div class="form-group">
                                 <label for="create-environment-name"><?php echo $this->translate('Choose a name') ?></label>
@@ -67,10 +64,7 @@
                         </blockquote>
                         <div class="form-group">
                             <label for="update-parent-select"><?php echo $this->translate('Select a parent') ?></label>
-                            <select id="update-parent-select" class="form-control" name="parent" data-rel="chosen" style="display: none;">
-                                <option value="0">-</option>
-                                <?php echo $this->partial('kmb-puppet/environments/environments-options', ['environments' => $this->environments]) ?>
-                            </select>
+                            <?php echo $this->environmentSelect('update-parent-select', 'parent') ?>
                         </div>
                         <div class="form-group">
                             <label for="environment-name"><?php echo $this->translate('Choose a name') ?></label>

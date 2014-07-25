@@ -43,8 +43,6 @@ class Bootstrap extends AbstractBootstrap
                     'KmbFakeAuthentication',
                     'KmbPermission',
                     'KmbPuppetDb',
-                    'KmbDashboard',
-                    'KmbServers',
                     'KmbPuppet',
                 )
             )

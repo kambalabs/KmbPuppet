@@ -5,6 +5,7 @@ use KmbBase\FakeDateTimeFactory;
 use KmbPuppetDb\Model;
 use KmbPuppetDbTest\FakeHttpClient;
 use KmbPuppetTest\Bootstrap;
+use Zend\Db\Adapter\AdapterInterface;
 use Zend\Json\Json;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
@@ -12,10 +13,23 @@ class ReportsControllerTest extends AbstractHttpControllerTestCase
 {
     protected $traceError = true;
 
+    /** @var \PDO */
+    protected $connection;
+
     public function setUp()
     {
         $this->setApplicationConfig(Bootstrap::getApplicationConfig());
         parent::setUp();
+
+        /** @var $dbAdapter AdapterInterface */
+        $dbAdapter = $this->getApplicationServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $this->connection = $dbAdapter->getDriver()->getConnection()->getResource();
+        $this->connection->exec(file_get_contents(Bootstrap::rootPath() . '/data/migrations/sqlite/schema.sql'));
+        \PHPUnit_Extensions_Database_Operation_Factory::INSERT()->execute(
+            new \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection($this->connection),
+            new \PHPUnit_Extensions_Database_DataSet_FlatXmlDataSet(Bootstrap::rootPath() . '/test/data/fixtures.xml')
+        );
+
         $serviceManager = $this->getApplicationServiceLocator();
         $serviceManager->setAllowOverride(true);
         $serviceManager->setService('DateTimeFactory', new FakeDateTimeFactory(new \DateTime('2014-03-31')));

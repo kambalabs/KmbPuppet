@@ -67,6 +67,9 @@ return [
             'shortHostname' => 'KmbPuppet\View\Helper\ShortHostname',
             'formatAncestorsNames' => 'KmbPuppet\View\Helper\FormatAncestorsNames',
         ],
+        'factories' => [
+            'environmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelectFactory',
+        ],
     ],
     'view_manager' => [
         'strategies' => [
@@ -77,6 +80,8 @@ return [
             'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
             'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
             'kmb-puppet/environments/environments-options' => __DIR__ . '/../view/kmb-puppet/environments/environments-options.phtml',
+            'kmb-puppet/environments/environments-select' => __DIR__ . '/../view/kmb-puppet/environments/environments-select.phtml',
+            'kmb-puppet/environments/environments-form' => __DIR__ . '/../view/kmb-puppet/environments/environments-form.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
