@@ -38,7 +38,7 @@ class PmProxyTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException RuntimeException
-     * @expectedExceptionMessage Unexpected PmProxy Response: HTTP/1.0 500 Internal Server Error
+     * @expectedExceptionMessage HTTP/1.0 500 Internal Server Error
      */
     public function cannotSaveWhenRequestFails()
     {
@@ -65,7 +65,7 @@ class PmProxyTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException RuntimeException
-     * @expectedExceptionMessage Unexpected PmProxy Response: HTTP/1.0 500 Internal Server Error
+     * @expectedExceptionMessage HTTP/1.0 500 Internal Server Error
      */
     public function cannotRemoveWhenRequestFails()
     {

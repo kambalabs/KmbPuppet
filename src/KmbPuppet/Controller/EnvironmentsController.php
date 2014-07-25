@@ -55,11 +55,14 @@ class EnvironmentsController extends AbstractActionController
             $this->repository->add($aggregateRoot);
             try {
                 $this->pmProxyService->save($aggregateRoot);
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
             } catch (RuntimeException $e) {
                 $this->repository->remove($aggregateRoot);
-                $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s could no be created on the puppet master !"), $aggregateRoot->getName()));
+                $this->flashMessenger()->addErrorMessage(
+                    sprintf($this->translate("Environment %s could no be created on the puppet master :"), $aggregateRoot->getName()) .
+                    '<pre>' . $e->getMessage() . '</pre>'
+                );
             }
-            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
         }
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
@@ -79,9 +82,16 @@ class EnvironmentsController extends AbstractActionController
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
-            $this->pmProxyService->save($aggregateRoot);
-            $this->repository->update($aggregateRoot);
-            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
+            try {
+                $this->pmProxyService->save($aggregateRoot);
+                $this->repository->update($aggregateRoot);
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
+            } catch (RuntimeException $e) {
+                $this->flashMessenger()->addErrorMessage(
+                    sprintf($this->translate("Environment %s could no be updated on the puppet master :"), $aggregateRoot->getName()) .
+                    '<pre>' . $e->getMessage() . '</pre>'
+                );
+            }
         }
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
@@ -100,9 +110,16 @@ class EnvironmentsController extends AbstractActionController
             throw new UnauthorizedException();
         }
 
-        $this->pmProxyService->remove($aggregateRoot);
-        $this->repository->remove($aggregateRoot);
-        $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
+        try {
+            $this->pmProxyService->remove($aggregateRoot);
+            $this->repository->remove($aggregateRoot);
+            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
+        } catch (RuntimeException $e) {
+            $this->flashMessenger()->addErrorMessage(
+                sprintf($this->translate("Environment %s could no be removed on the puppet master :"), $aggregateRoot->getName()) .
+                '<pre>' . $e->getMessage() . '</pre>'
+            );
+        }
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }

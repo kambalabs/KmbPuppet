@@ -203,8 +203,10 @@ class PmProxy implements PmProxyInterface
         $this->logRequest($start, $httpResponse->renderStatusLine(), $uri);
 
         if (!$httpResponse->isSuccess()) {
-            $this->getLogger()->err('[' . $httpResponse->renderStatusLine() . '] ' . $httpResponse->getBody());
-            throw new RuntimeException('Unexpected PmProxy Response: ' . $httpResponse->renderStatusLine());
+            $body = $httpResponse->getBody();
+            $this->getLogger()->err('[' . $httpResponse->renderStatusLine() . '] ' . $body);
+            $result = Json::decode($body);
+            throw new RuntimeException(isset($result['message']) ? $result['message'] : $httpResponse->renderStatusLine());
         }
 
         return $this;
