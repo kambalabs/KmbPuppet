@@ -20,14 +20,13 @@
  */
 namespace KmbPuppet\Service;
 
-use KmbPuppet\Controller\EnvironmentsController;
-use KmbPuppet\Service;
-use KmbPuppet\Model\EnvironmentRepositoryInterface;
+use Zend\Http;
+use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceManager;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
-class EnvironmentsControllerFactory implements FactoryInterface
+class PmProxyFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -37,19 +36,28 @@ class EnvironmentsControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /** @var ServiceManager $serviceManager */
-        $serviceManager = $serviceLocator->getServiceLocator();
+        $globalConfig = $serviceLocator->get('Config');
+        $config = isset($globalConfig['pmproxy']) ? $globalConfig['pmproxy'] : array();
 
-        $controller = new EnvironmentsController();
+        $service = new PmProxy();
 
-        /** @var EnvironmentRepositoryInterface $repository */
-        $repository = $serviceManager->get('EnvironmentRepository');
-        $controller->setRepository($repository);
+        /** @var Http\Client $httpClient */
+        $httpClient = $serviceLocator->get('KmbPuppet\Http\Client');
+        if (isset($config['http_options'])) {
+            $httpClient->setOptions($config['http_options']);
+        }
+        $service->setHttpClient($httpClient);
 
-        /** @var PmProxy $pmProxyService */
-        $pmProxyService = $serviceManager->get('KmbPuppet\Service\PmProxy');
-        $controller->setPmProxyService($pmProxyService);
+        $service->setBaseUri($config['base_uri']);
 
-        return $controller;
+        /** @var HydratorInterface $environmentHydrator */
+        $environmentHydrator = $serviceLocator->get('KmbPuppet\Model\PmProxy\EnvironmentHydrator');
+        $service->setEnvironmentHydrator($environmentHydrator);
+
+        /** @var Logger $logger */
+        $logger = $serviceLocator->get('Logger');
+        $service->setLogger($logger);
+
+        return $service;
     }
 }

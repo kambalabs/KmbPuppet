@@ -1,5 +1,10 @@
 <?php
 return [
+    'service_manager' => [
+        'invokables' => [
+            'KmbPuppet\Http\Client' => 'KmbPuppetTest\FakeHttpClient',
+        ],
+    ],
     'router' => [
         'routes' => [
             'index' => [

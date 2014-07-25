@@ -13,4 +13,7 @@ return [
         'driver' => 'Pdo',
         'dsn' => 'sqlite::memory:'
     ],
+    'pmproxy' => [
+        'base_uri' => 'http://localhost:3000',
+    ]
 ];

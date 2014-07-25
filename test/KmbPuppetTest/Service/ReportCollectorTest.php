@@ -35,7 +35,8 @@ class ReportCollectorTest extends \PHPUnit_Framework_TestCase
                         array('~', 'message', 'File'),
                         array('~', 'containing-class', 'File'),
                         array('~', 'certname', 'File'),
-                    )) {
+                    )
+                ) {
                     $reports = array_slice($reports, 1, 7);
                 }
                 if ($orderBy == array(array('field' => 'certname', 'order' => 'desc'))) {

@@ -1,5 +1,17 @@
 <?php
 return [
+    'service_manager' => [
+        'invokables' => [
+            'KmbPuppet\Http\Client' => 'Zend\Http\Client',
+            'KmbPuppet\Model\PmProxy\EnvironmentHydrator' => 'KmbPuppet\Model\PmProxy\EnvironmentHydrator',
+        ],
+        'factories' => [
+            'KmbPuppet\Service\PmProxy' => 'KmbPuppet\Service\PmProxyFactory',
+        ],
+        'abstract_factories' => [
+            'Zend\Log\LoggerAbstractServiceFactory',
+        ],
+    ],
     'router' => [
         'routes' => [
             'puppet' => [

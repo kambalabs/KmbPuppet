@@ -23,6 +23,7 @@ namespace KmbPuppet\Controller;
 use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
+use KmbPuppet\Service;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -32,6 +33,9 @@ class EnvironmentsController extends AbstractActionController
 {
     /** @var EnvironmentRepositoryInterface */
     protected $repository;
+
+    /** @var Service\PmProxy */
+    protected $pmProxyService;
 
     public function indexAction()
     {
@@ -48,6 +52,7 @@ class EnvironmentsController extends AbstractActionController
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
             $this->repository->add($aggregateRoot);
+            $this->pmProxyService->save($aggregateRoot);
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
         }
 
@@ -69,6 +74,7 @@ class EnvironmentsController extends AbstractActionController
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
             $this->repository->update($aggregateRoot);
+            $this->pmProxyService->save($aggregateRoot);
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
         }
 
@@ -89,6 +95,7 @@ class EnvironmentsController extends AbstractActionController
         }
 
         $this->repository->remove($aggregateRoot);
+        $this->pmProxyService->remove($aggregateRoot);
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
 
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
@@ -114,6 +121,28 @@ class EnvironmentsController extends AbstractActionController
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    /**
+     * Set PmProxyService.
+     *
+     * @param \KmbPuppet\Service\PmProxy $pmProxyService
+     * @return EnvironmentsController
+     */
+    public function setPmProxyService($pmProxyService)
+    {
+        $this->pmProxyService = $pmProxyService;
+        return $this;
+    }
+
+    /**
+     * Get PmProxyService.
+     *
+     * @return \KmbPuppet\Service\PmProxy
+     */
+    public function getPmProxyService()
+    {
+        return $this->pmProxyService;
     }
 
     /**
