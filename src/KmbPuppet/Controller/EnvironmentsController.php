@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbPuppet\Exception\RuntimeException;
 use KmbPuppet\Model\Environment;
 use KmbPuppet\Model\EnvironmentInterface;
 use KmbPuppet\Model\EnvironmentRepositoryInterface;
@@ -51,8 +52,13 @@ class EnvironmentsController extends AbstractActionController
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
-            $this->pmProxyService->save($aggregateRoot);
             $this->repository->add($aggregateRoot);
+            try {
+                $this->pmProxyService->save($aggregateRoot);
+            } catch (RuntimeException $e) {
+                $this->repository->remove($aggregateRoot);
+                $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s could no be created on the puppet master !"), $aggregateRoot->getName()));
+            }
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
         }
 
