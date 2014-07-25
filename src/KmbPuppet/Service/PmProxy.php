@@ -191,7 +191,10 @@ class PmProxy implements PmProxyInterface
         $request->setUri($this->getUri($uri));
         $request->setMethod($method);
         $headers = new Headers();
-        $headers->addHeaders(['Accept' => 'application/json']);
+        $headers->addHeaders([
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        ]);
         $request->setHeaders($headers);
         $request->setContent($content);
 
