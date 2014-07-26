@@ -2,7 +2,7 @@
 return [
     'service_manager' => [
         'invokables' => [
-            'KmbPuppet\Http\Client' => 'KmbPuppetTest\FakeHttpClient',
+            'KmbPmProxy\Http\Client' => 'KmbPuppetTest\FakeHttpClient',
         ],
     ],
     'router' => [

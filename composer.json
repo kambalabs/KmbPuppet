@@ -17,13 +17,16 @@
     ],
     "require": {
         "kambalabs/kmb-base": "dev-master",
+        "kambalabs/kmb-domain": "dev-master",
         "kambalabs/kmb-authentication": "dev-master",
         "kambalabs/kmb-permission": "dev-master",
-        "kambalabs/kmb-puppetdb": "dev-master"
+        "kambalabs/kmb-puppetdb": "dev-master",
+        "kambalabs/kmb-pmproxy": "dev-master"
     },
     "require-dev": {
         "phpunit/PHPUnit": "3.7.*",
         "phpunit/dbunit": "1.3.*",
+        "kambalabs/kmb-zend-db-infrastructure": "dev-master",
         "kambalabs/kmb-fake-authentication": "dev-master",
         "zendframework/zend-developer-tools": "dev-master",
         "satooshi/php-coveralls": "dev-master"

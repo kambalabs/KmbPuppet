@@ -1,7 +1,7 @@
 <?php
 namespace KmbPuppetTest\View\Helper;
 
-use KmbPuppet\Model\Environment;
+use KmbDomain\Model\Environment;
 use KmbPuppet\View\Helper\FormatAncestorsNames;
 
 class FormatAncestorsNamesTest extends \PHPUnit_Framework_TestCase

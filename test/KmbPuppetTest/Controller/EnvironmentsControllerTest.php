@@ -42,7 +42,6 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/puppet/environments/10/remove');
 
-        echo $this->getResponse()->getContent();
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/puppet/environments');
         $this->assertControllerName('KmbPuppet\Controller\Environments');

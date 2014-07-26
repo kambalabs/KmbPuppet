@@ -1,30 +1,30 @@
 <?php
 /**
  * @copyright Copyright (c) 2014 Orange Applications for Business
- * @link      http://github.com/multimediabs/kamba for the canonical source repository
+ * @link      http://github.com/kambalabs for the sources repositories
  *
- * This file is part of kamba.
+ * This file is part of Kamba.
  *
- * kamba is free software: you can redistribute it and/or modify
+ * Kamba is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * kamba is distributed in the hope that it will be useful,
+ * Kamba is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with kamba.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Kamba.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace KmbPuppet\Controller;
 
-use KmbPuppet\Exception\RuntimeException;
-use KmbPuppet\Model\Environment;
-use KmbPuppet\Model\EnvironmentInterface;
-use KmbPuppet\Model\EnvironmentRepositoryInterface;
-use KmbPuppet\Service;
+use KmbPmProxy\Exception\RuntimeException;
+use KmbDomain\Model\Environment;
+use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbPmProxy\Service;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -127,7 +127,7 @@ class EnvironmentsController extends AbstractActionController
     /**
      * Set Repository.
      *
-     * @param \KmbPuppet\Model\EnvironmentRepositoryInterface $repository
+     * @param EnvironmentRepositoryInterface $repository
      * @return EnvironmentsController
      */
     public function setRepository($repository)
@@ -139,7 +139,7 @@ class EnvironmentsController extends AbstractActionController
     /**
      * Get Repository.
      *
-     * @return \KmbPuppet\Model\EnvironmentRepositoryInterface
+     * @return EnvironmentRepositoryInterface
      */
     public function getRepository()
     {
@@ -149,7 +149,7 @@ class EnvironmentsController extends AbstractActionController
     /**
      * Set PmProxyService.
      *
-     * @param \KmbPuppet\Service\PmProxy $pmProxyService
+     * @param Service\PmProxy $pmProxyService
      * @return EnvironmentsController
      */
     public function setPmProxyService($pmProxyService)
@@ -161,7 +161,7 @@ class EnvironmentsController extends AbstractActionController
     /**
      * Get PmProxyService.
      *
-     * @return \KmbPuppet\Service\PmProxy
+     * @return Service\PmProxy
      */
     public function getPmProxyService()
     {

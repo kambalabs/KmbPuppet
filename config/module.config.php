@@ -1,17 +1,5 @@
 <?php
 return [
-    'service_manager' => [
-        'invokables' => [
-            'KmbPuppet\Http\Client' => 'Zend\Http\Client',
-            'KmbPuppet\Model\PmProxy\EnvironmentHydrator' => 'KmbPuppet\Model\PmProxy\EnvironmentHydrator',
-        ],
-        'factories' => [
-            'KmbPuppet\Service\PmProxy' => 'KmbPuppet\Service\PmProxyFactory',
-        ],
-        'abstract_factories' => [
-            'Zend\Log\LoggerAbstractServiceFactory',
-        ],
-    ],
     'router' => [
         'routes' => [
             'puppet' => [
@@ -112,7 +100,11 @@ return [
                     'actions' => ['index', 'create', 'remove', 'update'],
                     'roles' => ['admin']
                 ],
-            ]
+//                'assertion_map' => [
+//                    'env.manage' => '',
+//                    'env.manage-children' => '',
+//                ],
+            ],
         ],
     ],
     'datatables' => [
@@ -146,18 +138,6 @@ return [
                     'key' => 'certname',
                 ],
             ]
-        ]
-    ],
-    'zenddb_repositories' => [
-        'EnvironmentRepository' => [
-            'aggregate_root_class' => 'KmbPuppet\Model\Environment',
-            'aggregate_root_proxy_factory' => 'KmbPuppet\Service\EnvironmentProxyFactory',
-            'aggregate_root_hydrator_class' => 'KmbPuppet\Infrastructure\ZendDb\EnvironmentHydrator',
-            'table_name' => 'environments',
-            'table_sequence_name' => 'environment_id_seq',
-            'paths_table_name' => 'environments_paths',
-            'factory' => 'KmbPuppet\Infrastructure\ZendDb\EnvironmentRepositoryFactory',
-            'repository_class' => 'KmbPuppet\Infrastructure\ZendDb\EnvironmentRepository',
         ]
     ],
 ];

@@ -1,9 +1,0 @@
-                  Prefix Verb   URI Pattern                                               Controller#Action
-          put_environments PUT    /environments/:name(.:format)                             environments#put
- moduleclasses_definitions GET    /environments/:name/modules-classes-definitions(.:format) module_classes#definitions
-   moduleclasses_templates GET    /environments/:name/modules-classes-templates(.:format)   module_classes#templates
-     moduleclasses_classes GET    /environments/:name/classes(.:format)                     module_classes#classes
-          addmodule_to_env PUT    /environments/:name/modules(.:format)                     module_managers#addmodule
-             module_of_env GET    /environments/:name/modules(.:format)                     module_managers#listmodule
-          delmodule_of_env DELETE /environments/:name/modules/:module_name(.:format)        module_managers#removemodule
-    list_available_modules GET    /modules/available(.:format)                              module_managers#listavailable

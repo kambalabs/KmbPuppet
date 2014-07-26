@@ -39,10 +39,13 @@ class Bootstrap extends AbstractBootstrap
                     'GtnDataTables',
                     'GtnPersistBase',
                     'GtnPersistZendDb',
+                    'KmbDomain',
+                    'KmbZendDbInfrastructure',
                     'KmbAuthentication',
                     'KmbFakeAuthentication',
                     'KmbPermission',
                     'KmbPuppetDb',
+                    'KmbPmProxy',
                     'KmbPuppet',
                 )
             )
