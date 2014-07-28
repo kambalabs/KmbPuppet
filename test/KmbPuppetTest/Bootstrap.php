@@ -58,6 +58,7 @@ class Bootstrap extends AbstractBootstrap
             parent::getNamespacePaths(),
             array(
                 'KmbPuppetDbTest' => static::findParentPath('kambalabs') . '/KmbPuppetDb/test/KmbPuppetDbTest',
+                'KmbZendDbInfrastructureTest' => static::findParentPath('kambalabs') . '/KmbZendDbInfrastructure/test/KmbZendDbInfrastructureTest',
                 __NAMESPACE__ => __DIR__,
             )
         );

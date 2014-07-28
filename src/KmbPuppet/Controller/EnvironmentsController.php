@@ -20,6 +20,8 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbDomain\Model\UserInterface;
+use KmbDomain\Model\UserRepositoryInterface;
 use KmbPmProxy\Exception\ExceptionInterface;
 use KmbPmProxy\Exception\NotFoundException;
 use KmbPmProxy\Exception\RuntimeException;
@@ -29,37 +31,41 @@ use KmbDomain\Model\EnvironmentRepositoryInterface;
 use KmbPmProxy\Service;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
 class EnvironmentsController extends AbstractActionController
 {
     /** @var EnvironmentRepositoryInterface */
-    protected $repository;
+    protected $environmentRepository;
+
+    /** @var UserRepositoryInterface */
+    protected $userRepository;
 
     /** @var Service\PmProxy */
     protected $pmProxyService;
 
     public function indexAction()
     {
-        return new ViewModel(['environments' => $this->repository->getAllRoots()]);
+        return new ViewModel(['environments' => $this->environmentRepository->getAllRoots()]);
     }
 
     public function createAction()
     {
         /** @var EnvironmentInterface $parent */
-        $parent = $this->repository->getById($this->params()->fromPost('parent'));
+        $parent = $this->environmentRepository->getById($this->params()->fromPost('parent'));
         $aggregateRoot = new Environment();
 
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
-            $this->repository->add($aggregateRoot);
+            $this->environmentRepository->add($aggregateRoot);
             try {
                 $this->pmProxyService->save($aggregateRoot);
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
             } catch (ExceptionInterface $e) {
-                $this->repository->remove($aggregateRoot);
+                $this->environmentRepository->remove($aggregateRoot);
                 $this->flashMessenger()->addErrorMessage(
                     sprintf($this->translate("Environment %s could no be created on the puppet master"), $aggregateRoot->getName()) .
                     ' : ' . $e->getMessage()
@@ -73,9 +79,9 @@ class EnvironmentsController extends AbstractActionController
     public function updateAction()
     {
         /** @var EnvironmentInterface $parent */
-        $parent = $this->repository->getById($this->params()->fromPost('parent'));
+        $parent = $this->environmentRepository->getById($this->params()->fromPost('parent'));
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->repository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
@@ -86,7 +92,7 @@ class EnvironmentsController extends AbstractActionController
             $aggregateRoot->setParent($parent);
             try {
                 $this->pmProxyService->save($aggregateRoot);
-                $this->repository->update($aggregateRoot);
+                $this->environmentRepository->update($aggregateRoot);
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
             } catch (ExceptionInterface $e) {
                 $this->flashMessenger()->addErrorMessage(
@@ -102,7 +108,7 @@ class EnvironmentsController extends AbstractActionController
     public function removeAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->repository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
@@ -116,7 +122,7 @@ class EnvironmentsController extends AbstractActionController
             try {
                 $this->pmProxyService->remove($aggregateRoot);
             } catch (NotFoundException $e) {}
-            $this->repository->remove($aggregateRoot);
+            $this->environmentRepository->remove($aggregateRoot);
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
         } catch (RuntimeException $e) {
             $this->flashMessenger()->addErrorMessage(
@@ -128,15 +134,65 @@ class EnvironmentsController extends AbstractActionController
         return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }
 
+    public function usersAction()
+    {
+        /** @var EnvironmentInterface $aggregateRoot */
+        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+
+        if ($aggregateRoot === null) {
+            return $this->notFoundAction();
+        }
+
+        $data = [];
+        foreach ($aggregateRoot->getUsers() as $user) {
+            /** @var UserInterface $user */
+            $data[] = [
+                $user->getLogin(),
+                $user->getName(),
+                $user->getRole(),
+            ];
+        }
+
+        return new JsonModel([
+            'data' => $data
+        ]);
+    }
+
+    public function availableUsersAction()
+    {
+        /** @var EnvironmentInterface $aggregateRoot */
+        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+
+        if ($aggregateRoot === null) {
+            return $this->notFoundAction();
+        }
+
+        $availableUsers = [];
+        foreach ($this->getUserRepository()->getAllAvailableForEnvironment($aggregateRoot) as $user) {
+            /** @var UserInterface $user */
+            $availableUsers[] = [
+                'id' => $user->getId(),
+                'login' => $user->getLogin(),
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'role' => $user->getRole(),
+            ];
+        }
+
+        return new JsonModel([
+            'users' => $availableUsers,
+        ]);
+    }
+
     /**
      * Set Repository.
      *
-     * @param EnvironmentRepositoryInterface $repository
+     * @param EnvironmentRepositoryInterface $environmentRepository
      * @return EnvironmentsController
      */
-    public function setRepository($repository)
+    public function setEnvironmentRepository($environmentRepository)
     {
-        $this->repository = $repository;
+        $this->environmentRepository = $environmentRepository;
         return $this;
     }
 
@@ -145,9 +201,31 @@ class EnvironmentsController extends AbstractActionController
      *
      * @return EnvironmentRepositoryInterface
      */
-    public function getRepository()
+    public function getEnvironmentRepository()
     {
-        return $this->repository;
+        return $this->environmentRepository;
+    }
+
+    /**
+     * Set UserRepository.
+     *
+     * @param UserRepositoryInterface $userRepository
+     * @return EnvironmentsController
+     */
+    public function setUserRepository($userRepository)
+    {
+        $this->userRepository = $userRepository;
+        return $this;
+    }
+
+    /**
+     * Get UserRepository.
+     *
+     * @return UserRepositoryInterface
+     */
+    public function getUserRepository()
+    {
+        return $this->userRepository;
     }
 
     /**
@@ -196,7 +274,7 @@ class EnvironmentsController extends AbstractActionController
             ) {
                 $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s has already a child named %s !"), $parent->getName(), $this->params()->fromPost('name')));
             }
-        } elseif ($this->repository->getRootByName($this->params()->fromPost('name')) !== null) {
+        } elseif ($this->environmentRepository->getRootByName($this->params()->fromPost('name')) !== null) {
             $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Root environment %s already exists !"), $this->params()->fromPost('name')));
         }
 

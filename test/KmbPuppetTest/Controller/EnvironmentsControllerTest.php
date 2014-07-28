@@ -1,13 +1,18 @@
 <?php
 namespace KmbPuppetTest\Controller;
 
+use KmbDomain\Model\UserInterface;
 use KmbPuppetDb\Model;
 use KmbPuppetTest\Bootstrap;
+use KmbZendDbInfrastructureTest\DatabaseInitTrait;
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Json\Json;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
 {
+    use DatabaseInitTrait;
+
     protected $traceError = true;
 
     /** @var \PDO */
@@ -21,11 +26,8 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
         /** @var $dbAdapter AdapterInterface */
         $dbAdapter = $this->getApplicationServiceLocator()->get('Zend\Db\Adapter\Adapter');
         $this->connection = $dbAdapter->getDriver()->getConnection()->getResource();
-        $this->connection->exec(file_get_contents(Bootstrap::rootPath() . '/data/migrations/sqlite/schema.sql'));
-        \PHPUnit_Extensions_Database_Operation_Factory::INSERT()->execute(
-            new \PHPUnit_Extensions_Database_DB_DefaultDatabaseConnection($this->connection),
-            new \PHPUnit_Extensions_Database_DataSet_FlatXmlDataSet(Bootstrap::rootPath() . '/test/data/fixtures.xml')
-        );
+        static::initSchema($this->connection);
+        static::initFixtures($this->connection);
     }
 
     /** @test */
@@ -83,5 +85,57 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
         $this->assertRedirectTo('/puppet/environments');
         $this->assertEquals('PF4', $this->connection->query('SELECT name FROM environments WHERE id = 4')->fetchColumn());
         $this->assertEquals('UNSTABLE', $this->connection->query('select name from environments join environments_paths on id = ancestor_id where length = 1 and descendant_id = 4')->fetchColumn());
+    }
+
+    /** @test */
+    public function cannotGetUsersOfUnknownEnvironment()
+    {
+        $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
+        $this->dispatch('/puppet/environments/99999/users');
+
+        $this->assertResponseStatusCode(404);
+    }
+
+    /** @test */
+    public function canGetUsers()
+    {
+        $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
+        $this->dispatch('/puppet/environments/4/users');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Environments');
+        $response = (array)Json::decode($this->getResponse()->getContent());
+        $this->assertEquals(2, count($response['data']));
+        $firstUser = $response['data'][0];
+        $this->assertEquals('psmith', $firstUser[0]);
+        $this->assertEquals('Paul SMITH', $firstUser[1]);
+        $this->assertEquals(UserInterface::ROLE_ADMIN, $firstUser[2]);
+    }
+
+    /** @test */
+    public function cannotGetAvailableUsersForUnknownEnvironment()
+    {
+        $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
+        $this->dispatch('/puppet/environments/99999/available-users');
+
+        $this->assertResponseStatusCode(404);
+    }
+
+    /** @test */
+    public function canGetAvailableUsers()
+    {
+        $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
+        $this->dispatch('/puppet/environments/4/available-users');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Environments');
+        $response = (array)Json::decode($this->getResponse()->getContent());
+        $this->assertEquals(3, count($response['users']));
+        $firstUser = $response['users'][0];
+        $this->assertEquals(5, $firstUser->id);
+        $this->assertEquals('madams', $firstUser->login);
+        $this->assertEquals('Martin ADAMS', $firstUser->name);
+        $this->assertEquals('madams@gmail.com', $firstUser->email);
+        $this->assertEquals(UserInterface::ROLE_USER, $firstUser->role);
     }
 }

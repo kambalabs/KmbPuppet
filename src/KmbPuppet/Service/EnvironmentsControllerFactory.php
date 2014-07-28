@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Service;
 
+use KmbDomain\Model\UserRepositoryInterface;
 use KmbPuppet\Controller\EnvironmentsController;
 use KmbPmProxy\Service;
 use KmbDomain\Model\EnvironmentRepositoryInterface;
@@ -42,9 +43,13 @@ class EnvironmentsControllerFactory implements FactoryInterface
 
         $controller = new EnvironmentsController();
 
-        /** @var EnvironmentRepositoryInterface $repository */
-        $repository = $serviceManager->get('EnvironmentRepository');
-        $controller->setRepository($repository);
+        /** @var EnvironmentRepositoryInterface $environmentRepository */
+        $environmentRepository = $serviceManager->get('EnvironmentRepository');
+        $controller->setEnvironmentRepository($environmentRepository);
+
+        /** @var UserRepositoryInterface $userRepository */
+        $userRepository = $serviceManager->get('UserRepository');
+        $controller->setUserRepository($userRepository);
 
         /** @var Service\PmProxy $pmProxyService */
         $pmProxyService = $serviceManager->get('KmbPmProxy\Service\PmProxy');

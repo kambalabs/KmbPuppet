@@ -97,7 +97,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Environments',
-                    'actions' => ['index', 'create', 'remove', 'update'],
+                    'actions' => ['index', 'create', 'remove', 'update', 'users', 'available-users'],
                     'roles' => ['admin']
                 ],
 //                'assertion_map' => [

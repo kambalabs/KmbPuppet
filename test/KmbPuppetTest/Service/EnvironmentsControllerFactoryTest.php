@@ -14,7 +14,8 @@ class EnvironmentsControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $controller = $controllerManager->get('KmbPuppet\Controller\Environments');
 
         $this->assertInstanceOf('KmbPuppet\Controller\EnvironmentsController', $controller);
-        $this->assertInstanceOf('KmbDomain\Model\EnvironmentRepositoryInterface', $controller->getRepository());
+        $this->assertInstanceOf('KmbDomain\Model\EnvironmentRepositoryInterface', $controller->getEnvironmentRepository());
+        $this->assertInstanceOf('KmbDomain\Model\UserRepositoryInterface', $controller->getUserRepository());
         $this->assertInstanceOf('KmbPmProxy\Service\PmProxy', $controller->getPmProxyService());
     }
 }
