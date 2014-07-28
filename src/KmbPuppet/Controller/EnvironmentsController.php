@@ -20,6 +20,8 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbPmProxy\Exception\ExceptionInterface;
+use KmbPmProxy\Exception\NotFoundException;
 use KmbPmProxy\Exception\RuntimeException;
 use KmbDomain\Model\Environment;
 use KmbDomain\Model\EnvironmentInterface;
@@ -56,7 +58,7 @@ class EnvironmentsController extends AbstractActionController
             try {
                 $this->pmProxyService->save($aggregateRoot);
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
-            } catch (RuntimeException $e) {
+            } catch (ExceptionInterface $e) {
                 $this->repository->remove($aggregateRoot);
                 $this->flashMessenger()->addErrorMessage(
                     sprintf($this->translate("Environment %s could no be created on the puppet master"), $aggregateRoot->getName()) .
@@ -86,7 +88,7 @@ class EnvironmentsController extends AbstractActionController
                 $this->pmProxyService->save($aggregateRoot);
                 $this->repository->update($aggregateRoot);
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
-            } catch (RuntimeException $e) {
+            } catch (ExceptionInterface $e) {
                 $this->flashMessenger()->addErrorMessage(
                     sprintf($this->translate("Environment %s could no be updated on the puppet master"), $aggregateRoot->getName()) .
                     ' : ' . $e->getMessage()
@@ -111,7 +113,9 @@ class EnvironmentsController extends AbstractActionController
         }
 
         try {
-            $this->pmProxyService->remove($aggregateRoot);
+            try {
+                $this->pmProxyService->remove($aggregateRoot);
+            } catch (NotFoundException $e) {}
             $this->repository->remove($aggregateRoot);
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
         } catch (RuntimeException $e) {
