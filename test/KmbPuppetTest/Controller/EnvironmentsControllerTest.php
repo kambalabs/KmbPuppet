@@ -110,7 +110,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
         $firstUser = $response['data'][0];
         $this->assertEquals('psmith', $firstUser[0]);
         $this->assertEquals('Paul SMITH', $firstUser[1]);
-        $this->assertEquals(UserInterface::ROLE_ADMIN, $firstUser[2]);
+        $this->assertContains(UserInterface::ROLE_ADMIN, $firstUser[2]);
     }
 
     /** @test */
@@ -138,5 +138,15 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
         $this->assertEquals('Martin ADAMS', $firstUser->name);
         $this->assertEquals('madams@gmail.com', $firstUser->email);
         $this->assertEquals(UserInterface::ROLE_USER, $firstUser->role);
+    }
+
+    /** @test */
+    public function canRemoveUser()
+    {
+        $this->dispatch('/puppet/environments/4/users/3/remove');
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/puppet/environments');
+        $this->assertEquals([[4]], $this->connection->query('SELECT user_id FROM environments_users WHERE environment_id = 4')->fetchAll(\PDO::FETCH_NUM));
     }
 }

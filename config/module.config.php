@@ -39,6 +39,21 @@ return [
                             ],
                         ],
                     ],
+                    'remove-user' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/environments/:id/users/:userId/remove',
+                            'constraints' => [
+                                'id' => '[0-9]*',
+                                'userId' => '[0-9]*',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'KmbPuppet\Controller',
+                                'controller' => 'Environments',
+                                'action' => 'remove-user',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -97,7 +112,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Environments',
-                    'actions' => ['index', 'create', 'remove', 'update', 'users', 'available-users'],
+                    'actions' => ['index', 'create', 'remove', 'update', 'users', 'available-users', 'remove-user'],
                     'roles' => ['admin']
                 ],
 //                'assertion_map' => [

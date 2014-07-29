@@ -159,7 +159,7 @@ class EnvironmentsController extends AbstractActionController
             $data[] = [
                 $user->getLogin(),
                 $user->getName(),
-                $user->getRole(),
+                $user->getRole() . '<button class="btn btn-xs btn-danger remove-user pull-right" data-environment-id="' . $aggregateRoot->getId() . '" data-user-id="' . $user->getId() . '"><span class="glyphicon glyphicon-remove"></span></button>',
             ];
         }
 
@@ -192,6 +192,18 @@ class EnvironmentsController extends AbstractActionController
         return new JsonModel([
             'users' => $availableUsers,
         ]);
+    }
+
+    public function removeUserAction()
+    {
+        /** @var EnvironmentInterface $aggregateRoot */
+        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot->getParent(); // Load parent
+
+        $aggregateRoot->removeUserById($this->params()->fromRoute('userId'));
+        $this->getEnvironmentRepository()->update($aggregateRoot);
+
+        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
     }
 
     /**
