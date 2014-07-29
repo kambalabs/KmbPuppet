@@ -20,14 +20,14 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbDomain\Model\Environment;
+use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\EnvironmentRepositoryInterface;
 use KmbDomain\Model\UserInterface;
 use KmbDomain\Model\UserRepositoryInterface;
 use KmbPmProxy\Exception\ExceptionInterface;
 use KmbPmProxy\Exception\NotFoundException;
 use KmbPmProxy\Exception\RuntimeException;
-use KmbDomain\Model\Environment;
-use KmbDomain\Model\EnvironmentInterface;
-use KmbDomain\Model\EnvironmentRepositoryInterface;
 use KmbPmProxy\Service;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -130,7 +130,8 @@ class EnvironmentsController extends AbstractActionController
         try {
             try {
                 $this->pmProxyService->remove($aggregateRoot);
-            } catch (NotFoundException $e) {}
+            } catch (NotFoundException $e) {
+            }
             $this->environmentRepository->remove($aggregateRoot);
             $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
         } catch (RuntimeException $e) {
@@ -266,9 +267,11 @@ class EnvironmentsController extends AbstractActionController
      */
     protected function validate($aggregateRoot, $parent)
     {
+        $newName = $this->params()->fromPost('name');
+
         $validator = new Alnum();
-        if (!$validator->isValid($this->params()->fromPost('name'))) {
-            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("'%s' is not a valid name (alphanumeric only) !"), $this->params()->fromPost('name')));
+        if (!$validator->isValid($newName)) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("'%s' is not a valid name (alphanumeric only) !"), $newName));
         }
 
         if ($aggregateRoot->isAncestorOf($parent) || ($parent !== null && $aggregateRoot->getId() == $parent->getId())) {
@@ -276,15 +279,18 @@ class EnvironmentsController extends AbstractActionController
         }
 
         if ($parent != null) {
-            $parentHasChildWithSameName = $parent->hasChildWithName($this->params()->fromPost('name'));
+            $parentHasChildWithSameName = $parent->hasChildWithName($newName);
             if (
                 ($aggregateRoot->hasParent() && $aggregateRoot->getParent()->getId() != $parent->getId() && $parentHasChildWithSameName) ||
                 (!$aggregateRoot->hasParent() && $parentHasChildWithSameName)
             ) {
-                $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s has already a child named %s !"), $parent->getName(), $this->params()->fromPost('name')));
+                $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Environment %s has already a child named %s !"), $parent->getName(), $newName));
             }
-        } elseif ($this->environmentRepository->getRootByName($this->params()->fromPost('name')) !== null) {
-            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Root environment %s already exists !"), $this->params()->fromPost('name')));
+        } elseif (
+            ($aggregateRoot->hasParent() || $aggregateRoot->getName() !== $newName) &&
+            $this->environmentRepository->getRootByName($newName) !== null
+        ) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Root environment %s already exists !"), $newName));
         }
 
         return !$this->flashMessenger()->hasCurrentErrorMessages();
