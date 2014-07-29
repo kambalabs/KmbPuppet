@@ -87,9 +87,18 @@ class EnvironmentsController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        $users = [];
+        foreach ($this->params()->fromPost('users', []) as $userId) {
+            $user = $this->userRepository->getById($userId);
+            if ($user !== null) {
+                $users[] = $user;
+            }
+        }
+
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
+            $aggregateRoot->addUsers($users);
             try {
                 $this->pmProxyService->save($aggregateRoot);
                 $this->environmentRepository->update($aggregateRoot);

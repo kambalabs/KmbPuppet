@@ -79,12 +79,13 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function canUpdate()
     {
-        $this->dispatch('/puppet/environments/4/update', 'POST', ['parent' => 2, 'name' => 'PF4']);
+        $this->dispatch('/puppet/environments/4/update', 'POST', ['parent' => 2, 'name' => 'PF4', 'users' => [4, 6, 7, 18]]);
 
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/puppet/environments');
         $this->assertEquals('PF4', $this->connection->query('SELECT name FROM environments WHERE id = 4')->fetchColumn());
         $this->assertEquals('UNSTABLE', $this->connection->query('select name from environments join environments_paths on id = ancestor_id where length = 1 and descendant_id = 4')->fetchColumn());
+        $this->assertEquals([[3], [4], [6], [7]], $this->connection->query('SELECT user_id FROM environments_users WHERE environment_id = 4')->fetchAll(\PDO::FETCH_NUM));
     }
 
     /** @test */
