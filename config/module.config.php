@@ -115,10 +115,6 @@ return [
                     'actions' => ['index', 'create', 'remove', 'update', 'users', 'available-users', 'remove-user'],
                     'roles' => ['admin']
                 ],
-//                'assertion_map' => [
-//                    'env.manage' => '',
-//                    'env.manage-children' => '',
-//                ],
             ],
         ],
     ],
