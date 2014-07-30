@@ -31,7 +31,7 @@ class EnvironmentSelect extends AbstractHelper
     /** @var array */
     protected $environments;
 
-    public function __invoke($id, $name, $default = '-')
+    public function __invoke($id, $name, $default = '-', $permission = 'manageEnvChildren')
     {
         if ($this->environments === null) {
             $this->environments = $this->environmentRepository->getAllRoots();
@@ -41,6 +41,7 @@ class EnvironmentSelect extends AbstractHelper
             'name' => $name,
             'default' => $default,
             'environments' => $this->environments,
+            'permission' => $permission,
         ]);
     }
 

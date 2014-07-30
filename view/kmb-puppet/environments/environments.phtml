@@ -1,5 +1,6 @@
 <ul>
     <?php foreach ($this->environments as $environment): ?>
+    <?php if ($this->isGranted('readEnv', $environment)): ?>
         <li>
         <?php if ($environment->hasChildren()): ?>
             <span>
@@ -26,5 +27,6 @@
             </span>
         <?php endif ?>
         </li>
+    <?php endif ?>
     <?php endforeach ?>
 </ul>
