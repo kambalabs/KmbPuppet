@@ -117,7 +117,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Environments',
-                    'actions' => ['create', 'remove', 'update', 'users', 'available-users', 'remove-user'],
+                    'actions' => ['create', 'remove', 'update', 'users', 'available-users', 'remove-user', 'add-users'],
                     'roles' => ['admin']
                 ],
             ],

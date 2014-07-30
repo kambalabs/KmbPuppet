@@ -60,51 +60,17 @@
                 </div>
                 <form class="" role="form" action="" method="post">
                     <div class="modal-body" style="min-height: 420px">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li class="active"><a href="#update-environment-infos-tab" role="tab" data-toggle="tab"><?php echo $this->translate('Informations') ?></a></li>
-                            <li><a href="#update-environment-permissions-tab" role="tab" data-toggle="tab"><?php echo $this->translate('Permissions') ?></a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="update-environment-infos-tab">
-                                <blockquote>
-                                    <p><strong><?php echo $this->translate('REMINDER') ?></strong> : <?php echo $this->translate('The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
-                                </blockquote>
-                                <div class="form-group">
-                                    <label for="update-parent-select"><?php echo $this->translate('Select a parent') ?></label>
-                                    <?php echo $this->environmentSelect('update-parent-select', 'parent') ?>
-                                </div>
-                                <div class="form-group">
-                                    <label for="update-environment-name"><?php echo $this->translate('Choose a name') ?></label>
-                                    <p><?php echo $this->translate('The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore).') ?></p>
-                                    <input type="text" class="form-control" name="name" id="update-environment-name" />
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="update-environment-permissions-tab">
-                                <blockquote>
-                                    <p>
-                                        <?php echo $this->translate('A <strong>user</strong> can read his environments, their ancestors and children.') ?>
-                                        <?php echo $this->translate('An <strong>admin</strong> can read his environments and their ancestors, and manage their children.') ?>
-                                    </p>
-                                </blockquote>
-                                <div class="form-group">
-                                    <select id="update-environment-user-select" class="form-control" name="users[]" multiple="multiple" data-placeholder="<?php echo $this->translate('Select users') ?>" data-rel="chosen" style="display: none;">
-                                        <option></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <table class="table table-striped table-hover table-condensed bootstrap-datatable datatable" id="update-environment-users">
-                                        <thead>
-                                        <tr>
-                                            <th><?php echo $this->translate('Login') ?></th>
-                                            <th><?php echo $this->translate('Name') ?></th>
-                                            <th><?php echo $this->translate('Role') ?></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <blockquote>
+                            <p><strong><?php echo $this->translate('REMINDER') ?></strong> : <?php echo $this->translate('The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
+                        </blockquote>
+                        <div class="form-group">
+                            <label for="update-parent-select"><?php echo $this->translate('Select a parent') ?></label>
+                            <?php echo $this->environmentSelect('update-parent-select', 'parent') ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-environment-name"><?php echo $this->translate('Choose a name') ?></label>
+                            <p><?php echo $this->translate('The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore).') ?></p>
+                            <input type="text" class="form-control" name="name" id="update-environment-name" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -112,6 +78,48 @@
                         <button type="submit" class="btn btn-primary"><?php echo $this->translate('Save') ?></button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div id="manage-environment-users" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="manageEnvironmentUsersLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="manageEnvironmentUsersLabel"><?php echo $this->translate('Manage permissions') ?></h1>
+                    <h4 class="lightgrey" id="current-environment-name"></h4>
+                </div>
+                <div class="modal-body" style="min-height: 420px">
+                    <blockquote>
+                        <p>
+                            <?php echo $this->translate('A <strong>user</strong> can read his environments, their ancestors and children.') ?>
+                            <?php echo $this->translate('An <strong>admin</strong> can read his environments and their ancestors, and manage their children.') ?>
+                        </p>
+                    </blockquote>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <select id="environment-user-select" class="form-control" name="users[]" multiple="multiple" data-placeholder="<?php echo $this->translate('Select users') ?>" data-rel="chosen" style="display: none;">
+                                <option></option>
+                            </select>
+                            <div class="input-group-btn">
+                                <button class="btn btn-info" type="submit" id="add-users" data-environment-id=""><i class="glyphicon glyphicon-plus"></i> <?php echo $this->translate('Add') ?></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <table class="table table-striped table-hover table-condensed bootstrap-datatable datatable" id="environment-users">
+                            <thead>
+                            <tr>
+                                <th><?php echo $this->translate('Login') ?></th>
+                                <th><?php echo $this->translate('Name') ?></th>
+                                <th><?php echo $this->translate('Role') ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -153,6 +161,9 @@
             </p>
             <p>
                 <?php echo sprintf($this->translate("Click on %s to update the name and/or the parent of the environment."), '<i class="glyphicon glyphicon-pencil icon-grey"></i>') ?>
+            </p>
+            <p>
+                <?php echo sprintf($this->translate("Manage permissions by clicking on %s."), '<i class="glyphicon glyphicon-user icon-grey"></i>') ?>
             </p>
             <?php endif ?>
         </blockquote>

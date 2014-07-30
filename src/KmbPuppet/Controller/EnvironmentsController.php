@@ -87,18 +87,9 @@ class EnvironmentsController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        $users = [];
-        foreach ($this->params()->fromPost('users', []) as $userId) {
-            $user = $this->userRepository->getById($userId);
-            if ($user !== null) {
-                $users[] = $user;
-            }
-        }
-
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
-            $aggregateRoot->addUsers($users);
             try {
                 $this->pmProxyService->save($aggregateRoot);
                 $this->environmentRepository->update($aggregateRoot);
@@ -194,11 +185,34 @@ class EnvironmentsController extends AbstractActionController
         ]);
     }
 
+    public function addUsersAction()
+    {
+        /** @var EnvironmentInterface $aggregateRoot */
+        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot->getParent(); // Load parent TODO: remove this ASAP
+
+        if ($aggregateRoot === null) {
+            return $this->notFoundAction();
+        }
+
+        $users = [];
+        foreach ($this->params()->fromPost('users', []) as $userId) {
+            $user = $this->userRepository->getById($userId);
+            if ($user !== null) {
+                $users[] = $user;
+            }
+        }
+
+        $aggregateRoot->addUsers($users);
+        $this->environmentRepository->update($aggregateRoot);
+        return new JsonModel();
+    }
+
     public function removeUserAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */
         $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
-        $aggregateRoot->getParent(); // Load parent
+        $aggregateRoot->getParent(); // Load parent TODO: remove this ASAP
 
         $aggregateRoot->removeUserById($this->params()->fromRoute('userId'));
         $this->getEnvironmentRepository()->update($aggregateRoot);
