@@ -28,20 +28,12 @@ class EnvironmentSelect extends AbstractHelper
     /** @var EnvironmentRepositoryInterface */
     protected $environmentRepository;
 
-    /** @var array */
-    protected $environments;
-
-    public function __invoke($id, $name, $default = '-', $permission = 'manageEnvChildren')
+    public function __invoke($permission = 'manageEnvChildren')
     {
-        if ($this->environments === null) {
-            $this->environments = $this->environmentRepository->getAllRoots();
-        }
-        return $this->getView()->partial('kmb-puppet/environments/environments-select', [
-            'id' => $id,
-            'name' => $name,
-            'default' => $default,
-            'environments' => $this->environments,
-            'permission' => $permission,
+        $environments = $this->environmentRepository->getAllRoots();
+        return $this->getView()->partial('kmb-puppet/environments/environments-options', [
+            'environments' => $environments,
+            'permission' => $permission
         ]);
     }
 
