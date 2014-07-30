@@ -24,8 +24,6 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\View\Helper\Partial;
-use Zend\View\HelperPluginManager;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface
 {
@@ -34,15 +32,6 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-
-        $eventManager->attach(MvcEvent::EVENT_RENDER, function (MvcEvent $e) {
-            $serviceManager = $e->getApplication()->getServiceManager();
-            /** @var HelperPluginManager $helperManager */
-            $helperManager = $serviceManager->get('ViewHelperManager');
-            /** @var Partial $partial */
-            $partial = $helperManager->get('partial');
-            $helperManager->get('placeholder')->getContainer('header-addon')->set($partial('kmb-puppet/environments/environments-form'));
-        });
     }
 
     public function getConfig()
