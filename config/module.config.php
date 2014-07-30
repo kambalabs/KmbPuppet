@@ -83,7 +83,10 @@ return [
             'formatAncestorsNames' => 'KmbPuppet\View\Helper\FormatAncestorsNames',
         ],
         'factories' => [
-            'environmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelectFactory',
+            'KmbPuppet\View\Helper\EnvironmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelectFactory',
+        ],
+        'aliases' => [
+            'environmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelect',
         ],
     ],
     'view_manager' => [
