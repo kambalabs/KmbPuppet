@@ -1,5 +1,0 @@
-<select id="<?php echo $this->id ?>" class="form-control" name="<?php echo $this->name ?>" data-placeholder="<?php echo $this->translate('Select an environment') ?>" data-rel="chosen" style="display: none;">
-    <option></option>
-    <option value="0"><?php echo $this->default ?></option>
-    <?php echo $this->partial('kmb-puppet/environments/environments-options', ['environments' => $this->environments, 'permission' => $this->permission]) ?>
-</select>

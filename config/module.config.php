@@ -98,7 +98,6 @@ return [
             'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
             'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
             'kmb-puppet/environments/environments-options' => __DIR__ . '/../view/kmb-puppet/environments/environments-options.phtml',
-            'kmb-puppet/environments/environments-select' => __DIR__ . '/../view/kmb-puppet/environments/environments-select.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
