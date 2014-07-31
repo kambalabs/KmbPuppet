@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-31 13:22+0100\n"
-"PO-Revision-Date: 2014-07-31 13:23+0100\n"
+"POT-Creation-Date: 2014-07-31 15:27+0100\n"
+"PO-Revision-Date: 2014-07-31 15:27+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,52 +17,56 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:66
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:53
+msgid "WARNING ! You should choose a default environment !"
+msgstr "ATTENTION ! Vous devez choisir un environnement par défaut !"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:70
 #, php-format
 msgid "Environment %s has been successfully created !"
 msgstr "L'environnement %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:70
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:74
 #, php-format
 msgid "Environment %s could no be created on the puppet master"
 msgstr "L'environnement %s n'a pas pu être créé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:96
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:101
 #, php-format
 msgid "Environment %s has been successfully updated !"
 msgstr "L'environnement %s a bien été modifié !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:99
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:104
 #, php-format
 msgid "Environment %s could no be updated on the puppet master"
 msgstr "L'environnement %s n'a pas pu être modifié sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:127
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:132
 #, php-format
 msgid "Environment %s has been successfully removed !"
 msgstr "L'environnement %s a bien été supprimé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:130
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:135
 #, php-format
 msgid "Environment %s could no be removed on the puppet master"
 msgstr "L'environnement %s n'a pas pu être supprimé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:300
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:305
 #, php-format
 msgid "'%s' is not a valid name (alphanumeric only) !"
 msgstr "'%s' n'est pas un nom valide (alphanumérique uniquement) !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:304
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:309
 #, php-format
 msgid "For obvious reasons, environment %s can't be the parent of %s !"
 msgstr "Pour des raisons évidentes, l'environnement %s ne peut pas être le parent de %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:313
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:318
 #, php-format
 msgid "Environment %s has already a child named %s !"
 msgstr "L'environnement %s a déjà un fils nommé %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:319
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:324
 #, php-format
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
@@ -226,32 +230,32 @@ msgstr "Tout replier"
 msgid "Expand all"
 msgstr "Tout déplier"
 
-#: ../view/kmb-puppet/environments/index.phtml:194
+#: ../view/kmb-puppet/environments/index.phtml:202
 #, php-format
 msgid "Filter the list by typing your terms in the search field, then click on the button %s."
 msgstr "Pour filtrer la liste, saisissez votre recherche dans le champ prévu à cet effet puis cliquez sur le bouton %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:197
+#: ../view/kmb-puppet/environments/index.phtml:205
 #, php-format
 msgid "You can expand / collapse the children of each environment by clicking on the buttons %s."
 msgstr "Vous pouvez plier / déplier les enfants de chaque environnement en cliquant sur les boutons %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:201
+#: ../view/kmb-puppet/environments/index.phtml:209
 #, php-format
 msgid "Click on %s to add a child to the environment."
 msgstr "Cliquer sur %s pour ajouter un fils à l'environnement."
 
-#: ../view/kmb-puppet/environments/index.phtml:204
+#: ../view/kmb-puppet/environments/index.phtml:212
 #, php-format
 msgid "Remove the environment by clicking on %s."
 msgstr "Supprimer l'environnement en cliquant sur %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:207
+#: ../view/kmb-puppet/environments/index.phtml:215
 #, php-format
 msgid "Click on %s to update the name and/or the parent of the environment."
 msgstr "Cliquer sur %s pour modifier le nom et/ou le parent de l'environnement."
 
-#: ../view/kmb-puppet/environments/index.phtml:210
+#: ../view/kmb-puppet/environments/index.phtml:218
 #, php-format
 msgid "Manage permissions by clicking on %s."
 msgstr "Gérer les droits d'accès en cliquant sur %s."

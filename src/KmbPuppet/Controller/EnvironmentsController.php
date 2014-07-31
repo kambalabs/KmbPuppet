@@ -48,7 +48,11 @@ class EnvironmentsController extends AbstractActionController
 
     public function indexAction()
     {
-        return new ViewModel(['environments' => $this->environmentRepository->getAllRoots()]);
+        $data = ['environments' => $this->environmentRepository->getAllRoots()];
+        if ($this->environmentRepository->getDefault() === null) {
+            $data['message'] = $this->translate("WARNING ! You should choose a default environment !");
+        }
+        return new ViewModel($data);
     }
 
     public function createAction()
