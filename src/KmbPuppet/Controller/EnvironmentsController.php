@@ -91,8 +91,8 @@ class EnvironmentsController extends AbstractActionController
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
             try {
-                $this->pmProxyService->save($aggregateRoot);
                 $this->environmentRepository->update($aggregateRoot);
+                $this->pmProxyService->save($aggregateRoot);
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
             } catch (ExceptionInterface $e) {
                 $this->flashMessenger()->addErrorMessage(
