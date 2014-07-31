@@ -157,7 +157,17 @@
                         </div>
                     </div>
                 </form>
-                <div class="tree ">
+                <div class="tree">
+                    <div>
+                        <a href="#" id="collapse-all" class="btn btn-default pull-right">
+                            <span class="glyphicon glyphicon-minus-sign"></span>
+                            <?php echo $this->translate('Collapse all') ?>
+                        </a>
+                        <a href="#" id="expand-all" class="btn btn-default pull-right">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            <?php echo $this->translate('Expand all') ?>
+                        </a>
+                    </div>
                     <?php echo $this->partial('kmb-puppet/environments/environments', ['environments' => $this->environments]) ?>
                 </div>
             </div>

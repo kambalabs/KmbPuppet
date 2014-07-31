@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-30 15:45+0100\n"
-"PO-Revision-Date: 2014-07-30 15:46+0100\n"
+"POT-Creation-Date: 2014-07-31 12:27+0100\n"
+"PO-Revision-Date: 2014-07-31 12:27+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -96,12 +96,10 @@ msgid "Day reports"
 msgstr "Rapports du jour"
 
 #: ../view/kmb-puppet/environments/environments-select.phtml:1
+#: ../view/kmb-puppet/environments/index.phtml:37
+#: ../view/kmb-puppet/environments/index.phtml:74
 msgid "Select an environment"
 msgstr "Choisir un environnement"
-
-#: ../view/kmb-puppet/environments/environments-form.phtml:3
-msgid "All"
-msgstr "Tous"
 
 #: ../view/kmb-puppet/environments/index.phtml:7
 msgid "Confirm Remove"
@@ -117,8 +115,8 @@ msgid "Do you want to proceed ?"
 msgstr "Êtes-vous sûr de vouloir continuer ?"
 
 #: ../view/kmb-puppet/environments/index.phtml:16
-#: ../view/kmb-puppet/environments/index.phtml:46
-#: ../view/kmb-puppet/environments/index.phtml:77
+#: ../view/kmb-puppet/environments/index.phtml:52
+#: ../view/kmb-puppet/environments/index.phtml:89
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -127,7 +125,7 @@ msgid "Remove"
 msgstr "Supprimer"
 
 #: ../view/kmb-puppet/environments/index.phtml:27
-#: ../view/kmb-puppet/environments/index.phtml:128
+#: ../view/kmb-puppet/environments/index.phtml:147
 msgid "Create an environment"
 msgstr "Créer un environnement"
 
@@ -136,107 +134,118 @@ msgid "You have to choose a parent and a name for this environment."
 msgstr "Vous devez choisir un parent et un nom pour le nouvel environnement."
 
 #: ../view/kmb-puppet/environments/index.phtml:33
-#: ../view/kmb-puppet/environments/index.phtml:64
+#: ../view/kmb-puppet/environments/index.phtml:70
 msgid "The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors."
 msgstr "L'environnement va automatiquement hériter de tous les modules (dans la même version) présents dans chacun de ses ancêtres."
 
 #: ../view/kmb-puppet/environments/index.phtml:36
-#: ../view/kmb-puppet/environments/index.phtml:67
+#: ../view/kmb-puppet/environments/index.phtml:73
 msgid "Select a parent"
 msgstr "Sélectionner un parent"
 
-#: ../view/kmb-puppet/environments/index.phtml:40
-#: ../view/kmb-puppet/environments/index.phtml:71
+#: ../view/kmb-puppet/environments/index.phtml:46
+#: ../view/kmb-puppet/environments/index.phtml:83
 msgid "Choose a name"
 msgstr "Choisir un nom"
 
-#: ../view/kmb-puppet/environments/index.phtml:41
-#: ../view/kmb-puppet/environments/index.phtml:72
+#: ../view/kmb-puppet/environments/index.phtml:47
+#: ../view/kmb-puppet/environments/index.phtml:84
 msgid "The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore)."
 msgstr "Le nom doit impérativement être <strong>alphanumérique</strong> ! Tout caractère spécial est interdit (y compris l'underscore)."
 
-#: ../view/kmb-puppet/environments/index.phtml:47
-#: ../view/kmb-puppet/environments/index.phtml:78
+#: ../view/kmb-puppet/environments/index.phtml:53
+#: ../view/kmb-puppet/environments/index.phtml:90
 msgid "Save"
 msgstr "Enregistrer"
 
-#: ../view/kmb-puppet/environments/index.phtml:58
+#: ../view/kmb-puppet/environments/index.phtml:64
 msgid "Update an environment"
 msgstr "Modifier un environnement"
 
-#: ../view/kmb-puppet/environments/index.phtml:64
+#: ../view/kmb-puppet/environments/index.phtml:70
 msgid "REMINDER"
 msgstr "RAPPEL"
 
-#: ../view/kmb-puppet/environments/index.phtml:89
+#: ../view/kmb-puppet/environments/index.phtml:101
 msgid "Manage permissions"
 msgstr "Gérer les droits d'accès"
 
-#: ../view/kmb-puppet/environments/index.phtml:95
+#: ../view/kmb-puppet/environments/index.phtml:107
 msgid "A <strong>user</strong> can read his environments, their ancestors and children."
 msgstr "Un <strong>utilisateur</strong> peut lire ses environnements, leurs ancêtres et enfants."
 
-#: ../view/kmb-puppet/environments/index.phtml:96
+#: ../view/kmb-puppet/environments/index.phtml:108
 msgid "An <strong>admin</strong> can read his environments and their ancestors, and manage their children."
 msgstr "Un <strong>admin</strong> peut lire ses environnements et leurs ancêtres, et peut gérer leurs enfants."
 
-#: ../view/kmb-puppet/environments/index.phtml:101
+#: ../view/kmb-puppet/environments/index.phtml:113
 msgid "Select users"
 msgstr "Choisir des utilisateurs"
 
-#: ../view/kmb-puppet/environments/index.phtml:105
+#: ../view/kmb-puppet/environments/index.phtml:117
 msgid "Add"
 msgstr "Ajouter"
 
-#: ../view/kmb-puppet/environments/index.phtml:113
+#: ../view/kmb-puppet/environments/index.phtml:125
 msgid "Login"
 msgstr "Login"
 
-#: ../view/kmb-puppet/environments/index.phtml:114
+#: ../view/kmb-puppet/environments/index.phtml:126
 msgid "Name"
 msgstr "Nom"
 
-#: ../view/kmb-puppet/environments/index.phtml:115
+#: ../view/kmb-puppet/environments/index.phtml:127
 msgid "Role"
 msgstr "Role"
 
-#: ../view/kmb-puppet/environments/index.phtml:128
+#: ../view/kmb-puppet/environments/index.phtml:143
 msgid "Environments"
 msgstr "Environnements"
 
-#: ../view/kmb-puppet/environments/index.phtml:132
+#: ../view/kmb-puppet/environments/index.phtml:154
 msgid "Search"
 msgstr "Rechercher"
 
-#: ../view/kmb-puppet/environments/index.phtml:150
+#: ../view/kmb-puppet/environments/index.phtml:164
+msgid "Collapse all"
+msgstr "Tout replier"
+
+#: ../view/kmb-puppet/environments/index.phtml:168
+msgid "Expand all"
+msgstr "Tout déplier"
+
+#: ../view/kmb-puppet/environments/index.phtml:182
 #, php-format
 msgid "Filter the list by typing your terms in the search field, then click on the button %s."
 msgstr "Pour filtrer la liste, saisissez votre recherche dans le champ prévu à cet effet puis cliquez sur le bouton %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:153
+#: ../view/kmb-puppet/environments/index.phtml:185
 #, php-format
 msgid "You can expand / collapse the children of each environment by clicking on the buttons %s."
 msgstr "Vous pouvez plier / déplier les enfants de chaque environnement en cliquant sur les boutons %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:157
+#: ../view/kmb-puppet/environments/index.phtml:189
 #, php-format
 msgid "Click on %s to add a child to the environment."
 msgstr "Cliquer sur %s pour ajouter un fils à l'environnement."
 
-#: ../view/kmb-puppet/environments/index.phtml:160
+#: ../view/kmb-puppet/environments/index.phtml:192
 #, php-format
 msgid "Remove the environment by clicking on %s."
 msgstr "Supprimer l'environnement en cliquant sur %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:163
+#: ../view/kmb-puppet/environments/index.phtml:195
 #, php-format
 msgid "Click on %s to update the name and/or the parent of the environment."
 msgstr "Cliquer sur %s pour modifier le nom et/ou le parent de l'environnement."
 
-#: ../view/kmb-puppet/environments/index.phtml:166
+#: ../view/kmb-puppet/environments/index.phtml:198
 #, php-format
 msgid "Manage permissions by clicking on %s."
 msgstr "Gérer les droits d'accès en cliquant sur %s."
+
+#~ msgid "All"
+#~ msgstr "Tous"
 
 #~ msgid "Informations"
 #~ msgstr "Informations"
