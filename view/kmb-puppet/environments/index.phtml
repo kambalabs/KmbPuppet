@@ -84,6 +84,18 @@
                             <p><?php echo $this->translate('The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore).') ?></p>
                             <input type="text" class="form-control" name="name" id="update-environment-name" />
                         </div>
+                        <?php if ($this->hasRole(\KmbDomain\Model\UserInterface::ROLE_ROOT)): ?>
+                        <div class="form-group">
+                            <label for="update-environment-default">
+                                <?php echo $this->translate('Default environment') ?>
+                            </label>
+                            <p><?php echo $this->translate('All servers which has not already been assigned to an environment will be automatically assigned to the default environment.') ?></p>
+                            <label>
+                                <input type="checkbox" name="default" id="update-environment-default" />
+                                <?php echo $this->translate('Mark this environment as default') ?>
+                            </label>
+                        </div>
+                        <?php endif ?>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>

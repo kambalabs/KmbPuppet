@@ -90,6 +90,7 @@ class EnvironmentsController extends AbstractActionController
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
             $aggregateRoot->setParent($parent);
+            $aggregateRoot->setDefault($this->params()->fromPost('default', 0) !== 0);
             try {
                 $this->environmentRepository->update($aggregateRoot);
                 $this->pmProxyService->save($aggregateRoot);
