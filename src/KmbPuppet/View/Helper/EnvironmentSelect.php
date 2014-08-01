@@ -21,6 +21,7 @@
 namespace KmbPuppet\View\Helper;
 
 use KmbDomain\Model\EnvironmentRepositoryInterface;
+use Zend\Mvc\Router\RouteMatch;
 use Zend\View\Helper\AbstractHelper;
 
 class EnvironmentSelect extends AbstractHelper
@@ -28,12 +29,16 @@ class EnvironmentSelect extends AbstractHelper
     /** @var EnvironmentRepositoryInterface */
     protected $environmentRepository;
 
+    /** @var RouteMatch */
+    protected $routeMatch;
+
     public function __invoke($permission = 'manageEnvChildren')
     {
         $environments = $this->environmentRepository->getAllRoots();
         return $this->getView()->partial('kmb-puppet/environments/environments-options', [
             'environments' => $environments,
-            'permission' => $permission
+            'permission' => $permission,
+            'envId' => $this->routeMatch !== null ? $this->routeMatch->getParam('envId', null) : null,
         ]);
     }
 
@@ -57,5 +62,27 @@ class EnvironmentSelect extends AbstractHelper
     public function getEnvironmentRepository()
     {
         return $this->environmentRepository;
+    }
+
+    /**
+     * Set RouteMatch.
+     *
+     * @param RouteMatch $routeMatch
+     * @return EnvironmentSelect
+     */
+    public function setRouteMatch($routeMatch)
+    {
+        $this->routeMatch = $routeMatch;
+        return $this;
+    }
+
+    /**
+     * Get RouteMatch.
+     *
+     * @return RouteMatch
+     */
+    public function getRouteMatch()
+    {
+        return $this->routeMatch;
     }
 }

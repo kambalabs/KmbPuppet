@@ -21,6 +21,7 @@
 namespace KmbPuppet\View\Helper;
 
 use KmbDomain\Model\EnvironmentRepositoryInterface;
+use Zend\Mvc\Application;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\HelperPluginManager;
@@ -43,6 +44,10 @@ class EnvironmentSelectFactory implements FactoryInterface
         /** @var EnvironmentRepositoryInterface $environmentRepository */
         $environmentRepository = $mainServiceManager->get('EnvironmentRepository');
         $helper->setEnvironmentRepository($environmentRepository);
+
+        /** @var Application $application */
+        $application = $mainServiceManager->get('Application');
+        $helper->setRouteMatch($application->getMvcEvent()->getRouteMatch());
 
         return $helper;
     }
