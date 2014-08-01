@@ -32,14 +32,17 @@ class EnvironmentSelect extends AbstractHelper
     /** @var RouteMatch */
     protected $routeMatch;
 
-    public function __invoke($permission = 'manageEnvChildren')
+    public function __invoke($permission = 'manageEnvChildren', $selectEnvId = false)
     {
         $environments = $this->environmentRepository->getAllRoots();
-        return $this->getView()->partial('kmb-puppet/environments/environments-options', [
+        $data = [
             'environments' => $environments,
             'permission' => $permission,
-            'envId' => $this->routeMatch !== null ? $this->routeMatch->getParam('envId', null) : null,
-        ]);
+        ];
+        if ($selectEnvId && $this->routeMatch !== null) {
+            $data['envId'] = $this->routeMatch->getParam('envId', null);
+        }
+        return $this->getView()->partial('kmb-puppet/environments/environments-options', $data);
     }
 
     /**
