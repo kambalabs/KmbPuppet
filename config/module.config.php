@@ -3,56 +3,50 @@ return [
     'router' => [
         'routes' => [
             'puppet' => [
-                'type' => 'Literal',
+                'type' => 'Segment',
                 'options' => [
-                    'route' => '/puppet',
+                    'route' => '[/env/:envId]/puppet[/[:controller[/:action]]]',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
                     'defaults' => [
                         '__NAMESPACE__' => 'KmbPuppet\Controller',
                         'controller' => 'Reports',
                         'action' => 'index',
+                        'envId' => '0',
                     ],
                 ],
-                'may_terminate' => true,
-                'child_routes' => [
-                    'default' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/[:controller[/:action]]',
-                            'constraints' => [
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ],
-                            'defaults' => [
-                            ],
-                        ],
+            ],
+            'puppet-environment' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/environment/:id/:action',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
                     ],
-                    'withid' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/[:controller[/:id][/:action]]',
-                            'constraints' => [
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'id' => '[0-9]*',
-                            ],
-                            'defaults' => [
-                            ],
-                        ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Environments',
+                        'envId' => '0',
                     ],
-                    'remove-user' => [
-                        'type' => 'Segment',
-                        'options' => [
-                            'route' => '/environments/:id/users/:userId/remove',
-                            'constraints' => [
-                                'id' => '[0-9]*',
-                                'userId' => '[0-9]*',
-                            ],
-                            'defaults' => [
-                                '__NAMESPACE__' => 'KmbPuppet\Controller',
-                                'controller' => 'Environments',
-                                'action' => 'remove-user',
-                            ],
-                        ],
+                ],
+            ],
+            'puppet-environment-user-remove' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/environment/:id/user/:userId/remove',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'id' => '[0-9]+',
+                        'userId' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Environments',
+                        'action' => 'remove-user',
+                        'envId' => '0',
                     ],
                 ],
             ],

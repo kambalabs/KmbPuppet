@@ -39,6 +39,17 @@ class ReportNodeNameDecorator extends AbstractDecorator
      */
     public function decorateValue($object)
     {
-        return '<a href="' . $this->url('server', array('hostname' => $object->getNodeName()), array('query' => array('back' => $this->url('puppet', array('controller' => 'reports'))))) . '" class="show-server" data-rel="tooltip" data-placement="left" data-original-title="' . $this->escapeHtmlAttr($object->getNodeName()) . '">' . $this->escapeHtml($this->shortHostname($object->getNodeName())) . '</a>';
+        return
+            '<a href="' .
+            $this->url(
+                'server',
+                ['hostname' => $object->getNodeName(), 'action' => 'show'],
+                ['query' => ['back' => $this->url('puppet', ['controller' => 'reports', 'action' => 'index'], [], true)]],
+                true
+            ) .
+            '" class="show-server" data-rel="tooltip" data-placement="left" data-original-title="' .
+            $this->escapeHtmlAttr($object->getNodeName()) . '">' .
+            $this->escapeHtml($this->shortHostname($object->getNodeName())) .
+            '</a>';
     }
 }

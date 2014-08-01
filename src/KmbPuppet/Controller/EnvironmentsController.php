@@ -77,7 +77,7 @@ class EnvironmentsController extends AbstractActionController
             }
         }
 
-        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+        return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
     }
 
     public function updateAction()
@@ -107,7 +107,7 @@ class EnvironmentsController extends AbstractActionController
             }
         }
 
-        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+        return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
     }
 
     public function removeAction()
@@ -137,7 +137,7 @@ class EnvironmentsController extends AbstractActionController
             );
         }
 
-        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+        return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
     }
 
     public function usersAction()
@@ -222,7 +222,7 @@ class EnvironmentsController extends AbstractActionController
         $aggregateRoot->removeUserById($this->params()->fromRoute('userId'));
         $this->getEnvironmentRepository()->update($aggregateRoot);
 
-        return $this->redirect()->toRoute('puppet/default', ['controller' => 'environments']);
+        return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
     }
 
     /**

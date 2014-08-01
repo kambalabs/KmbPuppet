@@ -42,7 +42,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function canRemove()
     {
-        $this->dispatch('/puppet/environments/10/remove');
+        $this->dispatch('/puppet/environment/10/remove');
 
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/puppet/environments');
@@ -53,7 +53,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function cannotRemoveUnknown()
     {
-        $this->dispatch('/puppet/environments/99999/remove');
+        $this->dispatch('/puppet/environment/99999/remove');
 
         $this->assertResponseStatusCode(404);
     }
@@ -61,7 +61,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function cannotRemoveEnvironmentWithChildren()
     {
-        $this->dispatch('/puppet/environments/1/remove');
+        $this->dispatch('/puppet/environment/1/remove');
 
         $this->assertApplicationException('ZfcRbac\Exception\UnauthorizedException');
     }
@@ -79,7 +79,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function canUpdate()
     {
-        $this->dispatch('/puppet/environments/4/update', 'POST', ['parent' => 2, 'name' => 'PF4']);
+        $this->dispatch('/puppet/environment/4/update', 'POST', ['parent' => 2, 'name' => 'PF4']);
 
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/puppet/environments');
@@ -91,7 +91,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     public function cannotGetUsersOfUnknownEnvironment()
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
-        $this->dispatch('/puppet/environments/99999/users');
+        $this->dispatch('/puppet/environment/99999/users');
 
         $this->assertResponseStatusCode(404);
     }
@@ -100,7 +100,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     public function canGetUsers()
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
-        $this->dispatch('/puppet/environments/4/users');
+        $this->dispatch('/puppet/environment/4/users');
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Environments');
@@ -116,7 +116,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     public function cannotGetAvailableUsersForUnknownEnvironment()
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
-        $this->dispatch('/puppet/environments/99999/available-users');
+        $this->dispatch('/puppet/environment/99999/available-users');
 
         $this->assertResponseStatusCode(404);
     }
@@ -125,7 +125,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     public function canGetAvailableUsers()
     {
         $this->getRequest()->getHeaders()->addHeaderLine('Accept', 'application/json');
-        $this->dispatch('/puppet/environments/4/available-users');
+        $this->dispatch('/puppet/environment/4/available-users');
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Environments');
@@ -142,7 +142,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function canAddUsers()
     {
-        $this->dispatch('/puppet/environments/4/add-users', 'POST', ['users' => [4, 6, 7, 18]]);
+        $this->dispatch('/puppet/environment/4/add-users', 'POST', ['users' => [4, 6, 7, 18]]);
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Environments');
@@ -152,7 +152,7 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function canRemoveUser()
     {
-        $this->dispatch('/puppet/environments/4/users/3/remove');
+        $this->dispatch('/puppet/environment/4/user/3/remove');
 
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/puppet/environments');
