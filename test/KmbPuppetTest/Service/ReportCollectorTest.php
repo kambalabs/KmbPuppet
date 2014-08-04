@@ -39,8 +39,7 @@ class ReportCollectorTest extends \PHPUnit_Framework_TestCase
                     ]
                 ) {
                     $reports = array_slice($reports, 1, 7);
-                }
-                elseif ($query == [
+                } elseif ($query == [
                         'and',
                         [
                             'or',
