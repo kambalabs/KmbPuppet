@@ -7,60 +7,35 @@ return [
     ],
     'router' => [
         'routes' => [
-            'signout' => [
-                'type' => 'Literal',
-                'options' => [
-                    'route' => '/signout',
-                    'defaults' => [
-                        'controller' => 'KmbOabAuthentication\Controller\Signout',
-                        'action' => 'index',
-                    ],
-                ],
-            ],
             'index' => [
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'type' => 'Segment',
                 'options' => [
-                    'route' => '/',
+                    'route' => '[/env/:envId]/',
                     'defaults' => [
-                        'controller' => 'KmbDashboard\Controller\Index',
-                        'action' => 'index',
                     ],
                 ],
             ],
             'dashboard' => [
-                'type' => 'segment',
+                'type' => 'Segment',
                 'options' => [
-                    'route' => '/dashboard[/][:action][/:id]',
-                    'constraints' => [
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
-                    ],
+                    'route' => '[/env/:envId]/dashboard[/]',
                     'defaults' => [
-                        'controller' => 'KmbDashboard\Controller\Index',
-                        'action' => 'index',
                     ],
                 ],
             ],
             'servers' => [
-                'type' => 'segment',
+                'type' => 'Segment',
                 'options' => [
-                    'route' => '/servers[/]',
+                    'route' => '[/env/:envId]/servers[/[:action]]',
                     'defaults' => [
-                        'controller' => 'KmbServers\Controller\Index',
-                        'action' => 'index',
                     ],
                 ],
             ],
             'server' => [
-                'type' => 'segment',
+                'type' => 'Segment',
                 'options' => [
-                    'route' => '/servers/:hostname[/:action]',
-                    'constraints' => [
-                        'hostname' => '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])',
-                    ],
+                    'route' => '[/env/:envId]/server/:hostname[/[:action]]',
                     'defaults' => [
-                        'controller' => 'KmbServers\Controller\Index',
-                        'action' => 'show',
                     ],
                 ],
             ],

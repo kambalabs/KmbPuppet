@@ -21,11 +21,15 @@
 namespace KmbPuppet\Controller;
 
 use GtnDataTables\Service\DataTable;
+use KmbDomain\Model\EnvironmentRepositoryInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
 class ReportsController extends AbstractActionController
 {
+    /** @var EnvironmentRepositoryInterface */
+    protected $environmentRepository;
+
     public function indexAction()
     {
         $viewModel = $this->acceptableViewModelSelector(array(
@@ -38,9 +42,15 @@ class ReportsController extends AbstractActionController
         ));
 
         if ($viewModel instanceof JsonModel) {
+            $params = $this->params()->fromQuery();
+//            TODO: uncomment when API v4 is stable
+//            $environment = $this->getEnvironmentRepository()->getById($this->params()->fromRoute('envId'));
+//            if ($environment != null) {
+//                $params['environment'] = $environment;
+//            }
             /** @var DataTable $datatable */
             $datatable = $this->getServiceLocator()->get('reports_datatable');
-            $result = $datatable->getResult($this->params()->fromQuery());
+            $result = $datatable->getResult($params);
             $viewModel->setVariable('draw', $result->getDraw());
             $viewModel->setVariable('recordsTotal', $result->getRecordsTotal());
             $viewModel->setVariable('recordsFiltered', $result->getRecordsFiltered());
@@ -48,5 +58,27 @@ class ReportsController extends AbstractActionController
         }
 
         return $viewModel;
+    }
+
+    /**
+     * Set EnvironmentRepository.
+     *
+     * @param \KmbDomain\Model\EnvironmentRepositoryInterface $environmentRepository
+     * @return ReportsController
+     */
+    public function setEnvironmentRepository($environmentRepository)
+    {
+        $this->environmentRepository = $environmentRepository;
+        return $this;
+    }
+
+    /**
+     * Get EnvironmentRepository.
+     *
+     * @return \KmbDomain\Model\EnvironmentRepositoryInterface
+     */
+    public function getEnvironmentRepository()
+    {
+        return $this->environmentRepository;
     }
 }

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-31 15:27+0100\n"
-"PO-Revision-Date: 2014-07-31 15:27+0100\n"
+"POT-Creation-Date: 2014-08-04 16:33+0100\n"
+"PO-Revision-Date: 2014-08-04 16:33+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -99,12 +99,6 @@ msgstr "Classe"
 msgid "Day reports"
 msgstr "Rapports du jour"
 
-#: ../view/kmb-puppet/environments/environments-select.phtml:1
-#: ../view/kmb-puppet/environments/index.phtml:37
-#: ../view/kmb-puppet/environments/index.phtml:74
-msgid "Select an environment"
-msgstr "Choisir un environnement"
-
 #: ../view/kmb-puppet/environments/index.phtml:7
 msgid "Confirm Remove"
 msgstr "Confirmation de suppression"
@@ -146,6 +140,11 @@ msgstr "L'environnement va automatiquement hériter de tous les modules (dans la
 #: ../view/kmb-puppet/environments/index.phtml:73
 msgid "Select a parent"
 msgstr "Sélectionner un parent"
+
+#: ../view/kmb-puppet/environments/index.phtml:37
+#: ../view/kmb-puppet/environments/index.phtml:74
+msgid "Select an environment"
+msgstr "Choisir un environnement"
 
 #: ../view/kmb-puppet/environments/index.phtml:46
 #: ../view/kmb-puppet/environments/index.phtml:83

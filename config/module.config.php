@@ -62,10 +62,8 @@ return [
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            'KmbPuppet\Controller\Reports' => 'KmbPuppet\Controller\ReportsController',
-        ],
         'factories' => [
+            'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
             'KmbPuppet\Controller\Environments' => 'KmbPuppet\Service\EnvironmentsControllerFactory',
         ]
     ],

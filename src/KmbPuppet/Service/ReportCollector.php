@@ -22,6 +22,7 @@ namespace KmbPuppet\Service;
 
 use GtnDataTables\Model\Collection;
 use GtnDataTables\Service\CollectorInterface;
+use KmbDomain\Model\EnvironmentInterface;
 use KmbPuppetDb\Service;
 
 class ReportCollector implements CollectorInterface
@@ -38,26 +39,40 @@ class ReportCollector implements CollectorInterface
         $offset = isset($params['start']) ? $params['start'] : null;
         $limit = isset($params['length']) ? $params['length'] : null;
 
-        $query = null;
+        $querySearch = null;
         if (isset($params['search']['value']) && !empty($params['search']['value'])) {
             $search = $params['search']['value'];
-            $query = array(
+            $querySearch = [
                 'or',
-                array('~', 'resource-type', $search),
-                array('~', 'resource-title', $search),
-                array('~', 'message', $search),
-                array('~', 'containing-class', $search),
-                array('~', 'certname', $search),
-            );
+                ['~', 'resource-type', $search],
+                ['~', 'resource-title', $search],
+                ['~', 'message', $search],
+                ['~', 'containing-class', $search],
+                ['~', 'certname', $search],
+            ];
         }
 
-        $orderBy = array();
+        $queryEnvironment = null;
+        if (isset($params['environment'])) {
+            /** @var EnvironmentInterface $environment */
+            $environment = $params['environment'];
+            $queryEnvironment = ['=', 'environment', $environment->getNormalizedName()];
+        }
+
+        $query = array_filter([$querySearch, $queryEnvironment]);
+        if (count($query) > 1) {
+            array_unshift($query, 'and');
+        } else {
+            $query = array_shift($query);
+        }
+
+        $orderBy = [];
         if (isset($params['order'])) {
             foreach ($params['order'] as $clause) {
-                $orderBy[] = array(
+                $orderBy[] = [
                     'field' => $clause['column'],
                     'order' => $clause['dir'],
-                );
+                ];
             }
         }
 
