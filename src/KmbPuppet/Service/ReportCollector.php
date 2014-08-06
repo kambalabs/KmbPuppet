@@ -22,13 +22,19 @@ namespace KmbPuppet\Service;
 
 use GtnDataTables\Model\Collection;
 use GtnDataTables\Service\CollectorInterface;
-use KmbDomain\Model\EnvironmentInterface;
+use KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface;
 use KmbPuppetDb\Service;
 
 class ReportCollector implements CollectorInterface
 {
     /** @var Service\Report */
     protected $reportService;
+
+    /** @var EnvironmentsQueryBuilderInterface */
+    protected $reportsEnvironmentsQueryBuilder;
+
+    /** @var \KmbPermission\Service\EnvironmentInterface */
+    protected $permissionEnvironmentService;
 
     /**
      * @param array $params
@@ -52,11 +58,10 @@ class ReportCollector implements CollectorInterface
             ];
         }
 
+        $environments = $this->permissionEnvironmentService->getAllReadable(isset($params['environment']) ? $params['environment'] : null);
         $queryEnvironment = null;
-        if (isset($params['environment'])) {
-            /** @var EnvironmentInterface $environment */
-            $environment = $params['environment'];
-            $queryEnvironment = ['=', 'environment', $environment->getNormalizedName()];
+        if (!empty($environments)) {
+            $queryEnvironment = $this->reportsEnvironmentsQueryBuilder->build($environments)->getData();
         }
 
         $query = array_filter([$querySearch, $queryEnvironment]);
@@ -101,5 +106,49 @@ class ReportCollector implements CollectorInterface
     {
         $this->reportService = $reportService;
         return $this;
+    }
+
+    /**
+     * Set ReportsEnvironmentsQueryBuilder.
+     *
+     * @param \KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface $reportsEnvironmentsQueryBuilder
+     * @return ReportCollector
+     */
+    public function setReportsEnvironmentsQueryBuilder($reportsEnvironmentsQueryBuilder)
+    {
+        $this->reportsEnvironmentsQueryBuilder = $reportsEnvironmentsQueryBuilder;
+        return $this;
+    }
+
+    /**
+     * Get ReportsEnvironmentsQueryBuilder.
+     *
+     * @return \KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface
+     */
+    public function getReportsEnvironmentsQueryBuilder()
+    {
+        return $this->reportsEnvironmentsQueryBuilder;
+    }
+
+    /**
+     * Set PermissionEnvironmentService.
+     *
+     * @param \KmbPermission\Service\EnvironmentInterface $permissionEnvironmentService
+     * @return ReportCollector
+     */
+    public function setPermissionEnvironmentService($permissionEnvironmentService)
+    {
+        $this->permissionEnvironmentService = $permissionEnvironmentService;
+        return $this;
+    }
+
+    /**
+     * Get PermissionEnvironmentService.
+     *
+     * @return \KmbPermission\Service\EnvironmentInterface
+     */
+    public function getPermissionEnvironmentService()
+    {
+        return $this->permissionEnvironmentService;
     }
 }

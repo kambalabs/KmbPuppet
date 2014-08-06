@@ -15,5 +15,7 @@ class ReportCollectorFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('KmbPuppet\Service\ReportCollector', $service);
         $this->assertInstanceOf('KmbPuppetDb\Service\Report', $service->getReportService());
+        $this->assertInstanceOf('KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface', $service->getReportsEnvironmentsQueryBuilder());
+        $this->assertInstanceOf('KmbPermission\Service\EnvironmentInterface', $service->getPermissionEnvironmentService());
     }
 }

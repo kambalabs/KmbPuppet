@@ -43,11 +43,10 @@ class ReportsController extends AbstractActionController
 
         if ($viewModel instanceof JsonModel) {
             $params = $this->params()->fromQuery();
-//            TODO: uncomment when API v4 is stable
-//            $environment = $this->getEnvironmentRepository()->getById($this->params()->fromRoute('envId'));
-//            if ($environment != null) {
-//                $params['environment'] = $environment;
-//            }
+            $environment = $this->getEnvironmentRepository()->getById($this->params()->fromRoute('envId'));
+            if ($environment != null) {
+                $params['environment'] = $environment;
+            }
             /** @var DataTable $datatable */
             $datatable = $this->getServiceLocator()->get('reports_datatable');
             $result = $datatable->getResult($params);

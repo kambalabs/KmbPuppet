@@ -20,6 +20,8 @@
  */
 namespace KmbPuppet\Service;
 
+use KmbPermission\Service\EnvironmentInterface;
+use KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface;
 use KmbPuppetDb\Service;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -39,6 +41,14 @@ class ReportCollectorFactory implements FactoryInterface
         /** @var Service\Report $reportService */
         $reportService = $serviceLocator->get('KmbPuppetDb\Service\Report');
         $service->setReportService($reportService);
+
+        /** @var EnvironmentsQueryBuilderInterface $reportsEnvironmentsQueryBuilder */
+        $reportsEnvironmentsQueryBuilder = $serviceLocator->get('KmbPuppetDb\Query\ReportsEnvironmentsQueryBuilder');
+        $service->setReportsEnvironmentsQueryBuilder($reportsEnvironmentsQueryBuilder);
+
+        /** @var EnvironmentInterface $permissionEnvironmentService */
+        $permissionEnvironmentService = $serviceLocator->get('KmbPermission\Service\Environment');
+        $service->setPermissionEnvironmentService($permissionEnvironmentService);
 
         return $service;
     }
