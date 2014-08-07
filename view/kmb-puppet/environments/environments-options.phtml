@@ -1,6 +1,6 @@
 <?php foreach ($this->environments as $environment): ?>
 <?php if ($this->isGranted($this->permission, $environment)): ?>
-<option value="<?php echo $environment->getId() ?>"<?php if ($environment->getId() === $this->envId): echo 'selected="selected"'; endif ?>><?php echo $this->formatAncestorsNames($environment) ?></option>
+<option value="<?php echo $environment->getId() ?>"<?php if ($environment->getId() == $this->envId): echo 'selected="selected"'; endif ?>><?php echo $this->formatAncestorsNames($environment) ?></option>
 <?php endif ?>
 <?php echo $this->partial('kmb-puppet/environments/environments-options', ['environments' => $environment->getChildren(), 'permission' => $this->permission, 'envId' => $this->envId]) ?>
 <?php endforeach ?>
