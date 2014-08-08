@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-sm-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span>
+                    <?php echo $this->translate('Modules') ?>
+                    <a class="btn btn-info btn-xs pull-right">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                        <?php echo $this->translate('Add a module') ?>
+                    </a>
+                </span>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped" id="modules">
+                    <tbody>
+                    <?php foreach ($this->modules as $module): ?>
+                    <tr>
+                        <td class="module-name" style="width: 100%">
+                            <span class="glyphicon glyphicon-search"></span>
+                            <a href="#"><?php echo $module->getName() ?></a>
+                        </td>
+                        <td>
+                            <span class="label label-default"><?php echo $module->getVersion() ?></span>
+                        </td>
+                    </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <?php if (isset($this->error)): ?>
+        <ul class="flash">
+            <li class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php echo $this->error ?>
+            </li>
+        </ul>
+        <?php endif ?>
+        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
+        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
+        <h1><?php echo $this->translate('Help') ?></h1>
+        <blockquote>
+            <p>Voici la liste des modules installés dans votre environnement <strong>ING_TST</strong>.</p>
+        </blockquote>
+    </div>
+</div>

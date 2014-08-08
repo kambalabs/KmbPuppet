@@ -62,6 +62,9 @@ return [
         ],
     ],
     'controllers' => [
+        'invokables' => [
+            'KmbPuppet\Controller\Modules' => 'KmbPuppet\Controller\ModulesController',
+        ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
             'KmbPuppet\Controller\Environments' => 'KmbPuppet\Service\EnvironmentsControllerFactory',
@@ -87,6 +90,7 @@ return [
         ],
         'template_map' => [
             'kmb-puppet/reports/index' => __DIR__ . '/../view/kmb-puppet/reports/index.phtml',
+            'kmb-puppet/modules/index' => __DIR__ . '/../view/kmb-puppet/modules/index.phtml',
             'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
             'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
             'kmb-puppet/environments/environments-options' => __DIR__ . '/../view/kmb-puppet/environments/environments-options.phtml',
@@ -100,6 +104,11 @@ return [
             'ZfcRbac\Guard\ControllerGuard' => [
                 [
                     'controller' => 'KmbPuppet\Controller\Reports',
+                    'actions' => ['index'],
+                    'roles' => ['user']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Modules',
                     'actions' => ['index'],
                     'roles' => ['user']
                 ],
