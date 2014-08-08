@@ -28,7 +28,6 @@ use KmbDomain\Model\UserRepositoryInterface;
 use KmbPmProxy\Exception\ExceptionInterface;
 use KmbPmProxy\Exception\NotFoundException;
 use KmbPmProxy\Exception\RuntimeException;
-use KmbPmProxy\Service;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -43,8 +42,8 @@ class EnvironmentsController extends AbstractActionController
     /** @var UserRepositoryInterface */
     protected $userRepository;
 
-    /** @var Service\PmProxy */
-    protected $pmProxyService;
+    /** @var \KmbPmProxy\Service\EnvironmentInterface */
+    protected $pmProxyEnvironmentService;
 
     public function indexAction()
     {
@@ -66,7 +65,7 @@ class EnvironmentsController extends AbstractActionController
             $aggregateRoot->setParent($parent);
             $this->environmentRepository->add($aggregateRoot);
             try {
-                $this->pmProxyService->save($aggregateRoot);
+                $this->pmProxyEnvironmentService->save($aggregateRoot);
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
             } catch (ExceptionInterface $e) {
                 $this->environmentRepository->remove($aggregateRoot);
@@ -97,7 +96,7 @@ class EnvironmentsController extends AbstractActionController
             $aggregateRoot->setDefault($this->params()->fromPost('default', 0) !== 0);
             try {
                 $this->environmentRepository->update($aggregateRoot);
-                $this->pmProxyService->save($aggregateRoot);
+                $this->pmProxyEnvironmentService->save($aggregateRoot);
                 $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
             } catch (ExceptionInterface $e) {
                 $this->flashMessenger()->addErrorMessage(
@@ -125,7 +124,7 @@ class EnvironmentsController extends AbstractActionController
 
         try {
             try {
-                $this->pmProxyService->remove($aggregateRoot);
+                $this->pmProxyEnvironmentService->remove($aggregateRoot);
             } catch (NotFoundException $e) {
             }
             $this->environmentRepository->remove($aggregateRoot);
@@ -270,25 +269,25 @@ class EnvironmentsController extends AbstractActionController
     }
 
     /**
-     * Set PmProxyService.
+     * Set PmProxy Environment Service.
      *
-     * @param Service\PmProxy $pmProxyService
+     * @param \KmbPmProxy\Service\EnvironmentInterface $pmProxyEnvironmentService
      * @return EnvironmentsController
      */
-    public function setPmProxyService($pmProxyService)
+    public function setPmProxyEnvironmentService($pmProxyEnvironmentService)
     {
-        $this->pmProxyService = $pmProxyService;
+        $this->pmProxyEnvironmentService = $pmProxyEnvironmentService;
         return $this;
     }
 
     /**
-     * Get PmProxyService.
+     * Get PmProxy Environment Service.
      *
-     * @return Service\PmProxy
+     * @return \KmbPmProxy\Service\EnvironmentInterface
      */
-    public function getPmProxyService()
+    public function getPmProxyEnvironmentService()
     {
-        return $this->pmProxyService;
+        return $this->pmProxyEnvironmentService;
     }
 
     /**

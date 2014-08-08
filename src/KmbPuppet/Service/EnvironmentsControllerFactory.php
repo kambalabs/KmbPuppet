@@ -51,9 +51,9 @@ class EnvironmentsControllerFactory implements FactoryInterface
         $userRepository = $serviceManager->get('UserRepository');
         $controller->setUserRepository($userRepository);
 
-        /** @var Service\PmProxy $pmProxyService */
-        $pmProxyService = $serviceManager->get('KmbPmProxy\Service\PmProxy');
-        $controller->setPmProxyService($pmProxyService);
+        /** @var \KmbPmProxy\Service\EnvironmentInterface $pmProxyEnvironmentService */
+        $pmProxyEnvironmentService = $serviceManager->get('KmbPmProxy\Service\Environment');
+        $controller->setPmProxyEnvironmentService($pmProxyEnvironmentService);
 
         return $controller;
     }
