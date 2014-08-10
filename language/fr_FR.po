@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-10 22:54+0100\n"
-"PO-Revision-Date: 2014-08-10 22:55+0100\n"
+"POT-Creation-Date: 2014-08-11 00:41+0100\n"
+"PO-Revision-Date: 2014-08-11 00:42+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -107,10 +107,15 @@ msgstr "Modules"
 msgid "Add a module"
 msgstr "Ajouter un module"
 
-#: ../view/kmb-puppet/modules/index.phtml:44
+#: ../view/kmb-puppet/modules/index.phtml:45
 #: ../view/kmb-puppet/environments/index.phtml:199
 msgid "Help"
 msgstr "Aide"
+
+#: ../view/kmb-puppet/modules/index.phtml:47
+#, php-format
+msgid "Here is the list of installed modules on environment <strong>%s</strong>."
+msgstr "Voici la liste des modules installés dans l'environnement <strong>%s</strong>."
 
 #: ../view/kmb-puppet/reports/index.phtml:2
 msgid "Day reports"

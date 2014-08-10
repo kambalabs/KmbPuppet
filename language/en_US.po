@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-04 16:33+0100\n"
-"PO-Revision-Date: 2014-08-04 16:33+0100\n"
+"POT-Creation-Date: 2014-08-11 00:41+0100\n"
+"PO-Revision-Date: 2014-08-11 00:41+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,56 +17,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:53
+#: ../src/KmbPuppet/Controller/ModulesController.php:35
+msgid "You have to select an environment first !"
+msgstr ""
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:52
 msgid "WARNING ! You should choose a default environment !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:70
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:69
 #, php-format
 msgid "Environment %s has been successfully created !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:74
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:73
 #, php-format
 msgid "Environment %s could no be created on the puppet master"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:101
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:100
 #, php-format
 msgid "Environment %s has been successfully updated !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:104
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:103
 #, php-format
 msgid "Environment %s could no be updated on the puppet master"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:132
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:131
 #, php-format
 msgid "Environment %s has been successfully removed !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:135
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:134
 #, php-format
 msgid "Environment %s could no be removed on the puppet master"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:305
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:304
 #, php-format
 msgid "'%s' is not a valid name (alphanumeric only) !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:309
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:308
 #, php-format
 msgid "For obvious reasons, environment %s can't be the parent of %s !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:318
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:317
 #, php-format
 msgid "Environment %s has already a child named %s !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:324
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:323
 #, php-format
 msgid "Root environment %s already exists !"
 msgstr ""
@@ -93,6 +97,24 @@ msgstr ""
 
 #: ../src/KmbPuppet/View/Decorator/ReportClassNameDecorator.php:33
 msgid "Class"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:7
+msgid "Modules"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:10
+msgid "Add a module"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:45
+#: ../view/kmb-puppet/environments/index.phtml:199
+msgid "Help"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:47
+#, php-format
+msgid "Here is the list of installed modules on environment <strong>%s</strong>"
 msgstr ""
 
 #: ../view/kmb-puppet/reports/index.phtml:2
