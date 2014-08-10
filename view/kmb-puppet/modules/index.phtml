@@ -5,7 +5,7 @@
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span>
                     <?php echo $this->translate('Modules') ?>
-                    <a class="btn btn-info btn-xs pull-right">
+                    <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->modules)): ?> disabled<?php endif ?>">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Add a module') ?>
                     </a>
@@ -41,9 +41,11 @@
         <?php endif ?>
         <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
+        <?php if (isset($this->environment)): ?>
         <h1><?php echo $this->translate('Help') ?></h1>
         <blockquote>
-            <p>Voici la liste des modules installés dans votre environnement <strong>ING_TST</strong>.</p>
+            <p><?php echo sprintf($this->translate("Voici la liste des modules installés dans l'environnement <strong>%s</strong>."), $this->environment->getNormalizedName()) ?></p>
         </blockquote>
+        <?php endif ?>
     </div>
 </div>

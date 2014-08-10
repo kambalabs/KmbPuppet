@@ -38,6 +38,9 @@ class ModulesController extends AbstractActionController
         /** @var Service\ModuleInterface $pmProxyModuleService */
         $pmProxyModuleService = $this->getServiceLocator()->get('KmbPmProxy\Service\Module');
 
-        return new ViewModel(['modules' => $pmProxyModuleService->getAllByEnvironment($environment)]);
+        return new ViewModel([
+            'environment' => $environment,
+            'modules' => $pmProxyModuleService->getAllByEnvironment($environment)]
+        );
     }
 }
