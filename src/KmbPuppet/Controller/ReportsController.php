@@ -43,7 +43,7 @@ class ReportsController extends AbstractActionController
 
         if ($viewModel instanceof JsonModel) {
             $params = $this->params()->fromQuery();
-            $environment = $this->getEnvironmentRepository()->getById($this->params()->fromRoute('envId'));
+            $environment = $this->environmentRepository->getById($this->params()->fromRoute('envId'));
             if ($environment != null) {
                 $params['environment'] = $environment;
             }

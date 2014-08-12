@@ -173,7 +173,7 @@ class EnvironmentsController extends AbstractActionController
         }
 
         $availableUsers = [];
-        foreach ($this->getUserRepository()->getAllAvailableForEnvironment($aggregateRoot) as $user) {
+        foreach ($this->userRepository->getAllAvailableForEnvironment($aggregateRoot) as $user) {
             /** @var UserInterface $user */
             $availableUsers[] = [
                 'id' => $user->getId(),
@@ -219,7 +219,7 @@ class EnvironmentsController extends AbstractActionController
         $aggregateRoot->getParent(); // Load parent TODO: remove this ASAP
 
         $aggregateRoot->removeUserById($this->params()->fromRoute('userId'));
-        $this->getEnvironmentRepository()->update($aggregateRoot);
+        $this->environmentRepository->update($aggregateRoot);
 
         return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
     }
