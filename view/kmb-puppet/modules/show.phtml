@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="row">
+        <div class="col-md-12">
+            <div><?php echo $this->translate('Detailed informations on module') ?></div>
+            <div class="date"><?php echo $this->escapeHtml($this->module->getName()) ?></div>
+        </div>
+    </div>
+    <div class="row">
+        <?php if (isset($this->back)): ?>
+            <div class="col-md-2 info-bar pull-left">
+                <div class="grey"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                <div class="stats-title"><a href="<?php echo $this->escapeHtmlAttr($this->back) ?>" class="btn btn-info"><?php echo $this->translate('back') ?></a></div>
+            </div>
+        <?php endif ?>
+        <?php if ($this->module->getAuthor() != null): ?>
+        <div class="col-md-2 info-bar pull-right">
+            <div class="yellow"><?php echo $this->translate('author') ?></div>
+            <div class="stats-title"><button class="btn btn-success btn-disabled" id="module_author"><?php echo $this->escapeHtml($this->module->getAuthor()) ?></button></div>
+        </div>
+        <?php endif ?>
+        <?php if ($this->module->getLicense() != null): ?>
+        <div class="col-md-2 info-bar pull-right">
+            <div class="yellow"><?php echo $this->translate('license') ?></div>
+            <div class="stats-title"><button class="btn btn-primary btn-disabled" id="module_license"><?php echo $this->escapeHtml($this->module->getLicense()) ?></button></div>
+        </div>
+        <?php endif ?>
+        <div class="col-md-2 info-bar pull-right">
+            <div class="yellow"><?php echo $this->translate('version') ?></div>
+            <div class="stats-title"><button class="btn btn-warning btn-disabled" id="module_version"><?php echo $this->escapeHtml($this->module->getVersion()) ?></button></div>
+        </div>
+    </div>
+    <hr/>
+    <div class="col-sm-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span>
+                    <?php echo sprintf($this->translate('Classes of module %s'), $this->module->getName()) ?>
+                </span>
+            </div>
+            <div class="panel-body">
+                <?php if ($this->module->hasClasses()): ?>
+                <table class="table table-striped" id="modules">
+                    <tbody>
+                    <?php foreach ($this->module->getClasses() as $class): ?>
+                        <tr>
+                            <td class="class-name" style="width: 100%">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <a href="#"><?php echo $class->getName() ?></a>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+                <? else: ?>
+                <h4><?php echo $this->translate('No classes available !') ?></h4>
+                <? endif ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="">project page</a></li>
+            <li><a href="">sources</a></li>
+            <li><a href="">issues</a></li>
+        </ul>
+        <?php if (isset($this->error)): ?>
+            <ul class="flash">
+                <li class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?php echo $this->error ?>
+                </li>
+            </ul>
+        <?php endif ?>
+        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
+        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
+        <?php if (isset($this->environment) && $this->module->getSummary() != ''): ?>
+            <h1><?php echo $this->translate('Summary') ?></h1>
+            <blockquote>
+                <p><?php echo $this->module->getSummary() ?></p>
+            </blockquote>
+        <?php endif ?>
+    </div>
+</div>

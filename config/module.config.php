@@ -50,6 +50,23 @@ return [
                     ],
                 ],
             ],
+            'puppet-module' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/modules/:name[/:action]',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'module' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Modules',
+                        'envId' => '0',
+                        'action' => 'show',
+                    ],
+                ],
+            ],
         ],
     ],
     'translator' => [
@@ -91,6 +108,7 @@ return [
         'template_map' => [
             'kmb-puppet/reports/index' => __DIR__ . '/../view/kmb-puppet/reports/index.phtml',
             'kmb-puppet/modules/index' => __DIR__ . '/../view/kmb-puppet/modules/index.phtml',
+            'kmb-puppet/modules/show' => __DIR__ . '/../view/kmb-puppet/modules/show.phtml',
             'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
             'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
             'kmb-puppet/environments/environments-options' => __DIR__ . '/../view/kmb-puppet/environments/environments-options.phtml',
@@ -109,7 +127,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Modules',
-                    'actions' => ['index'],
+                    'actions' => ['index', 'show'],
                     'roles' => ['user']
                 ],
                 [

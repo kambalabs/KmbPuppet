@@ -40,7 +40,30 @@ class ModulesController extends AbstractActionController
 
         return new ViewModel([
             'environment' => $environment,
-            'modules' => $pmProxyModuleService->getAllByEnvironment($environment)]
-        );
+            'modules' => $pmProxyModuleService->getAllByEnvironment($environment)
+        ]);
+    }
+
+    public function showAction()
+    {
+        /** @var Model\EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+        }
+
+        /** @var Service\ModuleInterface $pmProxyModuleService */
+        $pmProxyModuleService = $this->getServiceLocator()->get('KmbPmProxy\Service\Module');
+
+        $module = $pmProxyModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('name'));
+        if ($module === null) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel([
+            'environment' => $environment,
+            'module' => $module,
+            'back' => $this->params()->fromQuery('back'),
+        ]);
     }
 }
