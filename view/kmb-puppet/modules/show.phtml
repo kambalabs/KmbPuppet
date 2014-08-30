@@ -52,15 +52,23 @@
                     <?php endforeach ?>
                     </tbody>
                 </table>
-                <? endif ?>
+                <?php else: ?>
+                <h4><?php echo $this->translate('No classes available !') ?></h4>
+                <?php endif ?>
             </div>
         </div>
     </div>
     <div class="col-sm-5">
         <ul class="nav nav-pills pull-right">
-            <li><a href=""><?php echo $this->translate('project page') ?></a></li>
-            <li><a href=""><?php echo $this->translate('sources') ?></a></li>
-            <li><a href=""><?php echo $this->translate('issues') ?></a></li>
+            <?php if ($this->module->getProjectPage() != null): ?>
+            <li><a href="<?php echo $this->module->getProjectPage() ?>"><?php echo $this->translate('project page') ?></a></li>
+            <?php endif ?>
+            <?php if ($this->module->getSource() != null): ?>
+            <li><a href="<?php echo $this->module->getSource() ?>"><?php echo $this->translate('sources') ?></a></li>
+            <?php endif ?>
+            <?php if ($this->module->getIssuesUrl() != null): ?>
+            <li><a href="<?php echo $this->module->getIssuesUrl() ?>"><?php echo $this->translate('issues') ?></a></li>
+            <?php endif ?>
         </ul>
         <?php if (isset($this->error)): ?>
             <ul class="flash">
