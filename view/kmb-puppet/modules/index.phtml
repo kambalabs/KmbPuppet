@@ -18,7 +18,7 @@
                     <tr>
                         <td class="module-name" style="width: 100%">
                             <span class="glyphicon glyphicon-search"></span>
-                            <a href="<?php echo $this->url('puppet-module', ['action' => 'show', 'name' => $module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules'], [], true)]], true) ?>"><?php echo $module->getName() ?></a>
+                            <a href="<?php echo $this->url('puppet-module', ['action' => 'show', 'name' => $module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true) ?>"><?php echo $module->getName() ?></a>
                         </td>
                         <td>
                             <span class="label label-default"><?php echo $module->getVersion() ?></span>

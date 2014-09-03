@@ -53,17 +53,33 @@ return [
             'puppet-module' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '[/env/:envId]/puppet/modules/:name[/:action]',
+                    'route' => '[/env/:envId]/puppet/module/:name[/:action]',
                     'constraints' => [
                         'envId' => '[0-9]+',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'module' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
+                        'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => 'KmbPuppet\Controller\Modules',
                         'envId' => '0',
                         'action' => 'show',
+                    ],
+                ],
+            ],
+            'puppet-module-class' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/module/:moduleName/class/:className[/:action]',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'moduleName' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'className' => '[a-zA-Z][:a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Modules',
+                        'envId' => '0',
+                        'action' => 'show-class',
                     ],
                 ],
             ],
@@ -93,6 +109,7 @@ return [
             'filterReportMessage' => 'KmbPuppet\View\Helper\FilterReportMessage',
             'shortHostname' => 'KmbPuppet\View\Helper\ShortHostname',
             'formatAncestorsNames' => 'KmbPuppet\View\Helper\FormatAncestorsNames',
+            'printParameterType' => 'KmbPuppet\View\Helper\PrintParameterType',
         ],
         'factories' => [
             'KmbPuppet\View\Helper\EnvironmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelectFactory',
@@ -109,6 +126,7 @@ return [
             'kmb-puppet/reports/index' => __DIR__ . '/../view/kmb-puppet/reports/index.phtml',
             'kmb-puppet/modules/index' => __DIR__ . '/../view/kmb-puppet/modules/index.phtml',
             'kmb-puppet/modules/show' => __DIR__ . '/../view/kmb-puppet/modules/show.phtml',
+            'kmb-puppet/modules/parameters-templates' => __DIR__ . '/../view/kmb-puppet/modules/parameters-templates.phtml',
             'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
             'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
             'kmb-puppet/environments/environments-options' => __DIR__ . '/../view/kmb-puppet/environments/environments-options.phtml',
@@ -127,7 +145,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Modules',
-                    'actions' => ['index', 'show'],
+                    'actions' => ['index', 'show', 'show-class'],
                     'roles' => ['user']
                 ],
                 [

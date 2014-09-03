@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-30 22:33+0100\n"
-"PO-Revision-Date: 2014-08-30 22:37+0100\n"
+"POT-Creation-Date: 2014-09-03 17:51+0100\n"
+"PO-Revision-Date: 2014-09-03 17:52+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,8 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/KmbPuppet/Controller/ModulesController.php:35
-#: ../src/KmbPuppet/Controller/ModulesController.php:52
+#: ../src/KmbPuppet/Controller/ModulesController.php:36
 msgid "You have to select an environment first !"
 msgstr "Vous devez d'abord choisir un environnement !"
 
@@ -100,6 +99,38 @@ msgstr "Type"
 msgid "Class"
 msgstr "Classe"
 
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:34
+msgid "boolean"
+msgstr "booléen"
+
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:36
+msgid "free entry"
+msgstr "saisie libre"
+
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:38
+msgid "string"
+msgstr "chaîne"
+
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:40
+msgid "text"
+msgstr "texte"
+
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:42
+msgid "predefined list"
+msgstr "liste prédéfinie"
+
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:44
+msgid "editable list"
+msgstr "liste éditable"
+
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:46
+msgid "hashtable"
+msgstr "hashtable"
+
+#: ../src/KmbPuppet/View/Helper/PrintParameterType.php:48
+msgid "editable hashtable"
+msgstr "hashtable éditable"
+
 #: ../view/kmb-puppet/modules/show.phtml:4
 msgid "Detailed informations on module"
 msgstr "Informations détaillées du module"
@@ -125,25 +156,49 @@ msgstr "version"
 msgid "Classes of module %s"
 msgstr "Classes du module %s"
 
-#: ../view/kmb-puppet/modules/show.phtml:56
+#: ../view/kmb-puppet/modules/show.phtml:54
+msgid "Error"
+msgstr "Erreur"
+
+#: ../view/kmb-puppet/modules/show.phtml:64
 msgid "No classes available !"
 msgstr "Aucune classe disponible !"
 
-#: ../view/kmb-puppet/modules/show.phtml:63
+#: ../view/kmb-puppet/modules/show.phtml:72
 msgid "project page"
 msgstr "page du projet"
 
-#: ../view/kmb-puppet/modules/show.phtml:64
+#: ../view/kmb-puppet/modules/show.phtml:75
 msgid "sources"
 msgstr "sources"
 
-#: ../view/kmb-puppet/modules/show.phtml:65
+#: ../view/kmb-puppet/modules/show.phtml:78
 msgid "issues"
 msgstr "issues"
 
-#: ../view/kmb-puppet/modules/show.phtml:78
+#: ../view/kmb-puppet/modules/show.phtml:92
 msgid "Summary"
 msgstr "Résumé"
+
+#: ../view/kmb-puppet/modules/parameters-templates.phtml:11
+msgid "required"
+msgstr "requis"
+
+#: ../view/kmb-puppet/modules/parameters-templates.phtml:13
+msgid "multiple values"
+msgstr "valeurs multiples"
+
+#: ../view/kmb-puppet/modules/parameters-templates.phtml:15
+msgid "type"
+msgstr "type"
+
+#: ../view/kmb-puppet/modules/parameters-templates.phtml:18
+msgid "values"
+msgstr "valeurs"
+
+#: ../view/kmb-puppet/modules/parameters-templates.phtml:24
+msgid "error"
+msgstr "erreur"
 
 #: ../view/kmb-puppet/modules/index.phtml:7
 msgid "Modules"
@@ -154,6 +209,7 @@ msgid "Add a module"
 msgstr "Ajouter un module"
 
 #: ../view/kmb-puppet/modules/index.phtml:45
+#: ../view/kmb-puppet/environments/index.phtml:199
 msgid "Help"
 msgstr "Aide"
 
@@ -161,6 +217,49 @@ msgstr "Aide"
 #, php-format
 msgid "Here is the list of installed modules on environment <strong>%s</strong>."
 msgstr "Voici la liste des modules installés dans l'environnement <strong>%s</strong>."
+
+#: ../view/kmb-puppet/modules/show-class.phtml:4
+msgid "Detailed informations on class"
+msgstr "Informations détaillées de la classe"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:19
+msgid "Parameters are in error, please check the template and the class definition"
+msgstr "Certains paramètres sont en erreur, veuillez vérifier le template et la définition de la classe"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:30
+#, php-format
+msgid "Parameters of class %s"
+msgstr "Paramètres de la classe %s"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:39
+msgid "Hide all"
+msgstr "Tout masquer"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:43
+msgid "Show all"
+msgstr "Tout montrer"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:47
+#: ../view/kmb-puppet/environments/index.phtml:176
+msgid "Collapse all"
+msgstr "Tout replier"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:51
+#: ../view/kmb-puppet/environments/index.phtml:180
+msgid "Expand all"
+msgstr "Tout déplier"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:57
+msgid "No parameters !"
+msgstr "Pas de paramètre !"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:66
+msgid "Documentation"
+msgstr "Documentation"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:72
+msgid "Documention should be provided in the puppetdoc of the class."
+msgstr "Il est conseillé de fournir une documentation dans la puppetdoc de la classe."
 
 #: ../view/kmb-puppet/reports/index.phtml:2
 msgid "Day reports"
@@ -288,14 +387,6 @@ msgstr "Environnements"
 msgid "Search"
 msgstr "Rechercher"
 
-#: ../view/kmb-puppet/environments/index.phtml:176
-msgid "Collapse all"
-msgstr "Tout replier"
-
-#: ../view/kmb-puppet/environments/index.phtml:180
-msgid "Expand all"
-msgstr "Tout déplier"
-
 #: ../view/kmb-puppet/environments/index.phtml:202
 #, php-format
 msgid "Filter the list by typing your terms in the search field, then click on the button %s."
@@ -366,9 +457,6 @@ msgstr "Gérer les droits d'accès en cliquant sur %s."
 
 #~ msgid "Fact"
 #~ msgstr "Fact"
-
-#~ msgid "Value"
-#~ msgstr "Valeur"
 
 #~ msgid "Enter a value for the fact"
 #~ msgstr "Saisissez une valeur pour le fact"

@@ -21,6 +21,7 @@
 namespace KmbPuppet\Controller;
 
 use KmbDomain\Model;
+use KmbPmProxy\Model\PuppetClassValidator;
 use KmbPmProxy\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -49,7 +50,7 @@ class ModulesController extends AbstractActionController
         /** @var Model\EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+            return $this->notFoundAction();
         }
 
         /** @var Service\ModuleInterface $pmProxyModuleService */
@@ -60,10 +61,65 @@ class ModulesController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        $classesErrors = [];
+        foreach ($module->getClasses() as $class) {
+            /** @var PuppetClassValidator $validator */
+            $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
+            if (!$validator->isValid($class)) {
+                $classesErrors[$class->getName()] = count($validator->getMessages());
+            }
+        }
+
         return new ViewModel([
             'environment' => $environment,
             'module' => $module,
             'back' => $this->params()->fromQuery('back'),
+            'classesErrors' => $classesErrors,
+        ]);
+    }
+
+    public function showClassAction()
+    {
+        /** @var Model\EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+
+        /** @var Service\ModuleInterface $pmProxyModuleService */
+        $pmProxyModuleService = $this->getServiceLocator()->get('KmbPmProxy\Service\Module');
+
+        $module = $pmProxyModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('moduleName'));
+        if ($module === null) {
+            return $this->notFoundAction();
+        }
+
+        $className = $this->params()->fromRoute('className');
+        if (!$module->hasClass($className)) {
+            return $this->notFoundAction();
+        }
+
+        $class = $module->getClass($className);
+        /** @var PuppetClassValidator $validator */
+        $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
+        $parametersErrors = [];
+        $classErrors = [];
+        if (!$validator->isValid($class)) {
+            foreach ($validator->getMessages() as $parameter => $message) {
+                if ($class->hasParameterTemplate($parameter)) {
+                    $parametersErrors[$parameter] = $message;
+                } else {
+                    $classErrors[] = $message;
+                }
+            }
+        }
+
+        return new ViewModel([
+            'environment' => $environment,
+            'class' => $class,
+            'back' => $this->params()->fromQuery('back'),
+            'parametersErrors' => $parametersErrors,
+            'classErrors' => $classErrors,
         ]);
     }
 }
