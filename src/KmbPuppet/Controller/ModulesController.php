@@ -37,7 +37,7 @@ class ModulesController extends AbstractActionController
         }
 
         /** @var Service\ModuleInterface $pmProxyModuleService */
-        $pmProxyModuleService = $this->getServiceLocator()->get('KmbPmProxy\Service\Module');
+        $pmProxyModuleService = $this->getServiceLocator()->get('pmProxyModuleService');
 
         return new ViewModel([
             'environment' => $environment,
@@ -54,7 +54,7 @@ class ModulesController extends AbstractActionController
         }
 
         /** @var Service\ModuleInterface $pmProxyModuleService */
-        $pmProxyModuleService = $this->getServiceLocator()->get('KmbPmProxy\Service\Module');
+        $pmProxyModuleService = $this->getServiceLocator()->get('pmProxyModuleService');
 
         $module = $pmProxyModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('name'));
         if ($module === null) {
@@ -87,7 +87,7 @@ class ModulesController extends AbstractActionController
         }
 
         /** @var Service\ModuleInterface $pmProxyModuleService */
-        $pmProxyModuleService = $this->getServiceLocator()->get('KmbPmProxy\Service\Module');
+        $pmProxyModuleService = $this->getServiceLocator()->get('pmProxyModuleService');
 
         $module = $pmProxyModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('moduleName'));
         if ($module === null) {
