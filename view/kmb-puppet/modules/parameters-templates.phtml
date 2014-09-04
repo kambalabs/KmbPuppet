@@ -1,13 +1,13 @@
 <ul style="clear:both">
     <?php foreach ($this->parametersTemplates as $parameterTemplate): ?>
     <li>
-        <span class="<?php if (array_key_exists($parameterTemplate->name, $this->errors)): echo 'bg-red'; endif ?>">
+        <span class="<?php if (isset($this->errors) && array_key_exists($parameterTemplate->name, $this->errors)): echo 'bg-red'; endif ?>">
             <?php if (isset($parameterTemplate->entries)): ?>
             <i class="glyphicon glyphicon-minus-sign"></i>
             <?php endif ?>
-            <i class="glyphicon glyphicon-zoom-<?php echo ( array_key_exists($parameterTemplate->name, $this->errors) ? 'out' : 'in' ) ?>"></i>
+            <i class="glyphicon glyphicon-zoom-<?php echo ( isset($this->errors) && array_key_exists($parameterTemplate->name, $this->errors) ? 'out' : 'in' ) ?>"></i>
             <strong class="blue<?php if ($parameterTemplate->required): echo ' required'; endif ?>"><?php echo $parameterTemplate->name ?></strong>
-            <dl class="dl-horizontal parameters"<?php if (!array_key_exists($parameterTemplate->name, $this->errors)): echo ' style="display: none"'; endif ?>>
+            <dl class="dl-horizontal parameters"<?php if (!isset($this->errors) || !array_key_exists($parameterTemplate->name, $this->errors)): echo ' style="display: none"'; endif ?>>
                 <dt><?php echo $this->translate('required') ?></dt>
                 <dd><?php echo $this->printBoolean($parameterTemplate->required, \KmbBase\View\Helper\PrintBoolean::YES_NO) ?></dd>
                 <dt><?php echo $this->translate('multiple values') ?></dt>
@@ -20,7 +20,7 @@
                 <dd class="value blue"><?php echo $value ?></dd>
                 <?php endforeach ?>
                 <?php endif ?>
-                <?php if (array_key_exists($parameterTemplate->name, $this->errors)): ?>
+                <?php if (isset($this->errors) && array_key_exists($parameterTemplate->name, $this->errors)): ?>
                 <dt class="red"><?php echo $this->translate('error') ?></dt>
                 <dd class="red"><?php echo $this->errors[$parameterTemplate->name] ?></dd>
                 <?php endif ?>
