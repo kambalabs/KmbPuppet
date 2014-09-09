@@ -103,14 +103,12 @@ class ModulesController extends AbstractActionController
         /** @var PuppetClassValidator $validator */
         $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
         $parametersErrors = [];
-        $classErrors = [];
         if (!$validator->isValid($class)) {
             foreach ($validator->getMessages() as $parameter => $message) {
-                if ($class->hasParameterTemplate($parameter)) {
-                    $parametersErrors[$parameter] = $message;
-                } else {
-                    $classErrors[] = $message;
+                if (!$class->hasParameterTemplate($parameter)) {
+                    $class->addParameterTemplate($class->getParameterDefinition($parameter));
                 }
+                $parametersErrors[$parameter] = $message;
             }
         }
 
@@ -119,7 +117,6 @@ class ModulesController extends AbstractActionController
             'class' => $class,
             'back' => $this->params()->fromQuery('back'),
             'parametersErrors' => $parametersErrors,
-            'classErrors' => $classErrors,
         ]);
     }
 }

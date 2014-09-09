@@ -46,6 +46,8 @@ class PrintParameterType extends AbstractTranslatorHelper
                 return $translator->translate('hashtable');
             case ParameterType::EDITABLE_HASHTABLE:
                 return $translator->translate('editable hashtable');
+            case null:
+                return '-';
         }
 
         return $type;

@@ -20,4 +20,10 @@ class PrintParameterTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('boolean', $this->printParameterType(ParameterType::BOOLEAN));
     }
+
+    /** @test */
+    public function canInvokeWithNull()
+    {
+        $this->assertEquals('-', $this->printParameterType(null));
+    }
 }

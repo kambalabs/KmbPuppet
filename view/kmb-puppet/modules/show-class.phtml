@@ -47,18 +47,12 @@
     <div class="col-sm-6">
         <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
-        <?php if (!empty($this->parametersErrors) || !empty($this->classErrors)): ?>
+        <?php if (!empty($this->parametersErrors)): ?>
             <ul class="flash">
                 <li class="alert alert-danger">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <?php echo $this->translate("Parameters are in error, please check the template and the class definition") ?>
                 </li>
-                <?php foreach ($this->classErrors as $error): ?>
-                    <li class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <?php echo $error ?>
-                    </li>
-                <?php endforeach ?>
             </ul>
         <?php endif ?>
         <h1><?php echo $this->translate('Documentation') ?></h1>
