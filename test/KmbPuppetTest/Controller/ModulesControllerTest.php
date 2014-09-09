@@ -48,6 +48,7 @@ class ModulesControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/env/1/puppet/modules');
 
+        echo $this->getResponse()->getContent();
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Modules');
         $this->assertActionName('index');
