@@ -83,6 +83,22 @@ return [
                     ],
                 ],
             ],
+            'puppet-group' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/group/:name[/:action]',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Groups',
+                        'envId' => '0',
+                        'action' => 'show',
+                    ],
+                ],
+            ],
         ],
     ],
     'translator' => [
@@ -97,6 +113,7 @@ return [
     'controllers' => [
         'invokables' => [
             'KmbPuppet\Controller\Modules' => 'KmbPuppet\Controller\ModulesController',
+            'KmbPuppet\Controller\Groups' => 'KmbPuppet\Controller\GroupsController',
         ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
@@ -128,6 +145,7 @@ return [
             'kmb-puppet/modules/index' => __DIR__ . '/../view/kmb-puppet/modules/index.phtml',
             'kmb-puppet/modules/show' => __DIR__ . '/../view/kmb-puppet/modules/show.phtml',
             'kmb-puppet/modules/parameters-templates' => __DIR__ . '/../view/kmb-puppet/modules/parameters-templates.phtml',
+            'kmb-puppet/groups/index' => __DIR__ . '/../view/kmb-puppet/groups/index.phtml',
             'kmb-puppet/environments/index' => __DIR__ . '/../view/kmb-puppet/environments/index.phtml',
             'kmb-puppet/environments/environments' => __DIR__ . '/../view/kmb-puppet/environments/environments.phtml',
             'kmb-puppet/environments/environments-options' => __DIR__ . '/../view/kmb-puppet/environments/environments-options.phtml',
@@ -147,6 +165,11 @@ return [
                 [
                     'controller' => 'KmbPuppet\Controller\Modules',
                     'actions' => ['index', 'show', 'show-class'],
+                    'roles' => ['user']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Groups',
+                    'actions' => ['index'],
                     'roles' => ['user']
                 ],
                 [
