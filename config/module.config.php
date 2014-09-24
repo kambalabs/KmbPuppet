@@ -169,6 +169,11 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Groups',
+                    'actions' => ['update'],
+                    'roles' => ['admin']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Groups',
                     'actions' => ['index'],
                     'roles' => ['user']
                 ],

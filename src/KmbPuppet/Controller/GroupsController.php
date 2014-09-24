@@ -21,7 +21,10 @@
 namespace KmbPuppet\Controller;
 
 use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\GroupInterface;
+use KmbDomain\Model\GroupRepositoryInterface;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
 class GroupsController extends AbstractActionController
@@ -40,7 +43,35 @@ class GroupsController extends AbstractActionController
         }
 
         return new ViewModel([
-            'groups' => $currentRevision->getGroups()
+            'groups' => $currentRevision->getGroups(),
+            'environment' => $environment,
         ]);
+    }
+
+    public function updateAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return new JsonModel(['error' => $this->translate('You have to select an environment first !')]);
+        }
+
+        $currentRevision = $environment->getCurrentRevision();
+        if ($currentRevision == null) {
+            return new ViewModel(['error' => $this->translate('This environment is invalid, it has no current revision. Please contact administrator !')]);
+        }
+
+        $groupsIds = $this->params()->fromPost('groups');
+        if (!empty($groupsIds)) {
+            /** @var GroupRepositoryInterface $groupRepository */
+            $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+            $groups = $groupRepository->getAllByIds($groupsIds);
+            foreach ($groups as $group) {
+                $group->setOrdering(array_search($group->getId(), $groupsIds));
+                $groupRepository->update($group);
+            }
+        }
+
+        return new JsonModel();
     }
 }

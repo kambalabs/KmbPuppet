@@ -40,4 +40,14 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
         $this->assertControllerName('KmbPuppet\Controller\Groups');
         $this->assertActionName('index');
     }
+
+    /** @test */
+    public function canPostUpdate()
+    {
+        $this->dispatch('/env/1/puppet/groups/update', 'POST');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Groups');
+        $this->assertActionName('update');
+    }
 }

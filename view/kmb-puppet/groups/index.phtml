@@ -16,8 +16,9 @@
                 <table class="table table-striped" id="groups">
                     <tbody>
                     <?php foreach ($this->groups as $group): ?>
-                    <tr>
+                    <tr id="groups-<?php echo $group->getId() ?>">
                         <td class="module-name" style="width: 100%">
+                            <span class="glyphicon glyphicon-th grab"></span>
                             <span class="glyphicon glyphicon-search"></span>
                             <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'name' => $group->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'groups', 'action' => 'index'], [], true)]], true) ?>"><?php echo $group->getName() ?></a>
                         </td>
