@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-03 17:51+0100\n"
-"PO-Revision-Date: 2014-09-03 17:52+0100\n"
+"POT-Creation-Date: 2014-09-29 00:44+0100\n"
+"PO-Revision-Date: 2014-09-29 00:48+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -18,6 +18,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
+#: ../src/KmbPuppet/Controller/GroupsController.php:37
+#: ../src/KmbPuppet/Controller/GroupsController.php:56
 msgid "You have to select an environment first !"
 msgstr "Vous devez d'abord choisir un environnement !"
 
@@ -75,6 +77,16 @@ msgstr "L'environnement %s a déjà un fils nommé %s !"
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
 
+#: ../src/KmbPuppet/Controller/GroupsController.php:42
+#: ../src/KmbPuppet/Controller/GroupsController.php:61
+msgid "This environment is invalid, it has no current revision. Please contact administrator !"
+msgstr "Cet environnement est invalide, il n'a pas de version courante. Merci de contacter un administrateur !"
+
+#: ../src/KmbPuppet/Controller/GroupsController.php:98
+#, php-format
+msgid "The group %s does not belong to environment %s !"
+msgstr "Le groupe %s n'appartient pas à l'environnement %s !"
+
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
 msgid "Title"
 msgstr "Titre"
@@ -131,13 +143,86 @@ msgstr "hashtable"
 msgid "editable hashtable"
 msgstr "hashtable éditable"
 
+#: ../view/kmb-puppet/groups/show.phtml:4
+msgid "Detailed informations on group"
+msgstr "Informations détaillées du groupe"
+
+#: ../view/kmb-puppet/groups/show.phtml:11
+#: ../view/kmb-puppet/modules/show.phtml:12
+#: ../view/kmb-puppet/modules/show-class.phtml:12
+msgid "back"
+msgstr "retour"
+
+#: ../view/kmb-puppet/groups/show.phtml:14
+msgid "exclude"
+msgstr "inclus"
+
+#: ../view/kmb-puppet/groups/show.phtml:20
+msgid "include"
+msgstr "exclus"
+
+#: ../view/kmb-puppet/groups/show.phtml:26
+msgid "servers"
+msgstr "serveurs"
+
+#: ../view/kmb-puppet/groups/show.phtml:38
+#, php-format
+msgid "Classes of group %s"
+msgstr "Classes du groupe %s"
+
+#: ../view/kmb-puppet/groups/show.phtml:54
+#: ../view/kmb-puppet/modules/show.phtml:54
+msgid "Error"
+msgstr "Erreur"
+
+#: ../view/kmb-puppet/groups/show.phtml:64
+#: ../view/kmb-puppet/modules/show.phtml:64
+msgid "No classes available !"
+msgstr "Aucune classe disponible !"
+
+#: ../view/kmb-puppet/groups/show.phtml:71
+msgid "edit"
+msgstr "éditer"
+
+#: ../view/kmb-puppet/groups/show.phtml:83
+#: ../view/kmb-puppet/groups/index.phtml:45
+#: ../view/kmb-puppet/modules/index.phtml:45
+#: ../view/kmb-puppet/environments/index.phtml:199
+msgid "Help"
+msgstr "Aide"
+
+#: ../view/kmb-puppet/groups/show.phtml:85
+msgid "No help yet provided for this group."
+msgstr "Aucune aide n'est pour l'instant disponible pour ce groupe."
+
+#: ../view/kmb-puppet/groups/index.phtml:7
+msgid "Groups"
+msgstr "Groupes"
+
+#: ../view/kmb-puppet/groups/index.phtml:10
+msgid "Create a group"
+msgstr "Créer un groupe"
+
+#: ../view/kmb-puppet/groups/index.phtml:47
+#, php-format
+msgid "Here is the list of groups on environment <strong>%s</strong>."
+msgstr "Voici la liste des groupes de l'environnement <strong>%s</strong>."
+
+#: ../view/kmb-puppet/groups/index.phtml:48
+msgid "You can see the details of a group by clicking on its name."
+msgstr "Accéder au détail d'un groupe en cliquant sur son nom."
+
+#: ../view/kmb-puppet/groups/index.phtml:49
+msgid "<strong>Caution</strong> : The order of groups is important ! When a server is associated to two groups which implements the same class, it's the class configuration of the lower group that will be sustained."
+msgstr "<strong>Attention</strong> : L'ordre des groupes est important ! Quand un serveur est associé à deux groupes implémentant la même classe, c'est la configuration de la classe du groupe le plus bas qui sera retenue."
+
+#: ../view/kmb-puppet/groups/index.phtml:50
+msgid "You can sort the groups by grabing the icon <span class=\"glyphicon glyphicon-th grab\"></span>."
+msgstr "Vous pouvez trier les groups en cliquant sur l'icône <span class=\"glyphicon glyphicon-th grab\"></span>."
+
 #: ../view/kmb-puppet/modules/show.phtml:4
 msgid "Detailed informations on module"
 msgstr "Informations détaillées du module"
-
-#: ../view/kmb-puppet/modules/show.phtml:12
-msgid "back"
-msgstr "retour"
 
 #: ../view/kmb-puppet/modules/show.phtml:17
 msgid "author"
@@ -155,14 +240,6 @@ msgstr "version"
 #, php-format
 msgid "Classes of module %s"
 msgstr "Classes du module %s"
-
-#: ../view/kmb-puppet/modules/show.phtml:54
-msgid "Error"
-msgstr "Erreur"
-
-#: ../view/kmb-puppet/modules/show.phtml:64
-msgid "No classes available !"
-msgstr "Aucune classe disponible !"
 
 #: ../view/kmb-puppet/modules/show.phtml:72
 msgid "project page"
@@ -208,56 +285,51 @@ msgstr "Modules"
 msgid "Add a module"
 msgstr "Ajouter un module"
 
-#: ../view/kmb-puppet/modules/index.phtml:45
-#: ../view/kmb-puppet/environments/index.phtml:199
-msgid "Help"
-msgstr "Aide"
-
 #: ../view/kmb-puppet/modules/index.phtml:47
 #, php-format
 msgid "Here is the list of installed modules on environment <strong>%s</strong>."
 msgstr "Voici la liste des modules installés dans l'environnement <strong>%s</strong>."
 
+#: ../view/kmb-puppet/modules/index.phtml:48
+msgid "When version of a module is red <span class=\"label label-danger\">1.0.0</span>, it means that at least one of its classes is in error."
+msgstr "La version d'un module est rouge <span class=\"label label-danger\">1.0.0</span> lorsqu'au moins une de ses classes est en erreur."
+
+#: ../view/kmb-puppet/modules/index.phtml:49
+msgid "<strong>Note</strong> : The list of modules is refreshed every 5 minutes, but you can clear the cache manually by clicking on your name in the top right of the page."
+msgstr "<strong>Note</strong> : La liste des modules est mise à jour toutes les 5 minutes, cependant vous pouvez vider le cache manuellement en cliquant sur votre nom en haut à droite de la page."
+
 #: ../view/kmb-puppet/modules/show-class.phtml:4
 msgid "Detailed informations on class"
 msgstr "Informations détaillées de la classe"
 
-#: ../view/kmb-puppet/modules/show-class.phtml:19
-msgid "Parameters are in error, please check the template and the class definition"
-msgstr "Certains paramètres sont en erreur, veuillez vérifier le template et la définition de la classe"
-
-#: ../view/kmb-puppet/modules/show-class.phtml:30
+#: ../view/kmb-puppet/modules/show-class.phtml:22
 #, php-format
 msgid "Parameters of class %s"
 msgstr "Paramètres de la classe %s"
 
-#: ../view/kmb-puppet/modules/show-class.phtml:39
-msgid "Hide all"
-msgstr "Tout masquer"
-
-#: ../view/kmb-puppet/modules/show-class.phtml:43
-msgid "Show all"
-msgstr "Tout montrer"
-
-#: ../view/kmb-puppet/modules/show-class.phtml:47
+#: ../view/kmb-puppet/modules/show-class.phtml:31
 #: ../view/kmb-puppet/environments/index.phtml:176
 msgid "Collapse all"
 msgstr "Tout replier"
 
-#: ../view/kmb-puppet/modules/show-class.phtml:51
+#: ../view/kmb-puppet/modules/show-class.phtml:35
 #: ../view/kmb-puppet/environments/index.phtml:180
 msgid "Expand all"
 msgstr "Tout déplier"
 
-#: ../view/kmb-puppet/modules/show-class.phtml:57
+#: ../view/kmb-puppet/modules/show-class.phtml:41
 msgid "No parameters !"
 msgstr "Pas de paramètre !"
 
-#: ../view/kmb-puppet/modules/show-class.phtml:66
+#: ../view/kmb-puppet/modules/show-class.phtml:54
+msgid "Parameters are in error, please check the template and the class definition"
+msgstr "Certains paramètres sont en erreur, veuillez vérifier le template et la définition de la classe"
+
+#: ../view/kmb-puppet/modules/show-class.phtml:58
 msgid "Documentation"
 msgstr "Documentation"
 
-#: ../view/kmb-puppet/modules/show-class.phtml:72
+#: ../view/kmb-puppet/modules/show-class.phtml:64
 msgid "Documention should be provided in the puppetdoc of the class."
 msgstr "Il est conseillé de fournir une documentation dans la puppetdoc de la classe."
 
@@ -417,6 +489,12 @@ msgstr "Cliquer sur %s pour modifier le nom et/ou le parent de l'environnement."
 msgid "Manage permissions by clicking on %s."
 msgstr "Gérer les droits d'accès en cliquant sur %s."
 
+#~ msgid "Hide all"
+#~ msgstr "Tout masquer"
+
+#~ msgid "Show all"
+#~ msgstr "Tout montrer"
+
 #~ msgid "All"
 #~ msgstr "Tous"
 
@@ -425,13 +503,6 @@ msgstr "Gérer les droits d'accès en cliquant sur %s."
 
 #~ msgid "ALL"
 #~ msgstr "TOUS"
-
-#~ msgid ""
-#~ "View the detail of an environment by clicking on its name or on the "
-#~ "associated button %s."
-#~ msgstr ""
-#~ "Accéder au détail d'un environnement en cliquant sur son nom ou sur "
-#~ "l'icône %s associée."
 
 #~ msgid ""
 #~ "It will automatically inherits of all the modules (in the same version) "

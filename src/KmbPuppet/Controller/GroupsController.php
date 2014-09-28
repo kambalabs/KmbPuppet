@@ -74,4 +74,36 @@ class GroupsController extends AbstractActionController
 
         return new JsonModel();
     }
+
+    public function showAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('id'));
+
+        if ($group == null) {
+            return $this->notFoundAction();
+        }
+
+        if ($group->getEnvironment() != $environment) {
+            return new ViewModel([
+                'error' => sprintf(
+                    $this->translate('The group %s does not belong to environment %s !'),
+                    $group->getName(),
+                    $environment->getNormalizedName()
+                )
+            ]);
+        }
+
+        return new ViewModel([
+            'group' => $group,
+        ]);
+    }
 }

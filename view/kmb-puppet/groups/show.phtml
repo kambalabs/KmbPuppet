@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="row">
+        <div class="col-md-12">
+            <div><?php echo $this->translate('Detailed informations on group') ?></div>
+            <div class="date"><?php echo $this->escapeHtml($this->group->getName()) ?></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 info-bar pull-left">
+            <div class="grey"><span class="glyphicon glyphicon-chevron-left"></span></div>
+            <div class="stats-title"><a href="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'index'], [], true) ?>" class="btn btn-info"><?php echo $this->translate('back') ?></a></div>
+        </div>
+        <div class="col-md-3 info-bar pull-right">
+            <div class="yellow"><?php echo $this->translate('exclude') ?></div>
+            <div class="stats-title">
+                <input type="text" class="form-control" id="group_exclude_pattern" value="<?php echo $this->escapeHtml($this->group->getExcludePattern()) ?>" />
+            </div>
+        </div>
+        <div class="col-md-3 info-bar pull-right">
+            <div class="yellow"><?php echo $this->translate('include') ?></div>
+            <div class="stats-title">
+                <input type="text" class="form-control" id="group_include_pattern" value="<?php echo $this->escapeHtml($this->group->getIncludePattern()) ?>" />
+            </div>
+        </div>
+        <div class="col-md-2 info-bar pull-right">
+            <div class="yellow"><?php echo $this->translate('servers') ?></div>
+            <div class="stats-title">
+                <span class="btn btn-warning">18</span>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span>
+                    <?php echo sprintf($this->translate('Classes of group %s'), $this->group->getName()) ?>
+                </span>
+            </div>
+            <div class="panel-body">
+                <?php if ($this->group->hasClasses()): ?>
+                <table class="table table-striped" id="classes">
+                    <tbody>
+                    <?php foreach ($this->group->getClasses() as $class): ?>
+                        <tr>
+                            <td class="class-name" style="width: 90%">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <a href="#"><?php echo $class->getName() ?></a>
+                            </td>
+                            <td class="text-right">
+                            <?php if (isset($this->classesErrors[$class->getName()])): ?>
+                                <span class="label label-uniform label-danger">
+                                    <?php echo $this->translate('Error') ?>
+                                    <span class="badge alert-danger" data-rel="tooltip" data-placement="top" data-original-title="errors"><?php echo $this->classesErrors[$class->getName()] ?></span>
+                                </span>
+                            <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                <h4><?php echo $this->translate('No classes available !') ?></h4>
+                <?php endif ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="#"><?php echo $this->translate('edit') ?></a></li>
+        </ul>
+        <?php if (isset($this->error)): ?>
+        <ul class="flash">
+            <li class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php echo $this->error ?>
+            </li>
+        </ul>
+        <?php endif ?>
+        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
+        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
+        <h1><?php echo $this->translate('Help') ?></h1>
+        <blockquote>
+            <p><?php echo $this->translate('No help yet provided for this group.') ?></p>
+        </blockquote>
+    </div>
+</div>

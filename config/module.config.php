@@ -86,11 +86,11 @@ return [
             'puppet-group' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '[/env/:envId]/puppet/group/:name[/:action]',
+                    'route' => '[/env/:envId]/puppet/group/:id[/:action]',
                     'constraints' => [
                         'envId' => '[0-9]+',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
                     ],
                     'defaults' => [
                         'controller' => 'KmbPuppet\Controller\Groups',
@@ -174,7 +174,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Groups',
-                    'actions' => ['index'],
+                    'actions' => ['index', 'show'],
                     'roles' => ['user']
                 ],
                 [

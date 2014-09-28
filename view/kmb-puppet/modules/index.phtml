@@ -45,7 +45,8 @@
         <h1><?php echo $this->translate('Help') ?></h1>
         <blockquote>
             <p><?php echo sprintf($this->translate("Here is the list of installed modules on environment <strong>%s</strong>."), $this->environment->getNormalizedName()) ?></p>
-            <p><?php echo $this->translate('When version is red <span class="label label-danger">1.0.0</span>, it means that at least one of its classes is in error.') ?></p>
+            <p><?php echo $this->translate('When version of a module is red <span class="label label-danger">1.0.0</span>, it means that at least one of its classes is in error.') ?></p>
+            <p><?php echo $this->translate('<strong>Note</strong> : The list of modules is refreshed every 5 minutes, but you can clear the cache manually by clicking on your name in the top right of the page.') ?></p>
         </blockquote>
         <?php endif ?>
     </div>

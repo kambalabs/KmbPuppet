@@ -20,7 +20,7 @@
                         <td class="module-name" style="width: 100%">
                             <span class="glyphicon glyphicon-th grab"></span>
                             <span class="glyphicon glyphicon-search"></span>
-                            <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'name' => $group->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'groups', 'action' => 'index'], [], true)]], true) ?>"><?php echo $group->getName() ?></a>
+                            <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true) ?>"><?php echo $group->getName() ?></a>
                         </td>
                     </tr>
                     <?php endforeach ?>
@@ -45,6 +45,9 @@
         <h1><?php echo $this->translate('Help') ?></h1>
         <blockquote>
             <p><?php echo sprintf($this->translate("Here is the list of groups on environment <strong>%s</strong>."), $this->environment->getNormalizedName()) ?></p>
+            <p><?php echo $this->translate("You can see the details of a group by clicking on its name.") ?></p>
+            <p><?php echo $this->translate("<strong>Caution</strong> : The order of groups is important ! When a server is associated to two groups which implements the same class, it's the class configuration of the lower group that will be sustained.") ?></p>
+            <p><?php echo $this->translate("You can sort the groups by grabing the icon <span class=\"glyphicon glyphicon-th grab\"></span>.") ?></p>
         </blockquote>
         <?php endif ?>
     </div>
