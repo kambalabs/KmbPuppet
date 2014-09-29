@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 00:44+0100\n"
-"PO-Revision-Date: 2014-09-29 00:48+0100\n"
+"POT-Creation-Date: 2014-09-29 14:49+0100\n"
+"PO-Revision-Date: 2014-09-29 16:20+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
-#: ../src/KmbPuppet/Controller/GroupsController.php:37
-#: ../src/KmbPuppet/Controller/GroupsController.php:56
+#: ../src/KmbPuppet/Controller/GroupsController.php:39
+#: ../src/KmbPuppet/Controller/GroupsController.php:58
 msgid "You have to select an environment first !"
 msgstr "Vous devez d'abord choisir un environnement !"
 
@@ -77,15 +77,10 @@ msgstr "L'environnement %s a déjà un fils nommé %s !"
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:42
-#: ../src/KmbPuppet/Controller/GroupsController.php:61
+#: ../src/KmbPuppet/Controller/GroupsController.php:44
+#: ../src/KmbPuppet/Controller/GroupsController.php:63
 msgid "This environment is invalid, it has no current revision. Please contact administrator !"
 msgstr "Cet environnement est invalide, il n'a pas de version courante. Merci de contacter un administrateur !"
-
-#: ../src/KmbPuppet/Controller/GroupsController.php:98
-#, php-format
-msgid "The group %s does not belong to environment %s !"
-msgstr "Le groupe %s n'appartient pas à l'environnement %s !"
 
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
 msgid "Title"
@@ -155,11 +150,11 @@ msgstr "retour"
 
 #: ../view/kmb-puppet/groups/show.phtml:14
 msgid "exclude"
-msgstr "inclus"
+msgstr "exclus"
 
 #: ../view/kmb-puppet/groups/show.phtml:20
 msgid "include"
-msgstr "exclus"
+msgstr "inclus"
 
 #: ../view/kmb-puppet/groups/show.phtml:26
 msgid "servers"
@@ -185,15 +180,12 @@ msgid "edit"
 msgstr "éditer"
 
 #: ../view/kmb-puppet/groups/show.phtml:83
-#: ../view/kmb-puppet/groups/index.phtml:45
-#: ../view/kmb-puppet/modules/index.phtml:45
-#: ../view/kmb-puppet/environments/index.phtml:199
-msgid "Help"
-msgstr "Aide"
+msgid "Description"
+msgstr "Description"
 
 #: ../view/kmb-puppet/groups/show.phtml:85
-msgid "No help yet provided for this group."
-msgstr "Aucune aide n'est pour l'instant disponible pour ce groupe."
+msgid "No description yet provided for this group."
+msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
 
 #: ../view/kmb-puppet/groups/index.phtml:7
 msgid "Groups"
@@ -202,6 +194,12 @@ msgstr "Groupes"
 #: ../view/kmb-puppet/groups/index.phtml:10
 msgid "Create a group"
 msgstr "Créer un groupe"
+
+#: ../view/kmb-puppet/groups/index.phtml:45
+#: ../view/kmb-puppet/modules/index.phtml:45
+#: ../view/kmb-puppet/environments/index.phtml:199
+msgid "Help"
+msgstr "Aide"
 
 #: ../view/kmb-puppet/groups/index.phtml:47
 #, php-format
@@ -488,6 +486,9 @@ msgstr "Cliquer sur %s pour modifier le nom et/ou le parent de l'environnement."
 #, php-format
 msgid "Manage permissions by clicking on %s."
 msgstr "Gérer les droits d'accès en cliquant sur %s."
+
+#~ msgid "The group %s does not belong to environment %s !"
+#~ msgstr "Le groupe %s n'appartient pas à l'environnement %s !"
 
 #~ msgid "Hide all"
 #~ msgstr "Tout masquer"

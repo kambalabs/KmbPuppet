@@ -154,6 +154,11 @@ return [
             __DIR__ . '/../view',
         ],
     ],
+    'service_manager' => [
+        'factories' => [
+            'KmbPuppet\Service\Node' => 'KmbPuppet\Service\NodeFactory',
+        ],
+    ],
     'zfc_rbac' => [
         'guards' => [
             'ZfcRbac\Guard\ControllerGuard' => [
@@ -174,7 +179,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Groups',
-                    'actions' => ['index', 'show'],
+                    'actions' => ['index', 'show', 'servers'],
                     'roles' => ['user']
                 ],
                 [

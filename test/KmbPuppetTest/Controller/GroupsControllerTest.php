@@ -2,6 +2,7 @@
 namespace KmbPuppetTest\Controller;
 
 use KmbDomain\Model\Environment;
+use KmbDomain\Model\Group;
 use KmbDomain\Model\Revision;
 use KmbPuppetDb\Model;
 use KmbPuppetTest\Bootstrap;
@@ -19,6 +20,7 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
 
         $serviceManager = $this->getApplicationServiceLocator();
         $serviceManager->setAllowOverride(true);
+
         $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
         $environment = new Environment();
         $environment->setCurrentRevision(new Revision());
@@ -29,6 +31,20 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
             ->method('getAllRoots')
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
+
+        $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
+        $group = new Group('dns');
+        $group->setEnvironment($environment);
+        $groupRepository->expects($this->any())
+            ->method('getById')
+            ->will($this->returnValue($group));
+        $serviceManager->setService('GroupRepository', $groupRepository);
+
+        $nodeService = $this->getMock('KmbPuppet\Service\NodeInterface');
+        $nodeService->expects($this->any())
+            ->method('getAllByEnvironmentAndPatterns')
+            ->will($this->returnValue([new Model\Node('node1.local'), new Model\Node('node3.local')]));
+        $serviceManager->setService('KmbPuppet\Service\Node', $nodeService);
     }
 
     /** @test */
@@ -49,5 +65,25 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Groups');
         $this->assertActionName('update');
+    }
+
+    /** @test */
+    public function canShowGroup()
+    {
+        $this->dispatch('/env/1/puppet/group/1');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Groups');
+        $this->assertActionName('show');
+    }
+
+    /** @test */
+    public function canGetServers()
+    {
+        $this->dispatch('/env/1/puppet/group/1/servers');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Groups');
+        $this->assertActionName('servers');
     }
 }

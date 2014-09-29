@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 00:44+0100\n"
-"PO-Revision-Date: 2014-09-29 00:44+0100\n"
+"POT-Creation-Date: 2014-09-29 14:49+0100\n"
+"PO-Revision-Date: 2014-09-29 14:49+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
-#: ../src/KmbPuppet/Controller/GroupsController.php:37
-#: ../src/KmbPuppet/Controller/GroupsController.php:56
+#: ../src/KmbPuppet/Controller/GroupsController.php:39
+#: ../src/KmbPuppet/Controller/GroupsController.php:58
 msgid "You have to select an environment first !"
 msgstr ""
 
@@ -77,14 +77,9 @@ msgstr ""
 msgid "Root environment %s already exists !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:42
-#: ../src/KmbPuppet/Controller/GroupsController.php:61
+#: ../src/KmbPuppet/Controller/GroupsController.php:44
+#: ../src/KmbPuppet/Controller/GroupsController.php:63
 msgid "This environment is invalid, it has no current revision. Please contact administrator !"
-msgstr ""
-
-#: ../src/KmbPuppet/Controller/GroupsController.php:98
-#, php-format
-msgid "The group %s does not belong to environment %s !"
 msgstr ""
 
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
@@ -185,14 +180,11 @@ msgid "edit"
 msgstr ""
 
 #: ../view/kmb-puppet/groups/show.phtml:83
-#: ../view/kmb-puppet/groups/index.phtml:45
-#: ../view/kmb-puppet/modules/index.phtml:45
-#: ../view/kmb-puppet/environments/index.phtml:199
-msgid "Help"
+msgid "Description"
 msgstr ""
 
 #: ../view/kmb-puppet/groups/show.phtml:85
-msgid "No help yet provided for this group."
+msgid "No description yet provided for this group."
 msgstr ""
 
 #: ../view/kmb-puppet/groups/index.phtml:7
@@ -201,6 +193,12 @@ msgstr ""
 
 #: ../view/kmb-puppet/groups/index.phtml:10
 msgid "Create a group"
+msgstr ""
+
+#: ../view/kmb-puppet/groups/index.phtml:45
+#: ../view/kmb-puppet/modules/index.phtml:45
+#: ../view/kmb-puppet/environments/index.phtml:199
+msgid "Help"
 msgstr ""
 
 #: ../view/kmb-puppet/groups/index.phtml:47

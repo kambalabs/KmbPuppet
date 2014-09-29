@@ -22,7 +22,7 @@ namespace KmbPuppet\Service;
 
 use GtnDataTables\Model\Collection;
 use GtnDataTables\Service\CollectorInterface;
-use KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface;
+use KmbPuppetDb\Query\QueryBuilderInterface;
 use KmbPuppetDb\Service;
 
 class ReportCollector implements CollectorInterface
@@ -30,7 +30,7 @@ class ReportCollector implements CollectorInterface
     /** @var Service\Report */
     protected $reportService;
 
-    /** @var EnvironmentsQueryBuilderInterface */
+    /** @var QueryBuilderInterface */
     protected $reportsEnvironmentsQueryBuilder;
 
     /** @var \KmbPermission\Service\EnvironmentInterface */
@@ -111,7 +111,7 @@ class ReportCollector implements CollectorInterface
     /**
      * Set ReportsEnvironmentsQueryBuilder.
      *
-     * @param \KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface $reportsEnvironmentsQueryBuilder
+     * @param \KmbPuppetDb\Query\QueryBuilderInterface $reportsEnvironmentsQueryBuilder
      * @return ReportCollector
      */
     public function setReportsEnvironmentsQueryBuilder($reportsEnvironmentsQueryBuilder)
@@ -123,7 +123,7 @@ class ReportCollector implements CollectorInterface
     /**
      * Get ReportsEnvironmentsQueryBuilder.
      *
-     * @return \KmbPuppetDb\Query\EnvironmentsQueryBuilderInterface
+     * @return \KmbPuppetDb\Query\QueryBuilderInterface
      */
     public function getReportsEnvironmentsQueryBuilder()
     {

@@ -8,24 +8,34 @@
     <div class="row">
         <div class="col-md-2 info-bar pull-left">
             <div class="grey"><span class="glyphicon glyphicon-chevron-left"></span></div>
-            <div class="stats-title"><a href="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'index'], [], true) ?>" class="btn btn-info"><?php echo $this->translate('back') ?></a></div>
+            <div><a href="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'index'], [], true) ?>" class="btn btn-info"><?php echo $this->translate('back') ?></a></div>
         </div>
         <div class="col-md-3 info-bar pull-right">
             <div class="yellow"><?php echo $this->translate('exclude') ?></div>
-            <div class="stats-title">
-                <input type="text" class="form-control" id="group_exclude_pattern" value="<?php echo $this->escapeHtml($this->group->getExcludePattern()) ?>" />
-            </div>
+            <form class="editable">
+                <input type="text" class="form-control" name="exclude" id="group-exclude-pattern" value="<?php echo $this->escapeHtml($this->group->getExcludePattern()) ?>" />
+                <div class="input-group-btn" style="display: none">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-question-sign"></i></button>
+                    <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
+                    <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                </div>
+            </form>
         </div>
         <div class="col-md-3 info-bar pull-right">
             <div class="yellow"><?php echo $this->translate('include') ?></div>
-            <div class="stats-title">
-                <input type="text" class="form-control" id="group_include_pattern" value="<?php echo $this->escapeHtml($this->group->getIncludePattern()) ?>" />
-            </div>
+            <form class="editable">
+                <input type="text" class="form-control" name="include" id="group-include-pattern" value="<?php echo $this->escapeHtml($this->group->getIncludePattern()) ?>" />
+                <div class="input-group-btn" style="display: none">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-question-sign"></i></button>
+                    <button class="btn btn-warning reset" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
+                    <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                </div>
+            </form>
         </div>
         <div class="col-md-2 info-bar pull-right">
             <div class="yellow"><?php echo $this->translate('servers') ?></div>
-            <div class="stats-title">
-                <span class="btn btn-warning">18</span>
+            <div>
+                <span class="btn btn-success" id="servers-count"><?php echo $this->serversCount ?></span>
             </div>
         </div>
     </div>
@@ -80,9 +90,9 @@
         <?php endif ?>
         <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
-        <h1><?php echo $this->translate('Help') ?></h1>
+        <h1><?php echo $this->translate('Description') ?></h1>
         <blockquote>
-            <p><?php echo $this->translate('No help yet provided for this group.') ?></p>
+            <p><?php echo $this->translate('No description yet provided for this group.') ?></p>
         </blockquote>
     </div>
 </div>

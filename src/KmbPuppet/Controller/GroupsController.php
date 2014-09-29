@@ -23,6 +23,8 @@ namespace KmbPuppet\Controller;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
+use KmbPuppet\Service;
+use KmbPuppetDb\Model\Node;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -93,17 +95,50 @@ class GroupsController extends AbstractActionController
         }
 
         if ($group->getEnvironment() != $environment) {
-            return new ViewModel([
-                'error' => sprintf(
-                    $this->translate('The group %s does not belong to environment %s !'),
-                    $group->getName(),
-                    $environment->getNormalizedName()
-                )
-            ]);
+            return $this->notFoundAction();
         }
+
+        /** @var Service\Node $nodeService */
+        $nodeService = $this->serviceLocator->get('KmbPuppet\Service\Node');
+        $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $group->getIncludePattern(), $group->getExcludePattern());
 
         return new ViewModel([
             'group' => $group,
+            'serversCount' => count($nodes),
+        ]);
+    }
+
+    public function serversAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->serviceLocator->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('id'));
+
+        if ($group == null) {
+            return $this->notFoundAction();
+        }
+
+        if ($group->getEnvironment() != $environment) {
+            return $this->notFoundAction();
+        }
+
+        /** @var Service\Node $nodeService */
+        $nodeService = $this->serviceLocator->get('KmbPuppet\Service\Node');
+        $include = $this->params()->fromQuery('include') ?: $group->getIncludePattern();
+        $exclude = $this->params()->fromQuery('exclude') ?: $group->getExcludePattern();
+        $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $include, $exclude);
+
+        return new JsonModel([
+            'nodes' => array_map(function (Node $node) {
+                return $node->getName();
+            }, $nodes),
         ]);
     }
 }
