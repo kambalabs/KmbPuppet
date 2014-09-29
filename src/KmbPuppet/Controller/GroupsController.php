@@ -92,11 +92,11 @@ class GroupsController extends AbstractActionController
         $group = $groupRepository->getById($this->params()->fromRoute('id'));
 
         if ($group == null) {
-            return $this->notFoundAction();
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
         if ($group->getEnvironment() != $environment) {
-            return $this->notFoundAction();
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
         /** @var Service\Node $nodeService */
