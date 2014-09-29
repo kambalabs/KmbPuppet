@@ -1,8 +1,14 @@
 <div class="row">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
             <div><?php echo $this->translate('Detailed informations on group') ?></div>
-            <div class="date"><?php echo $this->escapeHtml($this->group->getName()) ?></div>
+            <form class="editable">
+                <input type="text" class="form-control" name="name" id="group-name" value="<?php echo $this->escapeHtml($this->group->getName()) ?>" />
+                <div class="input-group-btn" style="display: none">
+                    <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
+                    <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="row">
