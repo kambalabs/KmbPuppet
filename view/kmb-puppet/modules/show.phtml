@@ -67,17 +67,6 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <ul class="nav nav-pills pull-right">
-            <?php if ($this->module->getProjectPage() != null): ?>
-            <li><a href="<?php echo $this->module->getProjectPage() ?>"><?php echo $this->translate('project page') ?></a></li>
-            <?php endif ?>
-            <?php if ($this->module->getSource() != null): ?>
-            <li><a href="<?php echo $this->module->getSource() ?>"><?php echo $this->translate('sources') ?></a></li>
-            <?php endif ?>
-            <?php if ($this->module->getIssuesUrl() != null): ?>
-            <li><a href="<?php echo $this->module->getIssuesUrl() ?>"><?php echo $this->translate('issues') ?></a></li>
-            <?php endif ?>
-        </ul>
         <?php if (isset($this->error)): ?>
             <ul class="flash">
                 <li class="alert alert-danger">
@@ -88,6 +77,17 @@
         <?php endif ?>
         <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
+        <ul class="nav nav-pills pull-right">
+            <?php if ($this->module->getProjectPage() != null): ?>
+                <li><a href="<?php echo $this->module->getProjectPage() ?>"><?php echo $this->translate('project page') ?></a></li>
+            <?php endif ?>
+            <?php if ($this->module->getSource() != null): ?>
+                <li><a href="<?php echo $this->module->getSource() ?>"><?php echo $this->translate('sources') ?></a></li>
+            <?php endif ?>
+            <?php if ($this->module->getIssuesUrl() != null): ?>
+                <li><a href="<?php echo $this->module->getIssuesUrl() ?>"><?php echo $this->translate('issues') ?></a></li>
+            <?php endif ?>
+        </ul>
         <?php if (isset($this->environment) && $this->module->getSummary() != ''): ?>
             <h1><?php echo $this->translate('Summary') ?></h1>
             <blockquote>

@@ -24,6 +24,7 @@ use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPuppet\Service;
+use KmbPuppetDb\Exception\RuntimeException;
 use KmbPuppetDb\Model\Node;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -100,11 +101,18 @@ class GroupsController extends AbstractActionController
 
         /** @var Service\Node $nodeService */
         $nodeService = $this->serviceLocator->get('KmbPuppet\Service\Node');
-        $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $group->getIncludePattern(), $group->getExcludePattern());
+        $error = null;
+        try {
+            $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $group->getIncludePattern(), $group->getExcludePattern());
+        } catch (RuntimeException $exception) {
+            $nodes = [];
+            $error = $this->translate('Invalid inclusion or exclusion pattern !');
+        }
 
         return new ViewModel([
             'group' => $group,
             'serversCount' => count($nodes),
+            'error' => $error,
         ]);
     }
 
@@ -133,7 +141,11 @@ class GroupsController extends AbstractActionController
         $nodeService = $this->serviceLocator->get('KmbPuppet\Service\Node');
         $include = $this->params()->fromQuery('include') ?: $group->getIncludePattern();
         $exclude = $this->params()->fromQuery('exclude') ?: $group->getExcludePattern();
-        $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $include, $exclude);
+        try {
+            $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $include, $exclude);
+        } catch (RuntimeException $exception) {
+            return new JsonModel(['error' => $this->translate('Invalid inclusion or exclusion pattern !')]);
+        }
 
         return new JsonModel([
             'nodes' => array_map(function (Node $node) {

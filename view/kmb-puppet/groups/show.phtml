@@ -77,9 +77,6 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <ul class="nav nav-pills pull-right">
-            <li><a href="#"><?php echo $this->translate('edit') ?></a></li>
-        </ul>
         <?php if (isset($this->error)): ?>
         <ul class="flash">
             <li class="alert alert-danger">
@@ -90,6 +87,9 @@
         <?php endif ?>
         <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
+        <ul class="nav nav-pills pull-right">
+            <li><a href="#"><?php echo $this->translate('edit') ?></a></li>
+        </ul>
         <h1><?php echo $this->translate('Description') ?></h1>
         <blockquote>
             <p><?php echo $this->translate('No description yet provided for this group.') ?></p>

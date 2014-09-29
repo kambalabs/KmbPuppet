@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 14:49+0100\n"
-"PO-Revision-Date: 2014-09-29 14:49+0100\n"
+"POT-Creation-Date: 2014-09-29 18:10+0100\n"
+"PO-Revision-Date: 2014-09-29 18:10+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
-#: ../src/KmbPuppet/Controller/GroupsController.php:39
-#: ../src/KmbPuppet/Controller/GroupsController.php:58
+#: ../src/KmbPuppet/Controller/GroupsController.php:40
+#: ../src/KmbPuppet/Controller/GroupsController.php:59
 msgid "You have to select an environment first !"
 msgstr ""
 
@@ -77,9 +77,14 @@ msgstr ""
 msgid "Root environment %s already exists !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:44
-#: ../src/KmbPuppet/Controller/GroupsController.php:63
+#: ../src/KmbPuppet/Controller/GroupsController.php:45
+#: ../src/KmbPuppet/Controller/GroupsController.php:64
 msgid "This environment is invalid, it has no current revision. Please contact administrator !"
+msgstr ""
+
+#: ../src/KmbPuppet/Controller/GroupsController.php:109
+#: ../src/KmbPuppet/Controller/GroupsController.php:147
+msgid "Invalid inclusion or exclusion pattern !"
 msgstr ""
 
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
@@ -152,38 +157,38 @@ msgstr ""
 msgid "exclude"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:20
+#: ../view/kmb-puppet/groups/show.phtml:25
 msgid "include"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:26
+#: ../view/kmb-puppet/groups/show.phtml:36
 msgid "servers"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:38
+#: ../view/kmb-puppet/groups/show.phtml:48
 #, php-format
 msgid "Classes of group %s"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:54
+#: ../view/kmb-puppet/groups/show.phtml:64
 #: ../view/kmb-puppet/modules/show.phtml:54
 msgid "Error"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:64
+#: ../view/kmb-puppet/groups/show.phtml:74
 #: ../view/kmb-puppet/modules/show.phtml:64
 msgid "No classes available !"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:71
+#: ../view/kmb-puppet/groups/show.phtml:81
 msgid "edit"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:83
+#: ../view/kmb-puppet/groups/show.phtml:93
 msgid "Description"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/show.phtml:85
+#: ../view/kmb-puppet/groups/show.phtml:95
 msgid "No description yet provided for this group."
 msgstr ""
 
