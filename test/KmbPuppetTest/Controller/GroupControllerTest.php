@@ -9,7 +9,7 @@ use KmbPuppetTest\Bootstrap;
 use KmbZendDbInfrastructureTest\DatabaseInitTrait;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class GroupsControllerTest extends AbstractHttpControllerTestCase
+class GroupControllerTest extends AbstractHttpControllerTestCase
 {
     protected $traceError = true;
 
@@ -48,22 +48,31 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
     }
 
     /** @test */
-    public function canGetIndex()
+    public function canShow()
     {
-        $this->dispatch('/env/1/puppet/groups');
+        $this->dispatch('/env/1/puppet/group/1');
 
         $this->assertResponseStatusCode(200);
-        $this->assertControllerName('KmbPuppet\Controller\Groups');
-        $this->assertActionName('index');
+        $this->assertControllerName('KmbPuppet\Controller\Group');
+        $this->assertActionName('show');
     }
 
     /** @test */
-    public function canPostUpdate()
+    public function canGetServers()
     {
-        $this->dispatch('/env/1/puppet/groups/update', 'POST');
+        $this->dispatch('/env/1/puppet/group/1/servers');
 
         $this->assertResponseStatusCode(200);
-        $this->assertControllerName('KmbPuppet\Controller\Groups');
-        $this->assertActionName('update');
+        $this->assertControllerName('KmbPuppet\Controller\Group');
+        $this->assertActionName('servers');
+    }
+
+    /** @test */
+    public function canUpdate()
+    {
+        $this->dispatch('/env/1/puppet/group/1/update', 'POST', ['name']);
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/env/1/puppet/group/1');
     }
 }

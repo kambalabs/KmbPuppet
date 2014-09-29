@@ -93,7 +93,7 @@ return [
                         'id' => '[0-9]+',
                     ],
                     'defaults' => [
-                        'controller' => 'KmbPuppet\Controller\Groups',
+                        'controller' => 'KmbPuppet\Controller\Group',
                         'envId' => '0',
                         'action' => 'show',
                     ],
@@ -114,6 +114,7 @@ return [
         'invokables' => [
             'KmbPuppet\Controller\Modules' => 'KmbPuppet\Controller\ModulesController',
             'KmbPuppet\Controller\Groups' => 'KmbPuppet\Controller\GroupsController',
+            'KmbPuppet\Controller\Group' => 'KmbPuppet\Controller\GroupController',
         ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
@@ -179,7 +180,17 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Groups',
-                    'actions' => ['index', 'show', 'servers'],
+                    'actions' => ['index'],
+                    'roles' => ['user']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Group',
+                    'actions' => ['update'],
+                    'roles' => ['admin']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Group',
+                    'actions' => ['show', 'servers'],
                     'roles' => ['user']
                 ],
                 [

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-3">
             <div><?php echo $this->translate('Detailed informations on group') ?></div>
-            <form class="editable">
+            <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
                 <input type="text" class="form-control" name="name" id="group-name" value="<?php echo $this->escapeHtml($this->group->getName()) ?>" />
                 <div class="input-group-btn" style="display: none">
                     <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-3 info-bar pull-right">
             <div class="yellow"><?php echo $this->translate('exclude') ?></div>
-            <form class="editable">
+            <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
                 <input type="text" class="form-control" name="exclude" id="group-exclude-pattern" value="<?php echo $this->escapeHtml($this->group->getExcludePattern()) ?>" />
                 <div class="input-group-btn" style="display: none">
                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-question-sign"></i></button>
@@ -29,7 +29,7 @@
         </div>
         <div class="col-md-3 info-bar pull-right">
             <div class="yellow"><?php echo $this->translate('include') ?></div>
-            <form class="editable">
+            <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
                 <input type="text" class="form-control" name="include" id="group-include-pattern" value="<?php echo $this->escapeHtml($this->group->getIncludePattern()) ?>" />
                 <div class="input-group-btn" style="display: none">
                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-question-sign"></i></button>
