@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 22:27+0100\n"
-"PO-Revision-Date: 2014-09-29 22:27+0100\n"
+"POT-Creation-Date: 2014-09-29 23:53+0100\n"
+"PO-Revision-Date: 2014-09-29 23:53+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -23,8 +23,9 @@ msgid "An error occured while reaching PuppetDB !"
 msgstr ""
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
-#: ../src/KmbPuppet/Controller/GroupsController.php:40
-#: ../src/KmbPuppet/Controller/GroupsController.php:59
+#: ../src/KmbPuppet/Controller/GroupsController.php:41
+#: ../src/KmbPuppet/Controller/GroupsController.php:60
+#: ../src/KmbPuppet/Controller/GroupsController.php:87
 msgid "You have to select an environment first !"
 msgstr ""
 
@@ -82,9 +83,20 @@ msgstr ""
 msgid "Root environment %s already exists !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:45
-#: ../src/KmbPuppet/Controller/GroupsController.php:64
+#: ../src/KmbPuppet/Controller/GroupsController.php:46
+#: ../src/KmbPuppet/Controller/GroupsController.php:65
+#: ../src/KmbPuppet/Controller/GroupsController.php:93
 msgid "This environment is invalid, it has no current revision. Please contact administrator !"
+msgstr ""
+
+#: ../src/KmbPuppet/Controller/GroupsController.php:101
+#, php-format
+msgid "The group %s already exists in this environment !"
+msgstr ""
+
+#: ../src/KmbPuppet/Controller/GroupsController.php:109
+#, php-format
+msgid "The group %s has been successfully created !"
 msgstr ""
 
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
@@ -151,25 +163,45 @@ msgstr ""
 msgid "Create a group"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/index.phtml:45
+#: ../view/kmb-puppet/groups/index.phtml:38
+msgid "New group"
+msgstr ""
+
+#: ../view/kmb-puppet/groups/index.phtml:43
+msgid "A group allows to configure a set of Puppet classes and assigned them to a list of servers."
+msgstr ""
+
+#: ../view/kmb-puppet/groups/index.phtml:46
+msgid "Choose a name"
+msgstr ""
+
+#: ../view/kmb-puppet/groups/index.phtml:51
+msgid "Cancel"
+msgstr ""
+
+#: ../view/kmb-puppet/groups/index.phtml:52
+msgid "Save"
+msgstr ""
+
+#: ../view/kmb-puppet/groups/index.phtml:70
 #: ../view/kmb-puppet/modules/index.phtml:45
 msgid "Help"
 msgstr ""
 
-#: ../view/kmb-puppet/groups/index.phtml:47
+#: ../view/kmb-puppet/groups/index.phtml:72
 #, php-format
 msgid "Here is the list of groups on environment <strong>%s</strong>."
 msgstr ""
 
-#: ../view/kmb-puppet/groups/index.phtml:48
+#: ../view/kmb-puppet/groups/index.phtml:73
 msgid "You can see the details of a group by clicking on its name."
 msgstr ""
 
-#: ../view/kmb-puppet/groups/index.phtml:49
+#: ../view/kmb-puppet/groups/index.phtml:74
 msgid "<strong>Caution</strong> : The order of groups is important ! When a server is associated to two groups which implements the same class, it's the class configuration of the lower group that will be sustained."
 msgstr ""
 
-#: ../view/kmb-puppet/groups/index.phtml:50
+#: ../view/kmb-puppet/groups/index.phtml:75
 msgid "You can sort the groups by grabing the icon <span class=\"glyphicon glyphicon-th grab\"></span>."
 msgstr ""
 
@@ -314,12 +346,6 @@ msgstr ""
 msgid "Do you want to proceed ?"
 msgstr ""
 
-#: ../view/kmb-puppet/environments/index.phtml:16
-#: ../view/kmb-puppet/environments/index.phtml:52
-#: ../view/kmb-puppet/environments/index.phtml:101
-msgid "Cancel"
-msgstr ""
-
 #: ../view/kmb-puppet/environments/index.phtml:17
 msgid "Remove"
 msgstr ""
@@ -348,19 +374,9 @@ msgstr ""
 msgid "Select an environment"
 msgstr ""
 
-#: ../view/kmb-puppet/environments/index.phtml:46
-#: ../view/kmb-puppet/environments/index.phtml:83
-msgid "Choose a name"
-msgstr ""
-
 #: ../view/kmb-puppet/environments/index.phtml:47
 #: ../view/kmb-puppet/environments/index.phtml:84
 msgid "The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore)."
-msgstr ""
-
-#: ../view/kmb-puppet/environments/index.phtml:53
-#: ../view/kmb-puppet/environments/index.phtml:102
-msgid "Save"
 msgstr ""
 
 #: ../view/kmb-puppet/environments/index.phtml:64

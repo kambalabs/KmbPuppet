@@ -38,6 +38,11 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
         $groupRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue($group));
+        $groupRepository->expects($this->any())
+            ->method('add')
+            ->will($this->returnCallback(function($group) {
+                $group->setId(2);
+            }));
         $serviceManager->setService('GroupRepository', $groupRepository);
 
         $nodeService = $this->getMock('KmbPuppet\Service\NodeInterface');
@@ -58,12 +63,21 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
     }
 
     /** @test */
-    public function canPostUpdate()
+    public function canUpdate()
     {
         $this->dispatch('/env/1/puppet/groups/update', 'POST');
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Groups');
         $this->assertActionName('update');
+    }
+
+    /** @test */
+    public function canCreate()
+    {
+        $this->dispatch('/env/1/puppet/groups/create', 'POST', ['name' => 'new group']);
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/env/1/puppet/group/2');
     }
 }

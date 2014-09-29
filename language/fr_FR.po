@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 22:26+0100\n"
-"PO-Revision-Date: 2014-09-29 22:27+0100\n"
+"POT-Creation-Date: 2014-09-29 23:52+0100\n"
+"PO-Revision-Date: 2014-09-29 23:53+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -23,8 +23,9 @@ msgid "An error occured while reaching PuppetDB !"
 msgstr "Une erreur est survenue lors de l'appel à PuppetDB !"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
-#: ../src/KmbPuppet/Controller/GroupsController.php:40
-#: ../src/KmbPuppet/Controller/GroupsController.php:59
+#: ../src/KmbPuppet/Controller/GroupsController.php:41
+#: ../src/KmbPuppet/Controller/GroupsController.php:60
+#: ../src/KmbPuppet/Controller/GroupsController.php:87
 msgid "You have to select an environment first !"
 msgstr "Vous devez d'abord choisir un environnement !"
 
@@ -82,10 +83,21 @@ msgstr "L'environnement %s a déjà un fils nommé %s !"
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:45
-#: ../src/KmbPuppet/Controller/GroupsController.php:64
+#: ../src/KmbPuppet/Controller/GroupsController.php:46
+#: ../src/KmbPuppet/Controller/GroupsController.php:65
+#: ../src/KmbPuppet/Controller/GroupsController.php:93
 msgid "This environment is invalid, it has no current revision. Please contact administrator !"
 msgstr "Cet environnement est invalide, il n'a pas de version courante. Merci de contacter un administrateur !"
+
+#: ../src/KmbPuppet/Controller/GroupsController.php:101
+#, php-format
+msgid "The group %s already exists in this environment !"
+msgstr "Le groupe %s existe déjà dans cet environnement !"
+
+#: ../src/KmbPuppet/Controller/GroupsController.php:109
+#, php-format
+msgid "The group %s has been successfully created !"
+msgstr "Le groupe %s a bien été créé !"
 
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
 msgid "Title"
@@ -151,25 +163,45 @@ msgstr "Groupes"
 msgid "Create a group"
 msgstr "Créer un groupe"
 
-#: ../view/kmb-puppet/groups/index.phtml:45
+#: ../view/kmb-puppet/groups/index.phtml:38
+msgid "New group"
+msgstr "Créer un groupe"
+
+#: ../view/kmb-puppet/groups/index.phtml:43
+msgid "A group allows to configure a set of Puppet classes and assigned them to a list of servers."
+msgstr "Un groupe permet de configurer un ensemble de classes Puppet et de les affecter à une liste de serveurs."
+
+#: ../view/kmb-puppet/groups/index.phtml:46
+msgid "Choose a name"
+msgstr "Choisir un nom"
+
+#: ../view/kmb-puppet/groups/index.phtml:51
+msgid "Cancel"
+msgstr "Annuler"
+
+#: ../view/kmb-puppet/groups/index.phtml:52
+msgid "Save"
+msgstr "Enregistrer"
+
+#: ../view/kmb-puppet/groups/index.phtml:70
 #: ../view/kmb-puppet/modules/index.phtml:45
 msgid "Help"
 msgstr "Aide"
 
-#: ../view/kmb-puppet/groups/index.phtml:47
+#: ../view/kmb-puppet/groups/index.phtml:72
 #, php-format
 msgid "Here is the list of groups on environment <strong>%s</strong>."
 msgstr "Voici la liste des groupes de l'environnement <strong>%s</strong>."
 
-#: ../view/kmb-puppet/groups/index.phtml:48
+#: ../view/kmb-puppet/groups/index.phtml:73
 msgid "You can see the details of a group by clicking on its name."
 msgstr "Accéder au détail d'un groupe en cliquant sur son nom."
 
-#: ../view/kmb-puppet/groups/index.phtml:49
+#: ../view/kmb-puppet/groups/index.phtml:74
 msgid "<strong>Caution</strong> : The order of groups is important ! When a server is associated to two groups which implements the same class, it's the class configuration of the lower group that will be sustained."
 msgstr "<strong>Attention</strong> : L'ordre des groupes est important ! Quand un serveur est associé à deux groupes implémentant la même classe, c'est la configuration de la classe du groupe le plus bas qui sera retenue."
 
-#: ../view/kmb-puppet/groups/index.phtml:50
+#: ../view/kmb-puppet/groups/index.phtml:75
 msgid "You can sort the groups by grabing the icon <span class=\"glyphicon glyphicon-th grab\"></span>."
 msgstr "Vous pouvez trier les groups en cliquant sur l'icône <span class=\"glyphicon glyphicon-th grab\"></span>."
 
@@ -314,12 +346,6 @@ msgstr "Vous êtes sur le point de supprimer l'environnement %s, cette action es
 msgid "Do you want to proceed ?"
 msgstr "Êtes-vous sûr de vouloir continuer ?"
 
-#: ../view/kmb-puppet/environments/index.phtml:16
-#: ../view/kmb-puppet/environments/index.phtml:52
-#: ../view/kmb-puppet/environments/index.phtml:101
-msgid "Cancel"
-msgstr "Annuler"
-
 #: ../view/kmb-puppet/environments/index.phtml:17
 msgid "Remove"
 msgstr "Supprimer"
@@ -348,20 +374,10 @@ msgstr "Sélectionner un parent"
 msgid "Select an environment"
 msgstr "Choisir un environnement"
 
-#: ../view/kmb-puppet/environments/index.phtml:46
-#: ../view/kmb-puppet/environments/index.phtml:83
-msgid "Choose a name"
-msgstr "Choisir un nom"
-
 #: ../view/kmb-puppet/environments/index.phtml:47
 #: ../view/kmb-puppet/environments/index.phtml:84
 msgid "The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore)."
 msgstr "Le nom doit impérativement être <strong>alphanumérique</strong> ! Tout caractère spécial est interdit (y compris l'underscore)."
-
-#: ../view/kmb-puppet/environments/index.phtml:53
-#: ../view/kmb-puppet/environments/index.phtml:102
-msgid "Save"
-msgstr "Enregistrer"
 
 #: ../view/kmb-puppet/environments/index.phtml:64
 msgid "Update an environment"
@@ -506,9 +522,6 @@ msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
 
 #~ msgid "Invalid pattern"
 #~ msgstr "Pattern invalide"
-
-#~ msgid "The group %s does not belong to environment %s !"
-#~ msgstr "Le groupe %s n'appartient pas à l'environnement %s !"
 
 #~ msgid "Hide all"
 #~ msgstr "Tout masquer"

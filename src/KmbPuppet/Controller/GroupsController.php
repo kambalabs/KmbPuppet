@@ -21,6 +21,7 @@
 namespace KmbPuppet\Controller;
 
 use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\Group;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPuppet\Service;
@@ -61,7 +62,7 @@ class GroupsController extends AbstractActionController
 
         $currentRevision = $environment->getCurrentRevision();
         if ($currentRevision == null) {
-            return new ViewModel(['error' => $this->translate('This environment is invalid, it has no current revision. Please contact administrator !')]);
+            return new JsonModel(['error' => $this->translate('This environment is invalid, it has no current revision. Please contact administrator !')]);
         }
 
         $groupsIds = $this->params()->fromPost('groups');
@@ -76,5 +77,36 @@ class GroupsController extends AbstractActionController
         }
 
         return new JsonModel();
+    }
+
+    public function createAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            $this->flashMessenger()->addErrorMessage($this->translate('You have to select an environment first !'));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $currentRevision = $environment->getCurrentRevision();
+        if ($currentRevision == null) {
+            $this->flashMessenger()->addErrorMessage($this->translate('This environment is invalid, it has no current revision. Please contact administrator !'));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $name = $this->params()->fromPost('name');
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        if ($groupRepository->getByNameAndRevision($name, $currentRevision)) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate('The group %s already exists in this environment !'), $name));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $group = new Group($name);
+        $group->setRevision($currentRevision);
+        $groupRepository->add($group);
+
+        $this->flashMessenger()->addSuccessMessage(sprintf($this->translate('The group %s has been successfully created !'), $name));
+        return $this->redirect()->toRoute('puppet-group', ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()], [], true);
     }
 }

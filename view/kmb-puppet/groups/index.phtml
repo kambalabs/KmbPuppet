@@ -5,7 +5,7 @@
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span>
                     <?php echo $this->translate('Groups') ?>
-                    <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->groups)): ?> disabled<?php endif ?>">
+                    <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->groups)): ?> disabled<?php endif ?>" data-toggle="modal" data-target="#new-group">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Create a group') ?>
                     </a>
@@ -27,6 +27,31 @@
                     </tbody>
                 </table>
                 <?php endif ?>
+            </div>
+        </div>
+    </div>
+    <div id="new-group" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newGroupLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="newGroupLabel"><?php echo $this->translate('New group') ?></h1>
+                </div>
+                <form role="form" action="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'create'], [], true) ?>" method="post">
+                    <div class="modal-body">
+                        <blockquote style="margin-top: 16px">
+                            <p><?php echo $this->translate('A group allows to configure a set of Puppet classes and assigned them to a list of servers.') ?></p>
+                        </blockquote>
+                        <div class="form-group">
+                            <label for="create-group-name"><?php echo $this->translate('Choose a name') ?></label>
+                            <input type="text" class="form-control" name="name" id="create-group-name" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                        <button type="submit" class="btn btn-primary"><?php echo $this->translate('Save') ?></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -175,7 +175,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Groups',
-                    'actions' => ['update'],
+                    'actions' => ['update', 'create'],
                     'roles' => ['admin']
                 ],
                 [
