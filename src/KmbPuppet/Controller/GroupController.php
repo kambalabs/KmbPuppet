@@ -25,7 +25,7 @@ use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPuppet\Service;
 use KmbPuppetDb\Exception\RuntimeException;
-use KmbPuppetDb\Model\Node;
+use KmbPuppetDb\Model\NodeInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -60,7 +60,7 @@ class GroupController extends AbstractActionController
             $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $group->getIncludePattern(), $group->getExcludePattern());
         } catch (RuntimeException $exception) {
             $nodes = [];
-            $error = $this->translate('Invalid inclusion or exclusion pattern !');
+            $error = $this->translate('An error occured while reaching PuppetDB !');
         }
 
         return new ViewModel([
@@ -98,13 +98,16 @@ class GroupController extends AbstractActionController
         try {
             $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $include, $exclude);
         } catch (RuntimeException $exception) {
-            return new JsonModel(['error' => $this->translate('Invalid inclusion or exclusion pattern !')]);
+            return new JsonModel(['error' => $this->translate('An error occured while reaching PuppetDB !')]);
         }
 
+        $servers = [];
+        foreach ($nodes as $node) {
+            /** @var NodeInterface $node */
+            $servers[] = $node->getName();
+        }
         return new JsonModel([
-            'nodes' => array_map(function (Node $node) {
-                return $node->getName();
-            }, $nodes),
+            'servers' => $servers,
         ]);
     }
 

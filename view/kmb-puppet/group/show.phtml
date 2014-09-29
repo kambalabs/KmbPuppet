@@ -21,7 +21,7 @@
             <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
                 <input type="text" class="form-control" name="exclude" id="group-exclude-pattern" value="<?php echo $this->escapeHtml($this->group->getExcludePattern()) ?>" />
                 <div class="input-group-btn" style="display: none">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-question-sign"></i></button>
+                    <a href="#" class="btn btn-default" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-count="<?php echo $this->serversCount ?>"><i class="glyphicon glyphicon-question-sign darkgrey"></i></a>
                     <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
                     <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
                 </div>
@@ -32,7 +32,7 @@
             <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
                 <input type="text" class="form-control" name="include" id="group-include-pattern" value="<?php echo $this->escapeHtml($this->group->getIncludePattern()) ?>" />
                 <div class="input-group-btn" style="display: none">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-question-sign"></i></button>
+                    <a href="#" class="btn btn-default" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-count="<?php echo $this->serversCount ?>"><i class="glyphicon glyphicon-question-sign darkgrey"></i></a>
                     <button class="btn btn-warning reset" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
                     <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
                 </div>
@@ -41,7 +41,28 @@
         <div class="col-md-2 info-bar pull-right">
             <div class="yellow"><?php echo $this->translate('servers') ?></div>
             <div>
-                <span class="btn btn-success" id="servers-count"><?php echo $this->serversCount ?></span>
+                <a href="#" class="btn btn-success" id="servers-count" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-count="<?php echo $this->serversCount ?>"><?php echo $this->serversCount ?></a>
+            </div>
+        </div>
+    </div>
+    <div id="group-servers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="groupUsersLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="groupUsersLabel"><?php echo $this->translate('Servers list') ?></h1>
+                    <h4 class="lightgrey"><?php echo $this->translate('Servers count') ?>&nbsp;: <span id="modal-servers-count"></span></h4>
+                </div>
+                <div class="modal-body" style="min-height: 420px">
+                    <div class="input-group" style="margin-bottom: 5px">
+                        <input type="text" id="servers-filter" class="form-control" placeholder="<?php echo $this->translate('Filter list') ?>" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="list-group">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

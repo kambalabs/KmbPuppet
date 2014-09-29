@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 18:10+0100\n"
-"PO-Revision-Date: 2014-09-29 18:10+0100\n"
+"POT-Creation-Date: 2014-09-29 22:26+0100\n"
+"PO-Revision-Date: 2014-09-29 22:27+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -16,6 +16,11 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+#: ../src/KmbPuppet/Controller/GroupController.php:63
+#: ../src/KmbPuppet/Controller/GroupController.php:101
+msgid "An error occured while reaching PuppetDB !"
+msgstr "Une erreur est survenue lors de l'appel à PuppetDB !"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
 #: ../src/KmbPuppet/Controller/GroupsController.php:40
@@ -82,11 +87,6 @@ msgstr "L'environnement racine %s existe déjà !"
 msgid "This environment is invalid, it has no current revision. Please contact administrator !"
 msgstr "Cet environnement est invalide, il n'a pas de version courante. Merci de contacter un administrateur !"
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:109
-#: ../src/KmbPuppet/Controller/GroupsController.php:147
-msgid "Invalid inclusion or exclusion pattern !"
-msgstr "Pattern d'inclusion ou d'exclusion invalide !"
-
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
 msgid "Title"
 msgstr "Titre"
@@ -143,55 +143,6 @@ msgstr "hashtable"
 msgid "editable hashtable"
 msgstr "hashtable éditable"
 
-#: ../view/kmb-puppet/groups/show.phtml:4
-msgid "Detailed informations on group"
-msgstr "Informations détaillées du groupe"
-
-#: ../view/kmb-puppet/groups/show.phtml:11
-#: ../view/kmb-puppet/modules/show.phtml:12
-#: ../view/kmb-puppet/modules/show-class.phtml:12
-msgid "back"
-msgstr "retour"
-
-#: ../view/kmb-puppet/groups/show.phtml:14
-msgid "exclude"
-msgstr "exclus"
-
-#: ../view/kmb-puppet/groups/show.phtml:25
-msgid "include"
-msgstr "inclus"
-
-#: ../view/kmb-puppet/groups/show.phtml:36
-msgid "servers"
-msgstr "serveurs"
-
-#: ../view/kmb-puppet/groups/show.phtml:48
-#, php-format
-msgid "Classes of group %s"
-msgstr "Classes du groupe %s"
-
-#: ../view/kmb-puppet/groups/show.phtml:64
-#: ../view/kmb-puppet/modules/show.phtml:54
-msgid "Error"
-msgstr "Erreur"
-
-#: ../view/kmb-puppet/groups/show.phtml:74
-#: ../view/kmb-puppet/modules/show.phtml:64
-msgid "No classes available !"
-msgstr "Aucune classe disponible !"
-
-#: ../view/kmb-puppet/groups/show.phtml:81
-msgid "edit"
-msgstr "éditer"
-
-#: ../view/kmb-puppet/groups/show.phtml:93
-msgid "Description"
-msgstr "Description"
-
-#: ../view/kmb-puppet/groups/show.phtml:95
-msgid "No description yet provided for this group."
-msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
-
 #: ../view/kmb-puppet/groups/index.phtml:7
 msgid "Groups"
 msgstr "Groupes"
@@ -202,7 +153,6 @@ msgstr "Créer un groupe"
 
 #: ../view/kmb-puppet/groups/index.phtml:45
 #: ../view/kmb-puppet/modules/index.phtml:45
-#: ../view/kmb-puppet/environments/index.phtml:199
 msgid "Help"
 msgstr "Aide"
 
@@ -227,6 +177,11 @@ msgstr "Vous pouvez trier les groups en cliquant sur l'icône <span class=\"glyp
 msgid "Detailed informations on module"
 msgstr "Informations détaillées du module"
 
+#: ../view/kmb-puppet/modules/show.phtml:12
+#: ../view/kmb-puppet/modules/show-class.phtml:12
+msgid "back"
+msgstr "retour"
+
 #: ../view/kmb-puppet/modules/show.phtml:17
 msgid "author"
 msgstr "auteur"
@@ -244,15 +199,23 @@ msgstr "version"
 msgid "Classes of module %s"
 msgstr "Classes du module %s"
 
-#: ../view/kmb-puppet/modules/show.phtml:72
+#: ../view/kmb-puppet/modules/show.phtml:54
+msgid "Error"
+msgstr "Erreur"
+
+#: ../view/kmb-puppet/modules/show.phtml:64
+msgid "No classes available !"
+msgstr "Aucune classe disponible !"
+
+#: ../view/kmb-puppet/modules/show.phtml:82
 msgid "project page"
 msgstr "page du projet"
 
-#: ../view/kmb-puppet/modules/show.phtml:75
+#: ../view/kmb-puppet/modules/show.phtml:85
 msgid "sources"
 msgstr "sources"
 
-#: ../view/kmb-puppet/modules/show.phtml:78
+#: ../view/kmb-puppet/modules/show.phtml:88
 msgid "issues"
 msgstr "issues"
 
@@ -311,12 +274,10 @@ msgid "Parameters of class %s"
 msgstr "Paramètres de la classe %s"
 
 #: ../view/kmb-puppet/modules/show-class.phtml:31
-#: ../view/kmb-puppet/environments/index.phtml:176
 msgid "Collapse all"
 msgstr "Tout replier"
 
 #: ../view/kmb-puppet/modules/show-class.phtml:35
-#: ../view/kmb-puppet/environments/index.phtml:180
 msgid "Expand all"
 msgstr "Tout déplier"
 
@@ -491,6 +452,54 @@ msgstr "Cliquer sur %s pour modifier le nom et/ou le parent de l'environnement."
 #, php-format
 msgid "Manage permissions by clicking on %s."
 msgstr "Gérer les droits d'accès en cliquant sur %s."
+
+#: ../view/kmb-puppet/group/show.phtml:4
+msgid "Detailed informations on group"
+msgstr "Informations détaillées du groupe"
+
+#: ../view/kmb-puppet/group/show.phtml:20
+msgid "exclude"
+msgstr "exclus"
+
+#: ../view/kmb-puppet/group/show.phtml:31
+msgid "include"
+msgstr "inclus"
+
+#: ../view/kmb-puppet/group/show.phtml:42
+msgid "servers"
+msgstr "serveurs"
+
+#: ../view/kmb-puppet/group/show.phtml:53
+msgid "Servers list"
+msgstr "Liste des serveurs"
+
+#: ../view/kmb-puppet/group/show.phtml:54
+msgid "Servers count"
+msgstr "Nombre de serveurs"
+
+#: ../view/kmb-puppet/group/show.phtml:58
+msgid "Filter list"
+msgstr "Filtrer la liste"
+
+#: ../view/kmb-puppet/group/show.phtml:75
+#, php-format
+msgid "Classes of group %s"
+msgstr "Classes du groupe %s"
+
+#: ../view/kmb-puppet/group/show.phtml:118
+msgid "edit"
+msgstr "éditer"
+
+#: ../view/kmb-puppet/group/show.phtml:120
+msgid "Description"
+msgstr "Description"
+
+#: ../view/kmb-puppet/group/show.phtml:122
+msgid "No description yet provided for this group."
+msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
+
+#~ msgid "Invalid inclusion or exclusion pattern !"
+#~ msgstr "Pattern d'inclusion ou d'exclusion invalide !"
 
 #~ msgid "Invalid pattern !"
 #~ msgstr "Pattern invalide !"
