@@ -1,50 +1,38 @@
 <div class="row">
-    <div class="row">
-        <div class="col-md-3">
-            <div><?php echo $this->translate('Detailed informations on group') ?></div>
-            <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
-                <input type="text" class="form-control" name="name" id="group-name" value="<?php echo $this->escapeHtml($this->group->getName()) ?>" />
-                <div class="input-group-btn" style="display: none">
-                    <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
-                    <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 info-bar pull-left">
-            <div class="grey"><span class="glyphicon glyphicon-chevron-left"></span></div>
-            <div><a href="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'index'], [], true) ?>" class="btn btn-info"><?php echo $this->translate('back') ?></a></div>
-        </div>
-        <div class="col-md-3 info-bar pull-right">
-            <div class="yellow"><?php echo $this->translate('exclude') ?></div>
-            <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
-                <input type="text" class="form-control" name="exclude" id="group-exclude-pattern" value="<?php echo $this->escapeHtml($this->group->getExcludePattern()) ?>" />
-                <div class="input-group-btn" style="display: none">
-                    <a href="#" class="btn btn-default" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-count="<?php echo $this->serversCount ?>"><i class="glyphicon glyphicon-question-sign darkgrey"></i></a>
-                    <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
-                    <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-3 info-bar pull-right">
-            <div class="yellow"><?php echo $this->translate('include') ?></div>
-            <form class="editable" action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
-                <input type="text" class="form-control" name="include" id="group-include-pattern" value="<?php echo $this->escapeHtml($this->group->getIncludePattern()) ?>" />
-                <div class="input-group-btn" style="display: none">
-                    <a href="#" class="btn btn-default" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-count="<?php echo $this->serversCount ?>"><i class="glyphicon glyphicon-question-sign darkgrey"></i></a>
-                    <button class="btn btn-warning reset" type="reset"><i class="glyphicon glyphicon-remove-sign"></i></button>
-                    <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-2 info-bar pull-right">
-            <div class="yellow"><?php echo $this->translate('servers') ?></div>
-            <div>
-                <a href="#" class="btn btn-success" id="servers-count" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-count="<?php echo $this->serversCount ?>"><?php echo $this->serversCount ?></a>
+    <form action="<?php echo $this->url('puppet-group', ['action' => 'update'], ['id' => $group->getId()], true) ?>" method="post">
+        <div class="row" style="margin-bottom: 8px">
+            <div class="col-md-3">
+                <div><?php echo $this->translate('Detailed informations on group') ?></div>
+                <div><input type="text" tabindex="100" class="form-control editable" data-target="#actions" name="name" id="group-name" value="<?php echo $this->escapeHtml($this->group->getName()) ?>" /></div>
+            </div>
+            <div id="actions" class="pull-right" style="display: none">
+                <div>&nbsp;</div>
+                <button class="btn btn-default" tabindex="110" type="reset"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('Cancel') ?></button>
+                <a href="#" class="btn btn-warning" tabindex="111" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-current="true" data-count="<?php echo $this->serversCount ?>"><i class="glyphicon glyphicon-search"></i> <?php echo $this->translate('Preview') ?></a>
+                <button class="btn btn-primary" tabindex="112" type="submit"><i class="glyphicon glyphicon-ok"></i> <?php echo $this->translate('Save') ?></button>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-md-2 info-bar pull-left">
+                <div>&nbsp;</div>
+                <div><a tabindex="900" href="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'index'], [], true) ?>" class="btn btn-info"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('back') ?></a></div>
+            </div>
+            <div class="col-md-3 info-bar pull-right">
+                <div class="yellow"><?php echo $this->translate('exclude') ?></div>
+                    <input type="text" tabindex="103" class="form-control editable" data-target="#actions" name="exclude" id="group-exclude-pattern" value="<?php echo $this->escapeHtml($this->group->getExcludePattern()) ?>" />
+            </div>
+            <div class="col-md-3 info-bar pull-right">
+                <div class="yellow"><?php echo $this->translate('include') ?></div>
+                    <input type="text" tabindex="102" class="form-control editable" data-target="#actions" name="include" id="group-include-pattern" value="<?php echo $this->escapeHtml($this->group->getIncludePattern()) ?>" />
+            </div>
+            <div class="col-md-2 info-bar pull-right">
+                <div class="yellow"><?php echo $this->translate('servers') ?></div>
+                <div>
+                    <a href="#" tabindex="101" class="btn btn-success" id="servers-count" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-count="<?php echo $this->serversCount ?>"><?php echo $this->serversCount ?></a>
+                </div>
+            </div>
+        </div>
+    </form>
     <div id="group-servers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="groupUsersLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

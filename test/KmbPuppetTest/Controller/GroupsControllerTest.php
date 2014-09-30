@@ -40,7 +40,7 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue($group));
         $groupRepository->expects($this->any())
             ->method('add')
-            ->will($this->returnCallback(function($group) {
+            ->will($this->returnCallback(function ($group) {
                 $group->setId(2);
             }));
         $serviceManager->setService('GroupRepository', $groupRepository);

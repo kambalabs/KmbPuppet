@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 23:53+0100\n"
-"PO-Revision-Date: 2014-09-29 23:53+0100\n"
+"POT-Creation-Date: 2014-09-30 12:17+0100\n"
+"PO-Revision-Date: 2014-09-30 12:17+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -469,48 +469,52 @@ msgstr ""
 msgid "Manage permissions by clicking on %s."
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:4
+#: ../view/kmb-puppet/group/show.phtml:5
 msgid "Detailed informations on group"
+msgstr ""
+
+#: ../view/kmb-puppet/group/show.phtml:10
+msgid "Preview"
 msgstr ""
 
 #: ../view/kmb-puppet/group/show.phtml:20
 msgid "exclude"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:31
+#: ../view/kmb-puppet/group/show.phtml:24
 msgid "include"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:42
+#: ../view/kmb-puppet/group/show.phtml:28
 msgid "servers"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:53
+#: ../view/kmb-puppet/group/show.phtml:40
 msgid "Servers list"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:54
+#: ../view/kmb-puppet/group/show.phtml:41
 msgid "Servers count"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:58
+#: ../view/kmb-puppet/group/show.phtml:45
 msgid "Filter list"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:75
+#: ../view/kmb-puppet/group/show.phtml:62
 #, php-format
 msgid "Classes of group %s"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:118
+#: ../view/kmb-puppet/group/show.phtml:105
 msgid "edit"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:120
+#: ../view/kmb-puppet/group/show.phtml:107
 msgid "Description"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:122
+#: ../view/kmb-puppet/group/show.phtml:109
 msgid "No description yet provided for this group."
 msgstr ""
 
