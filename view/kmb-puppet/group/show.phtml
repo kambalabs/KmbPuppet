@@ -91,6 +91,7 @@
             </div>
         </div>
     </div>
+    <?php if ($this->group->hasClasses()): ?>
     <?php foreach ($this->group->getClasses() as $class): ?>
     <div class="col-sm-6 class-parameters" data-class-id="<?php echo $class->getId() ?>" style="display: none">
         <div class="panel panel-default" style="min-height: 370px">
@@ -123,6 +124,7 @@
         </div>
     </div>
     <?php endforeach ?>
+    <?php endif ?>
     <div class="col-sm-6" id="group-description">
         <?php if (isset($this->error)): ?>
         <ul class="flash">
