@@ -65,13 +65,13 @@
             </div>
             <div class="panel-body">
                 <?php if ($this->group->hasClasses()): ?>
-                <table class="table table-striped" id="classes">
+                <table class="table table-striped">
                     <tbody>
                     <?php foreach ($this->group->getClasses() as $class): ?>
                         <tr>
-                            <td class="class-name" style="width: 90%">
+                            <td style="width: 90%">
                                 <span class="glyphicon glyphicon-search"></span>
-                                <a href="#"><?php echo $class->getName() ?></a>
+                                <a href="#" data-class-id="<?php echo $class->getId() ?>" class="class-name"><?php echo $class->getName() ?></a>
                             </td>
                             <td class="text-right">
                             <?php if (isset($this->classesErrors[$class->getName()])): ?>
@@ -91,7 +91,39 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <?php foreach ($this->group->getClasses() as $class): ?>
+    <div class="col-sm-6 class-parameters" data-class-id="<?php echo $class->getId() ?>" style="display: none">
+        <div class="panel panel-default" style="min-height: 370px">
+            <div class="panel-heading">
+                <button type="button" class="close">&times;</button>
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span>
+                    <?php echo sprintf($this->translate('Parameters of class %s'), $class->getName()) ?>
+                </span>
+            </div>
+            <div class="panel-body">
+            <?php if ($class->hasParameters()): ?>
+                <div class="tree">
+                    <div>
+                        <a href="#" id="collapse-all" class="btn btn-default pull-right">
+                            <span class="glyphicon glyphicon-minus-sign"></span>
+                            <?php echo $this->translate('Collapse all') ?>
+                        </a>
+                        <a href="#" id="expand-all" class="btn btn-default pull-right" style="display:none">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            <?php echo $this->translate('Expand all') ?>
+                        </a>
+                    </div>
+                    <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $class->getParameters()]) ?>
+                </div>
+            <?php else: ?>
+                <h4><?php echo $this->translate('No parameters !') ?></h4>
+            <?php endif ?>
+            </div>
+        </div>
+    </div>
+    <?php endforeach ?>
+    <div class="col-sm-6" id="group-description">
         <?php if (isset($this->error)): ?>
         <ul class="flash">
             <li class="alert alert-danger">

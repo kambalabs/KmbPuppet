@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-30 14:42+0100\n"
-"PO-Revision-Date: 2014-09-30 14:43+0100\n"
+"POT-Creation-Date: 2014-09-30 18:23+0100\n"
+"PO-Revision-Date: 2014-09-30 18:23+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -317,6 +317,10 @@ msgstr "Tout déplier"
 msgid "No parameters !"
 msgstr "Pas de paramètre !"
 
+#: ../view/kmb-puppet/modules/show-class.phtml:43
+msgid "required parameter"
+msgstr "paramètre requis"
+
 #: ../view/kmb-puppet/modules/show-class.phtml:54
 msgid "Parameters are in error, please check the template and the class definition"
 msgstr "Certains paramètres sont en erreur, veuillez vérifier le template et la définition de la classe"
@@ -506,23 +510,23 @@ msgstr "Filtrer la liste"
 msgid "Classes of group %s"
 msgstr "Classes du groupe %s"
 
-#: ../view/kmb-puppet/group/show.phtml:106
+#: ../view/kmb-puppet/group/show.phtml:138
 msgid "edit"
 msgstr "éditer"
 
-#: ../view/kmb-puppet/group/show.phtml:108
+#: ../view/kmb-puppet/group/show.phtml:140
 msgid "Description"
 msgstr "Description"
 
-#: ../view/kmb-puppet/group/show.phtml:110
+#: ../view/kmb-puppet/group/show.phtml:142
 msgid "No description yet provided for this group."
 msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
 
-#: ../view/kmb-puppet/group/show.phtml:114
+#: ../view/kmb-puppet/group/show.phtml:146
 msgid "Click on the servers count to preview the list of assigned servers."
 msgstr "Cliquez sur le nombre de serveurs pour prévisualiser la liste des serveurs affectés."
 
-#: ../view/kmb-puppet/group/show.phtml:115
+#: ../view/kmb-puppet/group/show.phtml:147
 msgid "View the detail configuration of a class by clicking on its name."
 msgstr "Accéder au détail de la configuration d'une classe en cliquant sur son nom."
 

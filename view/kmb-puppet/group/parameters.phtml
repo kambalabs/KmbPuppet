@@ -1,0 +1,29 @@
+<ul style="clear:both">
+    <?php foreach ($this->parameters as $parameter): ?>
+    <li>
+        <?php if ($parameter->hasChildren()): ?>
+        <span>
+            <i class="glyphicon glyphicon-minus-sign"></i>
+            <strong class="blue"><?php echo $parameter->getName() ?></strong>
+        </span>
+        <? echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren()]) ?>
+        <?php elseif ($parameter->hasValues()): ?>
+        <span>
+            <i class="glyphicon glyphicon-minus-sign"></i>
+            <strong class="blue"><?php echo $parameter->getName() ?></strong>
+        </span>
+        <ul style="clear:both">
+        <?php foreach ($parameter->getValues() as $value): ?>
+            <li>
+                <span><?php echo $value->getName() ?></span>
+            </li>
+        <?php endforeach ?>
+        </ul>
+        <?php else: ?>
+        <span>
+            <strong class="blue"><?php echo $parameter->getName() ?></strong>
+        </span>
+        <?php endif ?>
+    </li>
+    <?php endforeach ?>
+</ul>

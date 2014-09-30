@@ -107,6 +107,6 @@ class GroupsController extends AbstractActionController
         $groupRepository->add($group);
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate('The group %s has been successfully created !'), $name));
-        return $this->redirect()->toRoute('puppet-group', ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()], [], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
     }
 }
