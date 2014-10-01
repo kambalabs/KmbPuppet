@@ -70,6 +70,7 @@
                     <?php foreach ($this->group->getClasses() as $class): ?>
                         <tr>
                             <td style="width: 90%">
+                                <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
                                 <span class="glyphicon glyphicon-search"></span>
                                 <a href="#" data-class-id="<?php echo $class->getId() ?>" class="class-name"><?php echo $class->getName() ?></a>
                             </td>
