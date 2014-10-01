@@ -44,7 +44,7 @@
                     <tbody>
                     <?php foreach ($this->module->getClasses() as $class): ?>
                         <tr>
-                            <td class="class-name" style="width: 90%">
+                            <td style="width: 90%">
                                 <span class="glyphicon glyphicon-search"></span>
                                 <a href="<?php echo $this->url('puppet-module-class', ['action' => 'show-class', 'moduleName' => $this->module->getName(), 'className' => $class->getName()], ['query' => ['back' => $this->url('puppet-module', ['action' => 'show', 'name' => $this->module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true)]], true) ?>"><?php echo $class->getName() ?></a>
                             </td>

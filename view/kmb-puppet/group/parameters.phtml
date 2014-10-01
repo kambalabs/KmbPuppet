@@ -4,23 +4,36 @@
         <?php if ($parameter->hasChildren()): ?>
         <span>
             <i class="glyphicon glyphicon-minus-sign"></i>
+            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
             <strong class="blue"><?php echo $parameter->getName() ?></strong>
         </span>
         <? echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren()]) ?>
         <?php elseif ($parameter->hasValues()): ?>
         <span>
             <i class="glyphicon glyphicon-minus-sign"></i>
+            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
             <strong class="blue"><?php echo $parameter->getName() ?></strong>
         </span>
         <ul style="clear:both">
         <?php foreach ($parameter->getValues() as $value): ?>
             <li>
-                <span><?php echo $value->getName() ?></span>
+                <span class="inline-editable">
+                    <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
+                    <?php echo $this->escapeHtml($value->getName()) ?>
+                </span>
+                <form class="input-group form-inline-editable" style="display: none" action="<?php echo $this->url('puppet-group', ['action' => 'update'], [], true) ?>" method="post">
+                    <input type="text" class="form-control" name="value" value="<?php echo $this->escapeHtml($value->getName()) ?>" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                    </div>
+                </form>
             </li>
         <?php endforeach ?>
         </ul>
         <?php else: ?>
         <span>
+            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
             <strong class="blue"><?php echo $parameter->getName() ?></strong>
         </span>
         <?php endif ?>
