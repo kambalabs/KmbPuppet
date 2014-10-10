@@ -248,6 +248,7 @@ class GroupController extends AbstractActionController
 
         $classRepository->remove($class);
 
+        $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Class %s has been succesfully removed"), $className));
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $className]], true);
     }
 }

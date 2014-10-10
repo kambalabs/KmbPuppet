@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-10 23:58+0100\n"
-"PO-Revision-Date: 2014-10-10 23:58+0100\n"
+"POT-Creation-Date: 2014-10-11 00:21+0100\n"
+"PO-Revision-Date: 2014-10-11 00:21+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -36,6 +36,11 @@ msgstr "La classe %s n'existe pas"
 #, php-format
 msgid "Group doesn't have class %s"
 msgstr "Le groupe n'a pas la classe %s"
+
+#: ../src/KmbPuppet/Controller/GroupController.php:251
+#, php-format
+msgid "Class %s has been succesfully removed"
+msgstr "La classe %s a bien été supprimée !"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:36
 #: ../src/KmbPuppet/Controller/GroupsController.php:41
