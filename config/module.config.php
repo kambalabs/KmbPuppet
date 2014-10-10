@@ -99,6 +99,23 @@ return [
                     ],
                 ],
             ],
+            'puppet-group-remove-class' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/group/:id/remove-class/:className',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                        'className' => '[a-zA-Z][a-zA-Z0-9_:-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Group',
+                        'envId' => '0',
+                        'action' => 'remove-class',
+                    ],
+                ],
+            ],
         ],
     ],
     'translator' => [
@@ -185,7 +202,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Group',
-                    'actions' => ['update'],
+                    'actions' => ['update', 'add-class', 'remove-class'],
                     'roles' => ['admin']
                 ],
                 [

@@ -23,6 +23,9 @@ namespace KmbPuppet\Controller;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
+use KmbDomain\Model\PuppetClassRepositoryInterface;
+use KmbPmProxy\Service\Module as ModuleService;
+use KmbPmProxy\Service\PuppetClass;
 use KmbPuppet\Service;
 use KmbPuppetDb\Exception\RuntimeException;
 use KmbPuppetDb\Model\NodeInterface;
@@ -63,9 +66,25 @@ class GroupController extends AbstractActionController
             $error = $this->translate('An error occured while reaching PuppetDB !');
         }
 
+        /** @var ModuleService $moduleService */
+        $moduleService = $this->serviceLocator->get('pmProxyModuleService');
+        $classes = [];
+        foreach ($moduleService->getAllByEnvironment($environment) as $module) {
+            $classes[$module->getName()] = array_filter($module->getClasses(), function ($class) use ($group) {
+                if ($group->hasClassWithName($class->getName())) {
+                    return false;
+                }
+                return true;
+            });
+        }
+
+        $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));
+
         return new ViewModel([
             'group' => $group,
             'serversCount' => count($nodes),
+            'classes' => $classes,
+            'selectedClass' => $selectedClass,
             'error' => $error,
         ]);
     }
@@ -147,5 +166,88 @@ class GroupController extends AbstractActionController
         $groupRepository->update($group);
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+    }
+
+    public function addClassAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('id'));
+
+        if ($group == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        if ($group->getEnvironment() != $environment) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        /** @var PuppetClass $puppetClassService */
+        $puppetClassService = $this->serviceLocator->get('pmProxyPuppetClassService');
+
+        $className = $this->params()->fromPost('class');
+        if ($group->hasClassWithName($className)) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate('Group already has the class %s'), $className));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+        }
+
+        $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $className);
+        if ($pmProxyPuppetClass === null) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate('Unknown class %s'), $className));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+        }
+
+        $class = new \KmbDomain\Model\PuppetClass();
+        $class->setName($className);
+        $class->setGroup($group);
+
+        /** @var PuppetClassRepositoryInterface $classRepository */
+        $classRepository = $this->getServiceLocator()->get('PuppetClassRepository');
+        $classRepository->add($class);
+
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $className]], true);
+    }
+
+    public function removeClassAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('id'));
+
+        if ($group == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        if ($group->getEnvironment() != $environment) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        /** @var PuppetClassRepositoryInterface $classRepository */
+        $classRepository = $this->getServiceLocator()->get('PuppetClassRepository');
+
+        $className = $this->params()->fromRoute('className');
+        $class = $group->getClassByName($className);
+        if ($class == null) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Group doesn't have class %s"), $className));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+        }
+
+        $classRepository->remove($class);
+
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $className]], true);
     }
 }
