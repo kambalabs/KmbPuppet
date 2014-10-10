@@ -1,7 +1,7 @@
 <?php
 namespace KmbPuppetTest\View\Helper;
 
-use KmbPmProxy\Model\ParameterType;
+use KmbDomain\Model\ParameterType;
 use KmbPuppet\View\Helper\PrintParameterType;
 use Zend\I18n\Translator\Translator;
 

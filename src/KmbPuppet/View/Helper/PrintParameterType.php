@@ -20,7 +20,7 @@
  */
 namespace KmbPuppet\View\Helper;
 
-use KmbPmProxy\Model\ParameterType;
+use KmbDomain\Model\ParameterType;
 use Zend\I18n\View\Helper\AbstractTranslatorHelper;
 
 class PrintParameterType extends AbstractTranslatorHelper
