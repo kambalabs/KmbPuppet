@@ -148,7 +148,7 @@
     </div>
     <?php if ($this->group->hasClasses()): ?>
     <?php foreach ($this->group->getClasses() as $class): ?>
-    <div class="col-sm-6 class-parameters" data-class-id="<?php echo $class->getId() ?>" <?php if (!isset($this->selectedClass) || $this->selectedClass->getId() !== $class->getId()): ?>style="display: none"<?php endif ?>>
+    <div data-class-id="<?php echo $class->getId() ?>" class="col-sm-6 class-parameters<?php if (isset($this->selectedClass) && $this->selectedClass->getId() === $class->getId()): ?> active<?php endif ?>">
         <div class="panel panel-default" style="min-height: 370px">
             <div class="panel-heading">
                 <button type="button" class="close">&times;</button>

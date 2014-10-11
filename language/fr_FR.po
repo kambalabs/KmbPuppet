@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-11 00:21+0100\n"
-"PO-Revision-Date: 2014-10-11 00:21+0100\n"
+"POT-Creation-Date: 2014-10-11 23:37+0100\n"
+"PO-Revision-Date: 2014-10-11 23:37+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,27 +17,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:66
-#: ../src/KmbPuppet/Controller/GroupController.php:120
+#: ../src/KmbPuppet/Controller/GroupController.php:67
+#: ../src/KmbPuppet/Controller/GroupController.php:121
 msgid "An error occured while reaching PuppetDB !"
 msgstr "Une erreur est survenue lors de l'appel à PuppetDB !"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:197
+#: ../src/KmbPuppet/Controller/GroupController.php:198
 #, php-format
 msgid "Group already has the class %s"
 msgstr "Le groupe a déjà la classe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:203
+#: ../src/KmbPuppet/Controller/GroupController.php:204
 #, php-format
 msgid "Unknown class %s"
 msgstr "La classe %s n'existe pas"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:245
+#: ../src/KmbPuppet/Controller/GroupController.php:246
 #, php-format
 msgid "Group doesn't have class %s"
 msgstr "Le groupe n'a pas la classe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:251
+#: ../src/KmbPuppet/Controller/GroupController.php:252
 #, php-format
 msgid "Class %s has been succesfully removed"
 msgstr "La classe %s a bien été supprimée !"
@@ -570,6 +570,10 @@ msgstr "Accéder au détail de la configuration d'une classe en cliquant sur son
 #: ../view/kmb-puppet/group/show.phtml:203
 msgid "Click on a parameter or a value to update it."
 msgstr "Cliquer sur un paramètre ou une valeur pour le (ou la) modifier."
+
+#: ../view/kmb-puppet/group/parameters.phtml:22
+msgid "click to update"
+msgstr "cliquer pour modifier"
 
 #~ msgid "Invalid inclusion or exclusion pattern !"
 #~ msgstr "Pattern d'inclusion ou d'exclusion invalide !"

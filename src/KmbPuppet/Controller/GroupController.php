@@ -23,6 +23,7 @@ namespace KmbPuppet\Controller;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
+use KmbDomain\Model\PuppetClassFactoryInterface;
 use KmbDomain\Model\PuppetClassRepositoryInterface;
 use KmbPmProxy\Service\Module as ModuleService;
 use KmbPmProxy\Service\PuppetClass;
@@ -204,9 +205,9 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
         }
 
-        $class = new \KmbDomain\Model\PuppetClass();
-        $class->setName($className);
-        $class->setGroup($group);
+        /** @var PuppetClassFactoryInterface $puppetClassFactory */
+        $puppetClassFactory = $this->serviceLocator->get('puppetClassFactory');
+        $class = $puppetClassFactory->create($className, $group, $pmProxyPuppetClass->getParametersTemplates());
 
         /** @var PuppetClassRepositoryInterface $classRepository */
         $classRepository = $this->getServiceLocator()->get('PuppetClassRepository');

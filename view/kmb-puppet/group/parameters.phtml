@@ -19,7 +19,7 @@
             <li>
                 <span class="inline-editable">
                     <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-                    <?php echo $this->escapeHtml($value->getName()) ?>
+                    <?php echo $value->getName() == '' ? '<i class="lightgrey">' . $this->translate('click to update') . '</i>' : $this->escapeHtml($value->getName()) ?>
                 </span>
                 <form class="input-group form-inline-editable" style="display: none" action="<?php echo $this->url('puppet-group', ['action' => 'update'], [], true) ?>" method="post">
                     <input type="text" class="form-control" name="value" value="<?php echo $this->escapeHtml($value->getName()) ?>" />
