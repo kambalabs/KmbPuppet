@@ -36,12 +36,12 @@ class ModulesController extends AbstractActionController
             return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
         }
 
-        /** @var Service\ModuleInterface $pmProxyModuleService */
-        $pmProxyModuleService = $this->getServiceLocator()->get('pmProxyModuleService');
+        /** @var Service\PuppetModuleInterface $puppetModuleService */
+        $puppetModuleService = $this->getServiceLocator()->get('pmProxyPuppetModuleService');
 
         return new ViewModel([
             'environment' => $environment,
-            'modules' => $pmProxyModuleService->getAllByEnvironment($environment)
+            'puppetModules' => $puppetModuleService->getAllByEnvironment($environment)
         ]);
     }
 
@@ -53,16 +53,16 @@ class ModulesController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        /** @var Service\ModuleInterface $pmProxyModuleService */
-        $pmProxyModuleService = $this->getServiceLocator()->get('pmProxyModuleService');
+        /** @var Service\PuppetModuleInterface $puppetModuleService */
+        $puppetModuleService = $this->getServiceLocator()->get('pmProxyPuppetModuleService');
 
-        $module = $pmProxyModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('name'));
-        if ($module === null) {
+        $puppetModule = $puppetModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('name'));
+        if ($puppetModule === null) {
             return $this->notFoundAction();
         }
 
         $classesErrors = [];
-        foreach ($module->getClasses() as $class) {
+        foreach ($puppetModule->getClasses() as $class) {
             /** @var PuppetClassValidator $validator */
             $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
             if (!$validator->isValid($class)) {
@@ -72,7 +72,7 @@ class ModulesController extends AbstractActionController
 
         return new ViewModel([
             'environment' => $environment,
-            'module' => $module,
+            'module' => $puppetModule,
             'back' => $this->params()->fromQuery('back'),
             'classesErrors' => $classesErrors,
         ]);
@@ -86,20 +86,20 @@ class ModulesController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        /** @var Service\ModuleInterface $pmProxyModuleService */
-        $pmProxyModuleService = $this->getServiceLocator()->get('pmProxyModuleService');
+        /** @var Service\PuppetModuleInterface $puppetModuleService */
+        $puppetModuleService = $this->getServiceLocator()->get('pmProxyPuppetModuleService');
 
-        $module = $pmProxyModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('moduleName'));
-        if ($module === null) {
+        $puppetModule = $puppetModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('moduleName'));
+        if ($puppetModule === null) {
             return $this->notFoundAction();
         }
 
         $className = $this->params()->fromRoute('className');
-        if (!$module->hasClass($className)) {
+        if (!$puppetModule->hasClass($className)) {
             return $this->notFoundAction();
         }
 
-        $class = $module->getClass($className);
+        $class = $puppetModule->getClass($className);
         /** @var PuppetClassValidator $validator */
         $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
         $parametersErrors = [];

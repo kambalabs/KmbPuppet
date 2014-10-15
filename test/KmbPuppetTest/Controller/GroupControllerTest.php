@@ -48,11 +48,11 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([new Model\Node('node1.local'), new Model\Node('node3.local')]));
         $serviceManager->setService('KmbPuppet\Service\Node', $nodeService);
 
-        $moduleService = $this->getMock('KmbPmProxy\Service\ModuleInterface');
-        $moduleService->expects($this->any())
+        $puppetModuleService = $this->getMock('KmbPmProxy\Service\PuppetModuleInterface');
+        $puppetModuleService->expects($this->any())
             ->method('getAllByEnvironment')
             ->will($this->returnValue([]));
-        $serviceManager->setService('pmProxyModuleService', $moduleService);
+        $serviceManager->setService('pmProxyPuppetModuleService', $puppetModuleService);
     }
 
     /** @test */

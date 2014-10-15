@@ -5,7 +5,7 @@
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span>
                     <?php echo $this->translate('Modules') ?>
-                    <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->modules)): ?> disabled<?php endif ?>">
+                    <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->puppetModules)): ?> disabled<?php endif ?>">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Add a module') ?>
                     </a>
@@ -14,15 +14,15 @@
             <div class="panel-body">
                 <table class="table table-striped" id="modules">
                     <tbody>
-                    <?php if (isset($this->modules)): ?>
-                    <?php foreach ($this->modules as $module): ?>
+                    <?php if (isset($this->puppetModules)): ?>
+                    <?php foreach ($this->puppetModules as $puppetModule): ?>
                     <tr>
                         <td class="module-name" style="width: 100%">
                             <span class="glyphicon glyphicon-search"></span>
-                            <a href="<?php echo $this->url('puppet-module', ['action' => 'show', 'name' => $module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true) ?>"><?php echo $module->getName() ?></a>
+                            <a href="<?php echo $this->url('puppet-module', ['action' => 'show', 'name' => $puppetModule->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true) ?>"><?php echo $puppetModule->getName() ?></a>
                         </td>
                         <td>
-                            <span class="label <?php echo $this->moduleLabelClass($module) ?>"><?php echo $module->getVersion() ?></span>
+                            <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $puppetModule->getVersion() ?></span>
                         </td>
                     </tr>
                     <?php endforeach ?>

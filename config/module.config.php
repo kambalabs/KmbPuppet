@@ -145,7 +145,7 @@ return [
             'shortHostname' => 'KmbPuppet\View\Helper\ShortHostname',
             'formatAncestorsNames' => 'KmbPuppet\View\Helper\FormatAncestorsNames',
             'printParameterType' => 'KmbPuppet\View\Helper\PrintParameterType',
-            'moduleLabelClass' => 'KmbPuppet\View\Helper\ModuleLabelClass',
+            'puppetModuleLabelClass' => 'KmbPuppet\View\Helper\PuppetModuleLabelClass',
         ],
         'factories' => [
             'KmbPuppet\View\Helper\EnvironmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelectFactory',

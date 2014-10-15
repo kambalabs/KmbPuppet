@@ -1,12 +1,12 @@
 <?php
 namespace KmbPuppetTest\View\Helper;
 
-use KmbPmProxy\Model\Module;
+use KmbPmProxy\Model\PuppetModule;
 use KmbPmProxy\Model\PuppetClass;
-use KmbPuppet\View\Helper\ModuleLabelClass;
+use KmbPuppet\View\Helper\PuppetModuleLabelClass;
 use KmbPuppetTest\Bootstrap;
 
-class ModuleLabelClassTest extends \PHPUnit_Framework_TestCase
+class PuppetModuleLabelClassTest extends \PHPUnit_Framework_TestCase
 {
     protected $serviceManager;
 
@@ -28,9 +28,9 @@ class ModuleLabelClassTest extends \PHPUnit_Framework_TestCase
         $this->puppetClassValidator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(true));
-        $module = new Module('apache', '1.0.0');
+        $module = new PuppetModule('apache', '1.0.0');
         $module->setClasses([new PuppetClass()]);
-        $helper = new ModuleLabelClass();
+        $helper = new PuppetModuleLabelClass();
         $helper->setServiceLocator($this->serviceManager);
 
         $this->assertEquals('label-success', $helper($module));
@@ -42,9 +42,9 @@ class ModuleLabelClassTest extends \PHPUnit_Framework_TestCase
         $this->puppetClassValidator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(false));
-        $module = new Module('apache', '1.0.0');
+        $module = new PuppetModule('apache', '1.0.0');
         $module->setClasses([new PuppetClass()]);
-        $helper = new ModuleLabelClass();
+        $helper = new PuppetModuleLabelClass();
         $helper->setServiceLocator($this->serviceManager);
 
         $this->assertEquals('label-danger', $helper($module));

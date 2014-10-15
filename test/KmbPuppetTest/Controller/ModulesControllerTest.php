@@ -2,7 +2,7 @@
 namespace KmbPuppetTest\Controller;
 
 use KmbDomain\Model\Environment;
-use KmbPmProxy\Model\Module;
+use KmbPmProxy\Model\PuppetModule;
 use KmbPmProxy\Model\PuppetClass;
 use KmbPuppetDb\Model;
 use KmbPuppetTest\Bootstrap;
@@ -28,19 +28,19 @@ class ModulesControllerTest extends AbstractHttpControllerTestCase
             ->method('getAllRoots')
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
-        $moduleService = $this->getMock('KmbPmProxy\Service\ModuleInterface');
-        $module = new Module('apache', '2.1.4');
-        $module->setClasses([new PuppetClass('apache::vhost', [], [])]);
-        $moduleService->expects($this->any())
+        $puppetModuleService = $this->getMock('KmbPmProxy\Service\PuppetModuleInterface');
+        $puppetModule = new PuppetModule('apache', '2.1.4');
+        $puppetModule->setClasses([new PuppetClass('apache::vhost', [], [])]);
+        $puppetModuleService->expects($this->any())
             ->method('getAllByEnvironment')
             ->will($this->returnValue([
-                'apache' => $module,
-                'ntp' => new Module('ntp', '1.1.0'),
+                'apache' => $puppetModule,
+                'ntp' => new PuppetModule('ntp', '1.1.0'),
             ]));
-        $moduleService->expects($this->any())
+        $puppetModuleService->expects($this->any())
             ->method('getByEnvironmentAndName')
-            ->will($this->returnValue($module));
-        $serviceManager->setService('KmbPmProxy\Service\Module', $moduleService);
+            ->will($this->returnValue($puppetModule));
+        $serviceManager->setService('pmProxyPuppetModuleService', $puppetModuleService);
     }
 
     /** @test */

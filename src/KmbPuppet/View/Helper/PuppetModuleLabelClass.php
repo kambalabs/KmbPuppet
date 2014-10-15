@@ -20,23 +20,23 @@
  */
 namespace KmbPuppet\View\Helper;
 
-use KmbPmProxy\Model\Module;
+use KmbPmProxy\Model\PuppetModule;
 use KmbPmProxy\Model\PuppetClassValidator;
 use KmbPuppetDb\Model;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Helper\AbstractHelper;
 
-class ModuleLabelClass extends AbstractHelper implements ServiceLocatorAwareInterface
+class PuppetModuleLabelClass extends AbstractHelper implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
 
-    public function __invoke(Module $module)
+    public function __invoke(PuppetModule $module)
     {
         return $this->hasError($module) ? 'label-danger' : 'label-success';
     }
     /**
-     * @param Module $module
+     * @param PuppetModule $module
      * @return bool
      */
     protected function hasError($module)

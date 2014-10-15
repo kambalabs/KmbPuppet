@@ -26,7 +26,7 @@ use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbDomain\Model\PuppetClassFactoryInterface;
 use KmbDomain\Model\PuppetClassRepositoryInterface;
-use KmbPmProxy\Service\Module as ModuleService;
+use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPmProxy\Service\PuppetClass;
 use KmbPuppet\Service;
 use KmbPuppetDb\Exception\RuntimeException;
@@ -70,17 +70,17 @@ class GroupController extends AbstractActionController
 
         /** @var ClassTemplatesHydratorInterface $classTemplatesHydrator */
         $classTemplatesHydrator = $this->serviceLocator->get('classTemplatesHydrator');
-        /** @var ModuleService $moduleService */
-        $moduleService = $this->serviceLocator->get('pmProxyModuleService');
+        /** @var PuppetModuleService $puppetModuleService */
+        $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
 
         $availableClasses = [];
-        foreach ($moduleService->getAllByEnvironment($environment) as $module) {
-            foreach ($module->getClasses() as $class) {
-                $groupClass = $group->getClassByName($class->getName());
+        foreach ($puppetModuleService->getAllByEnvironment($environment) as $puppetModule) {
+            foreach ($puppetModule->getClasses() as $puppetClass) {
+                $groupClass = $group->getClassByName($puppetClass->getName());
                 if ($groupClass != null) {
-                    $classTemplatesHydrator->hydrate($class->getParametersTemplates(), $groupClass);
+                    $classTemplatesHydrator->hydrate($puppetClass->getParametersTemplates(), $groupClass);
                 } else {
-                    $availableClasses[$module->getName()][] = $class;
+                    $availableClasses[$puppetModule->getName()][] = $puppetClass;
                 }
             }
         }
