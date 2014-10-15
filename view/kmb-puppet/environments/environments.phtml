@@ -14,7 +14,7 @@
                 <?php endif ?>
                 <?php echo $environment->getName() ?>
             </span>
-            <? echo $this->partial('kmb-puppet/environments/environments', ['environments' => $environment->getChildren()]) ?>
+            <?php echo $this->partial('kmb-puppet/environments/environments', ['environments' => $environment->getChildren()]) ?>
         <?php else: ?>
             <span>
                 <?php if ($this->isGranted('manageEnvChildren', $environment)): ?>

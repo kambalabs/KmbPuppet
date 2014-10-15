@@ -14,6 +14,7 @@
             <div class="panel-body">
                 <table class="table table-striped" id="modules">
                     <tbody>
+                    <?php if (isset($this->modules)): ?>
                     <?php foreach ($this->modules as $module): ?>
                     <tr>
                         <td class="module-name" style="width: 100%">
@@ -25,6 +26,7 @@
                         </td>
                     </tr>
                     <?php endforeach ?>
+                    <?php endif ?>
                     </tbody>
                 </table>
             </div>

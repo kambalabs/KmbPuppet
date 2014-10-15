@@ -1,42 +1,34 @@
+<?php if (!empty($this->parameters)): ?>
 <ul style="clear:both">
     <?php foreach ($this->parameters as $parameter): ?>
     <li>
-        <?php if ($parameter->hasChildren()): ?>
-        <span>
-            <i class="glyphicon glyphicon-minus-sign"></i>
-            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-            <strong class="blue"><?php echo $parameter->getName() ?></strong>
-        </span>
-        <? echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren()]) ?>
-        <?php elseif ($parameter->hasValues()): ?>
-        <span>
-            <i class="glyphicon glyphicon-minus-sign"></i>
-            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-            <strong class="blue"><?php echo $parameter->getName() ?></strong>
-        </span>
-        <ul style="clear:both">
-        <?php foreach ($parameter->getValues() as $value): ?>
-            <li>
-                <span class="inline-editable">
-                    <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-                    <?php echo $value->getName() == '' ? '<i class="lightgrey">' . $this->translate('click to update') . '</i>' : $this->escapeHtml($value->getName()) ?>
-                </span>
-                <form class="input-group form-inline-editable" style="display: none" action="<?php echo $this->url('puppet-group', ['action' => 'update'], [], true) ?>" method="post">
-                    <input type="text" class="form-control" name="value" value="<?php echo $this->escapeHtml($value->getName()) ?>" />
-                    <div class="input-group-btn">
-                        <button class="btn btn-warning" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
-                        <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
-                    </div>
-                </form>
-            </li>
-        <?php endforeach ?>
-        </ul>
-        <?php else: ?>
-        <span>
-            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-            <strong class="blue"><?php echo $parameter->getName() ?></strong>
-        </span>
+    <?php if ($parameter->hasTemplate()): ?>
+        <?php echo $this->partial('kmb-puppet/group/parameter', ['parameter' => $parameter, 'template' => $parameter->getTemplate()]) ?>
+        <?php if ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::HASHTABLE): ?>
+            <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren()]) ?>
+        <?php elseif ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE): ?>
+            <?php if ($parameter->hasChildren()): ?>
+                <ul style="clear:both">
+                <?php foreach ($parameter->getChildren() as $child): ?>
+                    <li>
+                        <?php echo $this->partial('kmb-puppet/group/parameter', ['parameter' => $child]) ?>
+                        <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $child->getChildren()]) ?>
+                    </li>
+                <?php endforeach ?>
+                </ul>
+            <?php endif ?>
         <?php endif ?>
+    <?php else: ?>
+        <span class="bg-red">
+            <i class="glyphicon glyphicon-minus-sign"></i>
+            <i class="glyphicon glyphicon-zoom-in"></i>
+            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
+            <strong class="blue"><?php echo $parameter->getName() ?></strong>
+            <p class="see-more red" style="display: none"><?php echo $this->translate('This parameter does not exists in the class template') ?></p>
+        </span>
+        <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren()]) ?>
+    <?php endif ?>
     </li>
     <?php endforeach ?>
 </ul>
+<?php endif ?>

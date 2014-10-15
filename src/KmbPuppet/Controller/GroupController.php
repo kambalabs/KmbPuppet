@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbDomain\Model\ClassTemplatesHydratorInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
@@ -67,16 +68,21 @@ class GroupController extends AbstractActionController
             $error = $this->translate('An error occured while reaching PuppetDB !');
         }
 
+        /** @var ClassTemplatesHydratorInterface $classTemplatesHydrator */
+        $classTemplatesHydrator = $this->serviceLocator->get('classTemplatesHydrator');
         /** @var ModuleService $moduleService */
         $moduleService = $this->serviceLocator->get('pmProxyModuleService');
-        $classes = [];
+
+        $availableClasses = [];
         foreach ($moduleService->getAllByEnvironment($environment) as $module) {
-            $classes[$module->getName()] = array_filter($module->getClasses(), function ($class) use ($group) {
-                if ($group->hasClassWithName($class->getName())) {
-                    return false;
+            foreach ($module->getClasses() as $class) {
+                $groupClass = $group->getClassByName($class->getName());
+                if ($groupClass != null) {
+                    $classTemplatesHydrator->hydrate($class->getParametersTemplates(), $groupClass);
+                } else {
+                    $availableClasses[$module->getName()][] = $class;
                 }
-                return true;
-            });
+            }
         }
 
         $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));
@@ -84,7 +90,7 @@ class GroupController extends AbstractActionController
         return new ViewModel([
             'group' => $group,
             'serversCount' => count($nodes),
-            'classes' => $classes,
+            'availableClasses' => $availableClasses,
             'selectedClass' => $selectedClass,
             'error' => $error,
         ]);
