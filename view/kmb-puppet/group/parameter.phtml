@@ -1,11 +1,11 @@
 <form action="<?php echo $this->url('puppet-group', ['action' => 'update'], [], true) ?>" method="post">
-<span class="inline-editable">
+<span class="tree-item inline-editable">
     <a href="#"><i class="glyphicon glyphicon-minus-sign darkgrey"></i></a>
     <?php if ($this->template->type == \KmbDomain\Model\ParameterType::HASHTABLE || $this->template->type == \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE || $this->template->multiple_values): ?>
-        <a href="#"><i class="glyphicon glyphicon-plus lightblue"></i></a>
+    <a href="#"><i class="glyphicon glyphicon-plus lightblue"></i></a>
     <?php endif ?>
     <a href="#"><i class="glyphicon glyphicon-remove red"></i></a>
-    <strong class="blue"><?php echo $this->parameter->getName() ?></strong>
+    <span class="blue"><?php echo $this->parameter->getName() ?></span>
 </span>
 <div class="input-group form-inline-editable" style="display: none">
     <?php if ($this->isEditableHashtableKey): ?>
@@ -13,8 +13,8 @@
     <?php else: ?>
         <select class="form-control" name="parameter">
             <option><?php echo $this->escapeHtml($this->parameter->getName()) ?></option>
-            <?php foreach ($this->parameter->getAvailableSiblings() as $sibling): ?>
-                <option><?php echo $this->escapeHtml($sibling->name) . ($sibling->required ? '*' : '') ?></option>
+            <?php foreach ($this->availableParameters as $sibling): ?>
+            <option><?php echo $this->escapeHtml($sibling->name) . ($sibling->required ? '*' : '') ?></option>
             <?php endforeach ?>
         </select>
     <?php endif ?>

@@ -3,7 +3,7 @@
     <?php if ($this->isGranted('readEnv', $environment)): ?>
         <li>
         <?php if ($environment->hasChildren()): ?>
-            <span>
+            <span class="tree-item">
                 <a href="#"><i class="glyphicon glyphicon-minus-sign darkgrey"></i></a>
                 <?php if ($this->isGranted('manageEnvChildren', $environment)): ?>
                 <a href="#" data-toggle="modal" data-target="#create-environment" data-parent-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-plus lightblue"></i></a>
@@ -16,7 +16,7 @@
             </span>
             <?php echo $this->partial('kmb-puppet/environments/environments', ['environments' => $environment->getChildren()]) ?>
         <?php else: ?>
-            <span>
+            <span class="tree-item">
                 <?php if ($this->isGranted('manageEnvChildren', $environment)): ?>
                 <a href="#" data-toggle="modal" data-target="#create-environment" data-parent-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-plus lightblue"></i></a>
                 <?php endif ?>

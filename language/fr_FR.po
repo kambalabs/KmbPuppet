@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-16 16:58+0100\n"
-"PO-Revision-Date: 2014-10-16 16:58+0100\n"
+"POT-Creation-Date: 2014-10-16 21:28+0100\n"
+"PO-Revision-Date: 2014-10-16 21:28+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -530,8 +530,9 @@ msgid "Filter list"
 msgstr "Filtrer la liste"
 
 #: ../view/kmb-puppet/group/show.phtml:63
-msgid "Classes of the group"
-msgstr "Classes du groupe"
+#, php-format
+msgid "Group %s"
+msgstr "Groupe %s"
 
 #: ../view/kmb-puppet/group/show.phtml:67
 #: ../view/kmb-puppet/group/show.phtml:104
@@ -546,6 +547,11 @@ msgstr "Choisir une classe"
 #, php-format
 msgid "You are about to remove %s class, this procedure is irreversible."
 msgstr "Vous êtes sur le point de supprimer la classe %s, cette action est irréversible."
+
+#: ../view/kmb-puppet/group/show.phtml:158
+#, php-format
+msgid "Class %s"
+msgstr "Classe %s"
 
 #: ../view/kmb-puppet/group/show.phtml:162
 msgid "Add a parameter"
@@ -582,6 +588,9 @@ msgstr "cliquer pour modifier"
 #: ../view/kmb-puppet/group/parameters.phtml:86
 msgid "This parameter does not exists in the class template"
 msgstr "Ce paramètre n'existe pas dans le template de classe"
+
+#~ msgid "Classes of the group"
+#~ msgstr "Classes du groupe"
 
 #~ msgid "Invalid inclusion or exclusion pattern !"
 #~ msgstr "Pattern d'inclusion ou d'exclusion invalide !"
