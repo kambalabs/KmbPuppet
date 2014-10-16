@@ -26,20 +26,20 @@
     <li>
         <span class="inline-editable">
             <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-            <?php echo $value->getName() == '' ? '<i class="lightgrey">' . $this->translate('click to update') . '</i>' : $this->escapeHtml($value->getName()) ?>
+            <?php echo $value == '' ? '<i class="lightgrey">' . $this->translate('click to update') . '</i>' : $this->escapeHtml($value) ?>
         </span>
         <div class="input-group form-inline-editable" style="display: none">
             <?php if ($this->template->type == \KmbDomain\Model\ParameterType::PREDEFINED_LIST): ?>
             <select class="form-control" name="values[]">
-                <option><?php echo $this->escapeHtml($value->getName()) ?></option>
+                <option><?php echo $this->escapeHtml($value) ?></option>
                 <?php foreach ($this->parameter->getAvailableValues() as $availableValue): ?>
                 <option><?php echo $this->escapeHtml($availableValue) ?></option>
                 <?php endforeach ?>
             </select>
             <?php elseif ($this->template->type == \KmbDomain\Model\ParameterType::TEXT): ?>
-            <textarea style="resize:vertical" class="form-control custom-control" name="values[]"><?php echo $this->escapeHtml($value->getName()) ?></textarea>
+            <textarea style="resize:vertical" class="form-control custom-control" name="values[]"><?php echo $this->escapeHtml($value) ?></textarea>
             <?php else: ?>
-            <input type="text" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($value->getName()) ?>" />
+            <input type="text" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($value) ?>" />
             <?php endif ?>
             <div class="input-group-<?php echo $this->template->type == \KmbDomain\Model\ParameterType::TEXT ? 'addon' : 'btn' ?>">
                 <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
