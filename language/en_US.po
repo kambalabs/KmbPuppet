@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-11 23:37+0100\n"
-"PO-Revision-Date: 2014-10-11 23:37+0100\n"
+"POT-Creation-Date: 2014-10-16 16:58+0100\n"
+"PO-Revision-Date: 2014-10-16 16:59+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,27 +17,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:67
-#: ../src/KmbPuppet/Controller/GroupController.php:121
+#: ../src/KmbPuppet/Controller/GroupController.php:68
+#: ../src/KmbPuppet/Controller/GroupController.php:127
 msgid "An error occured while reaching PuppetDB !"
-msgstr ""
-
-#: ../src/KmbPuppet/Controller/GroupController.php:198
-#, php-format
-msgid "Group already has the class %s"
 msgstr ""
 
 #: ../src/KmbPuppet/Controller/GroupController.php:204
 #, php-format
+msgid "Group already has the class %s"
+msgstr ""
+
+#: ../src/KmbPuppet/Controller/GroupController.php:210
+#, php-format
 msgid "Unknown class %s"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupController.php:246
+#: ../src/KmbPuppet/Controller/GroupController.php:252
 #, php-format
 msgid "Group doesn't have class %s"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupController.php:252
+#: ../src/KmbPuppet/Controller/GroupController.php:258
 #, php-format
 msgid "Class %s has been succesfully removed"
 msgstr ""
@@ -204,7 +204,7 @@ msgid "Save"
 msgstr ""
 
 #: ../view/kmb-puppet/groups/index.phtml:70
-#: ../view/kmb-puppet/modules/index.phtml:45
+#: ../view/kmb-puppet/modules/index.phtml:47
 msgid "Help"
 msgstr ""
 
@@ -303,16 +303,16 @@ msgstr ""
 msgid "Add a module"
 msgstr ""
 
-#: ../view/kmb-puppet/modules/index.phtml:47
+#: ../view/kmb-puppet/modules/index.phtml:49
 #, php-format
 msgid "Here is the list of installed modules on environment <strong>%s</strong>."
 msgstr ""
 
-#: ../view/kmb-puppet/modules/index.phtml:48
+#: ../view/kmb-puppet/modules/index.phtml:50
 msgid "When version of a module is red <span class=\"label label-danger\">1.0.0</span>, it means that at least one of its classes is in error."
 msgstr ""
 
-#: ../view/kmb-puppet/modules/index.phtml:49
+#: ../view/kmb-puppet/modules/index.phtml:51
 msgid "<strong>Note</strong> : The list of modules is refreshed every 5 minutes, but you can clear the cache manually by clicking on your name in the top right of the page."
 msgstr ""
 
@@ -547,31 +547,39 @@ msgstr ""
 msgid "You are about to remove %s class, this procedure is irreversible."
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:193
+#: ../view/kmb-puppet/group/show.phtml:162
+msgid "Add a parameter"
+msgstr ""
+
+#: ../view/kmb-puppet/group/show.phtml:198
 msgid "edit"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:195
+#: ../view/kmb-puppet/group/show.phtml:200
 msgid "Description"
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:197
+#: ../view/kmb-puppet/group/show.phtml:202
 msgid "No description yet provided for this group."
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:201
+#: ../view/kmb-puppet/group/show.phtml:206
 msgid "Click on the servers count to preview the list of assigned servers."
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:202
+#: ../view/kmb-puppet/group/show.phtml:207
 msgid "View the detail configuration of a class by clicking on its name."
 msgstr ""
 
-#: ../view/kmb-puppet/group/show.phtml:203
+#: ../view/kmb-puppet/group/show.phtml:208
 msgid "Click on a parameter or a value to update it."
 msgstr ""
 
-#: ../view/kmb-puppet/group/parameters.phtml:22
+#: ../view/kmb-puppet/group/parameters.phtml:37
 msgid "click to update"
+msgstr ""
+
+#: ../view/kmb-puppet/group/parameters.phtml:86
+msgid "This parameter does not exists in the class template"
 msgstr ""
 
