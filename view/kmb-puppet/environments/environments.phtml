@@ -1,16 +1,16 @@
-<ul>
+<ul style="clear:both">
     <?php foreach ($this->environments as $environment): ?>
     <?php if ($this->isGranted('readEnv', $environment)): ?>
         <li>
         <?php if ($environment->hasChildren()): ?>
             <span>
-                <i class="glyphicon glyphicon-minus-sign"></i>
+                <a href="#"><i class="glyphicon glyphicon-minus-sign darkgrey"></i></a>
                 <?php if ($this->isGranted('manageEnvChildren', $environment)): ?>
-                <a href="#" data-toggle="modal" data-target="#create-environment" data-parent-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-plus icon-blue"></i></a>
+                <a href="#" data-toggle="modal" data-target="#create-environment" data-parent-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-plus lightblue"></i></a>
                 <?php endif ?>
                 <?php if ($this->isGranted('manageEnv', $environment)): ?>
-                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'update', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#update-environment" data-default="<?php echo $environment->isDefault() ? 1 : 0 ?>" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-parent-id="<?php echo $environment->hasParent() ? $environment->getParent()->getId() : 0 ?>"><i class="glyphicon glyphicon-pencil icon-grey"></i></a>
-                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'add-users', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#manage-environment-users" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-user icon-grey"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'update', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#update-environment" data-default="<?php echo $environment->isDefault() ? 1 : 0 ?>" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-parent-id="<?php echo $environment->hasParent() ? $environment->getParent()->getId() : 0 ?>"><i class="glyphicon glyphicon-pencil darkgrey"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'add-users', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#manage-environment-users" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-user darkgrey"></i></a>
                 <?php endif ?>
                 <?php echo $environment->getName() ?>
             </span>
@@ -18,12 +18,12 @@
         <?php else: ?>
             <span>
                 <?php if ($this->isGranted('manageEnvChildren', $environment)): ?>
-                <a href="#" data-toggle="modal" data-target="#create-environment" data-parent-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-plus icon-blue"></i></a>
+                <a href="#" data-toggle="modal" data-target="#create-environment" data-parent-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-plus lightblue"></i></a>
                 <?php endif ?>
                 <?php if ($this->isGranted('manageEnv', $environment)): ?>
-                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'remove', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $environment->getName() ?>"><i class="glyphicon glyphicon-remove icon-red"></i></a>
-                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'update', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#update-environment" data-default="<?php echo $environment->isDefault() ? 1 : 0 ?>" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-parent-id="<?php echo $environment->hasParent() ? $environment->getParent()->getId() : 0 ?>"><i class="glyphicon glyphicon-pencil icon-grey"></i></a>
-                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'add-users', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#manage-environment-users" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-user icon-grey"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'remove', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $environment->getName() ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'update', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#update-environment" data-default="<?php echo $environment->isDefault() ? 1 : 0 ?>" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-parent-id="<?php echo $environment->hasParent() ? $environment->getParent()->getId() : 0 ?>"><i class="glyphicon glyphicon-pencil darkgrey"></i></a>
+                <a href="#" data-href="<?php echo $this->url('puppet-environment', ['action' => 'add-users', 'id' => $environment->getId()], [], true) ?>" data-toggle="modal" data-target="#manage-environment-users" data-name="<?php echo $environment->getName() ?>" data-full-name="<?php echo $this->formatAncestorsNames($environment) ?>" data-id="<?php echo $environment->getId() ?>"><i class="glyphicon glyphicon-user darkgrey"></i></a>
                 <?php endif ?>
                 <?php echo $environment->getName() ?>
             </span>
@@ -31,4 +31,5 @@
         </li>
     <?php endif ?>
     <?php endforeach ?>
+        <form><li style="display: none"></li></form>
 </ul>

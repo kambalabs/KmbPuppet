@@ -5,30 +5,102 @@
     <?php if ($parameter->hasTemplate()): ?>
         <?php echo $this->partial('kmb-puppet/group/parameter', ['parameter' => $parameter, 'template' => $parameter->getTemplate()]) ?>
         <?php if ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::HASHTABLE): ?>
-            <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren()]) ?>
+            <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren(), 'availableParameters' => $parameter->getAvailableSiblings()]) ?>
         <?php elseif ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE): ?>
             <?php if ($parameter->hasChildren()): ?>
                 <ul style="clear:both">
                 <?php foreach ($parameter->getChildren() as $child): ?>
                     <li>
-                        <?php echo $this->partial('kmb-puppet/group/parameter', ['parameter' => $child]) ?>
-                        <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $child->getChildren()]) ?>
+                        <?php echo $this->partial('kmb-puppet/group/parameter', ['parameter' => $child, 'template' => $parameter->getTemplate(), 'isEditableHashtableKey' => true]) ?>
+                        <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $child->getChildren(), 'availableParameters' => $child->getAvailableSiblings()]) ?>
                     </li>
                 <?php endforeach ?>
+                    <form action="#" method="POST">
+                    <li class="input-group form-inline-editable new-element" style="display: none">
+                        <input type="text" class="form-control" name="parameter" value="<?php echo $this->escapeHtml($parameter->getName()) ?>" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                        </div>
+                    </li>
+                    </form>
                 </ul>
             <?php endif ?>
+        <?php elseif ($parameter->hasValues()): ?>
+        <ul style="clear:both">
+            <?php foreach ($parameter->getValues() as $value): ?>
+            <li>
+                <span class="inline-editable">
+                    <?php if ($parameter->getTemplate()->multiple_values): ?>
+                    <a href="#"><i class="glyphicon glyphicon-remove red"></i></a>
+                    <?php endif ?>
+                    <?php echo $value == '' ? '<i class="lightgrey">' . $this->translate('click to update') . '</i>' : $this->escapeHtml($value) ?>
+                </span>
+                <div class="input-group form-inline-editable" style="display: none">
+                    <?php if ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::PREDEFINED_LIST): ?>
+                        <select class="form-control" name="values[]">
+                            <option><?php echo $this->escapeHtml($value) ?></option>
+                            <?php foreach ($parameter->getAvailableValues() as $availableValue): ?>
+                                <option><?php echo $this->escapeHtml($availableValue) ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    <?php elseif ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::TEXT): ?>
+                        <textarea style="resize:vertical" class="form-control custom-control" name="values[]"><?php echo $this->escapeHtml($value) ?></textarea>
+                    <?php else: ?>
+                        <input type="text" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($value) ?>" />
+                    <?php endif ?>
+                    <div class="input-group-<?php echo $parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::TEXT ? 'addon' : 'btn' ?>">
+                        <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                    </div>
+                </div>
+            </li>
+            <?php endforeach ?>
+            <form action="#" method="POST">
+            <li class="new-element input-group form-inline-editable" style="display: none">
+                <?php if ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::PREDEFINED_LIST): ?>
+                    <select class="form-control" name="values[]">
+                        <?php foreach ($parameter->getAvailableValues() as $availableValue): ?>
+                            <option><?php echo $this->escapeHtml($availableValue) ?></option>
+                        <?php endforeach ?>
+                    </select>
+                <?php elseif ($parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::TEXT): ?>
+                    <textarea style="resize:vertical" class="form-control custom-control" name="values[]"></textarea>
+                <?php else: ?>
+                    <input type="text" class="form-control" name="values[]" value="" />
+                <?php endif ?>
+                <div class="input-group-<?php echo $parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::TEXT ? 'addon' : 'btn' ?>">
+                    <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                </div>
+            </li>
+            </form>
+        </ul>
         <?php endif ?>
     <?php else: ?>
         <span class="bg-red">
-            <i class="glyphicon glyphicon-minus-sign"></i>
-            <i class="glyphicon glyphicon-zoom-in"></i>
-            <a href="#"><i class="glyphicon glyphicon-remove icon-red"></i></a>
+            <a href="#"><i class="glyphicon glyphicon-minus-sign darkgrey"></i></a>
+            <a href="#"><i class="glyphicon glyphicon-zoom-in"></i></a>
+            <a href="#"><i class="glyphicon glyphicon-remove red"></i></a>
             <strong class="blue"><?php echo $parameter->getName() ?></strong>
             <p class="see-more red" style="display: none"><?php echo $this->translate('This parameter does not exists in the class template') ?></p>
         </span>
-        <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren()]) ?>
+        <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $parameter->getChildren(), 'availableParameters' => $parameter->getAvailableSiblings()]) ?>
     <?php endif ?>
     </li>
     <?php endforeach ?>
+    <form action="#" method="POST">
+    <li class="input-group form-inline-editable new-element" style="display: none">
+        <select class="form-control" name="parameter">
+            <?php foreach ($this->availableParameters as $parameter): ?>
+                <option><?php echo $this->escapeHtml($parameter->name) . ($parameter->required ? '*' : '') ?></option>
+            <?php endforeach ?>
+        </select>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
+            <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+        </div>
+    </li>
+    </form>
 </ul>
 <?php endif ?>
