@@ -70,7 +70,7 @@ class ParameterController extends AbstractActionController
         }
         $parameterRepository->update($parameter);
 
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $selectedClass]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['query' => ['id' => $group->getId(), 'selectedClass' => $selectedClass]], true);
     }
 
     public function removeAction()
@@ -99,6 +99,6 @@ class ParameterController extends AbstractActionController
         $parameterRepository->remove($class);
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Parameter %s has been succesfully removed"), $parameter->getName()));
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $class->getName()]], true);
     }
 }

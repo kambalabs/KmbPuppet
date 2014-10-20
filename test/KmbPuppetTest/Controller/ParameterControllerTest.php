@@ -40,6 +40,12 @@ class ParameterControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
+        $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
+        $groupRepository->expects($this->any())
+            ->method('getById')
+            ->will($this->returnValue($group));
+        $serviceManager->setService('GroupRepository', $groupRepository);
+
         $parameterRepository = $this->getMock('KmbDomain\Model\ParameterRepositoryInterface');
         $parameterRepository->expects($this->any())
             ->method('getById')
