@@ -1,0 +1,23 @@
+<?php if (isset($this->parent)): ?>
+<form class="input-group" action="<?php echo $this->url('puppet-parameter', ['action' => 'add-child', 'id' => $this->parent->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
+<?php else: ?>
+<form class="input-group" action="<?php echo $this->url('puppet-parameters', ['action' => 'create', 'id' => $this->class->getId()], true) ?>" method="post">
+<?php endif ?>
+    <?php if ($this->isEditableHashtableKey): ?>
+    <input type="text" class="form-control" name="parameter" value="" />
+    <?php else: ?>
+    <select class="form-control" name="name">
+        <?php if (empty($this->availableParameters)): ?>
+            <option value="">--</option>
+        <?php else: ?>
+            <?php foreach ($this->availableParameters as $parameter): ?>
+                <option><?php echo $this->escapeHtml($parameter->name) . ($parameter->required ? '*' : '') ?></option>
+            <?php endforeach ?>
+        <?php endif ?>
+    </select>
+    <?php endif ?>
+    <div class="input-group-btn">
+        <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
+        <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+    </div>
+</form>

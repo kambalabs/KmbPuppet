@@ -116,6 +116,37 @@ return [
                     ],
                 ],
             ],
+            'puppet-parameter' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/group/:groupId/parameter/:id/:action',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'groupId' => '[0-9]+',
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Parameter',
+                        'envId' => '0',
+                    ],
+                ],
+            ],
+            'puppet-parameters' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/class/:id/parameters/:action',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Parameters',
+                        'envId' => '0',
+                    ],
+                ],
+            ],
         ],
     ],
     'translator' => [
@@ -132,6 +163,7 @@ return [
             'KmbPuppet\Controller\Modules' => 'KmbPuppet\Controller\ModulesController',
             'KmbPuppet\Controller\Groups' => 'KmbPuppet\Controller\GroupsController',
             'KmbPuppet\Controller\Group' => 'KmbPuppet\Controller\GroupController',
+            'KmbPuppet\Controller\Parameter' => 'KmbPuppet\Controller\ParameterController',
         ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
@@ -209,6 +241,11 @@ return [
                     'controller' => 'KmbPuppet\Controller\Group',
                     'actions' => ['show', 'servers'],
                     'roles' => ['user']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Parameter',
+                    'actions' => ['update', 'remove'],
+                    'roles' => ['admin']
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Environments',

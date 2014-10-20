@@ -146,6 +146,18 @@
             </div>
         </div>
     </div>
+    <div class="col-sm-6">
+        <?php if (isset($this->error)): ?>
+            <ul class="flash">
+                <li class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <?php echo $this->error ?>
+                </li>
+            </ul>
+        <?php endif ?>
+        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
+        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
+    </div>
     <?php if ($this->group->hasClasses()): ?>
     <?php foreach ($this->group->getClasses() as $class): ?>
     <?php $availableParameters = [] ?>
@@ -173,9 +185,7 @@
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Expand all') ?>
                     </a>
-                    <ul style="clear:both">
-                        <?php echo $this->partial('kmb-puppet/group/parameters', ['parameters' => $class->getParameters(), 'availableParameters' => $availableParameters]) ?>
-                    </ul>
+                    <?php echo $this->partial('kmb-puppet/group/parameters', ['group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $availableParameters]) ?>
                 </div>
             <?php else: ?>
                 <h4><?php echo $this->translate('No parameters !') ?></h4>
@@ -186,16 +196,6 @@
     <?php endforeach ?>
     <?php endif ?>
     <div class="col-sm-6" id="group-description" <?php if (isset($this->selectedClass)): ?>style="display: none" <?php endif ?>>
-        <?php if (isset($this->error)): ?>
-        <ul class="flash">
-            <li class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $this->error ?>
-            </li>
-        </ul>
-        <?php endif ?>
-        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
-        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
         <ul class="nav nav-pills pull-right">
             <li><a href="#"><?php echo $this->translate('edit') ?></a></li>
         </ul>

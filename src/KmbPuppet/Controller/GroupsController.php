@@ -22,11 +22,8 @@ namespace KmbPuppet\Controller;
 
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\Group;
-use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPuppet\Service;
-use KmbPuppetDb\Exception\RuntimeException;
-use KmbPuppetDb\Model\Node;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
