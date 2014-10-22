@@ -22,13 +22,18 @@ class ParameterControllerTest extends AbstractHttpControllerTestCase
         $serviceManager->setAllowOverride(true);
 
         $environment = new Environment();
+        $environment->setId(1);
         $environment->setName('STABLE');
         $group = new Group('default');
+        $group->setId(1);
         $group->setEnvironment($environment);
         $class = new \KmbDomain\Model\PuppetClass();
+        $class->setId(1);
         $class->setName('dns');
         $class->setGroup($group);
+        $group->addClass($class);
         $parameter = new Parameter();
+        $parameter->setId(1);
         $parameter->setName('server');
         $parameter->setClass($class);
         $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
