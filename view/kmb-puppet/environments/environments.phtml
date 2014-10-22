@@ -1,7 +1,7 @@
 <ul style="clear:both">
     <?php foreach ($this->environments as $environment): ?>
     <?php if ($this->isGranted('readEnv', $environment)): ?>
-        <li>
+        <li class="tree-level">
         <?php if ($environment->hasChildren()): ?>
             <span class="tree-item">
                 <a href="#"><i class="glyphicon glyphicon-minus-sign darkgrey"></i></a>
@@ -31,5 +31,5 @@
         </li>
     <?php endif ?>
     <?php endforeach ?>
-        <form><li style="display: none"></li></form>
+        <li style="display: none"></li>
 </ul>

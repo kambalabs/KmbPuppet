@@ -1,6 +1,6 @@
 <div class="input-group <?php echo '#' . $this->type . '#' ?>">
     <?php if ($this->type == \KmbDomain\Model\ParameterType::PREDEFINED_LIST): ?>
-        <select class="form-control" name="values[]">
+        <select class="form-control" name="values[]" disabled="disabled">
             <?php if (empty($this->availableValues)): ?>
                 <option value="">--</option>
             <?php else: ?>
@@ -10,9 +10,9 @@
             <?php endif ?>
         </select>
     <?php elseif ($this->type == \KmbDomain\Model\ParameterType::TEXT): ?>
-        <textarea style="resize:vertical" class="form-control custom-control" name="values[]"></textarea>
+        <textarea style="resize:vertical" disabled="disabled" class="form-control custom-control" name="values[]"></textarea>
     <?php else: ?>
-        <input type="text" class="form-control" name="values[]" value="" />
+        <input type="text" disabled="disabled" class="form-control" name="values[]" value="" />
     <?php endif ?>
     <div class="input-group-<?php echo $this->type == \KmbDomain\Model\ParameterType::TEXT ? 'addon' : 'btn' ?>">
         <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>

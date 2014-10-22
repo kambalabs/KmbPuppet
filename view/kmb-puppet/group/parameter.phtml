@@ -8,10 +8,10 @@
             $this->type == \KmbDomain\Model\ParameterType::HASHTABLE ||
             $this->type == \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE ||
             $this->hasMultipleValues): ?>
-        <a href="#"><i class="glyphicon glyphicon-plus lightblue"></i></a>
+        <a href="#"><i class="glyphicon glyphicon-plus create-element lightblue"></i></a>
         <?php endif ?>
-        <a href="#"><i class="glyphicon glyphicon-remove red"></i></a>
-        <span class="<?php if ($this->isEditableHashtableKey): ?>darkgrey<?php else: ?>blue<?php endif ?>"><?php echo $this->parameter->getName() ?></span>
+        <a href="#" data-href="<?php echo $this->url('puppet-parameter', ['action' => 'remove', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+        <span class="inline-editable-clickable <?php if ($this->isEditableHashtableKey): ?>darkgrey<?php else: ?>blue<?php endif ?>"><?php echo $this->parameter->getName() ?></span>
         <?php if (!empty($this->error)): ?>
         <p class="see-more red" style="display: none"><?php echo $this->error ?></p>
         <?php endif ?>
@@ -34,12 +34,12 @@
             </div>
         </div>
     </div>
-    <?php if ($this->parameter->hasValues()): ?>
-        <?php echo $this->partial('kmb-puppet/group/values', [
-            'parameter' => $this->parameter,
-            'type' => $this->parameter->hasTemplate() ? $this->parameter->getTemplate()->type : null,
-            'class' => $this->class,
-            'group' => $this->group,
-        ]) ?>
-    <?php endif ?>
 </form>
+<?php if ($this->parameter->hasValues()): ?>
+    <?php echo $this->partial('kmb-puppet/group/values', [
+        'parameter' => $this->parameter,
+        'type' => $this->parameter->hasTemplate() ? $this->parameter->getTemplate()->type : null,
+        'class' => $this->class,
+        'group' => $this->group,
+    ]) ?>
+<?php endif ?>

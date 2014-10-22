@@ -1,8 +1,9 @@
-<form action="<?php echo $this->url('puppet-parameter', ['action' => 'update', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
+<form class="values-form" action="<?php echo $this->url('puppet-parameter', ['action' => 'update', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
     <ul style="clear:both">
         <?php foreach ($this->parameter->getValues() as $value): ?>
         <li class="tree-level">
             <?php echo $this->partial('kmb-puppet/group/value', [
+                'parameter' => $this->parameter,
                 'value' => $value,
                 'type' => $this->type,
                 'hasMultipleValues' => $this->parameter->hasTemplate() && $this->parameter->getTemplate()->multiple_values,

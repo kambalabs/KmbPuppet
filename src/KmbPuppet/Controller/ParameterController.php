@@ -70,7 +70,7 @@ class ParameterController extends AbstractActionController
         }
         $parameterRepository->update($parameter);
 
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['query' => ['id' => $group->getId(), 'selectedClass' => $selectedClass]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $selectedClass]], true);
     }
 
     public function removeAction()
@@ -79,6 +79,15 @@ class ParameterController extends AbstractActionController
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return $this->notFoundAction();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('groupId'));
+
+        if ($group == null || $group->getEnvironment() != $environment) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
         /** @var ParameterRepositoryInterface $parameterRepository */
@@ -91,14 +100,13 @@ class ParameterController extends AbstractActionController
         }
 
         $class = $parameter->getClass();
-        $group = $class->getGroup();
-        if ($group == null || $group->getEnvironment() != $environment) {
+        if (!$group->hasClassWithName($class->getName())) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        $parameterRepository->remove($class);
+        $parameterRepository->remove($parameter);
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Parameter %s has been succesfully removed"), $parameter->getName()));
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $class->getName()]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
     }
 }
