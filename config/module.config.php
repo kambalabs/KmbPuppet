@@ -244,7 +244,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Parameter',
-                    'actions' => ['update', 'remove'],
+                    'actions' => ['update', 'remove', 'add-child'],
                     'roles' => ['admin']
                 ],
                 [

@@ -23,10 +23,15 @@ namespace KmbPuppet\Controller;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
+use KmbDomain\Model\Parameter;
+use KmbDomain\Model\ParameterFactoryInterface;
 use KmbDomain\Model\ParameterInterface;
 use KmbDomain\Model\ParameterRepositoryInterface;
+use KmbDomain\Model\ParameterType;
+use KmbPmProxy\Service\PuppetClass;
 use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Stdlib\ArrayUtils;
 
 class ParameterController extends AbstractActionController
 {
@@ -70,7 +75,7 @@ class ParameterController extends AbstractActionController
         }
         $parameterRepository->update($parameter);
 
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $selectedClass]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $selectedClass], 'fragment' => 'parameter' . $parameter->getId()], true);
     }
 
     public function removeAction()
@@ -104,9 +109,106 @@ class ParameterController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
+        $anchor = $parameter->hasParent() ? 'parameter' . $parameter->getParent()->getId() : '';
+
         $parameterRepository->remove($parameter);
 
-        $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Parameter %s has been succesfully removed"), $parameter->getName()));
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()], 'fragment' => $anchor], true);
+    }
+
+    public function addChildAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('groupId'));
+
+        if ($group == null || $group->getEnvironment() != $environment) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        /** @var ParameterRepositoryInterface $parameterRepository */
+        $parameterRepository = $this->getServiceLocator()->get('ParameterRepository');
+        /** @var ParameterInterface $parameter */
+        $parameter = $parameterRepository->getById($this->params()->fromRoute('id'));
+
+        if ($parameter == null || $parameter->getClass() == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $class = $parameter->getClass();
+        if (!$group->hasClassWithName($class->getName())) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        /** @var PuppetClass $puppetClassService */
+        $puppetClassService = $this->serviceLocator->get('pmProxyPuppetClassService');
+
+        $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $class->getName());
+        if ($pmProxyPuppetClass === null) {
+            $this->flashMessenger()->addErrorMessage($this->translate('Class template not found'));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        }
+
+        $name = $this->params()->fromPost('name');
+        if (empty($name)) {
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        }
+
+        /** @var \stdClass $template */
+        $template = $this->findAssociatedTemplate(ArrayUtils::merge($parameter->getAncestorsNames(), [$name]), $pmProxyPuppetClass->getParametersTemplates());
+        if ($template == null) {
+            $this->flashMessenger()->addErrorMessage($this->translate('Parameter template not found'));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        }
+
+        /** @var ParameterFactoryInterface $parameterFactory */
+        $parameterFactory = $this->serviceLocator->get('parameterFactory');
+
+        if ($template->type == ParameterType::EDITABLE_HASHTABLE) {
+            $child = new Parameter();
+            $child->setName($name);
+            if (isset($template->entries)) {
+                $child->setChildren($parameterFactory->createRequiredFromTemplates($template->entries));
+            }
+        } else {
+            $child = $parameterFactory->createFromTemplate($template);
+        }
+        $child->setClass($class);
+        $child->setParent($parameter);
+
+        $parameterRepository->add($child);
+
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()], 'fragment' => 'parameter' . $child->getId()], true);
+    }
+
+    /**
+     * @param array $ancestorsNames
+     * @param \stdClass[] $templates
+     * @return \stdClass
+     */
+    protected function findAssociatedTemplate($ancestorsNames, $templates)
+    {
+        $name = array_shift($ancestorsNames);
+        if (!empty($templates)) {
+            foreach ($templates as $template) {
+                if ($template->name === $name) {
+                    if ($template->type == ParameterType::EDITABLE_HASHTABLE) {
+                        array_shift($ancestorsNames); // Ignore keys of editable hashtables
+                    }
+                    if (empty($ancestorsNames)) {
+                        return $template;
+                    } elseif ($template->type == ParameterType::HASHTABLE || $template->type == ParameterType::EDITABLE_HASHTABLE) {
+                        return $this->findAssociatedTemplate($ancestorsNames, $template->entries);
+                    }
+                }
+            }
+        }
     }
 }

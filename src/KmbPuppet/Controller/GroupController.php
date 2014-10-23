@@ -24,6 +24,7 @@ use KmbDomain\Model\ClassTemplatesHydratorInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
+use KmbDomain\Model\ParameterFactoryInterface;
 use KmbDomain\Model\PuppetClassFactoryInterface;
 use KmbDomain\Model\PuppetClassRepositoryInterface;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
@@ -211,9 +212,14 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
         }
 
-        /** @var PuppetClassFactoryInterface $puppetClassFactory */
-        $puppetClassFactory = $this->serviceLocator->get('puppetClassFactory');
-        $class = $puppetClassFactory->create($className, $group, $pmProxyPuppetClass->getParametersTemplates());
+        /** @var ParameterFactoryInterface $parameterFactory */
+        $parameterFactory = $this->serviceLocator->get('parameterFactory');
+        $parameters = $parameterFactory->createRequiredFromTemplates($pmProxyPuppetClass->getParametersTemplates());
+
+        $class = new \KmbDomain\Model\PuppetClass();
+        $class->setName($className);
+        $class->setGroup($group);
+        $class->setParameters($parameters);
 
         /** @var PuppetClassRepositoryInterface $classRepository */
         $classRepository = $this->getServiceLocator()->get('PuppetClassRepository');

@@ -35,7 +35,7 @@
         </div>
     </div>
 </form>
-<?php if ($this->parameter->hasValues()): ?>
+<?php if ($this->type != \KmbDomain\Model\ParameterType::HASHTABLE && $this->type != \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE): ?>
     <?php echo $this->partial('kmb-puppet/group/values', [
         'parameter' => $this->parameter,
         'type' => $this->parameter->hasTemplate() ? $this->parameter->getTemplate()->type : null,

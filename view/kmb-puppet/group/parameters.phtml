@@ -1,7 +1,7 @@
 <ul style="clear:both">
 <?php if (!empty($this->parameters)): ?>
 <?php foreach ($this->parameters as $parameter): ?>
-    <li class="tree-level">
+    <li class="tree-level" id="parameter<?php echo $parameter->getId() ?>">
         <?php echo $this->partial('kmb-puppet/group/parameter', [
             'group' => $this->group,
             'class' => $this->class,
@@ -14,7 +14,7 @@
         <?php if ($parameter->hasTemplate() && $parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE): ?>
         <ul style="clear:both">
             <?php foreach ($parameter->getChildren() as $child): ?>
-            <li class="tree-level">
+            <li class="tree-level" id="parameter<?php echo $child->getId() ?>">
                 <?php echo $this->partial('kmb-puppet/group/parameter', [
                     'group' => $this->group,
                     'class' => $this->class,

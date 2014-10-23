@@ -4,7 +4,7 @@
 <form class="input-group" action="<?php echo $this->url('puppet-parameters', ['action' => 'create', 'id' => $this->class->getId()], true) ?>" method="post">
 <?php endif ?>
     <?php if ($this->isEditableHashtableKey): ?>
-    <input type="text" class="form-control" name="parameter" value="" disabled="disabled" />
+    <input type="text" class="form-control" name="name" value="" disabled="disabled" />
     <?php else: ?>
     <select class="form-control" name="name" disabled="disabled">
         <?php if (empty($this->availableParameters)): ?>

@@ -78,13 +78,22 @@ class ParameterControllerTest extends AbstractHttpControllerTestCase
         $this->dispatch('/env/1/puppet/group/1/parameter/1/update?selectedClass=dns', 'POST', ['name']);
 
         $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns');
+        $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns#parameter1');
     }
 
     /** @test */
     public function canRemove()
     {
         $this->dispatch('/env/1/puppet/group/1/parameter/1/remove?selectedClass=dns');
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns');
+    }
+
+    /** @test */
+    public function canAddChild()
+    {
+        $this->dispatch('/env/1/puppet/group/1/parameter/1/add-child?selectedClass=dns', 'POST', ['name' => 'test']);
 
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns');
