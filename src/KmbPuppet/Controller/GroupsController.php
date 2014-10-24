@@ -54,12 +54,8 @@ class GroupsController extends AbstractActionController
         /** @var EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return new JsonModel(['error' => $this->translate('You have to select an environment first !')]);
-        }
-
-        $currentRevision = $environment->getCurrentRevision();
-        if ($currentRevision == null) {
-            return new JsonModel(['error' => $this->translate('This environment is invalid, it has no current revision. Please contact administrator !')]);
+            $this->flashMessenger()->addErrorMessage($this->translate('You have to select an environment first !'));
+            return new JsonModel(['error' => true]);
         }
 
         $groupsIds = $this->params()->fromPost('groups');
@@ -67,6 +63,12 @@ class GroupsController extends AbstractActionController
             /** @var GroupRepositoryInterface $groupRepository */
             $groupRepository = $this->getServiceLocator()->get('GroupRepository');
             $groups = $groupRepository->getAllByIds($groupsIds);
+            $revision = $groups[0]->getRevision();
+            if ($revision->isReleased()) {
+                $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+                $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+                return new JsonModel(['error' => true]);
+            }
             foreach ($groups as $group) {
                 $group->setOrdering(array_search($group->getId(), $groupsIds));
                 $groupRepository->update($group);

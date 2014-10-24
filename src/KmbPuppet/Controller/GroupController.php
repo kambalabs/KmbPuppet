@@ -66,7 +66,6 @@ class GroupController extends AbstractActionController
             $nodes = $nodeService->getAllByEnvironmentAndPatterns($environment, $group->getIncludePattern(), $group->getExcludePattern());
         } catch (RuntimeException $exception) {
             $nodes = [];
-            $error = $this->translate('An error occured while reaching PuppetDB !');
         }
 
         /** @var ClassTemplatesHydratorInterface $classTemplatesHydrator */
@@ -92,8 +91,7 @@ class GroupController extends AbstractActionController
             'group' => $group,
             'serversCount' => count($nodes),
             'availableClasses' => $availableClasses,
-            'selectedClass' => $selectedClass,
-            'error' => $error,
+            'selectedClass' => $selectedClass
         ]);
     }
 
@@ -159,6 +157,13 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
         $name = $this->params()->fromPost('name');
         if (isset($name)) {
             $group->setName($name);
@@ -194,6 +199,13 @@ class GroupController extends AbstractActionController
         }
 
         if ($group->getEnvironment() != $environment) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 

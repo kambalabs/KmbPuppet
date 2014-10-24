@@ -55,6 +55,13 @@ class PuppetClassController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        }
+
         /** @var ParameterRepositoryInterface $parameterRepository */
         $parameterRepository = $this->serviceLocator->get('ParameterRepository');
 
@@ -63,7 +70,7 @@ class PuppetClassController extends AbstractActionController
 
         $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $class->getName());
         if ($pmProxyPuppetClass === null) {
-            $this->flashMessenger()->addErrorMessage($this->translate('Class template not found'));
+            $this->flashMessenger()->addErrorMessage($this->translate('Unable to find associated template to the class'));
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
         }
 
@@ -75,7 +82,7 @@ class PuppetClassController extends AbstractActionController
         /** @var \stdClass $template */
         $template = $this->findAssociatedTemplate($name, $pmProxyPuppetClass->getParametersTemplates());
         if ($template == null) {
-            $this->flashMessenger()->addErrorMessage($this->translate('Parameter template not found'));
+            $this->flashMessenger()->addErrorMessage($this->translate('Unable to find associated template to the parameter'));
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
         }
 

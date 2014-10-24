@@ -55,6 +55,13 @@ class ParameterController extends AbstractActionController
 
         $selectedClass = $this->params()->fromQuery('selectedClass');
 
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $selectedClass]], true);
+        }
+
         /** @var ParameterRepositoryInterface $parameterRepository */
         $parameterRepository = $this->getServiceLocator()->get('ParameterRepository');
         /** @var ParameterInterface $parameter */
@@ -111,6 +118,13 @@ class ParameterController extends AbstractActionController
 
         $anchor = $parameter->hasParent() ? 'parameter' . $parameter->getParent()->getId() : '';
 
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        }
+
         $parameterRepository->remove($parameter);
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()], 'fragment' => $anchor], true);
@@ -147,12 +161,19 @@ class ParameterController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+        }
+
         /** @var PuppetClass $puppetClassService */
         $puppetClassService = $this->serviceLocator->get('pmProxyPuppetClassService');
 
         $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $class->getName());
         if ($pmProxyPuppetClass === null) {
-            $this->flashMessenger()->addErrorMessage($this->translate('Class template not found'));
+            $this->flashMessenger()->addErrorMessage($this->translate('Unable to find associated template to the class'));
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
         }
 
@@ -164,7 +185,7 @@ class ParameterController extends AbstractActionController
         /** @var \stdClass $template */
         $template = $this->findAssociatedTemplate(ArrayUtils::merge($parameter->getAncestorsNames(), [$name]), $pmProxyPuppetClass->getParametersTemplates());
         if ($template == null) {
-            $this->flashMessenger()->addErrorMessage($this->translate('Parameter template not found'));
+            $this->flashMessenger()->addErrorMessage($this->translate('Unable to find associated template to the parameter'));
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
         }
 
