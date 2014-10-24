@@ -180,7 +180,6 @@
     </div>
     <?php if ($this->group->hasClasses()): ?>
     <?php foreach ($this->group->getClasses() as $class): ?>
-    <?php $availableParameters = [] ?>
     <div data-class-id="<?php echo $class->getId() ?>" class="col-sm-6 class-parameters<?php if (isset($this->selectedClass) && $this->selectedClass->getId() === $class->getId()): ?> active<?php endif ?>">
         <div class="panel panel-default" style="min-height: 370px">
             <div class="panel-heading">
@@ -189,13 +188,12 @@
                 <span>
                     <?php echo sprintf($this->translate('Class %s'), $this->truncate($class->getName(), 36)) ?>
                 </span>
-                <a href="#" class="btn btn-info btn-xs pull-right"<?php if (empty($availableParameters)): ?> disabled="disabled"<?php endif ?> style="margin-right: 10px">
+                <a href="#" class="add-parameter btn btn-info btn-xs pull-right"<?php if (!$class->hasAvailableParameters()): ?> disabled="disabled"<?php endif ?> style="margin-right: 10px">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                     <?php echo $this->translate('Add a parameter') ?>
                 </a>
             </div>
             <div class="panel-body">
-            <?php if ($class->hasParameters()): ?>
                 <div class="tree">
                     <a href="#" class="btn btn-default collapse-all pull-right">
                         <span class="glyphicon glyphicon-minus-sign"></span>
@@ -205,11 +203,8 @@
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Expand all') ?>
                     </a>
-                    <?php echo $this->partial('kmb-puppet/group/parameters', ['group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $availableParameters]) ?>
+                    <?php echo $this->partial('kmb-puppet/group/parameters', ['group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $class->getAvailableParameters()]) ?>
                 </div>
-            <?php else: ?>
-                <h4><?php echo $this->translate('No parameters !') ?></h4>
-            <?php endif ?>
             </div>
         </div>
     </div>

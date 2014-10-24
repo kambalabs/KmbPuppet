@@ -132,17 +132,17 @@ return [
                     ],
                 ],
             ],
-            'puppet-parameters' => [
+            'puppet-class' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '[/env/:envId]/puppet/class/:id/parameters/:action',
+                    'route' => '[/env/:envId]/puppet/class/:id/:action',
                     'constraints' => [
                         'envId' => '[0-9]+',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ],
                     'defaults' => [
-                        'controller' => 'KmbPuppet\Controller\Parameters',
+                        'controller' => 'KmbPuppet\Controller\PuppetClass',
                         'envId' => '0',
                     ],
                 ],
@@ -163,6 +163,7 @@ return [
             'KmbPuppet\Controller\Modules' => 'KmbPuppet\Controller\ModulesController',
             'KmbPuppet\Controller\Groups' => 'KmbPuppet\Controller\GroupsController',
             'KmbPuppet\Controller\Group' => 'KmbPuppet\Controller\GroupController',
+            'KmbPuppet\Controller\PuppetClass' => 'KmbPuppet\Controller\PuppetClassController',
             'KmbPuppet\Controller\Parameter' => 'KmbPuppet\Controller\ParameterController',
         ],
         'factories' => [
@@ -241,6 +242,11 @@ return [
                     'controller' => 'KmbPuppet\Controller\Group',
                     'actions' => ['show', 'servers'],
                     'roles' => ['user']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\PuppetClass',
+                    'actions' => ['add-parameter'],
+                    'roles' => ['admin']
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Parameter',
