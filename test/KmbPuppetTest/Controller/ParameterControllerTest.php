@@ -4,6 +4,7 @@ namespace KmbPuppetTest\Controller;
 use KmbDomain\Model\Environment;
 use KmbDomain\Model\Group;
 use KmbDomain\Model\Parameter;
+use KmbDomain\Model\Revision;
 use KmbPmProxy\Model\PuppetClass;
 use KmbPmProxy\Model\PuppetModule;
 use KmbPuppetTest\Bootstrap;
@@ -26,6 +27,7 @@ class ParameterControllerTest extends AbstractHttpControllerTestCase
         $environment->setName('STABLE');
         $group = new Group('default');
         $group->setId(1);
+        $group->setRevision(new Revision());
         $group->setEnvironment($environment);
         $class = new \KmbDomain\Model\PuppetClass();
         $class->setId(1);

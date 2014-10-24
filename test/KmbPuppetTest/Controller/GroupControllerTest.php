@@ -36,6 +36,7 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
 
         $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
         $group = new Group('dns');
+        $group->setRevision(new Revision());
         $group->setEnvironment($environment);
         $groupRepository->expects($this->any())
             ->method('getById')
