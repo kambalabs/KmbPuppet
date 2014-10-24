@@ -11,7 +11,7 @@
             'availableParameters' => $this->availableParameters,
             'error' => !$parameter->hasTemplate() ? $this->translate('This parameter does not exists in the class template') : '',
         ]) ?>
-        <?php if ($parameter->hasTemplate() && $parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE): ?>
+        <?php if ($parameter->hasTemplate() && $parameter->getTemplate()->type == \KmbDomain\Model\GroupParameterType::EDITABLE_HASHTABLE): ?>
         <ul style="clear:both">
             <?php foreach ($parameter->getChildren() as $child): ?>
             <li class="tree-level" id="parameter<?php echo $child->getId() ?>">
@@ -43,7 +43,7 @@
                 ]) ?>
             </li>
         </ul>
-        <?php elseif (!$parameter->hasTemplate() || $parameter->getTemplate()->type == \KmbDomain\Model\ParameterType::HASHTABLE): ?>
+        <?php elseif (!$parameter->hasTemplate() || $parameter->getTemplate()->type == \KmbDomain\Model\GroupParameterType::HASHTABLE): ?>
             <?php echo $this->partial('kmb-puppet/group/parameters', [
                 'group' => $this->group,
                 'class' => $this->class,

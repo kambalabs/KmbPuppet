@@ -1,7 +1,7 @@
 <?php if (isset($this->parent)): ?>
-<form class="input-group" action="<?php echo $this->url('puppet-parameter', ['action' => 'add-child', 'id' => $this->parent->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
+<form class="input-group" action="<?php echo $this->url('puppet-group-parameter', ['action' => 'add-child', 'id' => $this->parent->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
 <?php else: ?>
-<form class="input-group" action="<?php echo $this->url('puppet-class', ['action' => 'add-parameter', 'id' => $this->class->getId()], true) ?>" method="post">
+<form class="input-group" action="<?php echo $this->url('puppet-group-class', ['action' => 'add-parameter', 'id' => $this->class->getId(), 'groupId' => $this->group->getId()], true) ?>" method="post">
 <?php endif ?>
     <?php if ($this->isEditableHashtableKey): ?>
     <input type="text" class="form-control" name="name" value="" disabled="disabled" />

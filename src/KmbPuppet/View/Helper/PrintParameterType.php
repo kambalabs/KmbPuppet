@@ -20,7 +20,7 @@
  */
 namespace KmbPuppet\View\Helper;
 
-use KmbDomain\Model\ParameterType;
+use KmbDomain\Model\GroupParameterType;
 use Zend\I18n\View\Helper\AbstractTranslatorHelper;
 
 class PrintParameterType extends AbstractTranslatorHelper
@@ -30,21 +30,21 @@ class PrintParameterType extends AbstractTranslatorHelper
         $translator = $this->getTranslator();
 
         switch ($type) {
-            case ParameterType::BOOLEAN:
+            case GroupParameterType::BOOLEAN:
                 return $translator->translate('boolean');
-            case ParameterType::FREE_ENTRY:
+            case GroupParameterType::FREE_ENTRY:
                 return $translator->translate('free entry');
-            case ParameterType::STRING:
+            case GroupParameterType::STRING:
                 return $translator->translate('string');
-            case ParameterType::TEXT:
+            case GroupParameterType::TEXT:
                 return $translator->translate('text');
-            case ParameterType::PREDEFINED_LIST:
+            case GroupParameterType::PREDEFINED_LIST:
                 return $translator->translate('predefined list');
-            case ParameterType::EDITABLE_LIST:
+            case GroupParameterType::EDITABLE_LIST:
                 return $translator->translate('editable list');
-            case ParameterType::HASHTABLE:
+            case GroupParameterType::HASHTABLE:
                 return $translator->translate('hashtable');
-            case ParameterType::EDITABLE_HASHTABLE:
+            case GroupParameterType::EDITABLE_HASHTABLE:
                 return $translator->translate('editable hashtable');
             case null:
                 return '-';

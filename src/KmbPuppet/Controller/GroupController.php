@@ -22,11 +22,11 @@ namespace KmbPuppet\Controller;
 
 use KmbDomain\Model\ClassTemplatesHydratorInterface;
 use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\GroupClass;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
-use KmbDomain\Model\ParameterFactoryInterface;
-use KmbDomain\Model\PuppetClassFactoryInterface;
-use KmbDomain\Model\PuppetClassRepositoryInterface;
+use KmbDomain\Model\GroupParameterFactoryInterface;
+use KmbDomain\Model\GroupClassRepositoryInterface;
 use KmbPmProxy\Service\PuppetClass;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
@@ -224,18 +224,18 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
         }
 
-        /** @var ParameterFactoryInterface $parameterFactory */
-        $parameterFactory = $this->serviceLocator->get('parameterFactory');
-        $parameters = $parameterFactory->createRequiredFromTemplates($pmProxyPuppetClass->getParametersTemplates());
+        /** @var GroupParameterFactoryInterface $groupParameterFactory */
+        $groupParameterFactory = $this->serviceLocator->get('groupParameterFactory');
+        $parameters = $groupParameterFactory->createRequiredFromTemplates($pmProxyPuppetClass->getParametersTemplates());
 
-        $class = new \KmbDomain\Model\PuppetClass();
-        $class->setName($className);
-        $class->setGroup($group);
-        $class->setParameters($parameters);
+        $groupClass = new GroupClass();
+        $groupClass->setName($className);
+        $groupClass->setGroup($group);
+        $groupClass->setParameters($parameters);
 
-        /** @var PuppetClassRepositoryInterface $classRepository */
-        $classRepository = $this->getServiceLocator()->get('PuppetClassRepository');
-        $classRepository->add($class);
+        /** @var GroupClassRepositoryInterface $classRepository */
+        $classRepository = $this->getServiceLocator()->get('GroupClassRepository');
+        $classRepository->add($groupClass);
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $className]], true);
     }
@@ -261,17 +261,17 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        /** @var PuppetClassRepositoryInterface $classRepository */
-        $classRepository = $this->getServiceLocator()->get('PuppetClassRepository');
+        /** @var GroupClassRepositoryInterface $groupClassRepository */
+        $groupClassRepository = $this->getServiceLocator()->get('GroupClassRepository');
 
         $className = $this->params()->fromRoute('className');
-        $class = $group->getClassByName($className);
-        if ($class == null) {
+        $groupClass = $group->getClassByName($className);
+        if ($groupClass == null) {
             $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Group doesn't have class %s"), $className));
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
         }
 
-        $classRepository->remove($class);
+        $groupClassRepository->remove($groupClass);
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Class %s has been succesfully removed"), $className));
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $className]], true);

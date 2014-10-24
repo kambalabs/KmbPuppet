@@ -3,14 +3,15 @@ namespace KmbPuppetTest\Controller;
 
 use KmbDomain\Model\Environment;
 use KmbDomain\Model\Group;
-use KmbDomain\Model\Parameter;
+use KmbDomain\Model\GroupClass;
+use KmbDomain\Model\GroupParameterType;
 use KmbDomain\Model\Revision;
 use KmbPmProxy\Model\PuppetClass;
 use KmbPmProxy\Model\PuppetModule;
 use KmbPuppetTest\Bootstrap;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class ParameterControllerTest extends AbstractHttpControllerTestCase
+class GroupClassControllerTest extends AbstractHttpControllerTestCase
 {
     protected $traceError = true;
 
@@ -29,15 +30,11 @@ class ParameterControllerTest extends AbstractHttpControllerTestCase
         $group->setId(1);
         $group->setRevision(new Revision());
         $group->setEnvironment($environment);
-        $class = new \KmbDomain\Model\PuppetClass();
-        $class->setId(1);
-        $class->setName('dns');
-        $class->setGroup($group);
-        $group->addClass($class);
-        $parameter = new Parameter();
-        $parameter->setId(1);
-        $parameter->setName('server');
-        $parameter->setClass($class);
+        $groupClass = new GroupClass();
+        $groupClass->setId(1);
+        $groupClass->setName('dns');
+        $groupClass->setGroup($group);
+        $group->addClass($groupClass);
         $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
         $environmentRepository->expects($this->any())
             ->method('getById')
@@ -47,17 +44,19 @@ class ParameterControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
-        $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
-        $groupRepository->expects($this->any())
+        $groupClassRepository = $this->getMock('KmbDomain\Model\GroupClassRepositoryInterface');
+        $groupClassRepository->expects($this->any())
             ->method('getById')
-            ->will($this->returnValue($group));
-        $serviceManager->setService('GroupRepository', $groupRepository);
+            ->will($this->returnValue($groupClass));
+        $serviceManager->setService('GroupClassRepository', $groupClassRepository);
 
-        $parameterRepository = $this->getMock('KmbDomain\Model\ParameterRepositoryInterface');
-        $parameterRepository->expects($this->any())
-            ->method('getById')
-            ->will($this->returnValue($parameter));
-        $serviceManager->setService('ParameterRepository', $parameterRepository);
+        $groupParameterRepository = $this->getMock('KmbDomain\Model\GroupParameterRepositoryInterface');
+        $groupParameterRepository->expects($this->any())
+            ->method('add')
+            ->will($this->returnCallback(function ($groupParameter) {
+                $groupParameter->setId(1);
+            }));
+        $serviceManager->setService('GroupParameterRepository', $groupParameterRepository);
 
         $puppetModuleService = $this->getMock('KmbPmProxy\Service\PuppetModuleInterface');
         $puppetModule = new PuppetModule('apache', '2.1.4');
@@ -72,32 +71,27 @@ class ParameterControllerTest extends AbstractHttpControllerTestCase
             ->method('getByEnvironmentAndName')
             ->will($this->returnValue($puppetModule));
         $serviceManager->setService('pmProxyPuppetModuleService', $puppetModuleService);
+
+        $puppetClassService = $this->getMock('KmbPmProxy\Service\PuppetClassInterface');
+        $template = new \stdClass();
+        $template->name = 'ServerName';
+        $template->required = true;
+        $template->multiple_values = false;
+        $template->type = GroupParameterType::STRING;
+        $puppetClass = new PuppetClass('apache::vhost', [$template], []);
+        $puppetClassService->expects($this->any())
+            ->method('getByEnvironmentAndName')
+            ->will($this->returnValue($puppetClass));
+        $serviceManager->setService('pmProxyPuppetClassService', $puppetClassService);
     }
 
     /** @test */
-    public function canUpdate()
+    public function canAddParameter()
     {
-        $this->dispatch('/env/1/puppet/group/1/parameter/1/update?selectedClass=dns', 'POST', ['name']);
+        $this->dispatch('/env/1/puppet/group/1/class/1/add-parameter', 'POST', ['name' => 'ServerName']);
 
+        echo $this->getResponse()->getContent();
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns#parameter1');
-    }
-
-    /** @test */
-    public function canRemove()
-    {
-        $this->dispatch('/env/1/puppet/group/1/parameter/1/remove?selectedClass=dns');
-
-        $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns');
-    }
-
-    /** @test */
-    public function canAddChild()
-    {
-        $this->dispatch('/env/1/puppet/group/1/parameter/1/add-child?selectedClass=dns', 'POST', ['name' => 'test']);
-
-        $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns');
     }
 }

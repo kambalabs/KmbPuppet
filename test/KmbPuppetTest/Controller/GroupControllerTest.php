@@ -32,7 +32,7 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
-        $serviceManager->setService('PuppetClassRepository', $this->getMock('KmbDomain\Model\PuppetClassRepositoryInterface'));
+        $serviceManager->setService('GroupClassRepository', $this->getMock('KmbDomain\Model\GroupClassRepositoryInterface'));
 
         $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
         $group = new Group('dns');

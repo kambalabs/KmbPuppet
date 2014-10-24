@@ -1,12 +1,12 @@
-<form action="<?php echo $this->url('puppet-parameter', ['action' => 'update', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
+<form action="<?php echo $this->url('puppet-group-parameter', ['action' => 'update', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
     <span class="tree-item inline-editable<?php if (!empty($this->error)): ?> bg-red<?php endif ?>">
         <a href="#"><i class="glyphicon glyphicon-minus-sign darkgrey"></i></a>
         <?php if (!empty($this->error)): ?>
         <a href="#"><i class="glyphicon glyphicon-zoom-in darkgrey"></i></a>
         <?php endif ?>
         <?php if (
-            $this->type == \KmbDomain\Model\ParameterType::HASHTABLE ||
-            $this->type == \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE ||
+            $this->type == \KmbDomain\Model\GroupParameterType::HASHTABLE ||
+            $this->type == \KmbDomain\Model\GroupParameterType::EDITABLE_HASHTABLE ||
             $this->hasMultipleValues): ?>
         <a href="#"><i class="glyphicon glyphicon-plus create-element lightblue"></i></a>
         <?php endif ?>
@@ -35,7 +35,7 @@
         </div>
     </div>
 </form>
-<?php if ($this->type != \KmbDomain\Model\ParameterType::HASHTABLE && $this->type != \KmbDomain\Model\ParameterType::EDITABLE_HASHTABLE): ?>
+<?php if ($this->type != \KmbDomain\Model\GroupParameterType::HASHTABLE && $this->type != \KmbDomain\Model\GroupParameterType::EDITABLE_HASHTABLE): ?>
     <?php echo $this->partial('kmb-puppet/group/values', [
         'parameter' => $this->parameter,
         'type' => $this->parameter->hasTemplate() ? $this->parameter->getTemplate()->type : null,

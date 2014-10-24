@@ -21,17 +21,17 @@
 namespace KmbPuppet\Controller;
 
 use KmbDomain\Model\EnvironmentInterface;
-use KmbDomain\Model\Parameter;
-use KmbDomain\Model\ParameterFactoryInterface;
-use KmbDomain\Model\ParameterRepositoryInterface;
-use KmbDomain\Model\ParameterType;
-use KmbDomain\Model\PuppetClassInterface;
-use KmbDomain\Model\PuppetClassRepositoryInterface;
+use KmbDomain\Model\GroupParameter;
+use KmbDomain\Model\GroupParameterFactoryInterface;
+use KmbDomain\Model\GroupParameterRepositoryInterface;
+use KmbDomain\Model\GroupParameterType;
+use KmbDomain\Model\GroupClassInterface;
+use KmbDomain\Model\GroupClassRepositoryInterface;
 use KmbPmProxy\Service\PuppetClass as PuppetClassService;
 use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 
-class PuppetClassController extends AbstractActionController
+class GroupClassController extends AbstractActionController
 {
     public function addParameterAction()
     {
@@ -41,16 +41,16 @@ class PuppetClassController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        /** @var PuppetClassRepositoryInterface $classRepository */
-        $classRepository = $this->serviceLocator->get('PuppetClassRepository');
-        /** @var PuppetClassInterface $class */
-        $class = $classRepository->getById($this->params()->fromRoute('id'));
+        /** @var GroupClassRepositoryInterface $groupClassRepository */
+        $groupClassRepository = $this->serviceLocator->get('GroupClassRepository');
+        /** @var GroupClassInterface $groupClass */
+        $groupClass = $groupClassRepository->getById($this->params()->fromRoute('id'));
 
-        if ($class == null) {
+        if ($groupClass == null) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        $group = $class->getGroup();
+        $group = $groupClass->getGroup();
         if ($group == null || $group->getEnvironment() != $environment) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
@@ -59,50 +59,50 @@ class PuppetClassController extends AbstractActionController
         if ($revision->isReleased()) {
             $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
 
-        /** @var ParameterRepositoryInterface $parameterRepository */
-        $parameterRepository = $this->serviceLocator->get('ParameterRepository');
+        /** @var GroupParameterRepositoryInterface $groupParameterRepository */
+        $groupParameterRepository = $this->serviceLocator->get('GroupParameterRepository');
 
         /** @var PuppetClassService $puppetClassService */
         $puppetClassService = $this->serviceLocator->get('pmProxyPuppetClassService');
 
-        $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $class->getName());
+        $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $groupClass->getName());
         if ($pmProxyPuppetClass === null) {
             $this->flashMessenger()->addErrorMessage($this->translate('Unable to find associated template to the class'));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
 
         $name = rtrim($this->params()->fromPost('name'), '*');
         if (empty($name)) {
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
 
         /** @var \stdClass $template */
         $template = $this->findAssociatedTemplate($name, $pmProxyPuppetClass->getParametersTemplates());
         if ($template == null) {
             $this->flashMessenger()->addErrorMessage($this->translate('Unable to find associated template to the parameter'));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()]], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
 
-        /** @var ParameterFactoryInterface $parameterFactory */
-        $parameterFactory = $this->serviceLocator->get('parameterFactory');
+        /** @var GroupParameterFactoryInterface $groupParameterFactory */
+        $groupParameterFactory = $this->serviceLocator->get('groupParameterFactory');
 
-        if ($template->type == ParameterType::EDITABLE_HASHTABLE) {
-            $parameter = new Parameter();
-            $parameter->setName($name);
+        if ($template->type == GroupParameterType::EDITABLE_HASHTABLE) {
+            $groupParameter = new GroupParameter();
+            $groupParameter->setName($name);
             if (isset($template->entries)) {
-                $parameter->setChildren($parameterFactory->createRequiredFromTemplates($template->entries));
+                $groupParameter->setChildren($groupParameterFactory->createRequiredFromTemplates($template->entries));
             }
         } else {
-            $parameter = $parameterFactory->createFromTemplate($template);
+            $groupParameter = $groupParameterFactory->createFromTemplate($template);
         }
-        $parameter->setClass($class);
+        $groupParameter->setClass($groupClass);
 
-        $parameterRepository->add($parameter);
+        $groupParameterRepository->add($groupParameter);
 
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $class->getName()], 'fragment' => 'parameter' . $parameter->getId()], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()], 'fragment' => 'parameter' . $groupParameter->getId()], true);
     }
 
     /**

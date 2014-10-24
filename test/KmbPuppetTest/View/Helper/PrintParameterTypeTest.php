@@ -1,7 +1,7 @@
 <?php
 namespace KmbPuppetTest\View\Helper;
 
-use KmbDomain\Model\ParameterType;
+use KmbDomain\Model\GroupParameterType;
 use KmbPuppet\View\Helper\PrintParameterType;
 use Zend\I18n\Translator\Translator;
 
@@ -18,7 +18,7 @@ class PrintParameterTypeTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function canInvokeWithBoolean()
     {
-        $this->assertEquals('boolean', $this->printParameterType(ParameterType::BOOLEAN));
+        $this->assertEquals('boolean', $this->printParameterType(GroupParameterType::BOOLEAN));
     }
 
     /** @test */

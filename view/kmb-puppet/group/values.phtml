@@ -1,4 +1,4 @@
-<form class="values-form" action="<?php echo $this->url('puppet-parameter', ['action' => 'update', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
+<form class="values-form" action="<?php echo $this->url('puppet-group-parameter', ['action' => 'update', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" method="post">
     <ul style="clear:both">
         <?php if ($this->parameter->hasValues()): ?>
         <?php foreach ($this->parameter->getValues() as $value): ?>
