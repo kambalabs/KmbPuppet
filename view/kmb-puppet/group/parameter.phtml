@@ -10,7 +10,7 @@
             $this->hasMultipleValues): ?>
         <a href="#"><i class="glyphicon glyphicon-plus create-element lightblue"></i></a>
         <?php endif ?>
-        <a href="#" data-href="<?php echo $this->url('puppet-parameter', ['action' => 'remove', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+        <a href="#" data-href="<?php echo $this->url('puppet-group-parameter', ['action' => 'remove', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
         <span class="inline-editable-clickable <?php if ($this->isEditableHashtableKey): ?>darkgrey<?php else: ?>blue<?php endif ?>"><?php echo $this->parameter->getName() ?></span>
         <?php if (!empty($this->error)): ?>
         <p class="see-more red" style="display: none"><?php echo $this->error ?></p>
