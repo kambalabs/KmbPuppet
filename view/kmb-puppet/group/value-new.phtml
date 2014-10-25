@@ -9,6 +9,11 @@
                 <?php endforeach ?>
             <?php endif ?>
         </select>
+    <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
+        <select class="form-control" name="values[]" disabled="disabled">
+            <option value="1"><?php echo $this->printBoolean(true) ?></option>
+            <option value="0"><?php echo $this->printBoolean(false) ?></option>
+        </select>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::TEXT): ?>
         <textarea style="resize:vertical" disabled="disabled" class="form-control custom-control" name="values[]"></textarea>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>

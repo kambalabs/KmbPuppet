@@ -2,7 +2,9 @@
     <?php if ($this->hasMultipleValues): ?>
         <a href="#" class="remove-value"<?php if ($this->type == \KmbDomain\Model\GroupParameterType::TEXT): ?> style="position: absolute; margin-left: -18px" <?php endif ?> data-toggle="modal" data-target="#confirm-remove-value" data-confirm-text="<?php echo sprintf($this->translate('You are about to remove a value of <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
     <?php endif ?>
-    <?php if (empty($this->value)): ?>
+    <?php if ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
+        <span class="inline-editable-clickable darkgrey"><?php echo $this->printBoolean($this->value) ?></span>
+    <?php elseif (empty($this->value)): ?>
         <i class="inline-editable-clickable lightgrey"><?php echo $this->translate('click to update') ?></i>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>
         <span class="inline-editable-clickable darkgrey"><?php echo $this->truncate(str_repeat('*', strlen($this->value)), 32) ?></span>
@@ -18,6 +20,11 @@
                 <?php foreach ($this->availableValues as $availableValue): ?>
                     <option><?php echo $this->escapeHtml($availableValue) ?></option>
                 <?php endforeach ?>
+            </select>
+        <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
+            <select class="form-control" name="values[]">
+                <option value="1"><?php echo $this->printBoolean(true) ?></option>
+                <option value="0"<?php if (!$this->value): ?> selected="selected"<?php endif ?>><?php echo $this->printBoolean(false) ?></option>
             </select>
         <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::TEXT): ?>
             <textarea style="resize:vertical" class="form-control custom-control" name="values[]"><?php echo $this->escapeHtml($this->value) ?></textarea>
