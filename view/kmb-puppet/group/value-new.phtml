@@ -11,6 +11,8 @@
         </select>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::TEXT): ?>
         <textarea style="resize:vertical" disabled="disabled" class="form-control custom-control" name="values[]"></textarea>
+    <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>
+        <input type="password" disabled="disabled" class="form-control" name="values[]" value="" />
     <?php else: ?>
         <input type="text" disabled="disabled" class="form-control" name="values[]" value="" />
     <?php endif ?>

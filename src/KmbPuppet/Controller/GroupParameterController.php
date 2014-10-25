@@ -177,7 +177,7 @@ class GroupParameterController extends AbstractActionController
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
 
-        $name = $this->params()->fromPost('name');
+        $name = rtrim($this->params()->fromPost('name'), '*');
         if (empty($name)) {
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }

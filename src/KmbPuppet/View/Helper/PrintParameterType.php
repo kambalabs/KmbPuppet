@@ -38,10 +38,10 @@ class PrintParameterType extends AbstractTranslatorHelper
                 return $translator->translate('string');
             case GroupParameterType::TEXT:
                 return $translator->translate('text');
+            case GroupParameterType::PASSWORD:
+                return $translator->translate('password');
             case GroupParameterType::PREDEFINED_LIST:
                 return $translator->translate('predefined list');
-            case GroupParameterType::EDITABLE_LIST:
-                return $translator->translate('editable list');
             case GroupParameterType::HASHTABLE:
                 return $translator->translate('hashtable');
             case GroupParameterType::EDITABLE_HASHTABLE:
