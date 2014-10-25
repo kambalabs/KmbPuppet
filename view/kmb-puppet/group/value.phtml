@@ -1,6 +1,6 @@
-<span class="tree-item inline-editable"<?php if ($this->type == \KmbDomain\Model\GroupParameterType::TEXT && $this->hasMultipleValues): ?> style="padding-left: 26px"<?php endif ?>>
+<span class="tree-item inline-editable"<?php if ($this->hasMultipleValues): ?> style="padding-left: 26px"<?php endif ?>>
     <?php if ($this->hasMultipleValues): ?>
-        <a href="#" class="remove-value"<?php if ($this->type == \KmbDomain\Model\GroupParameterType::TEXT): ?> style="position: absolute; margin-left: -18px" <?php endif ?> data-toggle="modal" data-target="#confirm-remove-value" data-confirm-text="<?php echo sprintf($this->translate('You are about to remove a value of <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+        <a href="#" class="remove-value" style="position: absolute; margin-left: -18px" data-toggle="modal" data-target="#confirm-remove-value" data-confirm-text="<?php echo sprintf($this->translate('You are about to remove a value of <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
     <?php endif ?>
     <?php if ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
         <span class="inline-editable-clickable darkgrey"><?php echo $this->printBoolean($this->value) ?></span>
