@@ -25,6 +25,7 @@ use KmbPmProxy\Model\PuppetClassValidator;
 use KmbPmProxy\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use ZfcRbac\Exception\UnauthorizedException;
 
 class ModulesController extends AbstractActionController
 {
@@ -34,6 +35,9 @@ class ModulesController extends AbstractActionController
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+        }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
         }
 
         /** @var Service\PuppetModuleInterface $puppetModuleService */
@@ -51,6 +55,9 @@ class ModulesController extends AbstractActionController
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return $this->notFoundAction();
+        }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
         }
 
         /** @var Service\PuppetModuleInterface $puppetModuleService */
@@ -84,6 +91,9 @@ class ModulesController extends AbstractActionController
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return $this->notFoundAction();
+        }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
         }
 
         /** @var Service\PuppetModuleInterface $puppetModuleService */

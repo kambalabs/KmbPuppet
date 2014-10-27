@@ -30,6 +30,7 @@ use KmbDomain\Model\GroupClassRepositoryInterface;
 use KmbPmProxy\Service\PuppetClass as PuppetClassService;
 use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
+use ZfcRbac\Exception\UnauthorizedException;
 
 class GroupClassController extends AbstractActionController
 {
@@ -39,6 +40,9 @@ class GroupClassController extends AbstractActionController
         $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return $this->notFoundAction();
+        }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
         }
 
         /** @var GroupClassRepositoryInterface $groupClassRepository */
@@ -51,7 +55,7 @@ class GroupClassController extends AbstractActionController
         }
 
         $group = $groupClass->getGroup();
-        if ($group == null || $group->getEnvironment() != $environment) {
+        if ($group == null || $group->getEnvironment()->getId() != $environment->getId()) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
@@ -89,15 +93,7 @@ class GroupClassController extends AbstractActionController
         /** @var GroupParameterFactoryInterface $groupParameterFactory */
         $groupParameterFactory = $this->serviceLocator->get('groupParameterFactory');
 
-        if ($template->type == GroupParameterType::EDITABLE_HASHTABLE) {
-            $groupParameter = new GroupParameter();
-            $groupParameter->setName($name);
-            if (isset($template->entries)) {
-                $groupParameter->setChildren($groupParameterFactory->createRequiredFromTemplates($template->entries));
-            }
-        } else {
-            $groupParameter = $groupParameterFactory->createFromTemplate($template);
-        }
+        $groupParameter = $groupParameterFactory->createFromTemplate($template);
         $groupParameter->setClass($groupClass);
 
         $groupParameterRepository->add($groupParameter);

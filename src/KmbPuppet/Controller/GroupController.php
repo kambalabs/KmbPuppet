@@ -35,6 +35,7 @@ use KmbPuppetDb\Model\NodeInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use ZfcRbac\Exception\UnauthorizedException;
 
 class GroupController extends AbstractActionController
 {
@@ -44,6 +45,9 @@ class GroupController extends AbstractActionController
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return $this->notFoundAction();
+        }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
         }
 
         /** @var GroupRepositoryInterface $groupRepository */
@@ -55,7 +59,7 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        if ($group->getEnvironment() != $environment) {
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
@@ -88,6 +92,7 @@ class GroupController extends AbstractActionController
         $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));
 
         return new ViewModel([
+            'environment' => $environment,
             'group' => $group,
             'serversCount' => count($nodes),
             'availableClasses' => $availableClasses,
@@ -102,6 +107,9 @@ class GroupController extends AbstractActionController
         if ($environment == null) {
             return $this->notFoundAction();
         }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         /** @var GroupRepositoryInterface $groupRepository */
         $groupRepository = $this->serviceLocator->get('GroupRepository');
@@ -112,7 +120,7 @@ class GroupController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        if ($group->getEnvironment() != $environment) {
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
             return $this->notFoundAction();
         }
 
@@ -143,6 +151,9 @@ class GroupController extends AbstractActionController
         if ($environment == null) {
             return $this->notFoundAction();
         }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         /** @var GroupRepositoryInterface $groupRepository */
         $groupRepository = $this->getServiceLocator()->get('GroupRepository');
@@ -153,7 +164,7 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        if ($group->getEnvironment() != $environment) {
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
@@ -188,6 +199,9 @@ class GroupController extends AbstractActionController
         if ($environment == null) {
             return $this->notFoundAction();
         }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         /** @var GroupRepositoryInterface $groupRepository */
         $groupRepository = $this->getServiceLocator()->get('GroupRepository');
@@ -198,7 +212,7 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        if ($group->getEnvironment() != $environment) {
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
@@ -247,6 +261,9 @@ class GroupController extends AbstractActionController
         if ($environment == null) {
             return $this->notFoundAction();
         }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         /** @var GroupRepositoryInterface $groupRepository */
         $groupRepository = $this->getServiceLocator()->get('GroupRepository');
@@ -257,7 +274,7 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        if ($group->getEnvironment() != $environment) {
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 

@@ -23,6 +23,7 @@ namespace KmbPuppet\Controller;
 use KmbDomain\Model\Environment;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbDomain\Model\Revision;
 use KmbDomain\Model\UserInterface;
 use KmbDomain\Model\UserRepositoryInterface;
 use KmbPmProxy\Exception\ExceptionInterface;
@@ -58,7 +59,13 @@ class EnvironmentsController extends AbstractActionController
     {
         /** @var EnvironmentInterface $parent */
         $parent = $this->environmentRepository->getById($this->params()->fromPost('parent'));
+        if (
+            ($parent == null && !$this->isGranted('manageAllEnv')) ||
+            ($parent != null && !$this->isGranted('manageEnvChildren', $parent))) {
+            throw new UnauthorizedException();
+        }
         $aggregateRoot = new Environment();
+        $aggregateRoot->setCurrentRevision(new Revision());
 
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
@@ -89,6 +96,11 @@ class EnvironmentsController extends AbstractActionController
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
         }
+        if (
+            ($parent == null && !$this->isGranted('manageAllEnv')) ||
+            ($parent != null && !$this->isGranted('manageEnvChildren', $parent))) {
+            throw new UnauthorizedException();
+        }
 
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
@@ -118,7 +130,7 @@ class EnvironmentsController extends AbstractActionController
             return $this->notFoundAction();
         }
 
-        if ($aggregateRoot->hasChildren()) {
+        if ($aggregateRoot->hasChildren() || !$this->isGranted('manageEnv', $aggregateRoot)) {
             throw new UnauthorizedException();
         }
 
@@ -148,6 +160,10 @@ class EnvironmentsController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        if (!$this->isGranted('readEnv', $aggregateRoot)) {
+            throw new UnauthorizedException();
+        }
+
         $data = [];
         foreach ($aggregateRoot->getUsers() as $user) {
             /** @var UserInterface $user */
@@ -170,6 +186,10 @@ class EnvironmentsController extends AbstractActionController
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
+        }
+
+        if (!$this->isGranted('readEnv', $aggregateRoot)) {
+            throw new UnauthorizedException();
         }
 
         $availableUsers = [];
@@ -199,6 +219,10 @@ class EnvironmentsController extends AbstractActionController
             return $this->notFoundAction();
         }
 
+        if (!$this->isGranted('manageEnv', $aggregateRoot)) {
+            throw new UnauthorizedException();
+        }
+
         $users = [];
         foreach ($this->params()->fromPost('users', []) as $userId) {
             $user = $this->userRepository->getById($userId);
@@ -216,7 +240,15 @@ class EnvironmentsController extends AbstractActionController
     {
         /** @var EnvironmentInterface $aggregateRoot */
         $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        if ($aggregateRoot === null) {
+            return $this->notFoundAction();
+        }
+
         $aggregateRoot->getParent(); // Load parent TODO: remove this ASAP
+
+        if (!$this->isGranted('manageEnv', $aggregateRoot)) {
+            throw new UnauthorizedException();
+        }
 
         $aggregateRoot->removeUserById($this->params()->fromRoute('userId'));
         $this->environmentRepository->update($aggregateRoot);

@@ -4,6 +4,7 @@
         <?php foreach ($this->parameter->getValues() as $value): ?>
         <li class="tree-level">
             <?php echo $this->partial('kmb-puppet/group/value', [
+                'environment' => $this->environment,
                 'parameter' => $this->parameter,
                 'value' => $value,
                 'type' => $this->type,
@@ -15,6 +16,7 @@
         <?php endif ?>
         <li class="new-element form-inline-editable" style="display: none">
             <?php echo $this->partial('kmb-puppet/group/value-new', [
+                'environment' => $this->environment,
                 'type' => $this->type,
                 'availableValues' => $this->parameter->getAvailableValues(),
             ]) ?>

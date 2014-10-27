@@ -1,3 +1,4 @@
+<?php if ($this->isGranted('manageEnv', $this->environment)): ?>
 <span class="tree-item inline-editable"<?php if ($this->hasMultipleValues): ?> style="padding-left: 26px"<?php endif ?>>
     <?php if ($this->hasMultipleValues): ?>
         <a href="#" class="remove-value" style="position: absolute; margin-left: -18px" data-toggle="modal" data-target="#confirm-remove-value" data-confirm-text="<?php echo sprintf($this->translate('You are about to remove a value of <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
@@ -12,6 +13,19 @@
         <span class="inline-editable-clickable darkgrey" style="white-space: pre-wrap"><?php echo $this->escapeHtml($this->value) ?></span>
     <?php endif ?>
 </span>
+<?php else: ?>
+<span class="tree-item">
+    <?php if ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
+        <span class="darkgrey"><?php echo $this->printBoolean($this->value) ?></span>
+    <?php elseif (empty($this->value)): ?>
+        <i class="lightgrey"><?php echo $this->translate('no value') ?></i>
+    <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>
+        <span class="darkgrey"><?php echo $this->truncate(str_repeat('*', strlen($this->value)), 32) ?></span>
+    <?php else: ?>
+        <span class="darkgrey" style="white-space: pre-wrap"><?php echo $this->escapeHtml($this->value) ?></span>
+    <?php endif ?>
+</span>
+<?php endif ?>
 <div class="form-inline-editable" style="display: none">
     <div class="input-group">
         <?php if ($this->type == \KmbDomain\Model\GroupParameterType::PREDEFINED_LIST): ?>

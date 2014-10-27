@@ -74,10 +74,12 @@
                 <span>
                     <?php echo sprintf($this->translate('Group %s'), $this->truncate($this->group->getName(), 45)) ?>
                 </span>
+                <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                 <a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#add-class"<?php if (empty($this->availableClasses)): ?> disabled="disabled"<?php endif ?>>
                     <span class="glyphicon glyphicon-plus-sign"></span>
                     <?php echo $this->translate('Add a class') ?>
                 </a>
+                <?php endif ?>
             </div>
             <div class="panel-body">
                 <?php if ($this->group->hasClasses()): ?>
@@ -86,7 +88,9 @@
                     <?php foreach ($this->group->getClasses() as $class): ?>
                         <tr>
                             <td style="width: 90%">
+                                <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                                 <a href="#" data-href="<?php echo $this->url('puppet-group-remove-class', ['id' => $this->group->getId(), 'className' => $class->getName()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> class.'), $class->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+                                <?php endif ?>
                                 <span class="glyphicon glyphicon-search"></span>
                                 <a href="#" data-class-id="<?php echo $class->getId() ?>" class="class-name"><?php echo $class->getName() ?></a>
                             </td>
@@ -188,10 +192,12 @@
                 <span>
                     <?php echo sprintf($this->translate('Class %s'), $this->truncate($class->getName(), 36)) ?>
                 </span>
+                <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                 <a href="#" class="add-parameter btn btn-info btn-xs pull-right"<?php if (!$class->hasAvailableParameters()): ?> disabled="disabled"<?php endif ?> style="margin-right: 10px">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                     <?php echo $this->translate('Add a parameter') ?>
                 </a>
+                <?php endif ?>
             </div>
             <div class="panel-body">
                 <div class="tree">
@@ -203,7 +209,7 @@
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Expand all') ?>
                     </a>
-                    <?php echo $this->partial('kmb-puppet/group/parameters', ['group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $class->getAvailableParameters()]) ?>
+                    <?php echo $this->partial('kmb-puppet/group/parameters', ['environment' => $this->environment, 'group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $class->getAvailableParameters()]) ?>
                 </div>
             </div>
         </div>

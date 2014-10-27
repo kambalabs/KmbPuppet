@@ -27,6 +27,7 @@ use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use ZfcRbac\Exception\UnauthorizedException;
 
 class GroupsController extends AbstractActionController
 {
@@ -36,6 +37,9 @@ class GroupsController extends AbstractActionController
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+        }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
         }
 
         $currentRevision = $environment->getCurrentRevision();

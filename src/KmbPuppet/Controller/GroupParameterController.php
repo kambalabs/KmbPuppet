@@ -32,6 +32,7 @@ use KmbPmProxy\Service\PuppetClass;
 use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Stdlib\ArrayUtils;
+use ZfcRbac\Exception\UnauthorizedException;
 
 class GroupParameterController extends AbstractActionController
 {
@@ -42,13 +43,16 @@ class GroupParameterController extends AbstractActionController
         if ($environment == null) {
             return $this->notFoundAction();
         }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         /** @var GroupRepositoryInterface $groupRepository */
         $groupRepository = $this->getServiceLocator()->get('GroupRepository');
         /** @var GroupInterface $group */
         $group = $groupRepository->getById($this->params()->fromRoute('groupId'));
 
-        if ($group == null || $group->getEnvironment() != $environment) {
+        if ($group == null || $group->getEnvironment()->getId() != $environment->getId()) {
             $this->flashMessenger()->addErrorMessage('Unknown group');
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
@@ -92,13 +96,16 @@ class GroupParameterController extends AbstractActionController
         if ($environment == null) {
             return $this->notFoundAction();
         }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         /** @var GroupRepositoryInterface $groupRepository */
         $groupRepository = $this->getServiceLocator()->get('GroupRepository');
         /** @var GroupInterface $group */
         $group = $groupRepository->getById($this->params()->fromRoute('groupId'));
 
-        if ($group == null || $group->getEnvironment() != $environment) {
+        if ($group == null || $group->getEnvironment()->getId() != $environment->getId()) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
@@ -137,13 +144,16 @@ class GroupParameterController extends AbstractActionController
         if ($environment == null) {
             return $this->notFoundAction();
         }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         /** @var GroupRepositoryInterface $groupRepository */
         $groupRepository = $this->getServiceLocator()->get('GroupRepository');
         /** @var GroupInterface $group */
         $group = $groupRepository->getById($this->params()->fromRoute('groupId'));
 
-        if ($group == null || $group->getEnvironment() != $environment) {
+        if ($group == null || $group->getEnvironment()->getId() != $environment->getId()) {
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
@@ -192,7 +202,7 @@ class GroupParameterController extends AbstractActionController
         /** @var GroupParameterFactoryInterface $groupParameterFactory */
         $groupParameterFactory = $this->serviceLocator->get('groupParameterFactory');
 
-        if ($template->type == GroupParameterType::EDITABLE_HASHTABLE) {
+        if ($template->type == GroupParameterType::EDITABLE_HASHTABLE && $template->isKey) {
             $child = new GroupParameter();
             $child->setName($name);
             if (isset($template->entries)) {
@@ -219,13 +229,19 @@ class GroupParameterController extends AbstractActionController
         $name = array_shift($ancestorsNames);
         if (!empty($templates)) {
             foreach ($templates as $template) {
+                $template->isKey = false;
                 if ($template->name === $name) {
-                    if ($template->type == GroupParameterType::EDITABLE_HASHTABLE) {
-                        array_shift($ancestorsNames); // Ignore keys of editable hashtables
-                    }
                     if (empty($ancestorsNames)) {
                         return $template;
-                    } elseif ($template->type == GroupParameterType::HASHTABLE || $template->type == GroupParameterType::EDITABLE_HASHTABLE) {
+                    }
+                    if ($template->type == GroupParameterType::EDITABLE_HASHTABLE) {
+                        array_shift($ancestorsNames); // Ignore keys of editable hashtables
+                        if (empty($ancestorsNames)) {
+                            $template->isKey = true;
+                            return $template;
+                        }
+                    }
+                    if ($template->type == GroupParameterType::HASHTABLE || $template->type == GroupParameterType::EDITABLE_HASHTABLE) {
                         return $this->findAssociatedTemplate($ancestorsNames, $template->entries);
                     }
                 }

@@ -5,10 +5,12 @@
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span>
                     <?php echo $this->translate('Groups') ?>
+                    <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                     <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->groups)): ?> disabled<?php endif ?>" data-toggle="modal" data-target="#new-group">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Create a group') ?>
                     </a>
+                    <?php endif ?>
                 </span>
             </div>
             <div class="panel-body">

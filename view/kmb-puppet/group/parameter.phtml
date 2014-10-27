@@ -4,14 +4,17 @@
         <?php if (!empty($this->error)): ?>
         <a href="#"><i class="glyphicon glyphicon-zoom-in darkgrey"></i></a>
         <?php endif ?>
+        <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
         <?php if (
             $this->type == \KmbDomain\Model\GroupParameterType::HASHTABLE ||
             $this->type == \KmbDomain\Model\GroupParameterType::EDITABLE_HASHTABLE ||
-            $this->hasMultipleValues): ?>
+            $this->hasMultipleValues
+        ): ?>
         <a href="#"><i class="glyphicon glyphicon-plus create-element lightblue"></i></a>
         <?php endif ?>
         <a href="#" data-href="<?php echo $this->url('puppet-group-parameter', ['action' => 'remove', 'id' => $this->parameter->getId(), 'groupId' => $this->group->getId()], ['query' => ['selectedClass' => $this->class->getName()]], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
-        <span class="inline-editable-clickable <?php if ($this->isEditableHashtableKey): ?>darkgrey<?php else: ?>blue<?php endif ?>"><?php echo $this->parameter->getName() ?></span>
+        <?php endif ?>
+        <span class="<?php if ($this->isGranted('manageEnv', $this->environment)): ?>inline-editable-clickable <?php endif ?><?php if ($this->isEditableHashtableKey): ?>darkgrey<?php else: ?>blue<?php endif ?>"><?php echo $this->parameter->getName() ?></span>
         <?php if (!empty($this->error)): ?>
         <p class="see-more red" style="display: none"><?php echo $this->error ?></p>
         <?php endif ?>
@@ -37,6 +40,7 @@
 </form>
 <?php if ($this->type != \KmbDomain\Model\GroupParameterType::HASHTABLE && $this->type != \KmbDomain\Model\GroupParameterType::EDITABLE_HASHTABLE): ?>
     <?php echo $this->partial('kmb-puppet/group/values', [
+        'environment' => $this->environment,
         'parameter' => $this->parameter,
         'type' => $this->parameter->hasTemplate() ? $this->parameter->getTemplate()->type : null,
         'class' => $this->class,
