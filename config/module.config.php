@@ -235,7 +235,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Group',
-                    'actions' => ['update', 'add-class', 'remove-class'],
+                    'actions' => ['update', 'remove', 'add-class', 'remove-class'],
                     'roles' => ['admin']
                 ],
                 [

@@ -21,6 +21,9 @@
                     <tr id="groups-<?php echo $group->getId() ?>">
                         <td class="module-name" style="width: 100%">
                             <span class="glyphicon glyphicon-th grab"></span>
+                            <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
+                            <a href="#" data-href="<?php echo $this->url('puppet-group', ['action' => 'remove', 'id' => $group->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> group.'), $group->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+                            <?php endif ?>
                             <span class="glyphicon glyphicon-search"></span>
                             <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true) ?>"><?php echo $group->getName() ?></a>
                         </td>
@@ -29,6 +32,26 @@
                     </tbody>
                 </table>
                 <?php endif ?>
+            </div>
+        </div>
+    </div>
+    <div id="confirm-remove" class="modal fade confirm" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="confirmRemoveLabel"><?php echo $this->translate('Confirm Remove') ?></h1>
+                </div>
+                <div class="modal-body">
+                    <blockquote>
+                        <p class="confirm-param1"></p>
+                        <p><?php echo $this->translate('Do you want to proceed ?') ?></p>
+                    </blockquote>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                    <a href="#" class="btn btn-danger danger"><?php echo $this->translate('Remove') ?></a>
+                </div>
             </div>
         </div>
     </div>

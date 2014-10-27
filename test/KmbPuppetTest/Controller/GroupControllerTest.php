@@ -86,6 +86,15 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
     }
 
     /** @test */
+    public function canRemove()
+    {
+        $this->dispatch('/env/1/puppet/group/1/remove');
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/env/1/puppet/groups');
+    }
+
+    /** @test */
     public function canAddClass()
     {
         $this->dispatch('/env/1/puppet/group/1/add-class', 'POST', ['class' => 'dns']);

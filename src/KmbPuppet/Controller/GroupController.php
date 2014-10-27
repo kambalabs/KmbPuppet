@@ -192,6 +192,42 @@ class GroupController extends AbstractActionController
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
     }
 
+    public function removeAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('id'));
+
+        if ($group == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $groupRepository->remove($group);
+
+        return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+    }
+
     public function addClassAction()
     {
         /** @var EnvironmentInterface $environment */
