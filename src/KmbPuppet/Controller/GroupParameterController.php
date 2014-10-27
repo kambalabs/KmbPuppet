@@ -61,9 +61,14 @@ class GroupParameterController extends AbstractActionController
 
         $revision = $group->getRevision();
         if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
             $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $selectedClass]], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], ['query' => ['selectedClass' => $selectedClass]], true);
         }
 
         /** @var GroupParameterRepositoryInterface $groupParameterRepository */
@@ -127,9 +132,14 @@ class GroupParameterController extends AbstractActionController
 
         $revision = $group->getRevision();
         if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
             $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
 
         $groupParameterRepository->remove($groupParameter);
@@ -173,9 +183,14 @@ class GroupParameterController extends AbstractActionController
 
         $revision = $group->getRevision();
         if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
             $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
 
         /** @var PuppetClass $puppetClassService */

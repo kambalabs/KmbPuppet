@@ -63,6 +63,18 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>.');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], [], true);
+        }
+
         /** @var Service\Node $nodeService */
         $nodeService = $this->serviceLocator->get('KmbPuppet\Service\Node');
         $error = null;
@@ -170,9 +182,14 @@ class GroupController extends AbstractActionController
 
         $revision = $group->getRevision();
         if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
             $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
-            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], [], true);
         }
 
         $name = $this->params()->fromPost('name');
@@ -189,7 +206,7 @@ class GroupController extends AbstractActionController
         }
         $groupRepository->update($group);
 
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
     }
 
     public function removeAction()
@@ -218,9 +235,14 @@ class GroupController extends AbstractActionController
 
         $revision = $group->getRevision();
         if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
             $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
-            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], [], true);
         }
 
         $groupRepository->remove($group);
@@ -254,9 +276,14 @@ class GroupController extends AbstractActionController
 
         $revision = $group->getRevision();
         if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
             $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
-            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], [], true);
         }
 
         /** @var PuppetClass $puppetClassService */
@@ -265,13 +292,13 @@ class GroupController extends AbstractActionController
         $className = $this->params()->fromPost('class');
         if ($group->hasClassWithName($className)) {
             $this->flashMessenger()->addErrorMessage(sprintf($this->translate('Group already has the class %s'), $className));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
         }
 
         $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $className);
         if ($pmProxyPuppetClass === null) {
             $this->flashMessenger()->addErrorMessage(sprintf($this->translate('Unknown class %s'), $className));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
         }
 
         /** @var GroupParameterFactoryInterface $groupParameterFactory */
@@ -287,7 +314,7 @@ class GroupController extends AbstractActionController
         $classRepository = $this->getServiceLocator()->get('GroupClassRepository');
         $classRepository->add($groupClass);
 
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $className]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $className]], true);
     }
 
     public function removeClassAction()
@@ -314,6 +341,18 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], [], true);
+        }
+
         /** @var GroupClassRepositoryInterface $groupClassRepository */
         $groupClassRepository = $this->getServiceLocator()->get('GroupClassRepository');
 
@@ -321,12 +360,12 @@ class GroupController extends AbstractActionController
         $groupClass = $group->getClassByName($className);
         if ($groupClass == null) {
             $this->flashMessenger()->addErrorMessage(sprintf($this->translate("Group doesn't have class %s"), $className));
-            return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId()], true);
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
         }
 
         $groupClassRepository->remove($groupClass);
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Class %s has been succesfully removed"), $className));
-        return $this->redirect()->toRoute('puppet-group', ['action' => 'show'], ['id' => $group->getId(), 'query' => ['selectedClass' => $className]], true);
+        return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $className]], true);
     }
 }

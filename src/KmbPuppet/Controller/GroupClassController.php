@@ -21,12 +21,10 @@
 namespace KmbPuppet\Controller;
 
 use KmbDomain\Model\EnvironmentInterface;
-use KmbDomain\Model\GroupParameter;
-use KmbDomain\Model\GroupParameterFactoryInterface;
-use KmbDomain\Model\GroupParameterRepositoryInterface;
-use KmbDomain\Model\GroupParameterType;
 use KmbDomain\Model\GroupClassInterface;
 use KmbDomain\Model\GroupClassRepositoryInterface;
+use KmbDomain\Model\GroupParameterFactoryInterface;
+use KmbDomain\Model\GroupParameterRepositoryInterface;
 use KmbPmProxy\Service\PuppetClass as PuppetClassService;
 use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -65,6 +63,17 @@ class GroupClassController extends AbstractActionController
             $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
         }
+        $revision = $group->getRevision();
+        if ($revision->isReleased()) {
+            $newRevision = $environment->getCurrentRevision();
+            if ($newRevision == null) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $newGroup = $newRevision->getGroupByName($group->getName());
+            $message = $this->translate('You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !');
+            $this->flashMessenger()->addErrorMessage(sprintf($message, $revision->getReleasedBy()));
+            return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], ['query' => ['selectedClass' => $groupClass->getName()]], true);
+        }
 
         /** @var GroupParameterRepositoryInterface $groupParameterRepository */
         $groupParameterRepository = $this->serviceLocator->get('GroupParameterRepository');
@@ -102,7 +111,7 @@ class GroupClassController extends AbstractActionController
     }
 
     /**
-     * @param array $name
+     * @param array       $name
      * @param \stdClass[] $templates
      * @return \stdClass
      */
