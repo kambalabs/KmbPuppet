@@ -32,7 +32,7 @@ class EnvironmentSelect extends AbstractHelper
     /** @var RouteMatch */
     protected $routeMatch;
 
-    public function __invoke($permission = 'manageEnvChildren', $selectEnvId = false)
+    public function __invoke($permission = 'manageEnv', $selectEnvId = false)
     {
         $environments = $this->environmentRepository->getAllRoots();
         $data = [

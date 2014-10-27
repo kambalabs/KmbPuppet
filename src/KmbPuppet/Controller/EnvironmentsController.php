@@ -61,7 +61,7 @@ class EnvironmentsController extends AbstractActionController
         $parent = $this->environmentRepository->getById($this->params()->fromPost('parent'));
         if (
             ($parent == null && !$this->isGranted('manageAllEnv')) ||
-            ($parent != null && !$this->isGranted('manageEnvChildren', $parent))) {
+            ($parent != null && !$this->isGranted('manageEnv', $parent))) {
             throw new UnauthorizedException();
         }
         $aggregateRoot = new Environment();
@@ -98,7 +98,7 @@ class EnvironmentsController extends AbstractActionController
         }
         if (
             ($parent == null && !$this->isGranted('manageAllEnv')) ||
-            ($parent != null && !$this->isGranted('manageEnvChildren', $parent))) {
+            ($parent != null && !$this->isGranted('manageEnv', $parent))) {
             throw new UnauthorizedException();
         }
 
