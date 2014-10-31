@@ -165,6 +165,7 @@ return [
             'KmbPuppet\Controller\Group' => 'KmbPuppet\Controller\GroupController',
             'KmbPuppet\Controller\GroupClass' => 'KmbPuppet\Controller\GroupClassController',
             'KmbPuppet\Controller\GroupParameter' => 'KmbPuppet\Controller\GroupParameterController',
+            'KmbPuppet\Controller\Revisions' => 'KmbPuppet\Controller\RevisionsController',
         ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
@@ -257,6 +258,11 @@ return [
                     'controller' => 'KmbPuppet\Controller\Environments',
                     'actions' => ['index', 'create', 'remove', 'update', 'users', 'available-users', 'remove-user', 'add-users'],
                     'roles' => ['admin']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Revisions',
+                    'actions' => ['index'],
+                    'roles' => ['user']
                 ],
             ],
         ],

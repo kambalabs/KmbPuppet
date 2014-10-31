@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-27 02:48+0100\n"
-"PO-Revision-Date: 2014-10-27 02:48+0100\n"
+"POT-Creation-Date: 2014-10-29 02:55+0100\n"
+"PO-Revision-Date: 2014-10-29 02:55+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -17,46 +17,51 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:134
+#: ../src/KmbPuppet/Controller/GroupController.php:73
+#, php-format
+msgid "You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>."
+msgstr ""
+
+#: ../src/KmbPuppet/Controller/GroupController.php:146
 msgid "An error occured while reaching PuppetDB !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupController.php:173
-#: ../src/KmbPuppet/Controller/GroupController.php:221
-#: ../src/KmbPuppet/Controller/GroupController.php:257
-#: ../src/KmbPuppet/Controller/GroupClassController.php:64
-#: ../src/KmbPuppet/Controller/GroupParameterController.php:64
-#: ../src/KmbPuppet/Controller/GroupParameterController.php:130
-#: ../src/KmbPuppet/Controller/GroupParameterController.php:176
-#: ../src/KmbPuppet/Controller/GroupsController.php:72
+#: ../src/KmbPuppet/Controller/GroupController.php:190
+#: ../src/KmbPuppet/Controller/GroupController.php:243
+#: ../src/KmbPuppet/Controller/GroupController.php:284
+#: ../src/KmbPuppet/Controller/GroupController.php:351
+#: ../src/KmbPuppet/Controller/GroupClassController.php:62
+#: ../src/KmbPuppet/Controller/GroupClassController.php:73
+#: ../src/KmbPuppet/Controller/GroupParameterController.php:69
+#: ../src/KmbPuppet/Controller/GroupParameterController.php:140
+#: ../src/KmbPuppet/Controller/GroupParameterController.php:191
 #, php-format
 msgid "You have been redirected to the last current revision of this group because last changes has been recently saved by <strong>%s</strong>. Please try again !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupController.php:267
+#: ../src/KmbPuppet/Controller/GroupController.php:294
 #, php-format
 msgid "Group already has the class %s"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupController.php:273
+#: ../src/KmbPuppet/Controller/GroupController.php:300
 #, php-format
 msgid "Unknown class %s"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupController.php:323
+#: ../src/KmbPuppet/Controller/GroupController.php:362
 #, php-format
 msgid "Group doesn't have class %s"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupController.php:329
+#: ../src/KmbPuppet/Controller/GroupController.php:368
 #, php-format
 msgid "Class %s has been succesfully removed"
 msgstr ""
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:37
 #: ../src/KmbPuppet/Controller/GroupsController.php:39
-#: ../src/KmbPuppet/Controller/GroupsController.php:61
-#: ../src/KmbPuppet/Controller/GroupsController.php:90
+#: ../src/KmbPuppet/Controller/GroupsController.php:87
 msgid "You have to select an environment first !"
 msgstr ""
 
@@ -114,27 +119,27 @@ msgstr ""
 msgid "Root environment %s already exists !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupClassController.php:77
-#: ../src/KmbPuppet/Controller/GroupParameterController.php:186
+#: ../src/KmbPuppet/Controller/GroupClassController.php:86
+#: ../src/KmbPuppet/Controller/GroupParameterController.php:201
 msgid "Unable to find associated template to the class"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupClassController.php:89
-#: ../src/KmbPuppet/Controller/GroupParameterController.php:198
+#: ../src/KmbPuppet/Controller/GroupClassController.php:98
+#: ../src/KmbPuppet/Controller/GroupParameterController.php:213
 msgid "Unable to find associated template to the parameter"
 msgstr ""
 
 #: ../src/KmbPuppet/Controller/GroupsController.php:47
-#: ../src/KmbPuppet/Controller/GroupsController.php:96
+#: ../src/KmbPuppet/Controller/GroupsController.php:93
 msgid "This environment is invalid, it has no current revision. Please contact administrator !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:104
+#: ../src/KmbPuppet/Controller/GroupsController.php:101
 #, php-format
 msgid "The group %s already exists in this environment !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/GroupsController.php:112
+#: ../src/KmbPuppet/Controller/GroupsController.php:109
 #, php-format
 msgid "The group %s has been successfully created !"
 msgstr ""
@@ -267,6 +272,8 @@ msgid "Detailed informations on module"
 msgstr ""
 
 #: ../view/kmb-puppet/modules/show.phtml:12
+#: ../view/kmb-puppet/modules/show-class.phtml:12
+#: ../view/kmb-puppet/group/show.phtml:18
 msgid "back"
 msgstr ""
 
@@ -288,10 +295,12 @@ msgid "Classes of module %s"
 msgstr ""
 
 #: ../view/kmb-puppet/modules/show.phtml:54
+#: ../view/kmb-puppet/group/show.phtml:100
 msgid "Error"
 msgstr ""
 
 #: ../view/kmb-puppet/modules/show.phtml:64
+#: ../view/kmb-puppet/group/show.phtml:110
 msgid "No classes available !"
 msgstr ""
 
@@ -391,6 +400,10 @@ msgstr ""
 
 #: ../view/kmb-puppet/modules/show-class.phtml:62
 msgid "Documention should be provided in the puppetdoc of the class."
+msgstr ""
+
+#: ../view/kmb-puppet/revisions/index.phtml:11
+msgid "Compare selected versions"
 msgstr ""
 
 #: ../view/kmb-puppet/reports/index.phtml:2
