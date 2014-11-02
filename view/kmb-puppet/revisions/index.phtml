@@ -16,18 +16,20 @@
                     <tbody>
                     <?php if ($this->currentRevision != null): ?>
                         <tr>
-                            <?php if ($this->currentRevision->getUpdatedAt() != null): ?>
+                            <?php if ($this->currentRevision->hasLogs()): ?>
                             <td>
                                 <input type="radio" name="from" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <input type="radio" name="to" checked="checked" value="<?php echo $this->currentRevision->getId() ?>" />
-                                <span><?php echo $this->translate('Current changes') ?></span>
+                                <span><?php echo $this->escapeHtml($this->currentRevision->getLastLog()->getComment()) ?></span>
                                 <span class="label label-warning"><?php echo $this->translate('current revision') ?></span>
-                                <span class="comment"><?php echo $this->dateFormat($this->currentRevision->getUpdatedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
-                                <span class="comment"><?php echo $this->currentRevision->getUpdatedBy(); ?></span>
+                                <br />
+                                <span class="comment"><?php echo $this->dateFormat($this->currentRevision->getLastLog()->getCreatedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
+                                <span class="comment"><?php echo $this->currentRevision->getLastLog()->getCreatedBy(); ?></span>
                             </td>
-                            <td>
+                            <td class="text-right" style="width: 170px">
                                 <a class="btn btn-primary btn-xs" href="#"><?php echo $this->translate('save') ?></a>
                                 <a class="btn btn-default btn-xs" href="#"><?php echo $this->translate('cancel') ?></a>
+                                <a class="btn btn-warning btn-xs" href="#"><?php echo $this->translate('logs') ?></a>
                             </td>
                             <?php else: ?>
                             <td>
@@ -51,6 +53,7 @@
                                 <?php if ($revision->getId() == $this->lastReleasedRevision->getId()): ?>
                                 <span class="label label-success"><?php echo $this->translate('active revision') ?></span>
                                 <?php endif ?>
+                                <br />
                                 <span class="comment"><?php echo $this->dateFormat($revision->getReleasedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
                                 <span class="comment"><?php echo $revision->getReleasedBy(); ?></span>
                             </td>
