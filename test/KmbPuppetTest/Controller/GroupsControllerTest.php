@@ -32,6 +32,8 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
+        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
+
         $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
         $group = new Group('dns');
         $group->setEnvironment($environment);

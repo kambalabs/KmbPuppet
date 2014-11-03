@@ -34,6 +34,8 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
 
         $serviceManager->setService('GroupClassRepository', $this->getMock('KmbDomain\Model\GroupClassRepositoryInterface'));
 
+        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
+
         $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
         $group = new Group('dns');
         $group->setId(1);

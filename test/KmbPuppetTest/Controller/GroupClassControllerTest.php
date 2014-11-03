@@ -28,7 +28,7 @@ class GroupClassControllerTest extends AbstractHttpControllerTestCase
         $environment->setName('STABLE');
         $group = new Group('default');
         $group->setId(1);
-        $group->setRevision(new Revision());
+        $group->setRevision(new Revision($environment));
         $group->setEnvironment($environment);
         $groupClass = new GroupClass();
         $groupClass->setId(1);
@@ -57,6 +57,8 @@ class GroupClassControllerTest extends AbstractHttpControllerTestCase
                 $groupParameter->setId(1);
             }));
         $serviceManager->setService('GroupParameterRepository', $groupParameterRepository);
+
+        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
 
         $puppetModuleService = $this->getMock('KmbPmProxy\Service\PuppetModuleInterface');
         $puppetModule = new PuppetModule('apache', '2.1.4');
@@ -90,7 +92,6 @@ class GroupClassControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/env/1/puppet/group/1/class/1/add-parameter', 'POST', ['name' => 'ServerName']);
 
-        echo $this->getResponse()->getContent();
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns#parameter1');
     }
