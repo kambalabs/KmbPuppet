@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-30 00:53+0100\n"
-"PO-Revision-Date: 2014-10-30 00:53+0100\n"
+"POT-Creation-Date: 2014-11-03 01:38+0100\n"
+"PO-Revision-Date: 2014-11-03 01:38+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -65,56 +65,60 @@ msgstr "La classe %s a bien été supprimée !"
 msgid "You have to select an environment first !"
 msgstr "Vous devez d'abord choisir un environnement !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:53
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:54
 msgid "WARNING ! You should choose a default environment !"
 msgstr "ATTENTION ! Vous devez choisir un environnement par défaut !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:76
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:77
+msgid "Initialization"
+msgstr "Initialisation"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:86
 #, php-format
 msgid "Environment %s has been successfully created !"
 msgstr "L'environnement %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:80
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:90
 #, php-format
 msgid "Environment %s could no be created on the puppet master"
 msgstr "L'environnement %s n'a pas pu être créé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:112
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:122
 #, php-format
 msgid "Environment %s has been successfully updated !"
 msgstr "L'environnement %s a bien été modifié !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:115
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:125
 #, php-format
 msgid "Environment %s could no be updated on the puppet master"
 msgstr "L'environnement %s n'a pas pu être modifié sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:143
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:153
 #, php-format
 msgid "Environment %s has been successfully removed !"
 msgstr "L'environnement %s a bien été supprimé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:146
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:156
 #, php-format
 msgid "Environment %s could no be removed on the puppet master"
 msgstr "L'environnement %s n'a pas pu être supprimé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:336
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:346
 #, php-format
 msgid "'%s' is not a valid name (alphanumeric only) !"
 msgstr "'%s' n'est pas un nom valide (alphanumérique uniquement) !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:340
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:350
 #, php-format
 msgid "For obvious reasons, environment %s can't be the parent of %s !"
 msgstr "Pour des raisons évidentes, l'environnement %s ne peut pas être le parent de %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:349
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:359
 #, php-format
 msgid "Environment %s has already a child named %s !"
 msgstr "L'environnement %s a déjà un fils nommé %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:355
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:365
 #, php-format
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
@@ -410,35 +414,37 @@ msgstr "Historique des changements"
 msgid "Compare selected versions"
 msgstr "Comparer les versions sélectionnées"
 
-#: ../view/kmb-puppet/revisions/index.phtml:23
-msgid "Current changes"
-msgstr "Changements en cours"
-
-#: ../view/kmb-puppet/revisions/index.phtml:28
-msgid "save"
-msgstr "enregistrer"
-
-#: ../view/kmb-puppet/revisions/index.phtml:29
-msgid "cancel"
-msgstr "annuler"
-
-#: ../view/kmb-puppet/revisions/index.phtml:35
-msgid "No current changes"
-msgstr "Aucun changement en cours"
-
-#: ../view/kmb-puppet/revisions/index.phtml:38
+#: ../view/kmb-puppet/revisions/index.phtml:27
+#: ../view/kmb-puppet/revisions/index.phtml:40
 msgid "current revision"
 msgstr "version en cours"
 
-#: ../view/kmb-puppet/revisions/index.phtml:54
+#: ../view/kmb-puppet/revisions/index.phtml:30
+msgid "save"
+msgstr "enregistrer"
+
+#: ../view/kmb-puppet/revisions/index.phtml:31
+msgid "cancel"
+msgstr "annuler"
+
+#: ../view/kmb-puppet/revisions/index.phtml:32
+#: ../view/kmb-puppet/revisions/index.phtml:63
+msgid "logs"
+msgstr "logs"
+
+#: ../view/kmb-puppet/revisions/index.phtml:38
+msgid "No current changes"
+msgstr "Aucun changement en cours"
+
+#: ../view/kmb-puppet/revisions/index.phtml:55
 msgid "active revision"
 msgstr "version active"
 
-#: ../view/kmb-puppet/revisions/index.phtml:56
+#: ../view/kmb-puppet/revisions/index.phtml:60
 msgid "restore"
 msgstr "rétablir"
 
-#: ../view/kmb-puppet/revisions/index.phtml:57
+#: ../view/kmb-puppet/revisions/index.phtml:61
 msgid "remove"
 msgstr "supprimer"
 
@@ -676,6 +682,9 @@ msgstr "cliquer pour modifier"
 #: ../view/kmb-puppet/group/value.phtml:21
 msgid "no value"
 msgstr "aucune valeur"
+
+#~ msgid "Current changes"
+#~ msgstr "Changements en cours"
 
 #~ msgid "editable list"
 #~ msgstr "liste éditable"

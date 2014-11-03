@@ -29,6 +29,7 @@ use KmbDomain\Model\UserRepositoryInterface;
 use KmbPmProxy\Exception\ExceptionInterface;
 use KmbPmProxy\Exception\NotFoundException;
 use KmbPmProxy\Exception\RuntimeException;
+use Zend\Authentication\AuthenticationService;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -64,8 +65,17 @@ class EnvironmentsController extends AbstractActionController
             ($parent != null && !$this->isGranted('manageEnv', $parent))) {
             throw new UnauthorizedException();
         }
+
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->serviceLocator->get('Zend\Authentication\AuthenticationService');
+
         $aggregateRoot = new Environment();
         $aggregateRoot->setCurrentRevision(new Revision());
+        $lastReleasedRevision = new Revision();
+        $lastReleasedRevision->setReleasedAt(new \DateTime());
+        $lastReleasedRevision->setReleasedBy($authenticationService->getIdentity()->getName());
+        $lastReleasedRevision->setComment($this->translate('Initialization'));
+        $aggregateRoot->setLastReleasedRevision($lastReleasedRevision);
 
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
