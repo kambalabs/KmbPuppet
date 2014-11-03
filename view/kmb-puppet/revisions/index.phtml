@@ -21,15 +21,15 @@
                                 <input type="radio" name="from" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <input type="radio" name="to" checked="checked" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <span><?php echo $this->escapeHtml($this->currentRevision->getLastLog()->getComment()) ?></span>
-                                <span class="label label-warning"><?php echo $this->translate('current revision') ?></span>
                                 <br />
                                 <span class="comment"><?php echo $this->dateFormat($this->currentRevision->getLastLog()->getCreatedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
                                 <span class="comment"><?php echo $this->currentRevision->getLastLog()->getCreatedBy(); ?></span>
+                                <span class="label label-warning"><?php echo $this->translate('current revision') ?></span>
                             </td>
-                            <td class="text-right" style="width: 170px">
-                                <a class="btn btn-primary btn-xs" href="#"><?php echo $this->translate('save') ?></a>
-                                <a class="btn btn-default btn-xs" href="#"><?php echo $this->translate('cancel') ?></a>
-                                <a class="btn btn-warning btn-xs" href="#"><?php echo $this->translate('logs') ?></a>
+                            <td class="text-right" style="width: 210px">
+                                <a class="btn btn-primary btn-xs" href="#"><i class="glyphicon glyphicon-ok"></i> <?php echo $this->translate('save') ?></a>
+                                <a class="btn btn-default btn-xs" href="#"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('cancel') ?></a>
+                                <a class="btn btn-warning btn-xs" href="#"><i class="glyphicon glyphicon-search"></i> <?php echo $this->translate('logs') ?></a>
                             </td>
                             <?php else: ?>
                             <td>
@@ -38,8 +38,8 @@
                                 <span><?php echo $this->translate('No current changes') ?></span>
                                 <span class="label label-warning"><?php echo $this->translate('current revision') ?></span>
                             </td>
-                            <td class="text-right">
-                                <a class="btn btn-warning btn-xs" href="#"><?php echo $this->translate('logs') ?></a>
+                            <td class="text-right" style="width: 210px">
+                                <a class="btn btn-warning btn-xs" href="#"><i class="glyphicon glyphicon-search"></i> <?php echo $this->translate('logs') ?></a>
                             </td>
                             <?php endif ?>
                         </tr>
@@ -50,19 +50,19 @@
                                 <input type="radio" name="from" value="<?php echo $revision->getId() ?>" <?php if ($index == 0) { echo 'checked="checked" '; } ?>/>
                                 <input type="radio" name="to" value="<?php echo $revision->getId() ?>" />
                                 <span><?php echo $this->escapeHtml($revision->getComment()); ?></span>
-                                <?php if ($revision->getId() == $this->lastReleasedRevision->getId()): ?>
-                                <span class="label label-success"><?php echo $this->translate('active revision') ?></span>
-                                <?php endif ?>
                                 <br />
                                 <span class="comment"><?php echo $this->dateFormat($revision->getReleasedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
                                 <span class="comment"><?php echo $revision->getReleasedBy(); ?></span>
+                                <?php if ($revision->getId() == $this->lastReleasedRevision->getId()): ?>
+                                <span class="label label-success"><?php echo $this->translate('active revision') ?></span>
+                                <?php endif ?>
                             </td>
                             <td class="text-right">
                                 <?php if ($revision->getId() != $this->lastReleasedRevision->getId()): ?>
-                                <a class="btn btn-primary btn-xs" href="#"><?php echo $this->translate('restore') ?></a>
-                                <a class="btn btn-danger btn-xs" href="#"><?php echo $this->translate('remove') ?></a>
+                                <a class="btn btn-info btn-xs" href="#"><i class="glyphicon glyphicon-repeat"></i> <?php echo $this->translate('restore') ?></a>
+                                <a class="btn btn-danger btn-xs" href="#"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('remove') ?></a>
                                 <?php endif ?>
-                                <a class="btn btn-warning btn-xs" href="#"><?php echo $this->translate('logs') ?></a>
+                                <a class="btn btn-warning btn-xs" href="#"><i class="glyphicon glyphicon-search"></i> <?php echo $this->translate('logs') ?></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
