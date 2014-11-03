@@ -20,7 +20,7 @@
                             <td style="background-color: #fffdde">
                                 <input type="radio" name="from" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <input type="radio" name="to" checked="checked" value="<?php echo $this->currentRevision->getId() ?>" />
-                                <span><?php echo $this->escapeHtml($this->currentRevision->getLastLog()->getComment()) ?></span>
+                                <span><?php echo $this->translate('Current changes') ?></span>
                                 <br />
                                 <span class="comment"><?php echo $this->dateFormat($this->currentRevision->getLastLog()->getCreatedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
                                 <span class="comment"><?php echo $this->currentRevision->getLastLog()->getCreatedBy(); ?></span>

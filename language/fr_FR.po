@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-03 22:35+0100\n"
-"PO-Revision-Date: 2014-11-03 22:39+0100\n"
+"POT-Creation-Date: 2014-11-03 22:49+0100\n"
+"PO-Revision-Date: 2014-11-03 22:49+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -495,6 +495,10 @@ msgstr "Historique des changements"
 msgid "Compare selected versions"
 msgstr "Comparer les versions sélectionnées"
 
+#: ../view/kmb-puppet/revisions/index.phtml:23
+msgid "Current changes"
+msgstr "Changements en cours"
+
 #: ../view/kmb-puppet/revisions/index.phtml:27
 #: ../view/kmb-puppet/revisions/index.phtml:39
 msgid "current revision"
@@ -763,9 +767,6 @@ msgstr "cliquer pour modifier"
 #: ../view/kmb-puppet/group/value.phtml:21
 msgid "no value"
 msgstr "aucune valeur"
-
-#~ msgid "Current changes"
-#~ msgstr "Changements en cours"
 
 #~ msgid "editable list"
 #~ msgstr "liste éditable"
