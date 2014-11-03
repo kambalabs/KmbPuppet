@@ -172,6 +172,11 @@ return [
             'KmbPuppet\Controller\Environments' => 'KmbPuppet\Service\EnvironmentsControllerFactory',
         ]
     ],
+    'controller_plugins' => [
+        'factories' => [
+            'writeRevisionLog' => 'KmbPuppet\Controller\Plugin\WriteRevisionLogFactory',
+        ],
+    ],
     'view_helpers' => [
         'invokables' => [
             'reportLabelClass' => 'KmbPuppet\View\Helper\ReportLabelClass',

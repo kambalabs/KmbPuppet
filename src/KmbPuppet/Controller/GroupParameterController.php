@@ -90,6 +90,7 @@ class GroupParameterController extends AbstractActionController
             $groupParameter->setValues($values);
         }
         $groupParameterRepository->update($groupParameter);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Update parameter %s of class %s on group %s'), $groupParameter->getName(), $groupParameter->getClass()->getName(), $group->getName()));
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $selectedClass], 'fragment' => 'parameter' . $groupParameter->getId()], true);
     }
@@ -143,6 +144,7 @@ class GroupParameterController extends AbstractActionController
         }
 
         $groupParameterRepository->remove($groupParameter);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Remove parameter %s of class %s on group %s'), $groupParameter->getName(), $groupParameter->getClass()->getName(), $group->getName()));
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()], 'fragment' => $anchor], true);
     }
@@ -230,6 +232,7 @@ class GroupParameterController extends AbstractActionController
         $child->setParent($groupParameter);
 
         $groupParameterRepository->add($child);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Add parameter %s to class %s on group %s'), $name, $groupParameter->getClass()->getName(), $group->getName()));
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()], 'fragment' => 'parameter' . $child->getId()], true);
     }

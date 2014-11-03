@@ -74,6 +74,7 @@ class GroupsController extends AbstractActionController
                 $group->setOrdering(array_search($group->getId(), $groupsIds));
                 $groupRepository->update($group);
             }
+            $this->writeRevisionLog($revision, sprintf($this->translate('Update groups ordering')));
         }
 
         return new JsonModel();
@@ -105,6 +106,7 @@ class GroupsController extends AbstractActionController
         $group = new Group($name);
         $group->setRevision($currentRevision);
         $groupRepository->add($group);
+        $this->writeRevisionLog($currentRevision, sprintf($this->translate('Create group %s'), $name));
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate('The group %s has been successfully created !'), $name));
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);

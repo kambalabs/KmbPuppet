@@ -106,6 +106,7 @@ class GroupClassController extends AbstractActionController
         $groupParameter->setClass($groupClass);
 
         $groupParameterRepository->add($groupParameter);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Add parameter %s to class %s on group %s'), $name, $groupClass->getName(), $group->getName()));
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $groupClass->getName()], 'fragment' => 'parameter' . $groupParameter->getId()], true);
     }

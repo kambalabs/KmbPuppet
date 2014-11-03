@@ -27,11 +27,14 @@ use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\GroupClassRepositoryInterface;
+use KmbDomain\Model\RevisionLog;
+use KmbDomain\Model\RevisionRepositoryInterface;
 use KmbPmProxy\Service\PuppetClass;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
 use KmbPuppetDb\Exception\RuntimeException;
 use KmbPuppetDb\Model\NodeInterface;
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -192,19 +195,26 @@ class GroupController extends AbstractActionController
             return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $newGroup->getId()], [], true);
         }
 
+        $logs = [];
         $name = $this->params()->fromPost('name');
-        if (isset($name)) {
+        if (isset($name) && $name !== $group->getName()) {
+            $logs[] = sprintf($this->translate('Update group name %s to %s'), $group->getName(), $name);
             $group->setName($name);
         }
         $include = $this->params()->fromPost('include');
-        if (isset($include)) {
+        if (isset($include) && $include !== $group->getIncludePattern()) {
             $group->setIncludePattern($include);
+            $logs[] = sprintf($this->translate('Update include pattern of group %s'), $group->getName());
         }
         $exclude = $this->params()->fromPost('exclude');
-        if (isset($exclude)) {
+        if (isset($exclude) && $exclude !== $group->getExcludePattern()) {
             $group->setExcludePattern($exclude);
+            $logs[] = sprintf($this->translate('Update exclude pattern of group %s'), $group->getName());
         }
-        $groupRepository->update($group);
+        if (!empty($logs)) {
+            $groupRepository->update($group);
+            $this->writeRevisionLog($revision, $logs);
+        }
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
     }
@@ -246,6 +256,7 @@ class GroupController extends AbstractActionController
         }
 
         $groupRepository->remove($group);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Remove group %s'), $group->getName()));
 
         return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
     }
@@ -313,6 +324,7 @@ class GroupController extends AbstractActionController
         /** @var GroupClassRepositoryInterface $classRepository */
         $classRepository = $this->getServiceLocator()->get('GroupClassRepository');
         $classRepository->add($groupClass);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Add class %s to group %s'), $className, $group->getName()));
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $className]], true);
     }
@@ -364,6 +376,7 @@ class GroupController extends AbstractActionController
         }
 
         $groupClassRepository->remove($groupClass);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Remove class %s from group %s'), $className, $group->getName()));
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Class %s has been succesfully removed"), $className));
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['selectedClass' => $className]], true);
