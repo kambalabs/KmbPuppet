@@ -17,7 +17,7 @@
                     <?php if ($this->currentRevision != null): ?>
                         <tr>
                             <?php if ($this->currentRevision->hasLogs()): ?>
-                            <td>
+                            <td style="background-color: #fffdde">
                                 <input type="radio" name="from" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <input type="radio" name="to" checked="checked" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <span><?php echo $this->escapeHtml($this->currentRevision->getLastLog()->getComment()) ?></span>
@@ -26,20 +26,18 @@
                                 <span class="comment"><?php echo $this->currentRevision->getLastLog()->getCreatedBy(); ?></span>
                                 <span class="label label-warning"><?php echo $this->translate('current revision') ?></span>
                             </td>
-                            <td class="text-right" style="width: 210px">
+                            <td class="text-right" style="width: 210px; background-color: #fffdde">
                                 <a class="btn btn-primary btn-xs" href="#"><i class="glyphicon glyphicon-ok"></i> <?php echo $this->translate('save') ?></a>
                                 <a class="btn btn-default btn-xs" href="#"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('cancel') ?></a>
                                 <a class="btn btn-warning btn-xs" href="#"><i class="glyphicon glyphicon-search"></i> <?php echo $this->translate('logs') ?></a>
                             </td>
                             <?php else: ?>
-                            <td>
+                            <td colspan="2" style="background-color: #fffdde">
                                 <input type="radio" name="from" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <input type="radio" name="to" checked="checked" value="<?php echo $this->currentRevision->getId() ?>" />
                                 <span><?php echo $this->translate('No current changes') ?></span>
+                                <br />
                                 <span class="label label-warning"><?php echo $this->translate('current revision') ?></span>
-                            </td>
-                            <td class="text-right" style="width: 210px">
-                                <a class="btn btn-warning btn-xs" href="#"><i class="glyphicon glyphicon-search"></i> <?php echo $this->translate('logs') ?></a>
                             </td>
                             <?php endif ?>
                         </tr>
