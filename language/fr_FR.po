@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-04 06:44+0100\n"
-"PO-Revision-Date: 2014-11-04 06:46+0100\n"
+"POT-Creation-Date: 2014-11-04 06:55+0100\n"
+"PO-Revision-Date: 2014-11-04 06:55+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -202,6 +202,10 @@ msgstr "Création du groupe %s"
 #, php-format
 msgid "The group %s has been successfully created !"
 msgstr "Le groupe %s a bien été créé !"
+
+#: ../src/KmbPuppet/Controller/RevisionController.php:44
+msgid "You must enter a comment"
+msgstr "Vous devez saisir un commentaire"
 
 #: ../src/KmbPuppet/View/Decorator/ReportTitleDecorator.php:33
 msgid "Title"

@@ -41,7 +41,7 @@ class RevisionController extends AbstractActionController
 
         $comment = $this->params()->fromPost('comment');
         if (empty($comment)) {
-            $this->flashMessenger()->addErrorMessage('Vous devez saisir un commentaire !');
+            $this->flashMessenger()->addErrorMessage($this->translate('You must enter a comment'));
             return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
         }
 
