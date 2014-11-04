@@ -42,4 +42,13 @@ class RevisionControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/revisions');
     }
+
+    /** @test */
+    public function canRemove()
+    {
+        $this->dispatch('/env/1/puppet/revision/1/remove');
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/env/1/puppet/revisions');
+    }
 }
