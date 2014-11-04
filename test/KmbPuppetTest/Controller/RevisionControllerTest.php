@@ -32,6 +32,14 @@ class RevisionControllerTest extends AbstractHttpControllerTestCase
             ->method('getAllRoots')
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
+
+        $revisionRepository = $this->getMock('KmbDomain\Model\RevisionRepositoryInterface');
+        $revisionRepository->expects($this->any())
+            ->method('getById')
+            ->will($this->returnValue(new Revision($environment)));
+        $serviceManager->setService('RevisionRepository', $revisionRepository);
+
+        $serviceManager->setService('revisionService', $this->getMock('KmbDomain\Model\RevisionServiceInterface'));
     }
 
     /** @test */

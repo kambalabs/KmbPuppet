@@ -21,7 +21,10 @@
 namespace KmbPuppet\Controller;
 
 use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\RevisionInterface;
+use KmbDomain\Model\RevisionServiceInterface;
 use KmbPuppet\Service;
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
@@ -31,12 +34,18 @@ class RevisionController extends AbstractActionController
     public function releaseAction()
     {
         /** @var EnvironmentInterface $environment */
-        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
         }
         if (!$this->isGranted('manageEnv', $environment)) {
             throw new UnauthorizedException();
+        }
+
+        /** @var RevisionInterface $revision */
+        $revision = $this->serviceLocator->get('RevisionRepository')->getById($this->params()->fromRoute('id'));
+        if ($revision == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
         }
 
         $comment = $this->params()->fromPost('comment');
@@ -45,19 +54,36 @@ class RevisionController extends AbstractActionController
             return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
         }
 
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->serviceLocator->get('Zend\Authentication\AuthenticationService');
+
+        /** @var RevisionServiceInterface $revisionService */
+        $revisionService = $this->serviceLocator->get('revisionService');
+        $revisionService->release($revision, $authenticationService->getIdentity(), $comment);
+
         return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
     }
 
     public function removeAction()
     {
         /** @var EnvironmentInterface $environment */
-        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
             return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
         }
         if (!$this->isGranted('manageEnv', $environment)) {
             throw new UnauthorizedException();
         }
+
+        /** @var RevisionInterface $revision */
+        $revision = $this->serviceLocator->get('RevisionRepository')->getById($this->params()->fromRoute('id'));
+        if ($revision == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
+        }
+
+        /** @var RevisionServiceInterface $revisionService */
+        $revisionService = $this->serviceLocator->get('revisionService');
+        $revisionService->remove($revision);
 
         return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
     }
