@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-03 22:49+0100\n"
-"PO-Revision-Date: 2014-11-03 22:49+0100\n"
+"POT-Creation-Date: 2014-11-04 01:40+0100\n"
+"PO-Revision-Date: 2014-11-04 01:41+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -273,35 +273,29 @@ msgid "You are about to remove <strong>%s</strong> group."
 msgstr "Vous êtes sur le point de supprimer le groupe <strong>%s</strong>."
 
 #: ../view/kmb-puppet/groups/index.phtml:43
+#: ../view/kmb-puppet/revisions/index.phtml:84
 #: ../view/kmb-puppet/environments/index.phtml:7
-#: ../view/kmb-puppet/group/show.phtml:150
-#: ../view/kmb-puppet/group/show.phtml:170
 msgid "Confirm Remove"
 msgstr "Confirmation de suppression"
 
 #: ../view/kmb-puppet/groups/index.phtml:48
+#: ../view/kmb-puppet/revisions/index.phtml:90
 #: ../view/kmb-puppet/environments/index.phtml:12
-#: ../view/kmb-puppet/group/show.phtml:155
-#: ../view/kmb-puppet/group/show.phtml:175
 msgid "Do you want to proceed ?"
 msgstr "Êtes-vous sûr de vouloir continuer ?"
 
 #: ../view/kmb-puppet/groups/index.phtml:52
 #: ../view/kmb-puppet/groups/index.phtml:76
+#: ../view/kmb-puppet/revisions/index.phtml:94
 #: ../view/kmb-puppet/environments/index.phtml:16
 #: ../view/kmb-puppet/environments/index.phtml:52
 #: ../view/kmb-puppet/environments/index.phtml:101
-#: ../view/kmb-puppet/group/show.phtml:10
-#: ../view/kmb-puppet/group/show.phtml:138
-#: ../view/kmb-puppet/group/show.phtml:159
-#: ../view/kmb-puppet/group/show.phtml:179
 msgid "Cancel"
 msgstr "Annuler"
 
 #: ../view/kmb-puppet/groups/index.phtml:53
+#: ../view/kmb-puppet/revisions/index.phtml:95
 #: ../view/kmb-puppet/environments/index.phtml:17
-#: ../view/kmb-puppet/group/show.phtml:160
-#: ../view/kmb-puppet/group/show.phtml:180
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -322,20 +316,18 @@ msgstr "Choisir un nom"
 #: ../view/kmb-puppet/groups/index.phtml:77
 #: ../view/kmb-puppet/environments/index.phtml:53
 #: ../view/kmb-puppet/environments/index.phtml:102
-#: ../view/kmb-puppet/group/show.phtml:12
 msgid "Save"
 msgstr "Enregistrer"
 
 #: ../view/kmb-puppet/groups/index.phtml:95
 #: ../view/kmb-puppet/modules/index.phtml:47
-#: ../view/kmb-puppet/revisions/index.phtml:83
+#: ../view/kmb-puppet/revisions/index.phtml:112
 #: ../view/kmb-puppet/environments/index.phtml:197
-#: ../view/kmb-puppet/group/show.phtml:227
 msgid "Help"
 msgstr "Aide"
 
 #: ../view/kmb-puppet/groups/index.phtml:97
-#: ../view/kmb-puppet/revisions/index.phtml:85
+#: ../view/kmb-puppet/revisions/index.phtml:114
 #, php-format
 msgid "Here is the list of groups on environment <strong>%s</strong>."
 msgstr "Voici la liste des groupes de l'environnement <strong>%s</strong>."
@@ -358,7 +350,6 @@ msgstr "Informations détaillées du module"
 
 #: ../view/kmb-puppet/modules/show.phtml:12
 #: ../view/kmb-puppet/modules/show-class.phtml:12
-#: ../view/kmb-puppet/group/show.phtml:18
 msgid "back"
 msgstr "retour"
 
@@ -380,12 +371,10 @@ msgid "Classes of module %s"
 msgstr "Classes du module %s"
 
 #: ../view/kmb-puppet/modules/show.phtml:54
-#: ../view/kmb-puppet/group/show.phtml:100
 msgid "Error"
 msgstr "Erreur"
 
 #: ../view/kmb-puppet/modules/show.phtml:64
-#: ../view/kmb-puppet/group/show.phtml:110
 msgid "No classes available !"
 msgstr "Aucune classe disponible !"
 
@@ -457,13 +446,11 @@ msgstr "Paramètres de la classe %s"
 
 #: ../view/kmb-puppet/modules/show-class.phtml:30
 #: ../view/kmb-puppet/environments/index.phtml:175
-#: ../view/kmb-puppet/group/show.phtml:206
 msgid "Collapse all"
 msgstr "Tout replier"
 
 #: ../view/kmb-puppet/modules/show-class.phtml:34
 #: ../view/kmb-puppet/environments/index.phtml:179
-#: ../view/kmb-puppet/group/show.phtml:210
 msgid "Expand all"
 msgstr "Tout déplier"
 
@@ -495,43 +482,34 @@ msgstr "Historique des changements"
 msgid "Compare selected versions"
 msgstr "Comparer les versions sélectionnées"
 
-#: ../view/kmb-puppet/revisions/index.phtml:23
+#: ../view/kmb-puppet/revisions/index.phtml:24
 msgid "Current changes"
 msgstr "Changements en cours"
 
 #: ../view/kmb-puppet/revisions/index.phtml:27
-#: ../view/kmb-puppet/revisions/index.phtml:39
+msgid "You are about to remove all current changes."
+msgstr "Vous êtes sur le point de supprimer tous les changements en cours."
+
+#: ../view/kmb-puppet/revisions/index.phtml:36
+#: ../view/kmb-puppet/revisions/index.phtml:43
 msgid "current revision"
 msgstr "version en cours"
 
-#: ../view/kmb-puppet/revisions/index.phtml:30
-msgid "save"
-msgstr "enregistrer"
-
-#: ../view/kmb-puppet/revisions/index.phtml:31
-msgid "cancel"
-msgstr "annuler"
-
-#: ../view/kmb-puppet/revisions/index.phtml:32
-#: ../view/kmb-puppet/revisions/index.phtml:62
-msgid "logs"
-msgstr "logs"
-
-#: ../view/kmb-puppet/revisions/index.phtml:38
+#: ../view/kmb-puppet/revisions/index.phtml:42
 msgid "No current changes"
 msgstr "Aucun changement en cours"
 
-#: ../view/kmb-puppet/revisions/index.phtml:54
+#: ../view/kmb-puppet/revisions/index.phtml:57
+msgid "You are about to remove a revision."
+msgstr "Vous êtes sur le point de supprimer une version."
+
+#: ../view/kmb-puppet/revisions/index.phtml:68
 msgid "active revision"
 msgstr "version active"
 
-#: ../view/kmb-puppet/revisions/index.phtml:59
-msgid "restore"
-msgstr "rétablir"
-
-#: ../view/kmb-puppet/revisions/index.phtml:60
-msgid "remove"
-msgstr "supprimer"
+#: ../view/kmb-puppet/revisions/index.phtml:89
+msgid "Don't forget to consult logs before (by clicking on icon&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) to be aware of what you are removing."
+msgstr "N'oubliez pas de consulter les logs avant (en cliquant sur l'icône&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) pour bien être conscient de ce que vous supprimez."
 
 #: ../view/kmb-puppet/reports/index.phtml:2
 msgid "Day reports"
@@ -608,7 +586,6 @@ msgid "Select users"
 msgstr "Choisir des utilisateurs"
 
 #: ../view/kmb-puppet/environments/index.phtml:129
-#: ../view/kmb-puppet/group/show.phtml:139
 msgid "Add"
 msgstr "Ajouter"
 
@@ -767,6 +744,21 @@ msgstr "cliquer pour modifier"
 #: ../view/kmb-puppet/group/value.phtml:21
 msgid "no value"
 msgstr "aucune valeur"
+
+#~ msgid "save"
+#~ msgstr "enregistrer"
+
+#~ msgid "cancel"
+#~ msgstr "annuler"
+
+#~ msgid "logs"
+#~ msgstr "logs"
+
+#~ msgid "restore"
+#~ msgstr "rétablir"
+
+#~ msgid "remove"
+#~ msgstr "supprimer"
 
 #~ msgid "editable list"
 #~ msgstr "liste éditable"
