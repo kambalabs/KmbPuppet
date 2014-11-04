@@ -147,6 +147,21 @@ return [
                     ],
                 ],
             ],
+            'puppet-revision' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '[/env/:envId]/puppet/revision/:id/:action',
+                    'constraints' => [
+                        'envId' => '[0-9]+',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Revision',
+                        'envId' => '0',
+                    ],
+                ],
+            ],
         ],
     ],
     'translator' => [
@@ -166,6 +181,7 @@ return [
             'KmbPuppet\Controller\GroupClass' => 'KmbPuppet\Controller\GroupClassController',
             'KmbPuppet\Controller\GroupParameter' => 'KmbPuppet\Controller\GroupParameterController',
             'KmbPuppet\Controller\Revisions' => 'KmbPuppet\Controller\RevisionsController',
+            'KmbPuppet\Controller\Revision' => 'KmbPuppet\Controller\RevisionController',
         ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
@@ -268,6 +284,11 @@ return [
                     'controller' => 'KmbPuppet\Controller\Revisions',
                     'actions' => ['index'],
                     'roles' => ['user']
+                ],
+                [
+                    'controller' => 'KmbPuppet\Controller\Revision',
+                    'actions' => ['release'],
+                    'roles' => ['admin']
                 ],
             ],
         ],
