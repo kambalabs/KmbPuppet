@@ -39,6 +39,12 @@ class RevisionController extends AbstractActionController
             throw new UnauthorizedException();
         }
 
+        $comment = $this->params()->fromPost('comment');
+        if (empty($comment)) {
+            $this->flashMessenger()->addErrorMessage('Vous devez saisir un commentaire !');
+            return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
+        }
+
         return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
     }
 }

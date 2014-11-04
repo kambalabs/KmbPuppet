@@ -3,10 +3,14 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
-                <span>
-                    <?php echo $this->translate('Changes history') ?>
-                    <a class="btn btn-info btn-xs pull-right">
-                        <span class="glyphicon glyphicon-search"></span>
+                <span><?php echo $this->translate('Changes history') ?></span>
+                <span class="pull-right">
+                    <a class="btn btn-info btn-xs">
+                        <span class="glyphicon glyphicon-import"></span>
+                        <?php echo $this->translate('Import version') ?>
+                    </a>
+                    <a class="btn btn-info btn-xs">
+                        <span class="glyphicon glyphicon-transfer"></span>
                         <?php echo $this->translate('Compare selected versions') ?>
                     </a>
                 </span>
@@ -25,10 +29,10 @@
                                 <div class="pull-right">
                                     <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                                     <a class="red" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'remove', 'id' => $this->currentRevision->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $this->translate("You are about to remove all current changes.") ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="green" href="#"><i class="glyphicon glyphicon-ok"></i></a>
-                                    <a class="lightgrey" href="#"><i class="glyphicon glyphicon-export"></i></a>
+                                    <a class="green" href="#"data-href="<?php echo $this->url('puppet-revision', ['action' => 'release', 'id' => $this->currentRevision->getId()], [], true) ?>" data-toggle="modal" data-target="#release" data-release-warning="<?php echo $this->translate('Warning ! You are about to save current changes, it will be immediately accessible by Puppet.') ?>"><i class="glyphicon glyphicon-ok"></i></a>
+                                    <a class="grey" href="#"><i class="glyphicon glyphicon-export"></i></a>
                                     <?php endif ?>
-                                    <a class="lightgrey" href="#"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="grey" href="#"><i class="glyphicon glyphicon-search"></i></a>
                                 </div>
                                 <br />
                                 <span class="comment"><?php echo $this->dateFormat($this->currentRevision->getLastLog()->getCreatedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
@@ -55,11 +59,11 @@
                                     <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                                     <?php if ($revision->getId() != $this->lastReleasedRevision->getId()): ?>
                                     <a class="red" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'remove', 'id' => $revision->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $this->translate("You are about to remove a revision.") ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                                    <a class="blue" href="#"><i class="glyphicon glyphicon-repeat"></i></a>
+                                    <a class="blue" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'release', 'id' => $revision->getId()], [], true) ?>" data-toggle="modal" data-target="#release" data-release-warning="<?php echo $this->translate('Warning ! You are about to restore a revision. It will be immediately accessible by Puppet, all current changes will be definitively lost.') ?>"><i class="glyphicon glyphicon-repeat"></i></a>
                                     <?php endif ?>
-                                    <a class="lightgrey" href="#"><i class="glyphicon glyphicon-export"></i></a>
+                                    <a class="grey" href="#"><i class="glyphicon glyphicon-export"></i></a>
                                     <?php endif ?>
-                                    <a class="lightgrey" href="#"><i class="glyphicon glyphicon-search"></i></a>
+                                    <a class="grey" href="#"><i class="glyphicon glyphicon-search"></i></a>
                                 </div>
                                 <br />
                                 <span class="comment"><?php echo $this->dateFormat($revision->getReleasedAt(), IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT); ?></span>
@@ -73,6 +77,30 @@
                     </tbody>
                 </table>
                 <?php endif ?>
+            </div>
+        </div>
+    </div>
+    <div id="release" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="releaseLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="releaseLabel"><?php echo $this->translate('Activate a revision') ?></h1>
+                </div>
+                <form role="form" action="#" method="post">
+                    <div class="modal-body">
+                        <blockquote style="margin-top: 16px">
+                            <p class="release-warning"></p>
+                        </blockquote>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="comment" name="comment" placeholder="<?php echo $this->translate('Enter a comment') ?>" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                        <button type="submit" class="btn btn-primary"><?php echo $this->translate('Save') ?></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -99,12 +127,12 @@
     </div>
     <div class="col-sm-4">
         <?php if (isset($this->error)): ?>
-            <ul class="flash">
-                <li class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <?php echo $this->error ?>
-                </li>
-            </ul>
+        <ul class="flash">
+            <li class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php echo $this->error ?>
+            </li>
+        </ul>
         <?php endif ?>
         <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
