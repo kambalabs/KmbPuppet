@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-04 06:55+0100\n"
-"PO-Revision-Date: 2014-11-04 06:55+0100\n"
+"POT-Creation-Date: 2014-11-07 22:29+0100\n"
+"PO-Revision-Date: 2014-11-07 22:32+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -203,7 +203,7 @@ msgstr "Création du groupe %s"
 msgid "The group %s has been successfully created !"
 msgstr "Le groupe %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/RevisionController.php:44
+#: ../src/KmbPuppet/Controller/RevisionController.php:53
 msgid "You must enter a comment"
 msgstr "Vous devez saisir un commentaire"
 
@@ -327,13 +327,12 @@ msgstr "Enregistrer"
 
 #: ../view/kmb-puppet/groups/index.phtml:95
 #: ../view/kmb-puppet/modules/index.phtml:47
-#: ../view/kmb-puppet/revisions/index.phtml:140
+#: ../view/kmb-puppet/revisions/index.phtml:139
 #: ../view/kmb-puppet/environments/index.phtml:197
 msgid "Help"
 msgstr "Aide"
 
 #: ../view/kmb-puppet/groups/index.phtml:97
-#: ../view/kmb-puppet/revisions/index.phtml:142
 #, php-format
 msgid "Here is the list of groups on environment <strong>%s</strong>."
 msgstr "Voici la liste des groupes de l'environnement <strong>%s</strong>."
@@ -536,6 +535,18 @@ msgstr "Saisir un commentaire"
 #: ../view/kmb-puppet/revisions/index.phtml:117
 msgid "Don't forget to consult logs before (by clicking on icon&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) to be aware of what you are removing."
 msgstr "N'oubliez pas de consulter les logs avant (en cliquant sur l'icône&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) pour bien être conscient de ce que vous supprimez."
+
+#: ../view/kmb-puppet/revisions/index.phtml:141
+msgid "You can restore a revision by clicking on <i class=\"glyphicon glyphicon-repeat blue\"></i>, or remove it by clicking on <i class=\"glyphicon glyphicon-remove red\"></i>."
+msgstr "Vous pouvez restaurer une version en cliquant sur <i class=\"glyphicon glyphicon-repeat blue\"></i>, ou la supprimer en cliquant sur <i class=\"glyphicon glyphicon-remove red\"></i>."
+
+#: ../view/kmb-puppet/revisions/index.phtml:142
+msgid "Click on <i class=\"glyphicon glyphicon-export grey\"></i> to export a revision."
+msgstr "Cliquez sur <i class=\"glyphicon glyphicon-export grey\"></i> pour exporter une version."
+
+#: ../view/kmb-puppet/revisions/index.phtml:143
+msgid "View all logs of a revision by clicking on <i class=\"glyphicon glyphicon-search grey\"></i>."
+msgstr "Consultez les logs d'une version en cliquant sur <i class=\"glyphicon glyphicon-search grey\"></i>."
 
 #: ../view/kmb-puppet/reports/index.phtml:2
 msgid "Day reports"

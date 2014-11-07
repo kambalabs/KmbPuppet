@@ -136,11 +136,11 @@
         <?php endif ?>
         <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
-        <?php if (isset($this->environment)): ?>
-            <h1><?php echo $this->translate('Help') ?></h1>
-            <blockquote>
-                <p><?php echo sprintf($this->translate("Here is the list of groups on environment <strong>%s</strong>."), $this->environment->getNormalizedName()) ?></p>
-            </blockquote>
-        <?php endif ?>
+        <h1><?php echo $this->translate('Help') ?></h1>
+        <blockquote>
+            <p><?php echo $this->translate('You can restore a revision by clicking on <i class="glyphicon glyphicon-repeat blue"></i>, or remove it by clicking on <i class="glyphicon glyphicon-remove red"></i>.') ?></p>
+            <p><?php echo $this->translate('Click on <i class="glyphicon glyphicon-export grey"></i> to export a revision.') ?></p>
+            <p><?php echo $this->translate('View all logs of a revision by clicking on <i class="glyphicon glyphicon-search grey"></i>.') ?></p>
+        </blockquote>
     </div>
 </div>
