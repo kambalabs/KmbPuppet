@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\RevisionInterface;
 use KmbDomain\Model\RevisionServiceInterface;
@@ -29,7 +30,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class RevisionController extends AbstractActionController
+class RevisionController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     public function releaseAction()
     {

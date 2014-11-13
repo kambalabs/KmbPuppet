@@ -21,11 +21,12 @@
 namespace KmbPuppet\Controller;
 
 use GtnDataTables\Service\DataTable;
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentRepositoryInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
-class ReportsController extends AbstractActionController
+class ReportsController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     /** @var EnvironmentRepositoryInterface */
     protected $environmentRepository;

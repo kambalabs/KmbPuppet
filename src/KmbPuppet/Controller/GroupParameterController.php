@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
@@ -34,7 +35,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Stdlib\ArrayUtils;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class GroupParameterController extends AbstractActionController
+class GroupParameterController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     public function updateAction()
     {

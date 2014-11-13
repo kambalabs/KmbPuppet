@@ -20,13 +20,14 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class RevisionsController extends AbstractActionController
+class RevisionsController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     public function indexAction()
     {

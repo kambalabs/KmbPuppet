@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model;
 use KmbPmProxy\Model\PuppetClassValidator;
 use KmbPmProxy\Service;
@@ -27,7 +28,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class ModulesController extends AbstractActionController
+class ModulesController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     public function indexAction()
     {

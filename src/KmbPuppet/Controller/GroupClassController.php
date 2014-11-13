@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupClassInterface;
 use KmbDomain\Model\GroupClassRepositoryInterface;
@@ -30,7 +31,7 @@ use KmbPuppet\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class GroupClassController extends AbstractActionController
+class GroupClassController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     public function addParameterAction()
     {

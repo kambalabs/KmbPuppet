@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\Environment;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\EnvironmentRepositoryInterface;
@@ -32,11 +33,12 @@ use KmbPmProxy\Exception\RuntimeException;
 use Zend\Authentication\AuthenticationService;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Exception;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class EnvironmentsController extends AbstractActionController
+class EnvironmentsController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     /** @var EnvironmentRepositoryInterface */
     protected $environmentRepository;
@@ -62,7 +64,8 @@ class EnvironmentsController extends AbstractActionController
         $parent = $this->environmentRepository->getById($this->params()->fromPost('parent'));
         if (
             ($parent == null && !$this->isGranted('manageAllEnv')) ||
-            ($parent != null && !$this->isGranted('manageEnv', $parent))) {
+            ($parent != null && !$this->isGranted('manageEnv', $parent))
+        ) {
             throw new UnauthorizedException();
         }
 
@@ -108,7 +111,8 @@ class EnvironmentsController extends AbstractActionController
         }
         if (
             ($parent == null && !$this->isGranted('manageAllEnv')) ||
-            ($parent != null && !$this->isGranted('manageEnv', $parent))) {
+            ($parent != null && !$this->isGranted('manageEnv', $parent))
+        ) {
             throw new UnauthorizedException();
         }
 

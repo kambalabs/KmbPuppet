@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\Group;
 use KmbDomain\Model\GroupRepositoryInterface;
@@ -29,7 +30,7 @@ use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class GroupsController extends AbstractActionController
+class GroupsController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     public function indexAction()
     {

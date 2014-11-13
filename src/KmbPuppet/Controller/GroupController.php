@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\ClassTemplatesHydratorInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupClass;
@@ -40,7 +41,7 @@ use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
-class GroupController extends AbstractActionController
+class GroupController extends AbstractActionController implements AuthenticatedControllerInterface
 {
     public function showAction()
     {
