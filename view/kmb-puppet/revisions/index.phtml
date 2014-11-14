@@ -1,5 +1,6 @@
 <div class="row">
     <div class="col-sm-8">
+        <form action="<?php echo $this->url('puppet', ['controller' => 'revisions', 'action' => 'diff'], [], true) ?>" method="get">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
@@ -9,10 +10,10 @@
                         <span class="glyphicon glyphicon-import"></span>
                         <?php echo $this->translate('Import version') ?>
                     </a>
-                    <a class="btn btn-info btn-xs">
+                    <button class="btn btn-info btn-xs">
                         <span class="glyphicon glyphicon-transfer"></span>
                         <?php echo $this->translate('Compare selected versions') ?>
-                    </a>
+                    </button>
                 </span>
             </div>
             <div class="panel-body">
@@ -79,6 +80,7 @@
                 <?php endif ?>
             </div>
         </div>
+        </form>
     </div>
     <div id="release" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="releaseLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -138,6 +140,7 @@
         <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
         <h1><?php echo $this->translate('Help') ?></h1>
         <blockquote>
+            <p><?php echo $this->translate('Click on <i class="glyphicon glyphicon-ok green"></i> to save current changes.') ?></p>
             <p><?php echo $this->translate('You can restore a revision by clicking on <i class="glyphicon glyphicon-repeat blue"></i>, or remove it by clicking on <i class="glyphicon glyphicon-remove red"></i>.') ?></p>
             <p><?php echo $this->translate('Click on <i class="glyphicon glyphicon-export grey"></i> to export a revision.') ?></p>
             <p><?php echo $this->translate('View all logs of a revision by clicking on <i class="glyphicon glyphicon-search grey"></i>.') ?></p>

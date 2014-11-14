@@ -32,6 +32,7 @@ class RevisionsControllerTest extends AbstractHttpControllerTestCase
             ->method('getAllRoots')
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
+        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
     }
 
     /** @test */
@@ -42,5 +43,15 @@ class RevisionsControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Revisions');
         $this->assertActionName('index');
+    }
+
+    /** @test */
+    public function canGetDiff()
+    {
+        $this->dispatch('/env/1/puppet/revisions/diff?from=1&to=2');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Revisions');
+        $this->assertActionName('diff');
     }
 }

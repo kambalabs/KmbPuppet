@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-sm-9">
+        <p>
+            <a class="btn btn-info" href="<?php echo $this->url('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true) ?>">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <?php echo $this->translate('back') ?>
+            </a>
+        </p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span><?php echo $this->translate('Groups ordering') ?></span>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->groupsOrderingDiff ?>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span><?php echo $this->translate('Groups content') ?></span>
+            </div>
+            <div class="panel-body">
+            <?php foreach ($this->groupsDiffs as $group => $diff): ?>
+                <h5 class="DifferencesHeader"><?php echo sprintf($this->translate('Group %s'), $group) ?></h5>
+                <?php echo $diff ?>
+            <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <h1><?php echo $this->translate('Help') ?></h1>
+        <blockquote>
+            <p><span class="DifferencesLegend ChangeInsert">&nbsp;</span>&nbsp;: <?php echo $this->translate('Insert') ?>.</p>
+            <p><span class="DifferencesLegend ChangeReplace">&nbsp;</span>&nbsp;: <?php echo $this->translate('Replace') ?>.</p>
+            <p><span class="DifferencesLegend ChangeDelete">&nbsp;</span>&nbsp;: <?php echo $this->translate('Delete') ?>.</p>
+        </blockquote>
+    </div>
+</div>

@@ -22,7 +22,11 @@ namespace KmbPuppet\Controller;
 
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\GroupInterface;
+use KmbDomain\Model\RevisionInterface;
+use KmbDomain\Model\RevisionRepositoryInterface;
 use KmbPuppet\Service;
+use Symfony\Component\Yaml\Yaml;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
@@ -46,5 +50,102 @@ class RevisionsController extends AbstractActionController implements Authentica
             'lastReleasedRevision' => $environment->getLastReleasedRevision(),
             'revisions' => $environment->getReleasedRevisions(),
         ]);
+    }
+
+    public function diffAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+        }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
+
+        /** @var RevisionRepositoryInterface $revisionRepository */
+        $revisionRepository = $this->getServiceLocator()->get('RevisionRepository');
+
+        /** @var RevisionInterface $from */
+        $from = $revisionRepository->getById($this->params()->fromQuery('from'));
+        /** @var RevisionInterface $to */
+        $to = $revisionRepository->getById($this->params()->fromQuery('to'));
+
+        return new ViewModel([
+            'groupsOrderingDiff' => $this->diffOrderingGroupsRevisions($from, $to),
+            'groupsDiffs' => $this->diffsGroupsRevisions($from, $to),
+        ]);
+    }
+
+    /**
+     * @param RevisionInterface $from
+     * @param RevisionInterface $to
+     * @return \Diff
+     */
+    protected function diffOrderingGroupsRevisions($from, $to)
+    {
+        $fromGroups = isset($from) ? array_map(function (GroupInterface $group) {
+            return $group->getName();
+        }, $from->getGroups()) : [];
+        $toGroups = isset($to) ? array_map(function (GroupInterface $group) {
+            return $group->getName();
+        }, $to->getGroups()) : [];
+        $diff = new \Diff($fromGroups, $toGroups);
+        return $diff->render(new \Diff_Renderer_Html_SideBySide());
+    }
+
+    /**
+     * @param RevisionInterface $from
+     * @param RevisionInterface $to
+     * @return \Diff[]
+     */
+    protected function diffsGroupsRevisions($from, $to)
+    {
+        $diffs = [];
+        if (isset($to) && $to->hasGroups()) {
+            foreach ($to->getGroups() as $toGroup) {
+                if (isset($from)) {
+                    $fromGroup = $from->getGroupByName($toGroup->getName());
+                    if (isset($fromGroup)) {
+                        $diff = new \Diff($this->dumpGroup($fromGroup), $this->dumpGroup($toGroup));
+                    } else {
+                        $diff = new \Diff([], $this->dumpGroup($toGroup));
+                    }
+                    $render = $diff->render(new \Diff_Renderer_Html_SideBySide());
+                    if (!empty($render)) {
+                        $diffs[$toGroup->getName()] = $render;
+                    }
+                }
+            }
+        }
+        if (isset($from) && $from->hasGroups()) {
+            foreach ($from->getGroups() as $fromGroup) {
+                if (isset($to)) {
+                    $toGroup = $to->getGroupByName($fromGroup->getName());
+                    if (!isset($toGroup)) {
+                        $diff = new \Diff($this->dumpGroup($fromGroup), []);
+                        $render = $diff->render(new \Diff_Renderer_Html_SideBySide());
+                        if (!empty($render)) {
+                            $diffs[$fromGroup->getName()] = $render;
+                        }
+                    }
+                }
+            }
+        }
+        return $diffs;
+    }
+
+    /**
+     * @param GroupInterface $group
+     * @return array
+     */
+    protected function dumpGroup($group)
+    {
+        $fromGroupDump = [
+            $this->translate('include') . ': ' . $group->getIncludePattern(),
+            $this->translate('exclude') . ': ' . $group->getExcludePattern(),
+            $this->translate('classes') . ': ',
+        ];
+        return array_merge($fromGroupDump, explode(PHP_EOL, Yaml::dump($group->dump(), 20, 4)));
     }
 }

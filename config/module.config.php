@@ -282,7 +282,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Revisions',
-                    'actions' => ['index'],
+                    'actions' => ['index', 'diff'],
                     'roles' => ['user']
                 ],
                 [
