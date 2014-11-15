@@ -22,10 +22,14 @@ namespace KmbPuppet\Controller;
 
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\RevisionInterface;
 use KmbDomain\Model\RevisionServiceInterface;
 use KmbPuppet\Service;
+use Symfony\Component\Yaml\Yaml;
 use Zend\Authentication\AuthenticationService;
+use Zend\Http\Response;
+use Zend\I18n\Validator\DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
@@ -87,5 +91,53 @@ class RevisionController extends AbstractActionController implements Authenticat
         $revisionService->remove($revision);
 
         return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
+    }
+
+    public function exportAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+        }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
+
+        /** @var RevisionInterface $revision */
+        $revision = $this->serviceLocator->get('RevisionRepository')->getById($this->params()->fromRoute('id'));
+        if ($revision == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
+        }
+
+        $groups = $revision->hasGroups() ? $revision->getGroups() : [];
+        $data = [
+            'released_at' => $revision->getReleasedAt() ? $revision->getReleasedAt()->format(\DateTime::W3C): '',
+            'released_by' => $revision->getReleasedBy() ?: '',
+            'comment' => $revision->getComment() ?: '',
+            'groups' => array_map(function (GroupInterface $group) {
+                return [
+                    'name' => $group->getName(),
+                    'include_pattern' => $group->getIncludePattern(),
+                    'exclude_pattern' => $group->getExcludePattern(),
+                    'classes' => $group->dump(),
+                ];
+            }, $groups),
+        ];
+        $content = Yaml::dump($data, 20, 4);
+
+        /** @var Response $response */
+        $response = $this->getResponse();
+        $response->setContent($content);
+
+        $filename = $environment->getNormalizedName() . '-' . date('Ymd-His') . '.yaml';
+
+        $headers = $response->getHeaders();
+        $headers->clearHeaders()
+            ->addHeaderLine('Content-Type', 'application/x-yaml')
+            ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->addHeaderLine('Content-Length', strlen($content));
+
+        return $this->response;
     }
 }

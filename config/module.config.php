@@ -287,7 +287,7 @@ return [
                 ],
                 [
                     'controller' => 'KmbPuppet\Controller\Revision',
-                    'actions' => ['release', 'remove'],
+                    'actions' => ['release', 'remove', 'export'],
                     'roles' => ['admin']
                 ],
             ],
