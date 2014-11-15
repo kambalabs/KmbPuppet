@@ -22,9 +22,9 @@ class RevisionsControllerTest extends AbstractHttpControllerTestCase
 
         $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
         $environment = new Environment();
-        $environment->setCurrentRevision(new Revision());
-        $environment->setLastReleasedRevision(new Revision());
-        $environment->setReleasedRevisions([new Revision(), new Revision()]);
+        $environment->setCurrentRevision($this->createRevision(3));
+        $environment->setLastReleasedRevision($this->createRevision(2));
+        $environment->setReleasedRevisions([$this->createRevision(1), $this->createRevision(2)]);
         $environmentRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue($environment));
@@ -53,5 +53,15 @@ class RevisionsControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Revisions');
         $this->assertActionName('diff');
+    }
+
+    /**
+     * @param int $id
+     * @return Revision
+     */
+    protected function createRevision($id)
+    {
+        $revision = new Revision();
+        return $revision->setId($id);
     }
 }

@@ -65,7 +65,6 @@ class RevisionControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/env/1/puppet/revision/1/export');
 
-        echo $this->getResponse()->getContent();
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Revision');
         $this->assertActionName('export');
