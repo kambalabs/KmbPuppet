@@ -30,6 +30,7 @@ use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\GroupClassRepositoryInterface;
 use KmbDomain\Model\RevisionLog;
 use KmbDomain\Model\RevisionRepositoryInterface;
+use KmbPmProxy\Hydrator\GroupClassHydrator;
 use KmbPmProxy\Service\PuppetClass;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
@@ -88,8 +89,8 @@ class GroupController extends AbstractActionController implements AuthenticatedC
             $nodes = [];
         }
 
-        /** @var ClassTemplatesHydratorInterface $classTemplatesHydrator */
-        $classTemplatesHydrator = $this->serviceLocator->get('classTemplatesHydrator');
+        /** @var GroupClassHydrator $groupClassHydrator */
+        $groupClassHydrator = $this->serviceLocator->get('pmProxyGroupClassHydrator');
         /** @var PuppetModuleService $puppetModuleService */
         $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
 
@@ -98,7 +99,7 @@ class GroupController extends AbstractActionController implements AuthenticatedC
             foreach ($puppetModule->getClasses() as $puppetClass) {
                 $groupClass = $group->getClassByName($puppetClass->getName());
                 if ($groupClass != null) {
-                    $classTemplatesHydrator->hydrate($puppetClass->getParametersTemplates(), $groupClass);
+                    $groupClassHydrator->hydrate($puppetClass->getParametersTemplates(), $groupClass);
                 } else {
                     $availableClasses[$puppetModule->getName()][] = $puppetClass;
                 }
