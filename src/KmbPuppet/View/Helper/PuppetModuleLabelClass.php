@@ -21,7 +21,7 @@
 namespace KmbPuppet\View\Helper;
 
 use KmbPmProxy\Model\PuppetModule;
-use KmbPmProxy\Model\PuppetClassValidator;
+use KmbPmProxy\Validator\PuppetClassValidator;
 use KmbPuppetDb\Model;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -44,7 +44,7 @@ class PuppetModuleLabelClass extends AbstractHelper implements ServiceLocatorAwa
         if ($module->hasClasses()) {
             foreach ($module->getClasses() as $class) {
                 /** @var PuppetClassValidator $validator */
-                $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
+                $validator = $this->getServiceLocator()->get('KmbPmProxy\Validator\PuppetClassValidator');
                 if (!$validator->isValid($class)) {
                     return true;
                 }

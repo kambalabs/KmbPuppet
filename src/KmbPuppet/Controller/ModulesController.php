@@ -22,7 +22,7 @@ namespace KmbPuppet\Controller;
 
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model;
-use KmbPmProxy\Model\PuppetClassValidator;
+use KmbPmProxy\Validator\PuppetClassValidator;
 use KmbPmProxy\Service;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -72,7 +72,7 @@ class ModulesController extends AbstractActionController implements Authenticate
         $classesErrors = [];
         foreach ($puppetModule->getClasses() as $class) {
             /** @var PuppetClassValidator $validator */
-            $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
+            $validator = $this->getServiceLocator()->get('KmbPmProxy\Validator\PuppetClassValidator');
             if (!$validator->isValid($class)) {
                 $classesErrors[$class->getName()] = count($validator->getMessages());
             }
@@ -112,7 +112,7 @@ class ModulesController extends AbstractActionController implements Authenticate
 
         $class = $puppetModule->getClass($className);
         /** @var PuppetClassValidator $validator */
-        $validator = $this->getServiceLocator()->get('KmbPmProxy\Model\PuppetClassValidator');
+        $validator = $this->getServiceLocator()->get('KmbPmProxy\Validator\PuppetClassValidator');
         $parametersErrors = [];
         if (!$validator->isValid($class)) {
             foreach ($validator->getMessages() as $parameter => $message) {

@@ -15,10 +15,10 @@ class PuppetModuleLabelClassTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->puppetClassValidator = $this->getMock('KmbPmProxy\Model\PuppetClassValidator');
+        $this->puppetClassValidator = $this->getMock('KmbPmProxy\Validator\PuppetClassValidator');
         Bootstrap::getServiceManager()
             ->setAllowOverride(true)
-            ->setService('KmbPmProxy\Model\PuppetClassValidator', $this->puppetClassValidator);
+            ->setService('KmbPmProxy\Validator\PuppetClassValidator', $this->puppetClassValidator);
         $this->serviceManager = Bootstrap::getServiceManager()->get('ViewHelperManager');
     }
 
