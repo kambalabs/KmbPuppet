@@ -24,19 +24,18 @@ use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\ClassTemplatesHydratorInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupClass;
-use KmbDomain\Model\GroupInterface;
-use KmbDomain\Model\GroupRepositoryInterface;
-use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\GroupClassRepositoryInterface;
-use KmbDomain\Model\RevisionLog;
-use KmbDomain\Model\RevisionRepositoryInterface;
+use KmbDomain\Model\GroupInterface;
+use KmbDomain\Model\GroupParameterFactoryInterface;
+use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPmProxy\Hydrator\GroupClassHydrator;
+use KmbPmProxy\Hydrator\GroupHydrator;
+use KmbPmProxy\Hydrator\GroupHydratorInterface;
 use KmbPmProxy\Service\PuppetClass;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
 use KmbPuppetDb\Exception\RuntimeException;
 use KmbPuppetDb\Model\NodeInterface;
-use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -89,22 +88,12 @@ class GroupController extends AbstractActionController implements AuthenticatedC
             $nodes = [];
         }
 
-        /** @var GroupClassHydrator $groupClassHydrator */
-        $groupClassHydrator = $this->serviceLocator->get('pmProxyGroupClassHydrator');
+        /** @var GroupHydratorInterface $groupHydrator */
+        $groupHydrator = $this->serviceLocator->get('pmProxyGroupHydrator');
         /** @var PuppetModuleService $puppetModuleService */
         $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
-
-        $availableClasses = [];
-        foreach ($puppetModuleService->getAllByEnvironment($environment) as $puppetModule) {
-            foreach ($puppetModule->getClasses() as $puppetClass) {
-                $groupClass = $group->getClassByName($puppetClass->getName());
-                if ($groupClass != null) {
-                    $groupClassHydrator->hydrate($puppetClass->getParametersTemplates(), $groupClass);
-                } else {
-                    $availableClasses[$puppetModule->getName()][] = $puppetClass;
-                }
-            }
-        }
+        $modules = $puppetModuleService->getAllByEnvironment($environment);
+        $groupHydrator->hydrate($modules, $group);
 
         $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));
 
@@ -112,7 +101,6 @@ class GroupController extends AbstractActionController implements AuthenticatedC
             'environment' => $environment,
             'group' => $group,
             'serversCount' => count($nodes),
-            'availableClasses' => $availableClasses,
             'selectedClass' => $selectedClass
         ]);
     }

@@ -124,10 +124,10 @@
                     <div class="form-group">
                         <select id="class-select" class="form-control" name="class" data-placeholder="<?php echo $this->translate('Select a class') ?>" data-rel="chosen" style="display: none;">
                             <option></option>
-                            <?php foreach ($this->availableClasses as $moduleName => $classes): ?>
+                            <?php foreach ($this->group->getAvailableClasses() as $moduleName => $classes): ?>
                                 <optgroup label="<?php echo $moduleName ?>">
-                                <?php foreach ($classes as $class): ?>
-                                    <option><?php echo $class->getName() ?></option>
+                                <?php foreach ($classes as $className): ?>
+                                    <option><?php echo $className ?></option>
                                 <?php endforeach ?>
                                 </optgroup>
                             <?php endforeach ?>
