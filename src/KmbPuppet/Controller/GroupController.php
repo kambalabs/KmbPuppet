@@ -21,15 +21,12 @@
 namespace KmbPuppet\Controller;
 
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
-use KmbDomain\Model\ClassTemplatesHydratorInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupClass;
 use KmbDomain\Model\GroupClassRepositoryInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
-use KmbPmProxy\Hydrator\GroupClassHydrator;
-use KmbPmProxy\Hydrator\GroupHydrator;
 use KmbPmProxy\Hydrator\GroupHydratorInterface;
 use KmbPmProxy\Service\PuppetClass;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;

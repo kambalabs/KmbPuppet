@@ -25,11 +25,12 @@ use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\RevisionInterface;
 use KmbDomain\Model\RevisionServiceInterface;
+use KmbPmProxy\Hydrator\RevisionHydratorInterface;
+use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
 use Symfony\Component\Yaml\Yaml;
 use Zend\Authentication\AuthenticationService;
 use Zend\Http\Response;
-use Zend\I18n\Validator\DateTime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
@@ -110,11 +111,18 @@ class RevisionController extends AbstractActionController implements Authenticat
             return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
         }
 
+        /** @var RevisionHydratorInterface $revisionHydrator */
+        $revisionHydrator = $this->serviceLocator->get('pmProxyRevisionHydrator');
+        /** @var PuppetModuleService $puppetModuleService */
+        $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
+        $modules = $puppetModuleService->getAllByEnvironment($environment);
+        $revisionHydrator->hydrate($modules, $revision);
+
         $groups = $revision->hasGroups() ? $revision->getGroups() : [];
         $data = [
-            'released_at' => $revision->getReleasedAt() ? $revision->getReleasedAt()->format(\DateTime::W3C): '',
-            'released_by' => $revision->getReleasedBy() ?: '',
-            'comment' => $revision->getComment() ?: '',
+            'released_at' => $revision->getReleasedAt() ? $revision->getReleasedAt()->format(\DateTime::W3C) : '',
+            'released_by' => $revision->getReleasedBy() ? : '',
+            'comment' => $revision->getComment() ? : '',
             'groups' => array_map(function (GroupInterface $group) {
                 return [
                     'name' => $group->getName(),

@@ -33,6 +33,7 @@ class RevisionsControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
         $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
+        $serviceManager->setService('pmProxyPuppetModuleService', $this->getMock('KmbPmProxy\Service\PuppetModuleInterface'));
     }
 
     /** @test */

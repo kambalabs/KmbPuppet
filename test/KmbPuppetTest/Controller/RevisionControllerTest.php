@@ -40,6 +40,7 @@ class RevisionControllerTest extends AbstractHttpControllerTestCase
         $serviceManager->setService('RevisionRepository', $revisionRepository);
 
         $serviceManager->setService('revisionService', $this->getMock('KmbDomain\Model\RevisionServiceInterface'));
+        $serviceManager->setService('pmProxyPuppetModuleService', $this->getMock('KmbPmProxy\Service\PuppetModuleInterface'));
     }
 
     /** @test */

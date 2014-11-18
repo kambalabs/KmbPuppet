@@ -25,6 +25,8 @@ use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\RevisionInterface;
 use KmbDomain\Model\RevisionRepositoryInterface;
+use KmbPmProxy\Hydrator\RevisionHydratorInterface;
+use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
 use Symfony\Component\Yaml\Yaml;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -66,10 +68,22 @@ class RevisionsController extends AbstractActionController implements Authentica
         /** @var RevisionRepositoryInterface $revisionRepository */
         $revisionRepository = $this->getServiceLocator()->get('RevisionRepository');
 
+        /** @var RevisionHydratorInterface $revisionHydrator */
+        $revisionHydrator = $this->serviceLocator->get('pmProxyRevisionHydrator');
+        /** @var PuppetModuleService $puppetModuleService */
+        $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
+        $modules = $puppetModuleService->getAllByEnvironment($environment);
+
         /** @var RevisionInterface $from */
         $from = $revisionRepository->getById($this->params()->fromQuery('from'));
+        if ($from != null) {
+            $revisionHydrator->hydrate($modules, $from);
+        }
         /** @var RevisionInterface $to */
         $to = $revisionRepository->getById($this->params()->fromQuery('to'));
+        if ($to != null) {
+            $revisionHydrator->hydrate($modules, $to);
+        }
 
         return new ViewModel([
             'groupsOrderingDiff' => $this->diffOrderingGroupsRevisions($from, $to),
