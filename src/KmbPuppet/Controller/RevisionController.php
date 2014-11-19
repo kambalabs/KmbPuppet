@@ -146,6 +146,6 @@ class RevisionController extends AbstractActionController implements Authenticat
             ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $filename . '"')
             ->addHeaderLine('Content-Length', strlen($content));
 
-        return $this->response;
+        return $response;
     }
 }

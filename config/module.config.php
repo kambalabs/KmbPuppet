@@ -162,6 +162,20 @@ return [
                     ],
                 ],
             ],
+            'puppet-server' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/puppet/server/:hostname',
+                    'constraints' => [
+                        'hostname' => '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
+                    'defaults' => [
+                        'controller' => 'KmbPuppet\Controller\Server',
+                        'action' => 'show',
+                    ],
+                ],
+            ],
         ],
     ],
     'translator' => [
@@ -182,6 +196,7 @@ return [
             'KmbPuppet\Controller\GroupParameter' => 'KmbPuppet\Controller\GroupParameterController',
             'KmbPuppet\Controller\Revisions' => 'KmbPuppet\Controller\RevisionsController',
             'KmbPuppet\Controller\Revision' => 'KmbPuppet\Controller\RevisionController',
+            'KmbPuppet\Controller\Server' => 'KmbPuppet\Controller\ServerController',
         ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
@@ -230,6 +245,7 @@ return [
     'service_manager' => [
         'factories' => [
             'KmbPuppet\Service\Node' => 'KmbPuppet\Service\NodeFactory',
+            'KmbPuppet\Service\Group' => 'KmbPuppet\Service\GroupFactory',
         ],
     ],
     'zfc_rbac' => [
