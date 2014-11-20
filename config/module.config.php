@@ -245,7 +245,7 @@ return [
     'service_manager' => [
         'factories' => [
             'KmbPuppet\Service\Node' => 'KmbPuppet\Service\NodeFactory',
-            'KmbPuppet\Service\Group' => 'KmbPuppet\Service\GroupFactory',
+            'KmbPuppet\Service\GroupClass' => 'KmbPuppet\Service\GroupClassFactory',
         ],
     ],
     'zfc_rbac' => [

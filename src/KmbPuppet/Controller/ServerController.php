@@ -46,13 +46,13 @@ class ServerController extends AbstractActionController
             return $response->setStatusCode(404);
         }
 
-        /** @var Service\GroupInterface $groupService */
-        $groupService = $this->serviceLocator->get('KmbPuppet\Service\Group');
-        $groups = $groupService->getAllReleasedByNode($node);
+        /** @var Service\GroupClassInterface $groupClassService */
+        $groupClassService = $this->serviceLocator->get('KmbPuppet\Service\GroupClass');
+        $classes = $groupClassService->getAllReleasedByNode($node);
         $dump = [];
-        if (!empty($groups)) {
-            foreach ($groups as $group) {
-                $dump = ArrayUtils::merge($dump, $group->dump());
+        if (!empty($classes)) {
+            foreach ($classes as $class) {
+                $dump = ArrayUtils::merge($dump, [$class->getName() => $class->dump()]);
             }
         }
 

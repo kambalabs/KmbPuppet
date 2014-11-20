@@ -20,26 +20,19 @@
  */
 namespace KmbPuppet\Service;
 
-use KmbDomain\Model\EnvironmentRepositoryInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use KmbPuppetDb\Model as PuppetDbModel;
 
-class GroupFactory implements FactoryInterface
+interface GroupClassInterface
 {
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param PuppetDbModel\NodeInterface $node
+     * @return \KmbDomain\Model\GroupClassInterface[]
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
-    {
-        $service = new Group();
+    public function getAllReleasedByNode(PuppetDbModel\NodeInterface $node);
 
-        /** @var EnvironmentRepositoryInterface $environmentRepository */
-        $environmentRepository = $serviceLocator->get('EnvironmentRepository');
-        $service->setEnvironmentRepository($environmentRepository);
-
-        return $service;
-    }
+    /**
+     * @param PuppetDbModel\NodeInterface $node
+     * @return \KmbDomain\Model\GroupClassInterface[]
+     */
+    public function getAllCurrentByNode(PuppetDbModel\NodeInterface $node);
 }
