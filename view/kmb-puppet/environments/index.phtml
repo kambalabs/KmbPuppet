@@ -186,14 +186,11 @@
     <div class="col-sm-5">
         <?php if (isset($this->message)): ?>
         <ul class="flash">
-            <li class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <li class="gritter-warning">
                 <?php echo $this->message ?>
             </li>
         </ul>
         <?php endif ?>
-        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
-        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
         <h1><?php echo $this->translate('Help') ?></h1>
         <blockquote>
             <p>

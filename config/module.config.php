@@ -243,10 +243,19 @@ return [
         ],
     ],
     'service_manager' => [
+        'invokables' => [
+            'KmbPuppet\Listener\RevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
+        ],
         'factories' => [
             'KmbPuppet\Service\Node' => 'KmbPuppet\Service\NodeFactory',
             'KmbPuppet\Service\GroupClass' => 'KmbPuppet\Service\GroupClassFactory',
         ],
+        'aliases' => [
+            'kmbRevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
+        ],
+    ],
+    'listeners' => [
+        'kmbRevisionLogsListener',
     ],
     'zfc_rbac' => [
         'guards' => [

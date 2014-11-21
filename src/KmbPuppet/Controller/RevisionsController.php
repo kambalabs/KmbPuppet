@@ -155,11 +155,11 @@ class RevisionsController extends AbstractActionController implements Authentica
      */
     protected function dumpGroup($group)
     {
-        $fromGroupDump = [
+        $fullDump = [
             $this->translate('include') . ': ' . $group->getIncludePattern(),
             $this->translate('exclude') . ': ' . $group->getExcludePattern(),
             $this->translate('classes') . ': ',
         ];
-        return array_merge($fromGroupDump, explode(PHP_EOL, Yaml::dump($group->dump(), 20, 4)));
+        return array_merge($fullDump, explode(PHP_EOL, Yaml::dump($group->dump(), 20, 4)));
     }
 }

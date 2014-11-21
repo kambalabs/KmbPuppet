@@ -83,14 +83,11 @@
     <div class="col-sm-5">
         <?php if (isset($this->error)): ?>
         <ul class="flash">
-            <li class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <li class="gritter-danger">
                 <?php echo $this->error ?>
             </li>
         </ul>
         <?php endif ?>
-        <?php echo $this->flashMessenger()->render('success', ['alert', 'alert-success']) ?>
-        <?php echo $this->flashMessenger()->render('error', ['alert', 'alert-danger']) ?>
         <?php if (isset($this->environment)): ?>
         <h1><?php echo $this->translate('Help') ?></h1>
         <blockquote>
