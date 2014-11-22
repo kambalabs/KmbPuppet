@@ -53,7 +53,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
     {
         $data = ['environments' => $this->environmentRepository->getAllRoots()];
         if ($this->environmentRepository->getDefault() === null) {
-            $data['message'] = $this->translate("WARNING ! You should choose a default environment !");
+            $this->globalMessenger()->addDangerMessage($this->translate("<h4>Warning !</h4><p>You should choose a default environment !</p>"));
         }
         return new ViewModel($data);
     }

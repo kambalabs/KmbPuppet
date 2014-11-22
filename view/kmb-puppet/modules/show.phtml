@@ -67,13 +67,6 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <?php if (isset($this->error)): ?>
-            <ul class="flash">
-                <li class="gritter-danger">
-                    <?php echo $this->error ?>
-                </li>
-            </ul>
-        <?php endif ?>
         <ul class="nav nav-pills pull-right">
             <?php if ($this->module->getProjectPage() != null): ?>
                 <li><a href="<?php echo $this->module->getProjectPage() ?>"><?php echo $this->translate('project page') ?></a></li>

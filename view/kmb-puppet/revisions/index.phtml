@@ -6,10 +6,12 @@
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span><?php echo $this->translate('Changes history') ?></span>
                 <span class="pull-right">
+                    <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                     <a class="btn btn-info btn-xs">
                         <span class="glyphicon glyphicon-import"></span>
                         <?php echo $this->translate('Import version') ?>
                     </a>
+                    <?php endif ?>
                     <button class="btn btn-info btn-xs">
                         <span class="glyphicon glyphicon-transfer"></span>
                         <?php echo $this->translate('Compare selected versions') ?>
@@ -29,8 +31,8 @@
                                 <span><?php echo $this->translate('Current changes') ?></span>
                                 <div class="pull-right">
                                     <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
-                                    <a class="red" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'remove', 'id' => $this->currentRevision->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $this->translate("You are about to remove all current changes.") ?>"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="green" href="#"data-href="<?php echo $this->url('puppet-revision', ['action' => 'release', 'id' => $this->currentRevision->getId()], [], true) ?>" data-toggle="modal" data-target="#release" data-release-warning="<?php echo $this->translate('Warning ! You are about to save current changes, it will be immediately accessible by Puppet.') ?>"><i class="glyphicon glyphicon-ok"></i></a>
+                                    <a class="red" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'remove', 'id' => $this->currentRevision->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $this->translate("You are about to remove all current changes.") ?>"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="grey" href="<?php echo $this->url('puppet-revision', ['action' => 'export', 'id' => $this->currentRevision->getId()], [], true) ?>"><i class="glyphicon glyphicon-export"></i></a>
                                     <?php endif ?>
                                     <a class="grey" href="#"><i class="glyphicon glyphicon-search"></i></a>
@@ -59,8 +61,8 @@
                                 <div class="pull-right">
                                     <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                                     <?php if ($revision->getId() != $this->lastReleasedRevision->getId()): ?>
-                                    <a class="red" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'remove', 'id' => $revision->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $this->translate("You are about to remove a revision.") ?>"><i class="glyphicon glyphicon-remove"></i></a>
                                     <a class="blue" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'release', 'id' => $revision->getId()], [], true) ?>" data-toggle="modal" data-target="#release" data-release-warning="<?php echo $this->translate('Warning ! You are about to restore a revision. It will be immediately accessible by Puppet, all current changes will be definitively lost.') ?>"><i class="glyphicon glyphicon-repeat"></i></a>
+                                    <a class="red" href="#" data-href="<?php echo $this->url('puppet-revision', ['action' => 'remove', 'id' => $revision->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo $this->translate("You are about to remove a revision.") ?>"><i class="glyphicon glyphicon-remove"></i></a>
                                     <?php endif ?>
                                     <a class="grey" href="<?php echo $this->url('puppet-revision', ['action' => 'export', 'id' => $revision->getId()], [], true) ?>"><i class="glyphicon glyphicon-export"></i></a>
                                     <?php endif ?>
@@ -128,13 +130,6 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <?php if (isset($this->error)): ?>
-        <ul class="flash">
-            <li class="gritter-danger">
-                <?php echo $this->error ?>
-            </li>
-        </ul>
-        <?php endif ?>
         <h1><?php echo $this->translate('Help') ?></h1>
         <blockquote>
             <p><?php echo $this->translate('Click on <i class="glyphicon glyphicon-ok green"></i> to save current changes.') ?></p>

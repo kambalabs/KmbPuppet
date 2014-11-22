@@ -42,7 +42,8 @@ class RevisionController extends AbstractActionController implements Authenticat
         /** @var EnvironmentInterface $environment */
         $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+            $this->globalMessenger()->addDangerMessage($this->translate('You have to select an environment first !'));
+            return new ViewModel();
         }
         if (!$this->isGranted('manageEnv', $environment)) {
             throw new UnauthorizedException();
@@ -75,7 +76,8 @@ class RevisionController extends AbstractActionController implements Authenticat
         /** @var EnvironmentInterface $environment */
         $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+            $this->globalMessenger()->addDangerMessage($this->translate('You have to select an environment first !'));
+            return new ViewModel();
         }
         if (!$this->isGranted('manageEnv', $environment)) {
             throw new UnauthorizedException();
@@ -99,7 +101,8 @@ class RevisionController extends AbstractActionController implements Authenticat
         /** @var EnvironmentInterface $environment */
         $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+            $this->globalMessenger()->addDangerMessage($this->translate('You have to select an environment first !'));
+            return new ViewModel();
         }
         if (!$this->isGranted('manageEnv', $environment)) {
             throw new UnauthorizedException();

@@ -33,15 +33,8 @@
         </div>
     </div>
     <div class="col-sm-5">
-        <?php if (isset($this->error)): ?>
-        <ul class="flash">
-            <li class="gritter-danger">
-                <?php echo $this->error ?>
-            </li>
-        </ul>
-        <?php endif ?>
-        <?php if (isset($this->environment)): ?>
         <h1><?php echo $this->translate('Help') ?></h1>
+        <?php if (isset($this->environment)): ?>
         <blockquote>
             <p><?php echo sprintf($this->translate("Here is the list of installed modules on environment <strong>%s</strong>."), $this->environment->getNormalizedName()) ?></p>
             <p><?php echo $this->translate('When version of a module is red <span class="label label-danger">1.0.0</span>, it means that at least one of its classes is in error.') ?></p>

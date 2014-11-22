@@ -35,7 +35,8 @@ class ModulesController extends AbstractActionController implements Authenticate
         /** @var Model\EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+            $this->globalMessenger()->addDangerMessage($this->translate('You have to select an environment first !'));
+            return new ViewModel();
         }
         if (!$this->isGranted('readEnv', $environment)) {
             throw new UnauthorizedException();
@@ -123,6 +124,9 @@ class ModulesController extends AbstractActionController implements Authenticate
             }
         }
 
+        if (!empty($parametersErrors)) {
+            $this->globalMessenger()->addDangerMessage($this->translate("Parameters are in error, please check the template and the class definition"));
+        }
         return new ViewModel([
             'environment' => $environment,
             'class' => $class,

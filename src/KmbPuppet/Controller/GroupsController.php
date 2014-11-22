@@ -37,7 +37,8 @@ class GroupsController extends AbstractActionController implements Authenticated
         /** @var EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return new ViewModel(['error' => $this->translate('You have to select an environment first !')]);
+            $this->globalMessenger()->addDangerMessage($this->translate('You have to select an environment first !'));
+            return new ViewModel();
         }
         if (!$this->isGranted('readEnv', $environment)) {
             throw new UnauthorizedException();
@@ -45,7 +46,8 @@ class GroupsController extends AbstractActionController implements Authenticated
 
         $currentRevision = $environment->getCurrentRevision();
         if ($currentRevision == null) {
-            return new ViewModel(['error' => $this->translate('This environment is invalid, it has no current revision. Please contact administrator !')]);
+            $this->globalMessenger()->addDangerMessage($this->translate('This environment is invalid, it has no current revision. Please contact administrator !'));
+            return new ViewModel();
         }
 
         return new ViewModel([

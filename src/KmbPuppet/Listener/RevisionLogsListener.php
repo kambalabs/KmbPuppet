@@ -82,8 +82,8 @@ class RevisionLogsListener extends AbstractListenerAggregate
                         if ($log->getCreatedBy() === $authService->getIdentity()->getName()) {
                             $message =
                                 '<p>' .
-                                sprintf($this->translate("You have made changes %s, don't forget to save them !"), $this->translateInterval($interval)) . ' ' .
-                                sprintf($this->translate('<a href="%s">Click here</a> to proceed.'), $this->url('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true)) .
+                                sprintf($this->translate("You haven't saved the changes you made %s !"), $this->translateInterval($interval)) . ' ' .
+                                sprintf($this->translate('<a href="%s">Click here</a> to save them.'), $this->url('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true)) .
                                 '</p>';
                         } else {
                             $message =
