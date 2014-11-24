@@ -311,6 +311,11 @@ return [
                     'roles' => ['user']
                 ],
                 [
+                    'controller' => 'KmbPuppet\Controller\Revisions',
+                    'actions' => ['import'],
+                    'roles' => ['admin']
+                ],
+                [
                     'controller' => 'KmbPuppet\Controller\Revision',
                     'actions' => ['release', 'remove', 'export'],
                     'roles' => ['admin']

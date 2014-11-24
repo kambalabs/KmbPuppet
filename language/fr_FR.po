@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-24 14:39+0100\n"
-"PO-Revision-Date: 2014-11-24 14:40+0100\n"
+"POT-Creation-Date: 2014-11-24 16:28+0100\n"
+"PO-Revision-Date: 2014-11-24 16:29+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -568,12 +568,16 @@ msgstr "Suppression"
 msgid "Changes history"
 msgstr "Historique des changements"
 
+#: ../view/kmb-puppet/revisions/index.phtml:10
+msgid "Warning ! You are about to import a revision. It will be immediately accessible by Puppet, all current changes will be definitively lost."
+msgstr "Attention ! Vous êtes sur le point d'importer une version. Elle sera immédiatement accessible par Puppet, tous les changements en cours seront définitivement perdus."
+
 #: ../view/kmb-puppet/revisions/index.phtml:12
-msgid "Import version"
+msgid "Import revision"
 msgstr "Importer une version"
 
 #: ../view/kmb-puppet/revisions/index.phtml:17
-msgid "Compare selected versions"
+msgid "Compare selected revisions"
 msgstr "Comparer les versions sélectionnées"
 
 #: ../view/kmb-puppet/revisions/index.phtml:31
@@ -617,23 +621,31 @@ msgstr "Activer une version"
 msgid "Enter a comment"
 msgstr "Saisir un commentaire"
 
-#: ../view/kmb-puppet/revisions/index.phtml:121
+#: ../view/kmb-puppet/revisions/index.phtml:116
+msgid "Import a revision"
+msgstr "Importer une version"
+
+#: ../view/kmb-puppet/revisions/index.phtml:129
+msgid "Import"
+msgstr "Importer"
+
+#: ../view/kmb-puppet/revisions/index.phtml:145
 msgid "Don't forget to consult logs before (by clicking on icon&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) to be aware of what you are removing."
 msgstr "N'oubliez pas de consulter les logs avant (en cliquant sur l'icône&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) pour bien être conscient de ce que vous supprimez."
 
-#: ../view/kmb-puppet/revisions/index.phtml:135
+#: ../view/kmb-puppet/revisions/index.phtml:159
 msgid "Click on <i class=\"glyphicon glyphicon-ok green\"></i> to save current changes."
 msgstr "Cliquez sur <i class=\"glyphicon glyphicon-ok green\"></i> pour enregistrer les changements en cours."
 
-#: ../view/kmb-puppet/revisions/index.phtml:136
+#: ../view/kmb-puppet/revisions/index.phtml:160
 msgid "You can restore a revision by clicking on <i class=\"glyphicon glyphicon-repeat blue\"></i>, or remove it by clicking on <i class=\"glyphicon glyphicon-remove red\"></i>."
 msgstr "Vous pouvez restaurer une version en cliquant sur <i class=\"glyphicon glyphicon-repeat blue\"></i>, ou la supprimer en cliquant sur <i class=\"glyphicon glyphicon-remove red\"></i>."
 
-#: ../view/kmb-puppet/revisions/index.phtml:137
+#: ../view/kmb-puppet/revisions/index.phtml:161
 msgid "Click on <i class=\"glyphicon glyphicon-export grey\"></i> to export a revision."
 msgstr "Cliquez sur <i class=\"glyphicon glyphicon-export grey\"></i> pour exporter une version."
 
-#: ../view/kmb-puppet/revisions/index.phtml:138
+#: ../view/kmb-puppet/revisions/index.phtml:162
 msgid "View all logs of a revision by clicking on <i class=\"glyphicon glyphicon-search grey\"></i>."
 msgstr "Consultez les logs d'une version en cliquant sur <i class=\"glyphicon glyphicon-search grey\"></i>."
 

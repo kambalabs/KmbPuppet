@@ -23,12 +23,16 @@ namespace KmbPuppet\Controller;
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
+use KmbDomain\Model\RevisionFactoryInterface;
 use KmbDomain\Model\RevisionInterface;
 use KmbDomain\Model\RevisionRepositoryInterface;
+use KmbDomain\Model\RevisionServiceInterface;
 use KmbPmProxy\Hydrator\RevisionHydratorInterface;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
 use Symfony\Component\Yaml\Yaml;
+use Zend\Authentication\AuthenticationService;
+use Zend\Form\Form;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
@@ -53,6 +57,55 @@ class RevisionsController extends AbstractActionController implements Authentica
             'lastReleasedRevision' => $environment->getLastReleasedRevision(),
             'revisions' => $environment->getReleasedRevisions(),
         ]);
+    }
+
+    public function importAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            $this->globalMessenger()->addDangerMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
+            return new ViewModel();
+        }
+        if (!$this->isGranted('readEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
+
+        $comment = $this->params()->fromPost('comment');
+        if (empty($comment)) {
+            $this->flashMessenger()->addErrorMessage($this->translate('You must enter a comment'));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
+        }
+
+        $request = $this->getRequest();
+        $form = new Form('import');
+        $form->add(['type' => 'Zend\Form\Element\File', 'name' => 'file']);
+        $form->setData(array_merge_recursive($request->getPost()->toArray(), $request->getFiles()->toArray()));
+
+        if (!$form->isValid()) {
+            foreach ($form->getMessages() as $message) {
+                $this->flashMessenger()->addErrorMessage($message);
+            }
+            return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
+        }
+
+        $formData = $form->getData();
+        $content = file_get_contents($formData['file']['tmp_name']);
+        $data = Yaml::parse($content);
+
+        /** @var RevisionFactoryInterface $revisionFactory */
+        $revisionFactory = $this->serviceLocator->get('revisionFactory');
+        $revision = $revisionFactory->createFromImportedData($data);
+        $revision->setEnvironment($environment);
+
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->serviceLocator->get('Zend\Authentication\AuthenticationService');
+
+        /** @var RevisionServiceInterface $revisionService */
+        $revisionService = $this->serviceLocator->get('revisionService');
+        $revisionService->release($revision, $authenticationService->getIdentity(), $comment);
+
+        return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
     }
 
     public function diffAction()
