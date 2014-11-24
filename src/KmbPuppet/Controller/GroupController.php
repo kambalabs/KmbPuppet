@@ -45,7 +45,7 @@ class GroupController extends AbstractActionController implements AuthenticatedC
         /** @var EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            return $this->notFoundAction();
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
         if (!$this->isGranted('readEnv', $environment)) {
             throw new UnauthorizedException();
