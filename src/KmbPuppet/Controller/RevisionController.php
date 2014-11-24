@@ -129,6 +129,7 @@ class RevisionController extends AbstractActionController implements Authenticat
             'groups' => array_map(function (GroupInterface $group) {
                 return [
                     'name' => $group->getName(),
+                    'ordering' => $group->getOrdering(),
                     'include_pattern' => $group->getIncludePattern(),
                     'exclude_pattern' => $group->getExcludePattern(),
                     'classes' => $group->dump(),
