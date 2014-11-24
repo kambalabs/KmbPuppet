@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-22 23:36+0100\n"
-"PO-Revision-Date: 2014-11-22 23:36+0100\n"
+"POT-Creation-Date: 2014-11-24 14:39+0100\n"
+"PO-Revision-Date: 2014-11-24 14:40+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -92,8 +92,8 @@ msgstr "La classe %s a bien été supprimée !"
 #: ../src/KmbPuppet/Controller/RevisionController.php:104
 #: ../src/KmbPuppet/Controller/RevisionsController.php:43
 #: ../src/KmbPuppet/Controller/RevisionsController.php:63
-msgid "You have to select an environment first !"
-msgstr "Vous devez d'abord choisir un environnement !"
+msgid "<h4>Warning !</h4><p>You have to select an environment first !</p>"
+msgstr "<h4>Attention !</h4><p>Vous devez d'abord choisir un environnement !</p>"
 
 #: ../src/KmbPuppet/Controller/ModulesController.php:128
 msgid "Parameters are in error, please check the template and the class definition"

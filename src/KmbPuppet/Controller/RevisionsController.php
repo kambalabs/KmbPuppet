@@ -40,7 +40,7 @@ class RevisionsController extends AbstractActionController implements Authentica
         /** @var EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            $this->globalMessenger()->addDangerMessage($this->translate('You have to select an environment first !'));
+            $this->globalMessenger()->addDangerMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
             return new ViewModel();
         }
         if (!$this->isGranted('readEnv', $environment)) {
@@ -60,7 +60,7 @@ class RevisionsController extends AbstractActionController implements Authentica
         /** @var EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            $this->globalMessenger()->addDangerMessage($this->translate('You have to select an environment first !'));
+            $this->globalMessenger()->addDangerMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
             return new ViewModel();
         }
         if (!$this->isGranted('readEnv', $environment)) {
