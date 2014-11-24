@@ -21,7 +21,7 @@
 namespace KmbPuppet\Controller;
 
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
-use KmbDomain\Factory\GroupParameterFactoryInterface;
+use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupClass;
 use KmbDomain\Model\GroupClassRepositoryInterface;

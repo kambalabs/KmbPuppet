@@ -25,7 +25,7 @@ use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbDomain\Model\GroupParameter;
-use KmbDomain\Factory\GroupParameterFactoryInterface;
+use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\GroupParameterInterface;
 use KmbDomain\Model\GroupParameterRepositoryInterface;
 use KmbDomain\Model\GroupParameterType;
