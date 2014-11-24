@@ -55,15 +55,6 @@
         </div>
     </div>
     <hr/>
-    <div class="col-sm-12">
-        <?php if (isset($this->error)): ?>
-            <ul class="flash">
-                <li class="gritter-danger">
-                    <?php echo $this->error ?>
-                </li>
-            </ul>
-        <?php endif ?>
-    </div>
     <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -83,7 +74,7 @@
                 <table class="table table-striped">
                     <tbody>
                     <?php foreach ($this->group->getClasses() as $class): ?>
-                        <tr>
+                        <tr<?php if (isset($this->selectedClass) && $this->selectedClass->getId() === $class->getId()): ?> class="selected-class"<?php endif ?>>
                             <td style="width: 90%">
                                 <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                                 <a href="#" data-href="<?php echo $this->url('puppet-group-remove-class', ['id' => $this->group->getId(), 'className' => $class->getName()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> class.'), $class->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
