@@ -208,6 +208,58 @@ return [
             'writeRevisionLog' => 'KmbPuppet\Controller\Plugin\WriteRevisionLogFactory',
         ],
     ],
+    'navigation' => [
+        'default' => [
+            [
+                'label' => 'Puppet',
+                'route' => 'puppet',
+                'tabindex' => 60,
+                'pages' => [
+                    [
+                        'label' => 'Day reports',
+                        'route' => 'puppet',
+                        'controller' => 'reports',
+                        'action' => 'index',
+                        'useRouteMatch' => true,
+                        'tabindex' => 61,
+                    ],
+                    [
+                        'label' => 'Environments',
+                        'route' => 'puppet',
+                        'controller' => 'environments',
+                        'action' => 'index',
+                        'useRouteMatch' => true,
+                        'roles' => 'admin',
+                        'tabindex' => 61,
+                    ],
+                    [
+                        'label' => 'Modules',
+                        'route' => 'puppet',
+                        'controller' => 'modules',
+                        'action' => 'index',
+                        'useRouteMatch' => true,
+                        'tabindex' => 62,
+                    ],
+                    [
+                        'label' => 'Groups',
+                        'route' => 'puppet',
+                        'controller' => 'groups',
+                        'action' => 'index',
+                        'useRouteMatch' => true,
+                        'tabindex' => 63,
+                    ],
+                    [
+                        'label' => 'Changes',
+                        'route' => 'puppet',
+                        'controller' => 'revisions',
+                        'action' => 'index',
+                        'useRouteMatch' => true,
+                        'tabindex' => 64,
+                    ],
+                ],
+            ],
+        ],
+    ],
     'view_helpers' => [
         'invokables' => [
             'reportLabelClass' => 'KmbPuppet\View\Helper\ReportLabelClass',

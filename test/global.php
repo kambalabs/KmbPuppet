@@ -7,36 +7,10 @@ return [
     ],
     'router' => [
         'routes' => [
-            'index' => [
-                'type' => 'Segment',
-                'options' => [
-                    'route' => '[/env/:envId]/',
-                    'defaults' => [
-                    ],
-                ],
-            ],
-            'dashboard' => [
-                'type' => 'Segment',
-                'options' => [
-                    'route' => '[/env/:envId]/dashboard[/]',
-                    'defaults' => [
-                    ],
-                ],
-            ],
-            'servers' => [
-                'type' => 'Segment',
-                'options' => [
-                    'route' => '[/env/:envId]/servers[/[:action]]',
-                    'defaults' => [
-                    ],
-                ],
-            ],
             'server' => [
                 'type' => 'Segment',
                 'options' => [
                     'route' => '[/env/:envId]/server/:hostname[/[:action]]',
-                    'defaults' => [
-                    ],
                 ],
             ],
         ],
