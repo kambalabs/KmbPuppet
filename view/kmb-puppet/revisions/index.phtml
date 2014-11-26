@@ -1,3 +1,4 @@
+<?php $this->inlineScript()->prependFile($this->basePath() . '/js/kmb.puppet.js'); ?>
 <div class="row">
     <div class="col-sm-8">
         <form action="<?php echo $this->url('puppet', ['controller' => 'revisions', 'action' => 'diff'], [], true) ?>" method="get">
