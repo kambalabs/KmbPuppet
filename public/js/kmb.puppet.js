@@ -28,10 +28,6 @@ $(window).load(function () {
         }
     }).disableSelection();
 
-    $('#actions button[type=reset]').click(function () {
-        $('#actions').hide();
-    });
-
     $('.values-form').on('reset', function() {
         $(this).find('.new-element .form-control').prop('disabled', true);
     });

@@ -1,6 +1,8 @@
 <?php
 // Awfull hack to tell to poedit to translate navigation labels
-$translate = function($message) { return $message; };
+$translate = function($message) {
+    return $message;
+};
 return [
     'router' => [
         'routes' => [

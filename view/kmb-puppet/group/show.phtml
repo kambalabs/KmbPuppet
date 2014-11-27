@@ -6,7 +6,7 @@
                 <div><?php echo $this->translate('Detailed informations on group') ?></div>
                 <div><input type="text" tabindex="100" class="form-control editable" data-target="#actions" name="name" id="group-name" value="<?php echo $this->escapeHtml($this->group->getName()) ?>" /></div>
             </div>
-            <div id="actions" class="pull-right" style="display: none">
+            <div id="actions" class="editable-actions pull-right" style="display: none">
                 <div>&nbsp;</div>
                 <button class="btn btn-default" tabindex="110" type="reset"><i class="glyphicon glyphicon-remove"></i> <?php echo $this->translate('Cancel') ?></button>
                 <a href="#" class="btn btn-warning" tabindex="111" data-href="<?php echo $this->url('puppet-group', ['action' => 'servers'], ['id' => $group->getId()], true) ?>" data-toggle="modal" data-target="#group-servers" data-current="true" data-count="<?php echo $this->serversCount ?>"><i class="glyphicon glyphicon-search"></i> <?php echo $this->translate('Preview') ?></a>
