@@ -1,4 +1,6 @@
 <?php
+// Awfull hack to tell to poedit to translate navigation labels
+$translate = function($message) { return $message; };
 return [
     'router' => [
         'routes' => [
@@ -208,15 +210,22 @@ return [
             'writeRevisionLog' => 'KmbPuppet\Controller\Plugin\WriteRevisionLogFactory',
         ],
     ],
+    'asset_manager' => [
+        'resolver_configs' => [
+            'paths' => [
+                __DIR__ . '/../public',
+            ],
+        ],
+    ],
     'navigation' => [
         'default' => [
             [
-                'label' => 'Puppet',
+                'label' => $translate('Puppet'),
                 'route' => 'puppet',
                 'tabindex' => 60,
                 'pages' => [
                     [
-                        'label' => 'Day reports',
+                        'label' => $translate('Day reports'),
                         'route' => 'puppet',
                         'controller' => 'reports',
                         'action' => 'index',
@@ -224,7 +233,7 @@ return [
                         'tabindex' => 61,
                     ],
                     [
-                        'label' => 'Environments',
+                        'label' => $translate('Environments'),
                         'route' => 'puppet',
                         'controller' => 'environments',
                         'action' => 'index',
@@ -233,7 +242,7 @@ return [
                         'tabindex' => 61,
                     ],
                     [
-                        'label' => 'Modules',
+                        'label' => $translate('Modules'),
                         'route' => 'puppet',
                         'controller' => 'modules',
                         'action' => 'index',
@@ -241,7 +250,7 @@ return [
                         'tabindex' => 62,
                     ],
                     [
-                        'label' => 'Groups',
+                        'label' => $translate('Groups'),
                         'route' => 'puppet',
                         'controller' => 'groups',
                         'action' => 'index',
@@ -249,7 +258,7 @@ return [
                         'tabindex' => 63,
                     ],
                     [
-                        'label' => 'Changes',
+                        'label' => $translate('Changes'),
                         'route' => 'puppet',
                         'controller' => 'revisions',
                         'action' => 'index',

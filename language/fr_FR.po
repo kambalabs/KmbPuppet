@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-24 16:28+0100\n"
-"PO-Revision-Date: 2014-11-24 16:29+0100\n"
+"POT-Creation-Date: 2014-11-27 13:09+0100\n"
+"PO-Revision-Date: 2014-11-27 13:09+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: \n"
@@ -90,8 +90,9 @@ msgstr "La classe %s a bien été supprimée !"
 #: ../src/KmbPuppet/Controller/RevisionController.php:45
 #: ../src/KmbPuppet/Controller/RevisionController.php:79
 #: ../src/KmbPuppet/Controller/RevisionController.php:104
-#: ../src/KmbPuppet/Controller/RevisionsController.php:43
-#: ../src/KmbPuppet/Controller/RevisionsController.php:63
+#: ../src/KmbPuppet/Controller/RevisionsController.php:47
+#: ../src/KmbPuppet/Controller/RevisionsController.php:67
+#: ../src/KmbPuppet/Controller/RevisionsController.php:116
 msgid "<h4>Warning !</h4><p>You have to select an environment first !</p>"
 msgstr "<h4>Attention !</h4><p>Vous devez d'abord choisir un environnement !</p>"
 
@@ -208,18 +209,19 @@ msgid "The group %s has been successfully created !"
 msgstr "Le groupe %s a bien été créé !"
 
 #: ../src/KmbPuppet/Controller/RevisionController.php:60
+#: ../src/KmbPuppet/Controller/RevisionsController.php:76
 msgid "You must enter a comment"
 msgstr "Vous devez saisir un commentaire"
 
-#: ../src/KmbPuppet/Controller/RevisionsController.php:161
+#: ../src/KmbPuppet/Controller/RevisionsController.php:214
 msgid "include"
 msgstr "inclus"
 
-#: ../src/KmbPuppet/Controller/RevisionsController.php:162
+#: ../src/KmbPuppet/Controller/RevisionsController.php:215
 msgid "exclude"
 msgstr "exclus"
 
-#: ../src/KmbPuppet/Controller/RevisionsController.php:163
+#: ../src/KmbPuppet/Controller/RevisionsController.php:216
 msgid "classes"
 msgstr "classes"
 
@@ -339,124 +341,145 @@ msgstr "hashtable"
 msgid "editable hashtable"
 msgstr "hashtable éditable"
 
-#: ../view/kmb-puppet/groups/index.phtml:7
+#: ../config/module.config.php:223
+msgid "Puppet"
+msgstr "Puppet"
+
+#: ../config/module.config.php:228
+msgid "Day reports"
+msgstr "Rapports du jour"
+
+#: ../config/module.config.php:236
+msgid "Environments"
+msgstr "Environnements"
+
+#: ../config/module.config.php:245
+msgid "Modules"
+msgstr "Modules"
+
+#: ../config/module.config.php:253
+#: ../view/kmb-puppet/groups/index.phtml:8
 msgid "Groups"
 msgstr "Groupes"
 
-#: ../view/kmb-puppet/groups/index.phtml:11
+#: ../config/module.config.php:261
+msgid "Changes"
+msgstr "Changements"
+
+#: ../view/kmb-puppet/groups/index.phtml:12
 msgid "Create a group"
 msgstr "Créer un groupe"
 
-#: ../view/kmb-puppet/groups/index.phtml:25
+#: ../view/kmb-puppet/groups/index.phtml:26
 #, php-format
 msgid "You are about to remove <strong>%s</strong> group."
 msgstr "Vous êtes sur le point de supprimer le groupe <strong>%s</strong>."
 
-#: ../view/kmb-puppet/groups/index.phtml:43
+#: ../view/kmb-puppet/groups/index.phtml:44
 msgid "Confirm Remove"
 msgstr "Confirmation de suppression"
 
-#: ../view/kmb-puppet/groups/index.phtml:48
+#: ../view/kmb-puppet/groups/index.phtml:49
 msgid "Do you want to proceed ?"
 msgstr "Êtes-vous sûr de vouloir continuer ?"
 
-#: ../view/kmb-puppet/groups/index.phtml:52
-#: ../view/kmb-puppet/groups/index.phtml:76
+#: ../view/kmb-puppet/groups/index.phtml:53
+#: ../view/kmb-puppet/groups/index.phtml:77
 msgid "Cancel"
 msgstr "Annuler"
 
-#: ../view/kmb-puppet/groups/index.phtml:53
+#: ../view/kmb-puppet/groups/index.phtml:54
 msgid "Remove"
 msgstr "Supprimer"
 
-#: ../view/kmb-puppet/groups/index.phtml:63
+#: ../view/kmb-puppet/groups/index.phtml:64
 msgid "New group"
 msgstr "Créer un groupe"
 
-#: ../view/kmb-puppet/groups/index.phtml:68
+#: ../view/kmb-puppet/groups/index.phtml:69
 msgid "A group allows to configure a set of Puppet classes and assigned them to a list of servers."
 msgstr "Un groupe permet de configurer un ensemble de classes Puppet et de les affecter à une liste de serveurs."
 
-#: ../view/kmb-puppet/groups/index.phtml:71
+#: ../view/kmb-puppet/groups/index.phtml:72
 msgid "Choose a name"
 msgstr "Choisir un nom"
 
-#: ../view/kmb-puppet/groups/index.phtml:77
+#: ../view/kmb-puppet/groups/index.phtml:78
 msgid "Save"
 msgstr "Enregistrer"
 
-#: ../view/kmb-puppet/groups/index.phtml:84
+#: ../view/kmb-puppet/groups/index.phtml:85
 msgid "Help"
 msgstr "Aide"
 
-#: ../view/kmb-puppet/groups/index.phtml:87
+#: ../view/kmb-puppet/groups/index.phtml:88
 #, php-format
 msgid "Here is the list of groups on environment <strong>%s</strong>."
 msgstr "Voici la liste des groupes de l'environnement <strong>%s</strong>."
 
-#: ../view/kmb-puppet/groups/index.phtml:88
+#: ../view/kmb-puppet/groups/index.phtml:89
 msgid "You can see the details of a group by clicking on its name."
 msgstr "Accéder au détail d'un groupe en cliquant sur son nom."
 
-#: ../view/kmb-puppet/groups/index.phtml:89
+#: ../view/kmb-puppet/groups/index.phtml:90
 msgid "<strong>Caution</strong> : The order of groups is important ! When a server is associated to two groups which implements the same class, it's the class configuration of the lower group that will be sustained."
 msgstr "<strong>Attention</strong> : L'ordre des groupes est important ! Quand un serveur est associé à deux groupes implémentant la même classe, c'est la configuration de la classe du groupe le plus bas qui sera retenue."
 
-#: ../view/kmb-puppet/groups/index.phtml:90
+#: ../view/kmb-puppet/groups/index.phtml:91
 msgid "You can sort the groups by grabing the icon <span class=\"glyphicon glyphicon-th grab\"></span>."
 msgstr "Vous pouvez trier les groupes en cliquant sur l'icône <span class=\"glyphicon glyphicon-th grab\"></span>."
 
-#: ../view/kmb-puppet/modules/show.phtml:4
+#: ../view/kmb-puppet/modules/show.phtml:5
 msgid "Detailed informations on module"
 msgstr "Informations détaillées du module"
 
-#: ../view/kmb-puppet/modules/show.phtml:12
+#: ../view/kmb-puppet/modules/show.phtml:13
 #: ../view/kmb-puppet/modules/show-class.phtml:12
-#: ../view/kmb-puppet/revisions/diff.phtml:6
-#: ../view/kmb-puppet/group/show.phtml:18
+#: ../view/kmb-puppet/revisions/diff.phtml:7
+#: ../view/kmb-puppet/group/show.phtml:19
 msgid "back"
 msgstr "retour"
 
-#: ../view/kmb-puppet/modules/show.phtml:17
+#: ../view/kmb-puppet/modules/show.phtml:18
 msgid "author"
 msgstr "auteur"
 
-#: ../view/kmb-puppet/modules/show.phtml:23
+#: ../view/kmb-puppet/modules/show.phtml:24
 msgid "license"
 msgstr "licence"
 
-#: ../view/kmb-puppet/modules/show.phtml:28
+#: ../view/kmb-puppet/modules/show.phtml:29
 msgid "version"
 msgstr "version"
 
-#: ../view/kmb-puppet/modules/show.phtml:38
+#: ../view/kmb-puppet/modules/show.phtml:39
 #, php-format
 msgid "Classes of module %s"
 msgstr "Classes du module %s"
 
-#: ../view/kmb-puppet/modules/show.phtml:54
-#: ../view/kmb-puppet/group/show.phtml:97
+#: ../view/kmb-puppet/modules/show.phtml:55
+#: ../view/kmb-puppet/group/show.phtml:89
 msgid "Error"
 msgstr "Erreur"
 
-#: ../view/kmb-puppet/modules/show.phtml:64
-#: ../view/kmb-puppet/group/show.phtml:107
+#: ../view/kmb-puppet/modules/show.phtml:65
+#: ../view/kmb-puppet/group/show.phtml:99
 msgid "No classes available !"
 msgstr "Aucune classe disponible !"
 
-#: ../view/kmb-puppet/modules/show.phtml:72
+#: ../view/kmb-puppet/modules/show.phtml:73
 msgid "project page"
 msgstr "page du projet"
 
-#: ../view/kmb-puppet/modules/show.phtml:75
+#: ../view/kmb-puppet/modules/show.phtml:76
 msgid "sources"
 msgstr "sources"
 
-#: ../view/kmb-puppet/modules/show.phtml:78
+#: ../view/kmb-puppet/modules/show.phtml:79
 msgid "issues"
 msgstr "issues"
 
-#: ../view/kmb-puppet/modules/show.phtml:82
+#: ../view/kmb-puppet/modules/show.phtml:83
 msgid "Summary"
 msgstr "Résumé"
 
@@ -480,24 +503,20 @@ msgstr "valeurs"
 msgid "error"
 msgstr "erreur"
 
-#: ../view/kmb-puppet/modules/index.phtml:7
-msgid "Modules"
-msgstr "Modules"
-
-#: ../view/kmb-puppet/modules/index.phtml:10
+#: ../view/kmb-puppet/modules/index.phtml:11
 msgid "Add a module"
 msgstr "Ajouter un module"
 
-#: ../view/kmb-puppet/modules/index.phtml:39
+#: ../view/kmb-puppet/modules/index.phtml:40
 #, php-format
 msgid "Here is the list of installed modules on environment <strong>%s</strong>."
 msgstr "Voici la liste des modules installés dans l'environnement <strong>%s</strong>."
 
-#: ../view/kmb-puppet/modules/index.phtml:40
+#: ../view/kmb-puppet/modules/index.phtml:41
 msgid "When version of a module is red <span class=\"label label-danger\">1.0.0</span>, it means that at least one of its classes is in error."
 msgstr "La version d'un module est rouge <span class=\"label label-danger\">1.0.0</span> lorsqu'au moins une de ses classes est en erreur."
 
-#: ../view/kmb-puppet/modules/index.phtml:41
+#: ../view/kmb-puppet/modules/index.phtml:42
 msgid "<strong>Note</strong> : The list of modules is refreshed every 5 minutes, but you can clear the cache manually by clicking on your name in the top right of the page."
 msgstr "<strong>Note</strong> : La liste des modules est mise à jour toutes les 5 minutes, cependant vous pouvez vider le cache manuellement en cliquant sur votre nom en haut à droite de la page."
 
@@ -511,14 +530,14 @@ msgid "Parameters of class %s"
 msgstr "Paramètres de la classe %s"
 
 #: ../view/kmb-puppet/modules/show-class.phtml:30
-#: ../view/kmb-puppet/environments/index.phtml:175
-#: ../view/kmb-puppet/group/show.phtml:203
+#: ../view/kmb-puppet/environments/index.phtml:176
+#: ../view/kmb-puppet/group/show.phtml:195
 msgid "Collapse all"
 msgstr "Tout replier"
 
 #: ../view/kmb-puppet/modules/show-class.phtml:34
-#: ../view/kmb-puppet/environments/index.phtml:179
-#: ../view/kmb-puppet/group/show.phtml:207
+#: ../view/kmb-puppet/environments/index.phtml:180
+#: ../view/kmb-puppet/group/show.phtml:199
 msgid "Expand all"
 msgstr "Tout déplier"
 
@@ -538,57 +557,57 @@ msgstr "Documentation"
 msgid "Documention should be provided in the puppetdoc of the class."
 msgstr "Il est conseillé de fournir une documentation dans la puppetdoc de la classe."
 
-#: ../view/kmb-puppet/revisions/diff.phtml:12
+#: ../view/kmb-puppet/revisions/diff.phtml:13
 msgid "Groups ordering"
 msgstr "Ordre des groupes"
 
-#: ../view/kmb-puppet/revisions/diff.phtml:21
+#: ../view/kmb-puppet/revisions/diff.phtml:22
 msgid "Groups content"
 msgstr "Contenu des groupes"
 
-#: ../view/kmb-puppet/revisions/diff.phtml:25
-#: ../view/kmb-puppet/group/show.phtml:72
+#: ../view/kmb-puppet/revisions/diff.phtml:26
+#: ../view/kmb-puppet/group/show.phtml:64
 #, php-format
 msgid "Group %s"
 msgstr "Groupe %s"
 
-#: ../view/kmb-puppet/revisions/diff.phtml:34
+#: ../view/kmb-puppet/revisions/diff.phtml:35
 msgid "Insert"
 msgstr "Ajout"
 
-#: ../view/kmb-puppet/revisions/diff.phtml:35
+#: ../view/kmb-puppet/revisions/diff.phtml:36
 msgid "Replace"
 msgstr "Modification"
 
-#: ../view/kmb-puppet/revisions/diff.phtml:36
+#: ../view/kmb-puppet/revisions/diff.phtml:37
 msgid "Delete"
 msgstr "Suppression"
 
-#: ../view/kmb-puppet/revisions/index.phtml:7
+#: ../view/kmb-puppet/revisions/index.phtml:8
 msgid "Changes history"
 msgstr "Historique des changements"
 
-#: ../view/kmb-puppet/revisions/index.phtml:10
+#: ../view/kmb-puppet/revisions/index.phtml:11
 msgid "Warning ! You are about to import a revision. It will be immediately accessible by Puppet, all current changes will be definitively lost."
 msgstr "Attention ! Vous êtes sur le point d'importer une version. Elle sera immédiatement accessible par Puppet, tous les changements en cours seront définitivement perdus."
 
-#: ../view/kmb-puppet/revisions/index.phtml:12
+#: ../view/kmb-puppet/revisions/index.phtml:13
 msgid "Import revision"
 msgstr "Importer une version"
 
-#: ../view/kmb-puppet/revisions/index.phtml:17
+#: ../view/kmb-puppet/revisions/index.phtml:18
 msgid "Compare selected revisions"
 msgstr "Comparer les versions sélectionnées"
 
-#: ../view/kmb-puppet/revisions/index.phtml:31
+#: ../view/kmb-puppet/revisions/index.phtml:32
 msgid "Current changes"
 msgstr "Changements en cours"
 
-#: ../view/kmb-puppet/revisions/index.phtml:34
+#: ../view/kmb-puppet/revisions/index.phtml:35
 msgid "Warning ! You are about to save current changes, it will be immediately accessible by Puppet."
 msgstr "Attention ! Vous êtes sur le point de sauver les changements en cours, ils seront immédiatement accessibles par Puppet."
 
-#: ../view/kmb-puppet/revisions/index.phtml:35
+#: ../view/kmb-puppet/revisions/index.phtml:36
 msgid "You are about to remove all current changes."
 msgstr "Vous êtes sur le point de supprimer tous les changements en cours."
 
@@ -618,6 +637,7 @@ msgid "Activate a revision"
 msgstr "Activer une version"
 
 #: ../view/kmb-puppet/revisions/index.phtml:100
+#: ../view/kmb-puppet/revisions/index.phtml:124
 msgid "Enter a comment"
 msgstr "Saisir un commentaire"
 
@@ -625,155 +645,147 @@ msgstr "Saisir un commentaire"
 msgid "Import a revision"
 msgstr "Importer une version"
 
-#: ../view/kmb-puppet/revisions/index.phtml:129
+#: ../view/kmb-puppet/revisions/index.phtml:132
 msgid "Import"
 msgstr "Importer"
 
-#: ../view/kmb-puppet/revisions/index.phtml:145
+#: ../view/kmb-puppet/revisions/index.phtml:148
 msgid "Don't forget to consult logs before (by clicking on icon&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) to be aware of what you are removing."
 msgstr "N'oubliez pas de consulter les logs avant (en cliquant sur l'icône&nbsp;<i class=\"glyphicon glyphicon-search lightgrey\"></i>) pour bien être conscient de ce que vous supprimez."
 
-#: ../view/kmb-puppet/revisions/index.phtml:159
+#: ../view/kmb-puppet/revisions/index.phtml:162
 msgid "Click on <i class=\"glyphicon glyphicon-ok green\"></i> to save current changes."
 msgstr "Cliquez sur <i class=\"glyphicon glyphicon-ok green\"></i> pour enregistrer les changements en cours."
 
-#: ../view/kmb-puppet/revisions/index.phtml:160
+#: ../view/kmb-puppet/revisions/index.phtml:163
 msgid "You can restore a revision by clicking on <i class=\"glyphicon glyphicon-repeat blue\"></i>, or remove it by clicking on <i class=\"glyphicon glyphicon-remove red\"></i>."
 msgstr "Vous pouvez restaurer une version en cliquant sur <i class=\"glyphicon glyphicon-repeat blue\"></i>, ou la supprimer en cliquant sur <i class=\"glyphicon glyphicon-remove red\"></i>."
 
-#: ../view/kmb-puppet/revisions/index.phtml:161
+#: ../view/kmb-puppet/revisions/index.phtml:164
 msgid "Click on <i class=\"glyphicon glyphicon-export grey\"></i> to export a revision."
 msgstr "Cliquez sur <i class=\"glyphicon glyphicon-export grey\"></i> pour exporter une version."
 
-#: ../view/kmb-puppet/revisions/index.phtml:162
+#: ../view/kmb-puppet/revisions/index.phtml:165
 msgid "View all logs of a revision by clicking on <i class=\"glyphicon glyphicon-search grey\"></i>."
 msgstr "Consultez les logs d'une version en cliquant sur <i class=\"glyphicon glyphicon-search grey\"></i>."
 
-#: ../view/kmb-puppet/reports/index.phtml:2
-msgid "Day reports"
-msgstr "Rapports du jour"
-
-#: ../view/kmb-puppet/environments/index.phtml:11
+#: ../view/kmb-puppet/environments/index.phtml:12
 #, php-format
 msgid "You are about to remove %s environment, this procedure is irreversible."
 msgstr "Vous êtes sur le point de supprimer l'environnement %s, cette action est irréversible."
 
-#: ../view/kmb-puppet/environments/index.phtml:27
-#: ../view/kmb-puppet/environments/index.phtml:159
+#: ../view/kmb-puppet/environments/index.phtml:28
+#: ../view/kmb-puppet/environments/index.phtml:160
 msgid "Create an environment"
 msgstr "Créer un environnement"
 
-#: ../view/kmb-puppet/environments/index.phtml:32
+#: ../view/kmb-puppet/environments/index.phtml:33
 msgid "You have to choose a parent and a name for this environment."
 msgstr "Vous devez choisir un parent et un nom pour le nouvel environnement."
 
-#: ../view/kmb-puppet/environments/index.phtml:33
-#: ../view/kmb-puppet/environments/index.phtml:70
+#: ../view/kmb-puppet/environments/index.phtml:34
+#: ../view/kmb-puppet/environments/index.phtml:71
 msgid "The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors."
 msgstr "L'environnement va automatiquement hériter de tous les modules (dans la même version) présents dans chacun de ses ancêtres."
 
-#: ../view/kmb-puppet/environments/index.phtml:36
-#: ../view/kmb-puppet/environments/index.phtml:73
+#: ../view/kmb-puppet/environments/index.phtml:37
+#: ../view/kmb-puppet/environments/index.phtml:74
 msgid "Select a parent"
 msgstr "Sélectionner un parent"
 
-#: ../view/kmb-puppet/environments/index.phtml:37
-#: ../view/kmb-puppet/environments/index.phtml:74
+#: ../view/kmb-puppet/environments/index.phtml:38
+#: ../view/kmb-puppet/environments/index.phtml:75
 msgid "Select an environment"
 msgstr "Choisir un environnement"
 
-#: ../view/kmb-puppet/environments/index.phtml:47
-#: ../view/kmb-puppet/environments/index.phtml:84
+#: ../view/kmb-puppet/environments/index.phtml:48
+#: ../view/kmb-puppet/environments/index.phtml:85
 msgid "The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore)."
 msgstr "Le nom doit impérativement être <strong>alphanumérique</strong> ! Tout caractère spécial est interdit (y compris l'underscore)."
 
-#: ../view/kmb-puppet/environments/index.phtml:64
+#: ../view/kmb-puppet/environments/index.phtml:65
 msgid "Update an environment"
 msgstr "Modifier un environnement"
 
-#: ../view/kmb-puppet/environments/index.phtml:70
+#: ../view/kmb-puppet/environments/index.phtml:71
 msgid "REMINDER"
 msgstr "RAPPEL"
 
-#: ../view/kmb-puppet/environments/index.phtml:90
+#: ../view/kmb-puppet/environments/index.phtml:91
 msgid "Default environment"
 msgstr "Environnement par défaut"
 
-#: ../view/kmb-puppet/environments/index.phtml:92
+#: ../view/kmb-puppet/environments/index.phtml:93
 msgid "All servers which has not already been assigned to an environment will be automatically assigned to the default environment."
 msgstr "Tous les serveurs qui n'ont pas encore été affecté à un environnement se verront automatiquement affecté à l'environnement par défaut."
 
-#: ../view/kmb-puppet/environments/index.phtml:95
+#: ../view/kmb-puppet/environments/index.phtml:96
 msgid "Mark this environment as default"
 msgstr "Choisir cet environnement comme environnement par défaut"
 
-#: ../view/kmb-puppet/environments/index.phtml:113
+#: ../view/kmb-puppet/environments/index.phtml:114
 msgid "Manage permissions"
 msgstr "Gérer les droits d'accès"
 
-#: ../view/kmb-puppet/environments/index.phtml:119
+#: ../view/kmb-puppet/environments/index.phtml:120
 msgid "A <strong>user</strong> can read his environments, their ancestors and children."
 msgstr "Un <strong>utilisateur</strong> peut lire ses environnements, leurs ancêtres et enfants."
 
-#: ../view/kmb-puppet/environments/index.phtml:120
+#: ../view/kmb-puppet/environments/index.phtml:121
 msgid "An <strong>admin</strong> can read his environments and their ancestors, and manage their children."
 msgstr "Un <strong>admin</strong> peut lire ses environnements et leurs ancêtres, et peut gérer leurs enfants."
 
-#: ../view/kmb-puppet/environments/index.phtml:125
+#: ../view/kmb-puppet/environments/index.phtml:126
 msgid "Select users"
 msgstr "Choisir des utilisateurs"
 
-#: ../view/kmb-puppet/environments/index.phtml:129
-#: ../view/kmb-puppet/group/show.phtml:136
+#: ../view/kmb-puppet/environments/index.phtml:130
+#: ../view/kmb-puppet/group/show.phtml:128
 msgid "Add"
 msgstr "Ajouter"
 
-#: ../view/kmb-puppet/environments/index.phtml:137
+#: ../view/kmb-puppet/environments/index.phtml:138
 msgid "Login"
 msgstr "Login"
 
-#: ../view/kmb-puppet/environments/index.phtml:138
+#: ../view/kmb-puppet/environments/index.phtml:139
 msgid "Name"
 msgstr "Nom"
 
-#: ../view/kmb-puppet/environments/index.phtml:139
+#: ../view/kmb-puppet/environments/index.phtml:140
 msgid "Role"
 msgstr "Role"
 
-#: ../view/kmb-puppet/environments/index.phtml:155
-msgid "Environments"
-msgstr "Environnements"
-
-#: ../view/kmb-puppet/environments/index.phtml:166
+#: ../view/kmb-puppet/environments/index.phtml:167
 msgid "Search"
 msgstr "Rechercher"
 
-#: ../view/kmb-puppet/environments/index.phtml:190
+#: ../view/kmb-puppet/environments/index.phtml:191
 #, php-format
 msgid "Filter the list by typing your terms in the search field, then click on the button %s."
 msgstr "Pour filtrer la liste, saisissez votre recherche dans le champ prévu à cet effet puis cliquez sur le bouton %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:193
+#: ../view/kmb-puppet/environments/index.phtml:194
 #, php-format
 msgid "You can expand / collapse the children of each environment by clicking on the buttons %s."
 msgstr "Vous pouvez plier / déplier les enfants de chaque environnement en cliquant sur les boutons %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:197
+#: ../view/kmb-puppet/environments/index.phtml:198
 #, php-format
 msgid "Click on %s to add a child to the environment."
 msgstr "Cliquer sur %s pour ajouter un fils à l'environnement."
 
-#: ../view/kmb-puppet/environments/index.phtml:200
+#: ../view/kmb-puppet/environments/index.phtml:201
 #, php-format
 msgid "Remove the environment by clicking on %s."
 msgstr "Supprimer l'environnement en cliquant sur %s."
 
-#: ../view/kmb-puppet/environments/index.phtml:203
+#: ../view/kmb-puppet/environments/index.phtml:204
 #, php-format
 msgid "Click on %s to update the name and/or the parent of the environment."
 msgstr "Cliquer sur %s pour modifier le nom et/ou le parent de l'environnement."
 
-#: ../view/kmb-puppet/environments/index.phtml:206
+#: ../view/kmb-puppet/environments/index.phtml:207
 #, php-format
 msgid "Manage permissions by clicking on %s."
 msgstr "Gérer les droits d'accès en cliquant sur %s."
@@ -783,74 +795,74 @@ msgstr "Gérer les droits d'accès en cliquant sur %s."
 msgid "You are about to remove <strong>%s</strong> parameter."
 msgstr "Vous êtes sur le point de supprimer le paramètre <strong>%s</strong>."
 
-#: ../view/kmb-puppet/group/show.phtml:5
+#: ../view/kmb-puppet/group/show.phtml:6
 msgid "Detailed informations on group"
 msgstr "Informations détaillées du groupe"
 
-#: ../view/kmb-puppet/group/show.phtml:11
+#: ../view/kmb-puppet/group/show.phtml:12
 msgid "Preview"
 msgstr "Prévisualiser"
 
-#: ../view/kmb-puppet/group/show.phtml:29
+#: ../view/kmb-puppet/group/show.phtml:30
 msgid "servers"
 msgstr "serveurs"
 
-#: ../view/kmb-puppet/group/show.phtml:41
+#: ../view/kmb-puppet/group/show.phtml:42
 msgid "Servers list"
 msgstr "Liste des serveurs"
 
-#: ../view/kmb-puppet/group/show.phtml:42
+#: ../view/kmb-puppet/group/show.phtml:43
 msgid "Servers count"
 msgstr "Nombre de serveurs"
 
-#: ../view/kmb-puppet/group/show.phtml:46
+#: ../view/kmb-puppet/group/show.phtml:47
 msgid "Filter list"
 msgstr "Filtrer la liste"
 
-#: ../view/kmb-puppet/group/show.phtml:77
-#: ../view/kmb-puppet/group/show.phtml:117
+#: ../view/kmb-puppet/group/show.phtml:69
+#: ../view/kmb-puppet/group/show.phtml:109
 msgid "Add a class"
 msgstr "Ajouter une classe"
 
-#: ../view/kmb-puppet/group/show.phtml:89
+#: ../view/kmb-puppet/group/show.phtml:81
 #, php-format
 msgid "You are about to remove <strong>%s</strong> class."
 msgstr "Vous êtes sur le point de supprimer la classe <strong>%s</strong>."
 
-#: ../view/kmb-puppet/group/show.phtml:122
+#: ../view/kmb-puppet/group/show.phtml:114
 msgid "Select a class"
 msgstr "Choisir une classe"
 
-#: ../view/kmb-puppet/group/show.phtml:190
+#: ../view/kmb-puppet/group/show.phtml:182
 #, php-format
 msgid "Class %s"
 msgstr "Classe %s"
 
-#: ../view/kmb-puppet/group/show.phtml:195
+#: ../view/kmb-puppet/group/show.phtml:187
 msgid "Add a parameter"
 msgstr "Ajouter un paramètre"
 
-#: ../view/kmb-puppet/group/show.phtml:218
+#: ../view/kmb-puppet/group/show.phtml:210
 msgid "edit"
 msgstr "éditer"
 
-#: ../view/kmb-puppet/group/show.phtml:220
+#: ../view/kmb-puppet/group/show.phtml:212
 msgid "Description"
 msgstr "Description"
 
-#: ../view/kmb-puppet/group/show.phtml:222
+#: ../view/kmb-puppet/group/show.phtml:214
 msgid "No description yet provided for this group."
 msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
 
-#: ../view/kmb-puppet/group/show.phtml:226
+#: ../view/kmb-puppet/group/show.phtml:218
 msgid "Click on the servers count to preview the list of assigned servers."
 msgstr "Cliquez sur le nombre de serveurs pour prévisualiser la liste des serveurs affectés."
 
-#: ../view/kmb-puppet/group/show.phtml:227
+#: ../view/kmb-puppet/group/show.phtml:219
 msgid "View the detail configuration of a class by clicking on its name."
 msgstr "Accéder au détail de la configuration d'une classe en cliquant sur son nom."
 
-#: ../view/kmb-puppet/group/show.phtml:228
+#: ../view/kmb-puppet/group/show.phtml:220
 msgid "Click on a parameter or a value to update it."
 msgstr "Cliquer sur un paramètre ou une valeur pour le (ou la) modifier."
 
@@ -981,6 +993,3 @@ msgstr "aucune valeur"
 
 #~ msgid "Patchs"
 #~ msgstr "Patchs"
-
-#~ msgid "Puppet"
-#~ msgstr "Puppet"

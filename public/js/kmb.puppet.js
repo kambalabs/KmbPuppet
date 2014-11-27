@@ -46,14 +46,17 @@ $(window).load(function () {
         return false;
     });
 
-    $('#reports').dataTable($.extend({}, DATATABLES_DEFAULT_SETTINGS, {
-        "processing": true,
+    $('#reports').dataTable($.extend({}, DATATABLES_NPROGRESS_DEFAULT_SETTINGS, {
         "serverSide": true,
         "ajax": {
             "url": window.location,
+            "complete": function() {
+                NProgress.done();
+            },
             "error": function (cause) {
                 console.log('Could not get reports list : ' + cause.statusText);
                 $('#reports_processing').hide();
+                NProgress.done();
             }
         }
     }));
@@ -93,7 +96,7 @@ $(window).load(function () {
         parentSelect.trigger('chosen:updated');
     });
 
-    var environmentUsers = $('#environment-users').DataTable($.extend({}, DATATABLES_DEFAULT_SETTINGS, {
+    var environmentUsers = $('#environment-users').dataTable($.extend({}, DATATABLES_DEFAULT_SETTINGS, {
         "lengthChange": false,
         "displayLength": 5
     }));
