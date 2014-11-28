@@ -67,8 +67,9 @@ class ServerController extends AbstractActionController
                     $dump = ArrayUtils::merge($dump, [$class->getName() => $class->dump()]);
                 }
             }
+            ksort($dump, SORT_STRING);
             $dump = [
-                'classes' => ksort($dump, SORT_STRING),
+                'classes' => $dump,
                 'parameters' => [
                     'enc_id' => isset($config['puppet']['enc_id']) ? $config['puppet']['enc_id'] : 'production',
                 ],
