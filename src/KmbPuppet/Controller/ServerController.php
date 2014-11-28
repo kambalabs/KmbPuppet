@@ -68,7 +68,7 @@ class ServerController extends AbstractActionController
                 }
             }
             $dump = [
-                'classes' => $dump,
+                'classes' => ksort($dump, SORT_STRING),
                 'parameters' => [
                     'enc_id' => isset($config['puppet']['enc_id']) ? $config['puppet']['enc_id'] : 'production',
                 ],
