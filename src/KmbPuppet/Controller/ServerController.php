@@ -30,60 +30,46 @@ use Zend\Stdlib\ArrayUtils;
 
 class ServerController extends AbstractActionController
 {
+    /** @var  Service\GroupClass */
+    protected $groupClassService;
+
+    /** @var  array */
+    protected $config;
+
     public function showAction()
     {
-        $config = $this->serviceLocator->get('Config');
         /** @var \KmbPuppetDb\Service\NodeInterface $nodeService */
         $nodeService = $this->serviceLocator->get('KmbPuppetDb\Service\Node');
 
         /** @var Response $response */
         $response = $this->getResponse();
 
+        $dump = [];
         $hostname = $this->params()->fromRoute('hostname');
-        try {
-            if (isset($hostname)) {
+        if (isset($hostname)) {
+            try {
                 $node = $nodeService->getByName($hostname);
-                $nodes = [$node];
-                $filename = $node->getName() . '.yaml';
-            } else {
-                $nodes = $nodeService->getAll();
-                $filename = 'kamba-active-puppet-configuration-' . date('Ymd-His') . '.yaml';
+            } catch (InvalidArgumentException $exception) {
+                $response->setContent($exception->getMessage() . PHP_EOL);
+                return $response->setStatusCode(404);
             }
-        } catch (InvalidArgumentException $exception) {
-            $response->setContent($exception->getMessage() . PHP_EOL);
-            return $response->setStatusCode(404);
+            $dump = $this->getNodeDump($node);
+            $filename = $node->getName() . '.yaml';
+        } else {
+            $nodes = $nodeService->getAll();
+            foreach ($nodes as $node) {
+                /** @var NodeInterface $node */
+                $dump[$node->getName()] = $this->getNodeDump($node);
+            }
+            ksort($dump);
+            $filename = 'kamba-active-puppet-configuration-' . date('Ymd-His') . '.yaml';
         }
 
-        /** @var Service\GroupClassInterface $groupClassService */
-        $groupClassService = $this->serviceLocator->get('KmbPuppet\Service\GroupClass');
-        $content = '';
-
-        foreach ($nodes as $node) {
-            /** @var NodeInterface $node */
-            $classes = $groupClassService->getAllReleasedByNode($node);
-            $dump = [];
-            if (!empty($classes)) {
-                foreach ($classes as $class) {
-                    $dump = ArrayUtils::merge($dump, [$class->getName() => $class->dump()]);
-                }
-            }
-            ksort($dump, SORT_STRING);
-            $dump = [
-                'classes' => $dump,
-                'parameters' => [
-                    'enc_id' => isset($config['puppet']['enc_id']) ? $config['puppet']['enc_id'] : 'production',
-                ],
-                'environment' => $node->getEnvironment(),
-            ];
-            if (!isset($hostname)) {
-                $dump = [$node->getName() => $dump];
-            }
-            $content .= Yaml::dump(
-                $dump,
-                20,
-                4
-            );
-        }
+        $content = Yaml::dump(
+            $dump,
+            20,
+            2
+        );
 
         $response->setContent($content);
 
@@ -94,5 +80,53 @@ class ServerController extends AbstractActionController
             ->addHeaderLine('Content-Length', strlen($content));
 
         return $response;
+    }
+
+    /**
+     * @return Service\GroupClass
+     */
+    public function getGroupClassService()
+    {
+        if ($this->groupClassService == null) {
+            $this->groupClassService = $this->serviceLocator->get('KmbPuppet\Service\GroupClass');
+        }
+        return $this->groupClassService;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        if ($this->config === null) {
+            $this->config = $this->serviceLocator->get('Config');
+        }
+        return $this->config;
+    }
+
+    /**
+     * @param $node
+     * @return array
+     */
+    protected function getNodeDump($node)
+    {
+        $config = $this->getConfig();
+        /** @var NodeInterface $node */
+        $classes = $this->getGroupClassService()->getAllReleasedByNode($node);
+        $dump = [];
+        if (!empty($classes)) {
+            foreach ($classes as $class) {
+                $dump = ArrayUtils::merge($dump, [$class->getName() => $class->dump()]);
+            }
+        }
+        ksort($dump, SORT_STRING);
+        $dump = [
+            'classes' => $dump,
+            'parameters' => [
+                'enc_id' => isset($config['puppet']['enc_id']) ? $config['puppet']['enc_id'] : 'production',
+            ],
+            'environment' => $node->getEnvironment(),
+        ];
+        return $dump;
     }
 }
