@@ -60,7 +60,7 @@ class ServerController extends AbstractActionController
             [
                 'classes' => $dump,
                 'parameters' => [
-                    'encId' => isset($config['puppet']['encId']) ? $config['puppet']['encId'] : 'production',
+                    'enc_id' => isset($config['puppet']['enc_id']) ? $config['puppet']['enc_id'] : 'production',
                 ],
                 'environment' => $node->getEnvironment(),
             ],

@@ -1,6 +1,6 @@
 <?php
 return [
     'puppet' => [
-        'encId' => 'production',
+        'enc_id' => 'production',
     ],
 ];
