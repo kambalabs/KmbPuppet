@@ -27,7 +27,7 @@
         <?php endif ?>
         <div class="col-md-2 info-bar pull-right">
             <div class="yellow"><?php echo $this->translate('version') ?></div>
-            <div class="stats-title"><button class="btn btn-warning btn-disabled" id="module_version"><?php echo $this->escapeHtml($this->module->getVersion()) ?></button></div>
+            <div class="stats-title"><button class="btn btn-warning btn-disabled" id="module_version"><?php echo $this->escapeHtml($this->module->getVersion()) ?: '-' ?></button></div>
         </div>
     </div>
     <hr/>
