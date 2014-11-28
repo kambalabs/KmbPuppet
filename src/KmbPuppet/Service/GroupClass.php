@@ -92,10 +92,13 @@ class GroupClass implements GroupClassInterface
         $names = explode('_', $node->getEnvironment());
         $environmentRootName = array_shift($names);
         $environmentRoot = $this->environmentRepository->getRootByName($environmentRootName);
-        if ($environmentRoot == null) {
-            return null;
+        $environment = $environmentRoot != null ? $environmentRoot->getDescendantByNormalizedName($node->getEnvironment()) : null;
+        if ($environment == null) {
+            $defaultEnvironment = $this->environmentRepository->getDefault();
+            $node->setEnvironment($defaultEnvironment->getNormalizedName());
+            return $defaultEnvironment;
         }
-        return $environmentRoot->getDescendantByNormalizedName($node->getEnvironment());
+        return $environment;
     }
 
     /**

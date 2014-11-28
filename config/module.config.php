@@ -167,10 +167,9 @@ return [
             'puppet-server' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/puppet/server/:hostname',
+                    'route' => '/puppet/server[s][/:hostname]',
                     'constraints' => [
                         'hostname' => '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])',
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => 'KmbPuppet\Controller\Server',

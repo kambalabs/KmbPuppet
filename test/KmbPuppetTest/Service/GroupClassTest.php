@@ -35,12 +35,6 @@ class GroupClassTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function cannotGetAllReleasedByNodeWhenUnknownEnvironment()
-    {
-        $this->assertEquals([], $this->groupClassService->getAllReleasedByNode($this->node));
-    }
-
-    /** @test */
     public function canGetAllReleasedByNode()
     {
         $stable = new Environment('STABLE');
@@ -66,6 +60,25 @@ class GroupClassTest extends \PHPUnit_Framework_TestCase
         $classes = $this->groupClassService->getAllReleasedByNode($this->node);
 
         $this->assertEquals([new Model\GroupClass('dns'), new Model\GroupClass('ntp'), new Model\GroupClass('xymon')], $classes);
+    }
+
+    /** @test */
+    public function canGetAllReleasedByNodeWithUnknownEnvironment()
+    {
+        $stable = new Environment('STABLE');
+        $stableGroup = new Model\Group('default', '.*');
+        $stableGroup->setClasses([new Model\GroupClass('dns'), new Model\GroupClass('ntp')]);
+        $stableRevision = new Model\Revision($stable);
+        $stableRevision->setGroups([$stableGroup]);
+        $stable->setLastReleasedRevision($stableRevision);
+        $this->environmentRepository->expects($this->any())
+            ->method('getDefault')
+            ->will($this->returnValue($stable));
+
+        $classes = $this->groupClassService->getAllReleasedByNode($this->node);
+
+        $this->assertEquals([new Model\GroupClass('dns'), new Model\GroupClass('ntp')], $classes);
+        $this->assertEquals('STABLE', $this->node->getEnvironment());
     }
 
     /** @test */

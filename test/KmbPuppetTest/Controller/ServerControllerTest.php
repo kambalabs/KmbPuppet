@@ -1,6 +1,7 @@
 <?php
 namespace KmbPuppetTest\Controller;
 
+use KmbDomain\Model\Environment;
 use KmbPuppetDb\Model;
 use KmbPuppetTest\Bootstrap;
 use KmbZendDbInfrastructureTest\DatabaseInitTrait;
@@ -22,15 +23,32 @@ class ServerControllerTest extends AbstractHttpControllerTestCase
         $nodeService->expects($this->any())
             ->method('getByName')
             ->will($this->returnValue(new Model\Node('node1.local')));
+        $nodeService->expects($this->any())
+            ->method('getAll')
+            ->will($this->returnValue([new Model\Node('node1.local')]));
         $serviceManager->setService('KmbPuppetDb\Service\Node', $nodeService);
-        $serviceManager->setService('KmbPuppet\Service\Group', $this->getMock('KmbPuppet\Service\Group'));
-        $serviceManager->setService('EnvironmentRepository', $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface'));
+        $serviceManager->setService('KmbPuppet\Service\GroupClass', $this->getMock('KmbPuppet\Service\GroupClass'));
+        $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $environmentRepository->expects($this->any())
+            ->method('getDefault')
+            ->will($this->returnValue(new Environment('DEFAULT')));
+        $serviceManager->setService('EnvironmentRepository', $environmentRepository);
     }
 
     /** @test */
     public function canShow()
     {
         $this->dispatch('/puppet/server/node1.local');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Server');
+        $this->assertActionName('show');
+    }
+
+    /** @test */
+    public function canShowAll()
+    {
+        $this->dispatch('/puppet/servers');
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Server');

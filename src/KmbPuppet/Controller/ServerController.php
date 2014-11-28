@@ -22,6 +22,7 @@ namespace KmbPuppet\Controller;
 
 use KmbPuppet\Service;
 use KmbPuppetDb\Exception\InvalidArgumentException;
+use KmbPuppetDb\Model\NodeInterface;
 use Symfony\Component\Yaml\Yaml;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -38,9 +39,16 @@ class ServerController extends AbstractActionController
         /** @var Response $response */
         $response = $this->getResponse();
 
+        $hostname = $this->params()->fromRoute('hostname');
         try {
-            /** @var \KmbPuppetDb\Model\NodeInterface $node */
-            $node = $nodeService->getByName($this->params()->fromRoute('hostname'));
+            if (isset($hostname)) {
+                $node = $nodeService->getByName($hostname);
+                $nodes = [$node];
+                $filename = $node->getName() . '.yaml';
+            } else {
+                $nodes = $nodeService->getAll();
+                $filename = 'kamba-active-puppet-configuration-' . date('Ymd-His') . '.yaml';
+            }
         } catch (InvalidArgumentException $exception) {
             $response->setContent($exception->getMessage() . PHP_EOL);
             return $response->setStatusCode(404);
@@ -48,28 +56,36 @@ class ServerController extends AbstractActionController
 
         /** @var Service\GroupClassInterface $groupClassService */
         $groupClassService = $this->serviceLocator->get('KmbPuppet\Service\GroupClass');
-        $classes = $groupClassService->getAllReleasedByNode($node);
-        $dump = [];
-        if (!empty($classes)) {
-            foreach ($classes as $class) {
-                $dump = ArrayUtils::merge($dump, [$class->getName() => $class->dump()]);
-            }
-        }
+        $content = '';
 
-        $content = Yaml::dump(
-            [
+        foreach ($nodes as $node) {
+            /** @var NodeInterface $node */
+            $classes = $groupClassService->getAllReleasedByNode($node);
+            $dump = [];
+            if (!empty($classes)) {
+                foreach ($classes as $class) {
+                    $dump = ArrayUtils::merge($dump, [$class->getName() => $class->dump()]);
+                }
+            }
+            $dump = [
                 'classes' => $dump,
                 'parameters' => [
                     'enc_id' => isset($config['puppet']['enc_id']) ? $config['puppet']['enc_id'] : 'production',
                 ],
                 'environment' => $node->getEnvironment(),
-            ],
-            20,
-            4
-        );
+            ];
+            if (!isset($hostname)) {
+                $dump = [$node->getName() => $dump];
+            }
+            $content .= Yaml::dump(
+                $dump,
+                20,
+                4
+            );
+        }
+
         $response->setContent($content);
 
-        $filename = $node->getName() . '.yaml';
         $headers = $response->getHeaders();
         $headers->clearHeaders()
             ->addHeaderLine('Content-Type', 'application/x-yaml')
