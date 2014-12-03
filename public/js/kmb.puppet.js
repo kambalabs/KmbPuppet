@@ -92,11 +92,6 @@ $(window).load(function () {
         parentSelect.trigger('chosen:updated');
     });
 
-    var environmentUsers = $('#environment-users').dataTable($.extend({}, DATATABLES_DEFAULT_SETTINGS, {
-        "lengthChange": false,
-        "displayLength": 5
-    }));
-
     function refreshUserSelect(id) {
         $.ajax({
             url: prefixUri + "/puppet/environment/" + id + "/available-users",
@@ -109,6 +104,11 @@ $(window).load(function () {
             $("#environment-user-select").trigger("chosen:updated");
         });
     }
+
+    var environmentUsers = $('#environment-users').DataTable($.extend({}, DATATABLES_DEFAULT_SETTINGS, {
+        "lengthChange": false,
+        "displayLength": 5
+    }));
 
     var manageEnvironmentUsers = $('#manage-environment-users');
     manageEnvironmentUsers.on('show.bs.modal', function (e) {
