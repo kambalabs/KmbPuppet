@@ -264,7 +264,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
             throw new UnauthorizedException();
         }
 
-        $aggregateRoot->removeUserById($this->params()->fromRoute('userId'));
+        $aggregateRoot->removeUserById(intval($this->params()->fromRoute('userId')));
         $this->environmentRepository->update($aggregateRoot);
 
         return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
