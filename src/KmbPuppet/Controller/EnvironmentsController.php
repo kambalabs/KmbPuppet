@@ -61,7 +61,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
     public function createAction()
     {
         /** @var EnvironmentInterface $parent */
-        $parent = $this->environmentRepository->getById($this->params()->fromPost('parent'));
+        $parent = $this->environmentRepository->getById(intval($this->params()->fromPost('parent')));
         if (
             ($parent == null && !$this->isGranted('manageAllEnv')) ||
             ($parent != null && !$this->isGranted('manageEnv', $parent))
@@ -104,7 +104,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
         /** @var EnvironmentInterface $parent */
         $parent = $this->environmentRepository->getById($this->params()->fromPost('parent'));
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById(intval($this->params()->fromRoute('id')));
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
@@ -138,7 +138,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
     public function removeAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById(intval($this->params()->fromRoute('id')));
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
@@ -168,7 +168,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
     public function usersAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById(intval($this->params()->fromRoute('id')));
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
@@ -196,7 +196,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
     public function availableUsersAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById(intval($this->params()->fromRoute('id')));
 
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
@@ -226,7 +226,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
     public function addUsersAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById(intval($this->params()->fromRoute('id')));
         $aggregateRoot->getParent(); // Load parent TODO: remove this ASAP
 
         if ($aggregateRoot === null) {
@@ -239,7 +239,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
 
         $users = [];
         foreach ($this->params()->fromPost('users', []) as $userId) {
-            $user = $this->userRepository->getById($userId);
+            $user = $this->userRepository->getById(intval($userId));
             if ($user !== null) {
                 $users[] = $user;
             }
@@ -253,7 +253,7 @@ class EnvironmentsController extends AbstractActionController implements Authent
     public function removeUserAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */
-        $aggregateRoot = $this->environmentRepository->getById($this->params()->fromRoute('id'));
+        $aggregateRoot = $this->environmentRepository->getById(intval($this->params()->fromRoute('id')));
         if ($aggregateRoot === null) {
             return $this->notFoundAction();
         }
