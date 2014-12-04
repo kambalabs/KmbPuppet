@@ -217,7 +217,7 @@ return [
         ],
     ],
     'navigation' => [
-        'default' => [
+        'navbar' => [
             [
                 'label' => $translate('Puppet'),
                 'route' => 'puppet',
@@ -282,6 +282,14 @@ return [
         ],
         'aliases' => [
             'environmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelect',
+        ],
+    ],
+    'view_helper_config' => [
+        'widget' => [
+            'puppetModulesActions' => [
+                'partials' => [
+                ],
+            ],
         ],
     ],
     'view_manager' => [
