@@ -66,7 +66,7 @@ class GroupParameterControllerTest extends AbstractHttpControllerTestCase
         $puppetModule = new PuppetModule('apache', '2.1.4');
         $puppetModule->setClasses([new PuppetClass('apache::vhost', [], [])]);
         $puppetModuleService->expects($this->any())
-            ->method('getAllByEnvironment')
+            ->method('getAllInstalledByEnvironment')
             ->will($this->returnValue([
                 'apache' => $puppetModule,
                 'ntp' => new PuppetModule('ntp', '1.1.0'),
@@ -100,6 +100,7 @@ class GroupParameterControllerTest extends AbstractHttpControllerTestCase
     {
         $this->dispatch('/env/1/puppet/group/1/parameter/1/add-child?selectedClass=dns', 'POST', ['name' => 'test']);
 
+        echo $this->getResponse()->getContent();
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/group/1?selectedClass=dns');
     }

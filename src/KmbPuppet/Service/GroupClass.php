@@ -65,7 +65,7 @@ class GroupClass implements GroupClassInterface
     protected function findClasses(PuppetDbModel\NodeInterface $node, Model\EnvironmentInterface $environment, $isForLastReleased = true)
     {
         $revision = $isForLastReleased ? $environment->getLastReleasedRevision() : $environment->getCurrentRevision();
-        $modules = $this->puppetModuleService->getAllByEnvironment($environment);
+        $modules = $this->puppetModuleService->getAllInstalledByEnvironment($environment);
         $this->revisionHydrator->hydrate($modules, $revision);
         $groups = $revision->getGroupsMatchingHostname($node->getName());
         $classes = [];

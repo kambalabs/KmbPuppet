@@ -89,7 +89,7 @@ class GroupController extends AbstractActionController implements AuthenticatedC
         $groupHydrator = $this->serviceLocator->get('pmProxyGroupHydrator');
         /** @var PuppetModuleService $puppetModuleService */
         $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
-        $modules = $puppetModuleService->getAllByEnvironment($environment);
+        $modules = $puppetModuleService->getAllInstalledByEnvironment($environment);
         $groupHydrator->hydrate($modules, $group);
 
         $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));

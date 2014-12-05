@@ -127,7 +127,7 @@ class RevisionsController extends AbstractActionController implements Authentica
         $revisionHydrator = $this->serviceLocator->get('pmProxyRevisionHydrator');
         /** @var PuppetModuleService $puppetModuleService */
         $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
-        $modules = $puppetModuleService->getAllByEnvironment($environment);
+        $modules = $puppetModuleService->getAllInstalledByEnvironment($environment);
 
         /** @var RevisionInterface $from */
         $from = $revisionRepository->getById($this->params()->fromQuery('from'));

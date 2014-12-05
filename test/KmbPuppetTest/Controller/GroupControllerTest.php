@@ -54,7 +54,7 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
 
         $puppetModuleService = $this->getMock('KmbPmProxy\Service\PuppetModuleInterface');
         $puppetModuleService->expects($this->any())
-            ->method('getAllByEnvironment')
+            ->method('getAllInstalledByEnvironment')
             ->will($this->returnValue([]));
         $serviceManager->setService('pmProxyPuppetModuleService', $puppetModuleService);
     }

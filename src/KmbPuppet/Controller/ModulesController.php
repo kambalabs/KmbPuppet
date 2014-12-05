@@ -47,7 +47,7 @@ class ModulesController extends AbstractActionController implements Authenticate
 
         return new ViewModel([
             'environment' => $environment,
-            'puppetModules' => $puppetModuleService->getAllByEnvironment($environment)
+            'puppetModules' => $puppetModuleService->getAllInstalledByEnvironment($environment)
         ]);
     }
 

@@ -118,7 +118,7 @@ class RevisionController extends AbstractActionController implements Authenticat
         $revisionHydrator = $this->serviceLocator->get('pmProxyRevisionHydrator');
         /** @var PuppetModuleService $puppetModuleService */
         $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
-        $modules = $puppetModuleService->getAllByEnvironment($environment);
+        $modules = $puppetModuleService->getAllInstalledByEnvironment($environment);
         $revisionHydrator->hydrate($modules, $revision);
 
         $groups = $revision->hasGroups() ? $revision->getGroups() : [];
