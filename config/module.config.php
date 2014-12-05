@@ -218,7 +218,7 @@ return [
     ],
     'navigation' => [
         'navbar' => [
-            [
+            'puppet' => [
                 'label' => $translate('Puppet'),
                 'route' => 'puppet',
                 'tabindex' => 60,
