@@ -35,9 +35,10 @@ class ReportMessageDecorator extends AbstractDecorator
 
     /**
      * @param Report $object
+     * @param $context
      * @return string
      */
-    public function decorateValue($object)
+    public function decorateValue($object, $context = null)
     {
         return '<pre>' . $this->escapeHtml($this->filterReportMessage($object->getMessage())) . '</pre>';
     }

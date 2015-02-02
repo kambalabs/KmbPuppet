@@ -35,9 +35,10 @@ class ReportTitleDecorator extends AbstractDecorator
 
     /**
      * @param Report $object
+     * @param $context
      * @return string
      */
-    public function decorateValue($object)
+    public function decorateValue($object, $context = null)
     {
         return '<span class="label label-default">' . $this->escapeHtml($object->getTitle()) . '</span>';
     }

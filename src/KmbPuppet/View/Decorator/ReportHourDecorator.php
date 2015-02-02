@@ -35,9 +35,10 @@ class ReportHourDecorator extends AbstractDecorator
 
     /**
      * @param Report $object
+     * @param $context
      * @return string
      */
-    public function decorateValue($object)
+    public function decorateValue($object, $context = null)
     {
         return $this->dateFormat($object->getCreatedAt(), \IntlDateFormatter::NONE, \IntlDateFormatter::MEDIUM);
     }
