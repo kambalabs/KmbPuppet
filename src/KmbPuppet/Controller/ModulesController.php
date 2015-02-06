@@ -65,7 +65,7 @@ class ModulesController extends AbstractActionController implements Authenticate
         /** @var Service\PuppetModuleInterface $puppetModuleService */
         $puppetModuleService = $this->getServiceLocator()->get('pmProxyPuppetModuleService');
 
-        $puppetModule = $puppetModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('name'));
+        $puppetModule = $puppetModuleService->getInstalledByEnvironmentAndName($environment, $this->params()->fromRoute('name'));
         if ($puppetModule === null) {
             return $this->notFoundAction();
         }
@@ -101,7 +101,7 @@ class ModulesController extends AbstractActionController implements Authenticate
         /** @var Service\PuppetModuleInterface $puppetModuleService */
         $puppetModuleService = $this->getServiceLocator()->get('pmProxyPuppetModuleService');
 
-        $puppetModule = $puppetModuleService->getByEnvironmentAndName($environment, $this->params()->fromRoute('moduleName'));
+        $puppetModule = $puppetModuleService->getInstalledByEnvironmentAndName($environment, $this->params()->fromRoute('moduleName'));
         if ($puppetModule === null) {
             return $this->notFoundAction();
         }

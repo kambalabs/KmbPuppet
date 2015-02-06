@@ -38,7 +38,7 @@ class ModulesControllerTest extends AbstractHttpControllerTestCase
                 'ntp' => new PuppetModule('ntp', '1.1.0'),
             ]));
         $puppetModuleService->expects($this->any())
-            ->method('getByEnvironmentAndName')
+            ->method('getInstalledByEnvironmentAndName')
             ->will($this->returnValue($puppetModule));
         $serviceManager->setService('pmProxyPuppetModuleService', $puppetModuleService);
     }
