@@ -78,10 +78,9 @@
                         <tr<?php if (isset($this->selectedClass) && $this->selectedClass->getId() === $class->getId()): ?> class="selected-class"<?php endif ?>>
                             <td style="width: 90%">
                                 <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
-                                <a href="#" data-href="<?php echo $this->url('puppet-group-remove-class', ['id' => $this->group->getId(), 'className' => $class->getName()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> class.'), $class->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+                                <a href="#" title="<?php echo $this->translate('Remove class') ?>" data-href="<?php echo $this->url('puppet-group-remove-class', ['id' => $this->group->getId(), 'className' => $class->getName()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> class.'), $class->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
                                 <?php endif ?>
-                                <span class="glyphicon glyphicon-search"></span>
-                                <a href="#" data-class-id="<?php echo $class->getId() ?>" class="class-name"><?php echo $class->getName() ?></a>
+                                <a href="#" title="<?php echo $this->translate('View class parameters') ?>" data-class-id="<?php echo $class->getId() ?>" class="class-name"><span class="glyphicon glyphicon-search darkgrey" style="margin-right: 6px"></span><?php echo $class->getName() ?></a>
                             </td>
                             <td class="text-right">
                             <?php if (isset($this->classesErrors[$class->getName()])): ?>

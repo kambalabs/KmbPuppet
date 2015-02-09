@@ -83,7 +83,7 @@ class RevisionLogsListener extends AbstractListenerAggregate
                             $message =
                                 '<p>' .
                                 sprintf($this->translate("You haven't saved the changes you made %s !"), $this->translateInterval($interval)) . ' ' .
-                                sprintf($this->translate('<a href="%s">Click here</a> to save them.'), $this->url('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true)) .
+                                sprintf($this->translate('<a href="%s">Click here</a> for more details.'), $this->url('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true)) .
                                 '</p>';
                         } else {
                             $message =

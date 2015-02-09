@@ -48,7 +48,7 @@
                         <tr>
                             <td style="width: 90%">
                                 <span class="glyphicon glyphicon-search"></span>
-                                <a href="<?php echo $this->url('puppet-module-class', ['action' => 'show-class', 'moduleName' => $this->module->getName(), 'className' => $class->getName()], ['query' => ['back' => $this->url('puppet-module', ['action' => 'show', 'name' => $this->module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true)]], true) ?>"><?php echo $class->getName() ?></a>
+                                <a href="<?php echo $this->url('puppet-module-class', ['action' => 'show-class', 'moduleName' => $this->module->getName(), 'className' => $class->getName()], ['query' => ['back' => $this->url('puppet-module', ['action' => 'show', 'name' => $this->module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true)]], true) ?>" title="<?php echo $this->translate('View more details on class') ?>"><?php echo $class->getName() ?></a>
                             </td>
                             <td class="text-right">
                             <?php if (isset($this->classesErrors[$class->getName()])): ?>

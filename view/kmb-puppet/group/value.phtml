@@ -1,7 +1,7 @@
 <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
 <span class="tree-item inline-editable"<?php if ($this->hasMultipleValues): ?> style="padding-left: 26px"<?php endif ?>>
     <?php if ($this->hasMultipleValues): ?>
-        <a href="#" class="remove-value" style="position: absolute; margin-left: -18px" data-toggle="modal" data-target="#confirm-remove-value" data-confirm-text="<?php echo sprintf($this->translate('You are about to remove a value of <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+        <a href="#" title="<?php echo $this->translate('Remove value') ?>" class="remove-value" style="position: absolute; margin-left: -18px" data-toggle="modal" data-target="#confirm-remove-value" data-confirm-text="<?php echo sprintf($this->translate('You are about to remove a value of <strong>%s</strong> parameter.'), $this->parameter->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
     <?php endif ?>
     <?php if ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
         <span class="inline-editable-clickable darkgrey"><?php echo $this->printBoolean($this->value) ?></span>
@@ -48,8 +48,8 @@
             <input type="text" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($this->value) ?>" />
         <?php endif ?>
         <div class="input-group-<?php echo ($this->type == \KmbDomain\Model\GroupParameterType::TEXT ? 'addon' : 'btn') ?>">
-            <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
-            <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+            <button class="btn btn-default" title="<?php echo $this->translate('Cancel') ?>" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
+            <button class="btn btn-primary" title="<?php echo $this->translate('Submit') ?>" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
         </div>
     </div>
 </div>

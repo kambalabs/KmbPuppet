@@ -21,12 +21,11 @@
                     <?php foreach ($this->groups as $group): ?>
                     <tr id="groups-<?php echo $group->getId() ?>">
                         <td class="module-name" style="width: 100%">
-                            <span class="glyphicon glyphicon-th grab"></span>
+                            <span class="glyphicon glyphicon-th grab" title="<?php echo $this->translate('Sort groups') ?>"></span>
                             <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
-                            <a href="#" data-href="<?php echo $this->url('puppet-group', ['action' => 'remove', 'id' => $group->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> group.'), $group->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+                            <a href="#" title="<?php echo $this->translate('Remove group') ?>" data-href="<?php echo $this->url('puppet-group', ['action' => 'remove', 'id' => $group->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> group.'), $group->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
                             <?php endif ?>
-                            <span class="glyphicon glyphicon-search"></span>
-                            <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true) ?>"><?php echo $group->getName() ?></a>
+                            <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true) ?>" title="<?php echo $this->translate('View group') ?>"><span class="glyphicon glyphicon-search grey" style="margin-right: 6px"></span><?php echo $group->getName() ?></a>
                         </td>
                     </tr>
                     <?php endforeach ?>
