@@ -12,9 +12,11 @@
                 </div>
             </div>
             <div class="panel-body">
+                <?php if (empty($this->puppetModules)): ?>
+                    <?php echo $this->translate('No modules') ?>
+                <?php else: ?>
                 <table class="table table-striped" id="modules">
                     <tbody>
-                    <?php if (isset($this->puppetModules)): ?>
                     <?php foreach ($this->puppetModules as $puppetModule): ?>
                     <tr>
                         <td class="module-name" style="width: 100%">
@@ -27,9 +29,9 @@
                         </td>
                     </tr>
                     <?php endforeach ?>
-                    <?php endif ?>
                     </tbody>
                 </table>
+                <?php endif ?>
             </div>
         </div>
         <?php if (!empty($this->inheritedPuppetModules)): ?>
