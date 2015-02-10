@@ -44,10 +44,19 @@ class ModulesController extends AbstractActionController implements Authenticate
 
         /** @var Service\PuppetModuleInterface $puppetModuleService */
         $puppetModuleService = $this->getServiceLocator()->get('pmProxyPuppetModuleService');
+        $puppetModules = $puppetModuleService->getAllInstalledByEnvironment($environment);
+        $inheritedPuppetModules = [];
+        foreach ($puppetModules as $index => $module) {
+            if ($module->isInherited()) {
+                $inheritedPuppetModules[] = $module;
+                unset($puppetModules[$index]);
+            }
+        }
 
         return new ViewModel([
             'environment' => $environment,
-            'puppetModules' => $puppetModuleService->getAllInstalledByEnvironment($environment)
+            'puppetModules' => $puppetModules,
+            'inheritedPuppetModules' => $inheritedPuppetModules
         ]);
     }
 

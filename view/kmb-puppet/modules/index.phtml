@@ -5,14 +5,13 @@
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-th"></span><span class="panel-break"></span>
                 <span>
-                    <?php echo $this->translate('Modules') ?>
+                    <?php echo sprintf($this->translate('Modules of %s environment'), $this->environment->getNormalizedName()); ?>
                 </span>
                 <div class="pull-right">
                     <?php echo $this->widget()->render('puppetModulesPanelHeading', ['puppetModules' => $this->puppetModules]); ?>
                 </div>
             </div>
             <div class="panel-body">
-                <h4>Environment STABLE</h4>
                 <table class="table table-striped" id="modules">
                     <tbody>
                     <?php if (isset($this->puppetModules)): ?>
@@ -33,6 +32,42 @@
                 </table>
             </div>
         </div>
+        <?php if (!empty($this->inheritedPuppetModules)): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-signal"></span><span class="panel-break"></span>
+                <span>
+                    <?php echo $this->translate('Inherited modules') ?>
+                </span>
+                <?php if ($this->environment->hasParent()): ?>
+                <div class="pull-right">
+                    <a class="btn btn-xs btn-info<?php if (!isset($this->puppetModules)): ?> disabled<?php endif ?>" href="<?php echo $this->url('puppet', ['controller' => 'modules', 'action' => 'index', 'envId' => $this->environment->getParent()->getId()], [], true) ?>">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <?php echo $this->translate("View parent's modules") ?>
+                    </a>
+                </div>
+                <?php endif ?>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped" id="modules">
+                    <tbody>
+                    <?php if (isset($this->puppetModules)): ?>
+                        <?php foreach ($this->puppetModules as $puppetModule): ?>
+                            <tr>
+                                <td class="module-name" style="width: 100%">
+                                    <?php echo $puppetModule->getName() ?>
+                                </td>
+                                <td>
+                                    <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $puppetModule->getVersion() ?></span>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
+                    <?php endif ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php endif ?>
     </div>
     <div class="col-sm-5">
         <h1><?php echo $this->translate('Help') ?></h1>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 18:22+0100\n"
-"PO-Revision-Date: 2015-02-09 18:22+0100\n"
+"POT-Creation-Date: 2015-02-10 12:12+0100\n"
+"PO-Revision-Date: 2015-02-10 12:12+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: en_US\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Environments"
 msgstr ""
 
-#: ../config/module.config.php:244 ../view/kmb-puppet/modules/index.phtml:8
+#: ../config/module.config.php:244
 msgid "Modules"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr ""
 msgid "The group %s has been successfully created !"
 msgstr ""
 
-#: ../src/KmbPuppet/Controller/ModulesController.php:128
+#: ../src/KmbPuppet/Controller/ModulesController.php:137
 msgid ""
 "Parameters are in error, please check the template and the class definition"
 msgstr ""
@@ -565,7 +565,7 @@ msgstr ""
 #: ../view/kmb-puppet/environments/index.phtml:188
 #: ../view/kmb-puppet/group/show.phtml:215
 #: ../view/kmb-puppet/groups/index.phtml:84
-#: ../view/kmb-puppet/modules/index.phtml:38
+#: ../view/kmb-puppet/modules/index.phtml:73
 #: ../view/kmb-puppet/revisions/diff.phtml:33
 #: ../view/kmb-puppet/revisions/index.phtml:168
 msgid "Help"
@@ -805,23 +805,36 @@ msgid ""
 "glyphicon-th grab\"></span>."
 msgstr ""
 
-#: ../view/kmb-puppet/modules/index.phtml:23
+#: ../view/kmb-puppet/modules/index.phtml:8
+#, php-format
+msgid "Modules of %s environment"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:22
 msgid "View module"
 msgstr ""
 
-#: ../view/kmb-puppet/modules/index.phtml:41
+#: ../view/kmb-puppet/modules/index.phtml:40
+msgid "Inherited modules"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:46
+msgid "View parent's modules"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:76
 #, php-format
 msgid ""
 "Here is the list of installed modules on environment <strong>%s</strong>."
 msgstr ""
 
-#: ../view/kmb-puppet/modules/index.phtml:42
+#: ../view/kmb-puppet/modules/index.phtml:77
 msgid ""
 "When version of a module is red <span class=\"label label-danger\">1.0.0</"
 "span>, it means that at least one of its classes is in error."
 msgstr ""
 
-#: ../view/kmb-puppet/modules/index.phtml:43
+#: ../view/kmb-puppet/modules/index.phtml:78
 msgid ""
 "<strong>Note</strong> : The list of modules is refreshed every 5 minutes, "
 "but you can clear the cache manually by clicking on your name in the top "

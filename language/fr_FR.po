@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-09 18:22+0100\n"
-"PO-Revision-Date: 2015-02-09 18:23+0100\n"
+"POT-Creation-Date: 2015-02-10 12:12+0100\n"
+"PO-Revision-Date: 2015-02-10 12:13+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -29,7 +29,7 @@ msgstr "Rapports du jour"
 msgid "Environments"
 msgstr "Environnements"
 
-#: ../config/module.config.php:244 ../view/kmb-puppet/modules/index.phtml:8
+#: ../config/module.config.php:244
 msgid "Modules"
 msgstr "Modules"
 
@@ -252,7 +252,7 @@ msgstr "Création du groupe %s"
 msgid "The group %s has been successfully created !"
 msgstr "Le groupe %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/ModulesController.php:128
+#: ../src/KmbPuppet/Controller/ModulesController.php:137
 msgid ""
 "Parameters are in error, please check the template and the class definition"
 msgstr ""
@@ -592,7 +592,7 @@ msgstr "Tout déplier"
 #: ../view/kmb-puppet/environments/index.phtml:188
 #: ../view/kmb-puppet/group/show.phtml:215
 #: ../view/kmb-puppet/groups/index.phtml:84
-#: ../view/kmb-puppet/modules/index.phtml:38
+#: ../view/kmb-puppet/modules/index.phtml:73
 #: ../view/kmb-puppet/revisions/diff.phtml:33
 #: ../view/kmb-puppet/revisions/index.phtml:168
 msgid "Help"
@@ -849,11 +849,24 @@ msgstr ""
 "Vous pouvez trier les groupes en cliquant sur l'icône <span class="
 "\"glyphicon glyphicon-th grab\"></span>."
 
-#: ../view/kmb-puppet/modules/index.phtml:23
+#: ../view/kmb-puppet/modules/index.phtml:8
+#, php-format
+msgid "Modules of %s environment"
+msgstr "Modules de l'environnement %s"
+
+#: ../view/kmb-puppet/modules/index.phtml:22
 msgid "View module"
 msgstr "Consulter le module"
 
-#: ../view/kmb-puppet/modules/index.phtml:41
+#: ../view/kmb-puppet/modules/index.phtml:40
+msgid "Inherited modules"
+msgstr "Modules hérités"
+
+#: ../view/kmb-puppet/modules/index.phtml:46
+msgid "View parent's modules"
+msgstr "Voir les modules du parent"
+
+#: ../view/kmb-puppet/modules/index.phtml:76
 #, php-format
 msgid ""
 "Here is the list of installed modules on environment <strong>%s</strong>."
@@ -861,7 +874,7 @@ msgstr ""
 "Voici la liste des modules installés dans l'environnement <strong>%s</"
 "strong>."
 
-#: ../view/kmb-puppet/modules/index.phtml:42
+#: ../view/kmb-puppet/modules/index.phtml:77
 msgid ""
 "When version of a module is red <span class=\"label label-danger\">1.0.0</"
 "span>, it means that at least one of its classes is in error."
@@ -869,7 +882,7 @@ msgstr ""
 "La version d'un module est rouge <span class=\"label label-danger\">1.0.0</"
 "span> lorsqu'au moins une de ses classes est en erreur."
 
-#: ../view/kmb-puppet/modules/index.phtml:43
+#: ../view/kmb-puppet/modules/index.phtml:78
 msgid ""
 "<strong>Note</strong> : The list of modules is refreshed every 5 minutes, "
 "but you can clear the cache manually by clicking on your name in the top "
@@ -1225,9 +1238,6 @@ msgstr ""
 #~ "<strong>RAPPEL</strong> : L'environnement va automatiquement hériter de "
 #~ "tous les modules (dans la même version) présents dans chacun de ses "
 #~ "ancêtres."
-
-#~ msgid "Parent of environment"
-#~ msgstr "Parent de l'environnement"
 
 #~ msgid "Filter servers by fact"
 #~ msgstr "Filtrer les serveurs par fact"
