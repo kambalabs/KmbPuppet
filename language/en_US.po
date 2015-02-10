@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-10 12:12+0100\n"
-"PO-Revision-Date: 2015-02-10 12:12+0100\n"
+"POT-Creation-Date: 2015-02-10 15:10+0100\n"
+"PO-Revision-Date: 2015-02-10 15:10+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: en_US\n"
@@ -816,6 +816,11 @@ msgstr ""
 
 #: ../view/kmb-puppet/modules/index.phtml:40
 msgid "Inherited modules"
+msgstr ""
+
+#: ../view/kmb-puppet/modules/index.phtml:44
+#, php-format
+msgid "View modules list of %s environment"
 msgstr ""
 
 #: ../view/kmb-puppet/modules/index.phtml:46

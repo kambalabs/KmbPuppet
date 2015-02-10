@@ -8,7 +8,7 @@
                     <?php echo sprintf($this->translate('Modules of %s environment'), $this->environment->getNormalizedName()); ?>
                 </span>
                 <div class="pull-right">
-                    <?php echo $this->widget()->render('puppetModulesPanelHeading', ['puppetModules' => $this->puppetModules]); ?>
+                    <?php echo $this->widget()->render('puppetModulesPanelHeading', ['puppetModules' => $this->puppetModules, 'inheritedPuppetModules' => $this->inheritedPuppetModules]); ?>
                 </div>
             </div>
             <div class="panel-body">
@@ -41,7 +41,7 @@
                 </span>
                 <?php if ($this->environment->hasParent()): ?>
                 <div class="pull-right">
-                    <a class="btn btn-xs btn-info<?php if (!isset($this->puppetModules)): ?> disabled<?php endif ?>" href="<?php echo $this->url('puppet', ['controller' => 'modules', 'action' => 'index', 'envId' => $this->environment->getParent()->getId()], [], true) ?>">
+                    <a class="btn btn-xs btn-info" href="<?php echo $this->url('puppet', ['controller' => 'modules', 'action' => 'index', 'envId' => $this->environment->getParent()->getId()], [], true) ?>" title="<?php echo sprintf($this->translate('View modules list of %s environment'), $this->environment->getParent()->getNormalizedName()); ?>">
                         <span class="glyphicon glyphicon-search"></span>
                         <?php echo $this->translate("View parent's modules") ?>
                     </a>
@@ -51,8 +51,8 @@
             <div class="panel-body">
                 <table class="table table-striped" id="modules">
                     <tbody>
-                    <?php if (isset($this->puppetModules)): ?>
-                        <?php foreach ($this->puppetModules as $puppetModule): ?>
+                    <?php if (isset($this->inheritedPuppetModules)): ?>
+                        <?php foreach ($this->inheritedPuppetModules as $puppetModule): ?>
                             <tr>
                                 <td class="module-name" style="width: 100%">
                                     <?php echo $puppetModule->getName() ?>
