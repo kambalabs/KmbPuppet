@@ -10,7 +10,7 @@
 <?php endif ?>
                 </span>
                 <div class="pull-right">
-                    <?php echo $this->widget()->render('puppetModulesPanelHeading', ['puppetModules' => $this->puppetModules, 'inheritedPuppetModules' => $this->inheritedPuppetModules]); ?>
+                    <?php echo $this->widget('puppetModulesPanelHeading')->render($this->viewModel()->getCurrent()); ?>
                 </div>
             </div>
             <div class="panel-body">
@@ -22,12 +22,12 @@
                     <?php foreach ($this->puppetModules as $puppetModule): ?>
                     <tr>
                         <td class="module-name" style="width: 100%">
-                            <?php echo $this->widget()->render('puppetModuleRowLeft', ['puppetModule' => $puppetModule]); ?>
+                            <?php echo $this->widget('puppetModuleRowLeft')->render(['puppetModule' => $puppetModule]); ?>
                             <a href="<?php echo $this->url('puppet-module', ['action' => 'show', 'name' => $puppetModule->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true) ?>" title="<?php echo $this->translate('View module') ?>"><span class="glyphicon glyphicon-search darkgrey" style="margin-right: 6px"></span><?php echo $puppetModule->getName() ?></a>
                         </td>
                         <td>
                             <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $puppetModule->getVersion() ?></span>
-                            <?php echo $this->widget()->render('puppetModuleRowRight', ['puppetModule' => $puppetModule]); ?>
+                            <?php echo $this->widget('puppetModuleRowRight')->render(['puppetModule' => $puppetModule]); ?>
                         </td>
                     </tr>
                     <?php endforeach ?>
