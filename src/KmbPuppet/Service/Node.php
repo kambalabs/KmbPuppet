@@ -20,9 +20,11 @@
  */
 namespace KmbPuppet\Service;
 
-use KmbDomain\Model\EnvironmentInterface;
+use KmbDomain\Model as DomainModel;
+use KmbPuppetDb\Model;
 use KmbPuppetDb\Query\Query;
 use KmbPuppetDb\Query\QueryBuilderInterface;
+use Zend\Stdlib\ArrayUtils;
 
 class Node implements NodeInterface
 {
@@ -35,13 +37,19 @@ class Node implements NodeInterface
     /** @var  QueryBuilderInterface */
     protected $nodesNamesQueryBuilder;
 
+    /** @var  array */
+    protected $config;
+
+    /** @var  GroupClass */
+    protected $groupClassService;
+
     /**
-     * @param EnvironmentInterface $environment
+     * @param DomainModel\EnvironmentInterface $environment
      * @param string               $include
      * @param string               $exclude
      * @return array
      */
-    public function getAllByEnvironmentAndPatterns(EnvironmentInterface $environment, $include, $exclude)
+    public function getAllByEnvironmentAndPatterns(DomainModel\EnvironmentInterface $environment, $include, $exclude)
     {
         if (empty($include)) {
             return [];
@@ -56,6 +64,48 @@ class Node implements NodeInterface
         $patternQuery = $excludeQuery == null ? $includeQuery : new Query(['AND', $includeQuery, new Query(['NOT', $excludeQuery])]);
 
         return $this->nodeService->getAll(new Query(['AND', $environmentQuery, $patternQuery]));
+    }
+
+    /**
+     * @param Model\NodeInterface $node
+     * @return array
+     */
+    public function getActivePuppetConfiguration(Model\NodeInterface $node)
+    {
+        return $this->dump($this->groupClassService->getAllReleasedByNode($node), $node->getEnvironment());
+    }
+
+    /**
+     * @param Model\NodeInterface $node
+     * @return array
+     */
+    public function getCurrentPuppetConfiguration(Model\NodeInterface $node)
+    {
+        return $this->dump($this->groupClassService->getAllCurrentByNode($node), $node->getEnvironment());
+    }
+
+    /**
+     * @param DomainModel\GroupClassInterface[] $classes
+     * @param string $environment
+     * @return array
+     */
+    protected function dump($classes, $environment)
+    {
+        $dump = [];
+        if (!empty($classes)) {
+            foreach ($classes as $class) {
+                $dump = ArrayUtils::merge($dump, [$class->getName() => $class->dump()]);
+            }
+        }
+        ksort($dump, SORT_STRING);
+        $dump = [
+            'classes' => $dump,
+            'parameters' => [
+                'enc_id' => isset($this->config['puppet']['enc_id']) ? $this->config['puppet']['enc_id'] : 'production',
+            ],
+            'environment' => $environment,
+        ];
+        return $dump;
     }
 
     /**
@@ -122,5 +172,49 @@ class Node implements NodeInterface
     public function getNodesNamesQueryBuilder()
     {
         return $this->nodesNamesQueryBuilder;
+    }
+
+    /**
+     * Set Config.
+     *
+     * @param array $config
+     * @return Node
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+        return $this;
+    }
+
+    /**
+     * Get Config.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Set GroupClassService.
+     *
+     * @param \KmbPuppet\Service\GroupClass $groupClassService
+     * @return Node
+     */
+    public function setGroupClassService($groupClassService)
+    {
+        $this->groupClassService = $groupClassService;
+        return $this;
+    }
+
+    /**
+     * Get GroupClassService.
+     *
+     * @return \KmbPuppet\Service\GroupClass
+     */
+    public function getGroupClassService()
+    {
+        return $this->groupClassService;
     }
 }

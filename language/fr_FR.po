@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-10 15:20+0100\n"
-"PO-Revision-Date: 2015-02-10 15:20+0100\n"
+"POT-Creation-Date: 2015-03-05 17:40+0100\n"
+"PO-Revision-Date: 2015-03-05 17:41+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -16,28 +16,28 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../config/module.config.php:222
+#: ../config/module.config.php:231
 msgid "Puppet"
 msgstr "Puppet"
 
-#: ../config/module.config.php:227 ../view/kmb-puppet/reports/index.phtml:3
+#: ../config/module.config.php:236 ../view/kmb-puppet/reports/index.phtml:3
 msgid "Day reports"
 msgstr "Rapports du jour"
 
-#: ../config/module.config.php:235
+#: ../config/module.config.php:244
 #: ../view/kmb-puppet/environments/index.phtml:156
 msgid "Environments"
 msgstr "Environnements"
 
-#: ../config/module.config.php:244
+#: ../config/module.config.php:253
 msgid "Modules"
 msgstr "Modules"
 
-#: ../config/module.config.php:252 ../view/kmb-puppet/groups/index.phtml:8
+#: ../config/module.config.php:261 ../view/kmb-puppet/groups/index.phtml:8
 msgid "Groups"
 msgstr "Groupes"
 
-#: ../config/module.config.php:260
+#: ../config/module.config.php:269
 msgid "Changes"
 msgstr "Changements"
 
@@ -592,7 +592,7 @@ msgstr "Tout déplier"
 #: ../view/kmb-puppet/environments/index.phtml:188
 #: ../view/kmb-puppet/group/show.phtml:215
 #: ../view/kmb-puppet/groups/index.phtml:84
-#: ../view/kmb-puppet/modules/index.phtml:75
+#: ../view/kmb-puppet/modules/index.phtml:77
 #: ../view/kmb-puppet/revisions/diff.phtml:33
 #: ../view/kmb-puppet/revisions/index.phtml:168
 msgid "Help"
@@ -849,33 +849,33 @@ msgstr ""
 "Vous pouvez trier les groupes en cliquant sur l'icône <span class="
 "\"glyphicon glyphicon-th grab\"></span>."
 
-#: ../view/kmb-puppet/modules/index.phtml:8
+#: ../view/kmb-puppet/modules/index.phtml:9
 #, php-format
 msgid "Modules of %s environment"
 msgstr "Modules de l'environnement %s"
 
-#: ../view/kmb-puppet/modules/index.phtml:16
+#: ../view/kmb-puppet/modules/index.phtml:18
 msgid "No modules"
 msgstr "Aucun module"
 
-#: ../view/kmb-puppet/modules/index.phtml:24
+#: ../view/kmb-puppet/modules/index.phtml:26
 msgid "View module"
 msgstr "Consulter le module"
 
-#: ../view/kmb-puppet/modules/index.phtml:42
+#: ../view/kmb-puppet/modules/index.phtml:44
 msgid "Inherited modules"
 msgstr "Modules hérités"
 
-#: ../view/kmb-puppet/modules/index.phtml:46
+#: ../view/kmb-puppet/modules/index.phtml:48
 #, php-format
 msgid "View modules list of %s environment"
 msgstr "Voir la liste des modules de l'environnement %s"
 
-#: ../view/kmb-puppet/modules/index.phtml:48
+#: ../view/kmb-puppet/modules/index.phtml:50
 msgid "View parent's modules"
 msgstr "Voir les modules du parent"
 
-#: ../view/kmb-puppet/modules/index.phtml:78
+#: ../view/kmb-puppet/modules/index.phtml:80
 #, php-format
 msgid ""
 "Here is the list of installed modules on environment <strong>%s</strong>."
@@ -883,7 +883,7 @@ msgstr ""
 "Voici la liste des modules installés dans l'environnement <strong>%s</"
 "strong>."
 
-#: ../view/kmb-puppet/modules/index.phtml:79
+#: ../view/kmb-puppet/modules/index.phtml:81
 msgid ""
 "When version of a module is red <span class=\"label label-danger\">1.0.0</"
 "span>, it means that at least one of its classes is in error."
@@ -891,7 +891,7 @@ msgstr ""
 "La version d'un module est rouge <span class=\"label label-danger\">1.0.0</"
 "span> lorsqu'au moins une de ses classes est en erreur."
 
-#: ../view/kmb-puppet/modules/index.phtml:80
+#: ../view/kmb-puppet/modules/index.phtml:82
 msgid ""
 "<strong>Note</strong> : The list of modules is refreshed every 5 minutes, "
 "but you can clear the cache manually by clicking on your name in the top "
@@ -1037,6 +1037,7 @@ msgstr "Comparer les versions sélectionnées"
 
 #: ../view/kmb-puppet/revisions/index.phtml:23
 #: ../view/kmb-puppet/revisions/index.phtml:87
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:6
 msgid "Compare"
 msgstr "Comparer"
 
@@ -1166,6 +1167,26 @@ msgid ""
 msgstr ""
 "Consultez les logs d'une version en cliquant sur <i class=\"glyphicon "
 "glyphicon-search grey\"></i>."
+
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:3
+msgid "Assigned groups"
+msgstr "Groupes affectés"
+
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:4
+msgid "Current configuration"
+msgstr "Configuration en cours"
+
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:5
+msgid "Active configuration"
+msgstr "Configuration active"
+
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:15
+msgid "No changes"
+msgstr "Aucun changement"
+
+#: ../view/kmb-puppet/server/puppetconfig.tab.title.phtml:1
+msgid "Puppet configuration"
+msgstr "Configuration Puppet"
 
 #~ msgid "<a href=\"%s\">Click here</a> to save them."
 #~ msgstr "<a href=\"%s\">Cliquez ici</a> pour les enregistrer."

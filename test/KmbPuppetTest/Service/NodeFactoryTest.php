@@ -16,5 +16,7 @@ class NodeFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('KmbPuppetDb\Service\Node', $service->getNodeService());
         $this->assertInstanceOf('KmbPuppetDb\Query\QueryBuilderInterface', $service->getNodesEnvironmentsQueryBuilder());
         $this->assertInstanceOf('KmbPuppetDb\Query\QueryBuilderInterface', $service->getNodesNamesQueryBuilder());
+        $this->assertInstanceOf('KmbPuppet\Service\GroupClassInterface', $service->getGroupClassService());
+        $this->assertInternalType('array', $service->getConfig());
     }
 }

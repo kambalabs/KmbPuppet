@@ -1,0 +1,14 @@
+<div class="tab-pane" id="puppet-config">
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="#current-config" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-hand-right"></span> <?php echo $this->translate('Current configuration'); ?></a></li>
+        <li role="presentation"><a href="#active-config" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo $this->translate('Active configuration'); ?></a></li>
+        <li role="presentation"><a href="#diff" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-transfer"></span> <?php echo $this->translate('Compare'); ?></a></li>
+    </ul>
+    <div class="tab-content" style="margin-top: 20px">
+        <pre class="tab-pane active" id="current-config" style="padding: 10px"><?php echo $this->currentConfiguration; ?></pre>
+        <pre class="tab-pane" id="active-config" style="padding: 10px"><?php echo $this->activeConfiguration; ?></pre>
+        <div class="tab-pane" id="diff">
+            <?php echo $this->diff ?: $this->translate('No changes'); ?>
+        </div>
+    </div>
+</div>

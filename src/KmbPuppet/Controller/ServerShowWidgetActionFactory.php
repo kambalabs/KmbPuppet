@@ -18,30 +18,28 @@
  * You should have received a copy of the GNU General Public License
  * along with Kamba.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace KmbPuppet\Service;
+namespace KmbPuppet\Controller;
 
-use KmbDomain\Model\EnvironmentInterface;
-use KmbPuppetDb\Model;
+use KmbPuppet\Service\Node;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-interface NodeInterface
+class ServerShowWidgetActionFactory implements FactoryInterface
 {
     /**
-     * @param EnvironmentInterface $environment
-     * @param string               $include
-     * @param string               $exclude
-     * @return array
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed
      */
-    public function getAllByEnvironmentAndPatterns(EnvironmentInterface $environment, $include, $exclude);
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        $serverShowWidgetAction = new ServerShowWidgetAction();
 
-    /**
-     * @param Model\NodeInterface $node
-     * @return array
-     */
-    public function getCurrentPuppetConfiguration(Model\NodeInterface $node);
+        /** @var Node $nodeService */
+        $nodeService = $serviceLocator->get('KmbPuppet\Service\Node');
+        $serverShowWidgetAction->setNodeService($nodeService);
 
-    /**
-     * @param Model\NodeInterface $node
-     * @return array
-     */
-    public function getActivePuppetConfiguration(Model\NodeInterface $node);
+        return $serverShowWidgetAction;
+    }
 }

@@ -47,6 +47,12 @@ class NodeFactory implements FactoryInterface
         $namesQueryBuilder = $serviceLocator->get('KmbPuppetDb\Query\NodesNamesQueryBuilder');
         $service->setNodesNamesQueryBuilder($namesQueryBuilder);
 
+        /** @var GroupClass $groupClassService */
+        $groupClassService = $serviceLocator->get('KmbPuppet\Service\GroupClass');
+        $service->setGroupClassService($groupClassService);
+
+        $service->setConfig($serviceLocator->get('Config'));
+
         return $service;
     }
 }

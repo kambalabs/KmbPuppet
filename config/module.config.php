@@ -209,6 +209,15 @@ return [
             'writeRevisionLog' => 'KmbPuppet\Controller\Plugin\WriteRevisionLogFactory',
         ],
     ],
+    'controller_plugin_config' => [
+        'widget' => [
+            'serverTabContent' => [
+                'actions' => [
+                    'KmbPuppet\Controller\ServerShowWidgetAction',
+                ],
+            ],
+        ],
+    ],
     'asset_manager' => [
         'resolver_configs' => [
             'paths' => [
@@ -286,8 +295,14 @@ return [
     ],
     'view_helper_config' => [
         'widget' => [
-            'puppetModulesActions' => [
+            'serverTabTitle' => [
                 'partials' => [
+                    'kmb-puppet/server/puppetconfig.tab.title.phtml',
+                ],
+            ],
+            'serverTabContent' => [
+                'partials' => [
+                    'kmb-puppet/server/puppetconfig.tab.content.phtml',
                 ],
             ],
         ],
@@ -317,6 +332,7 @@ return [
         'factories' => [
             'KmbPuppet\Service\Node' => 'KmbPuppet\Service\NodeFactory',
             'KmbPuppet\Service\GroupClass' => 'KmbPuppet\Service\GroupClassFactory',
+            'KmbPuppet\Controller\ServerShowWidgetAction' => 'KmbPuppet\Controller\ServerShowWidgetActionFactory',
         ],
         'aliases' => [
             'kmbRevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
