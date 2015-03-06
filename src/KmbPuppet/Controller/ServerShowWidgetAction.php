@@ -44,6 +44,7 @@ class ServerShowWidgetAction extends AbstractWidgetAction
         /** @var Model\Node $node */
         $node = $model->getVariable('node');
 
+        $model->setVariable('envId', $this->params()->fromRoute('envId'));
         $model->setVariable('groups', $this->groupService->getAllByNode($node));
 
         $currentConfiguration = Yaml::dump($this->nodeService->getCurrentPuppetConfiguration($node), 20, 4);
