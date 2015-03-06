@@ -20,15 +20,14 @@
  */
 namespace KmbPuppet\Service;
 
+use KmbDomain\Model as DomainModel;
 use KmbPuppetDb\Model as PuppetDbModel;
 
-interface GroupInterface
+interface EnvironmentInterface
 {
     /**
-     * Get all groups assigned to specified node group by environment.
-     *
      * @param PuppetDbModel\NodeInterface $node
-     * @return \KmbDomain\Model\GroupInterface[]
+     * @return DomainModel\EnvironmentInterface
      */
-    public function getAllByNode(PuppetDbModel\NodeInterface $node);
+    public function getByNode(PuppetDbModel\NodeInterface $node);
 }

@@ -1,11 +1,34 @@
 <div class="tab-pane" id="puppet-config">
     <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a href="#groups" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-tags"></span> <?php echo $this->translate('Assigned groups'); ?></a></li>
         <li role="presentation"><a href="#current-config" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-hand-right"></span> <?php echo $this->translate('Current configuration'); ?></a></li>
         <li role="presentation"><a href="#active-config" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo $this->translate('Active configuration'); ?></a></li>
         <li role="presentation"><a href="#diff" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-transfer"></span> <?php echo $this->translate('Compare'); ?></a></li>
     </ul>
     <div class="tab-content" style="margin-top: 20px">
-        <pre class="tab-pane active" id="current-config" style="padding: 10px"><?php echo $this->currentConfiguration; ?></pre>
+        <div class="tab-pane active" id="groups">
+            <?php if (!empty($this->groups)): ?>
+            <?php foreach ($this->groups as $environment => $groups): ?>
+                <h4><?php echo $environment ?></h4>
+                <?php if (!empty($groups)): ?>
+                <table class="table table-striped" id="groups">
+                    <tbody>
+                    <?php foreach ($groups as $group): ?>
+                        <tr id="groups-<?php echo $group->getId() ?>">
+                            <td class="module-name" style="width: 100%">
+                                <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true) ?>" title="<?php echo $this->translate('View group') ?>"><span class="glyphicon glyphicon-search grey" style="margin-right: 6px"></span><?php echo $group->getName() ?></a>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                <p><?php echo $this->translate('No groups'); ?></p>
+                <?php endif ?>
+            <?php endforeach ?>
+            <?php endif ?>
+        </div>
+        <pre class="tab-pane" id="current-config" style="padding: 10px"><?php echo $this->currentConfiguration; ?></pre>
         <pre class="tab-pane" id="active-config" style="padding: 10px"><?php echo $this->activeConfiguration; ?></pre>
         <div class="tab-pane" id="diff">
             <?php echo $this->diff ?: $this->translate('No changes'); ?>

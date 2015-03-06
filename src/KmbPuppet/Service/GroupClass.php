@@ -27,14 +27,14 @@ use KmbPuppetDb\Model as PuppetDbModel;
 
 class GroupClass implements GroupClassInterface
 {
-    /** @var  Model\EnvironmentRepositoryInterface */
-    protected $environmentRepository;
-
     /** @var  RevisionHydratorInterface */
     protected $revisionHydrator;
 
     /** @var  Service\PuppetModuleInterface */
     protected $puppetModuleService;
+
+    /** @var  EnvironmentInterface */
+    protected $environmentService;
 
     /**
      * @param PuppetDbModel\NodeInterface $node
@@ -42,7 +42,7 @@ class GroupClass implements GroupClassInterface
      */
     public function getAllReleasedByNode(PuppetDbModel\NodeInterface $node)
     {
-        $environment = $this->findEnvironment($node);
+        $environment = $this->environmentService->getByNode($node);
         return $environment != null ? $this->findClasses($node, $environment) : [];
     }
 
@@ -52,7 +52,7 @@ class GroupClass implements GroupClassInterface
      */
     public function getAllCurrentByNode(PuppetDbModel\NodeInterface $node)
     {
-        $environment = $this->findEnvironment($node);
+        $environment = $this->environmentService->getByNode($node);
         return $environment != null ? $this->findClasses($node, $environment, false) : [];
     }
 
@@ -84,46 +84,6 @@ class GroupClass implements GroupClassInterface
     }
 
     /**
-     * @param PuppetDbModel\NodeInterface $node
-     * @return Model\EnvironmentInterface
-     */
-    protected function findEnvironment($node)
-    {
-        $names = explode('_', $node->getEnvironment());
-        $environmentRootName = array_shift($names);
-        $environmentRoot = $this->environmentRepository->getRootByName($environmentRootName);
-        $environment = $environmentRoot != null ? $environmentRoot->getDescendantByNormalizedName($node->getEnvironment()) : null;
-        if ($environment == null) {
-            $defaultEnvironment = $this->environmentRepository->getDefault();
-            $node->setEnvironment($defaultEnvironment->getNormalizedName());
-            return $defaultEnvironment;
-        }
-        return $environment;
-    }
-
-    /**
-     * Set EnvironmentRepository.
-     *
-     * @param \KmbDomain\Model\EnvironmentRepositoryInterface $environmentRepository
-     * @return GroupClass
-     */
-    public function setEnvironmentRepository($environmentRepository)
-    {
-        $this->environmentRepository = $environmentRepository;
-        return $this;
-    }
-
-    /**
-     * Get EnvironmentRepository.
-     *
-     * @return \KmbDomain\Model\EnvironmentRepositoryInterface
-     */
-    public function getEnvironmentRepository()
-    {
-        return $this->environmentRepository;
-    }
-
-    /**
      * Set PuppetModuleService.
      *
      * @param \KmbPmProxy\Service\PuppetModuleInterface $puppetModuleService
@@ -143,6 +103,28 @@ class GroupClass implements GroupClassInterface
     public function getPuppetModuleService()
     {
         return $this->puppetModuleService;
+    }
+
+    /**
+     * Set EnvironmentService.
+     *
+     * @param EnvironmentInterface $environmentService
+     * @return GroupClass
+     */
+    public function setEnvironmentService($environmentService)
+    {
+        $this->environmentService = $environmentService;
+        return $this;
+    }
+
+    /**
+     * Get EnvironmentService.
+     *
+     * @return EnvironmentInterface
+     */
+    public function getEnvironmentService()
+    {
+        return $this->environmentService;
     }
 
     /**

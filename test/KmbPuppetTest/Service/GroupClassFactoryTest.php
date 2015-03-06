@@ -13,7 +13,7 @@ class GroupClassFactoryTest extends \PHPUnit_Framework_TestCase
         $service = Bootstrap::getServiceManager()->get('KmbPuppet\Service\GroupClass');
 
         $this->assertInstanceOf('KmbPuppet\Service\GroupClass', $service);
-        $this->assertInstanceOf('KmbDomain\Model\EnvironmentRepositoryInterface', $service->getEnvironmentRepository());
+        $this->assertInstanceOf('KmbPuppet\Service\Environment', $service->getEnvironmentService());
         $this->assertInstanceOf('KmbPmProxy\Service\PuppetModule', $service->getPuppetModuleService());
         $this->assertInstanceOf('KmbPmProxy\Hydrator\RevisionHydrator', $service->getRevisionHydrator());
     }

@@ -45,8 +45,8 @@ class Node implements NodeInterface
 
     /**
      * @param DomainModel\EnvironmentInterface $environment
-     * @param string               $include
-     * @param string               $exclude
+     * @param string                           $include
+     * @param string                           $exclude
      * @return array
      */
     public function getAllByEnvironmentAndPatterns(DomainModel\EnvironmentInterface $environment, $include, $exclude)
@@ -86,7 +86,7 @@ class Node implements NodeInterface
 
     /**
      * @param DomainModel\GroupClassInterface[] $classes
-     * @param string $environment
+     * @param string                            $environment
      * @return array
      */
     protected function dump($classes, $environment)

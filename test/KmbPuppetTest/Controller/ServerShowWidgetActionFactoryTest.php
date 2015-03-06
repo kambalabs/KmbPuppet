@@ -14,5 +14,6 @@ class ServerShowWidgetActionFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('KmbPuppet\Controller\ServerShowWidgetAction', $service);
         $this->assertInstanceOf('KmbPuppet\Service\Node', $service->getNodeService());
+        $this->assertInstanceOf('KmbPuppet\Service\Group', $service->getGroupService());
     }
 }

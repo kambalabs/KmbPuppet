@@ -20,7 +20,6 @@
  */
 namespace KmbPuppet\Service;
 
-use KmbDomain\Model\EnvironmentRepositoryInterface;
 use KmbPmProxy\Hydrator\RevisionHydratorInterface;
 use KmbPmProxy\Service\PuppetModuleInterface;
 use Zend\ServiceManager\FactoryInterface;
@@ -38,9 +37,9 @@ class GroupClassFactory implements FactoryInterface
     {
         $service = new GroupClass();
 
-        /** @var EnvironmentRepositoryInterface $environmentRepository */
-        $environmentRepository = $serviceLocator->get('EnvironmentRepository');
-        $service->setEnvironmentRepository($environmentRepository);
+        /** @var EnvironmentInterface $environmentService */
+        $environmentService = $serviceLocator->get('KmbPuppet\Service\Environment');
+        $service->setEnvironmentService($environmentService);
 
         /** @var PuppetModuleInterface $moduleService */
         $moduleService = $serviceLocator->get('pmProxyPuppetModuleService');

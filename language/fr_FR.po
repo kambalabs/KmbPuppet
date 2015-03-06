@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-05 17:40+0100\n"
-"PO-Revision-Date: 2015-03-05 17:41+0100\n"
+"POT-Creation-Date: 2015-03-06 16:59+0100\n"
+"PO-Revision-Date: 2015-03-06 16:59+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -807,6 +807,7 @@ msgid "You are about to remove <strong>%s</strong> group."
 msgstr "Vous êtes sur le point de supprimer le groupe <strong>%s</strong>."
 
 #: ../view/kmb-puppet/groups/index.phtml:28
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:19
 msgid "View group"
 msgstr "Consulter le groupe"
 
@@ -1180,7 +1181,11 @@ msgstr "Configuration en cours"
 msgid "Active configuration"
 msgstr "Configuration active"
 
-#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:15
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:26
+msgid "No groups"
+msgstr "Aucun groupe"
+
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:34
 msgid "No changes"
 msgstr "Aucun changement"
 

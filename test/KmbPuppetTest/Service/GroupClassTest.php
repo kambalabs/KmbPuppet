@@ -12,7 +12,7 @@ class GroupClassTest extends \PHPUnit_Framework_TestCase
     protected $groupClassService;
 
     /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    protected $environmentRepository;
+    protected $environmentService;
 
     /** @var  PuppetDbModel\NodeInterface */
     protected $node;
@@ -21,17 +21,17 @@ class GroupClassTest extends \PHPUnit_Framework_TestCase
     {
         $this->node = new PuppetDbModel\Node('node1.local', null, null, [], 'STABLE_PF1');
 
-        $this->environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
-
         $puppetModuleService = $this->getMock('KmbPmProxy\Service\PuppetModuleInterface');
         $puppetModuleService->expects($this->any())
             ->method('getAllByEnvironment')
             ->will($this->returnValue([]));
 
+        $this->environmentService = $this->getMock('KmbPuppet\Service\EnvironmentInterface');
+
         $this->groupClassService = new Service\GroupClass();
-        $this->groupClassService->setEnvironmentRepository($this->environmentRepository);
         $this->groupClassService->setRevisionHydrator($this->getMock('KmbPmProxy\Hydrator\RevisionHydratorInterface'));
         $this->groupClassService->setPuppetModuleService($puppetModuleService);
+        $this->groupClassService->setEnvironmentService($this->environmentService);
     }
 
     /** @test */
@@ -53,32 +53,13 @@ class GroupClassTest extends \PHPUnit_Framework_TestCase
         $pf1Revision = new Model\Revision($pf1);
         $pf1Revision->setGroups([$pf1Group1, $pf1Group2]);
         $pf1->setLastReleasedRevision($pf1Revision);
-        $this->environmentRepository->expects($this->any())
-            ->method('getRootByName')
-            ->will($this->returnValue($stable));
+        $this->environmentService->expects($this->any())
+            ->method('getByNode')
+            ->will($this->returnValue($pf1));
 
         $classes = $this->groupClassService->getAllReleasedByNode($this->node);
 
         $this->assertEquals([new Model\GroupClass('dns'), new Model\GroupClass('ntp'), new Model\GroupClass('xymon')], $classes);
-    }
-
-    /** @test */
-    public function canGetAllReleasedByNodeWithUnknownEnvironment()
-    {
-        $stable = new Environment('STABLE');
-        $stableGroup = new Model\Group('default', '.*');
-        $stableGroup->setClasses([new Model\GroupClass('dns'), new Model\GroupClass('ntp')]);
-        $stableRevision = new Model\Revision($stable);
-        $stableRevision->setGroups([$stableGroup]);
-        $stable->setLastReleasedRevision($stableRevision);
-        $this->environmentRepository->expects($this->any())
-            ->method('getDefault')
-            ->will($this->returnValue($stable));
-
-        $classes = $this->groupClassService->getAllReleasedByNode($this->node);
-
-        $this->assertEquals([new Model\GroupClass('dns'), new Model\GroupClass('ntp')], $classes);
-        $this->assertEquals('STABLE', $this->node->getEnvironment());
     }
 
     /** @test */
@@ -100,9 +81,9 @@ class GroupClassTest extends \PHPUnit_Framework_TestCase
         $pf1Revision = new Model\Revision($pf1);
         $pf1Revision->setGroups([$pf1Group1, $pf1Group2]);
         $pf1->setCurrentRevision($pf1Revision);
-        $this->environmentRepository->expects($this->any())
-            ->method('getRootByName')
-            ->will($this->returnValue($stable));
+        $this->environmentService->expects($this->any())
+            ->method('getByNode')
+            ->will($this->returnValue($pf1));
 
         $classes = $this->groupClassService->getAllCurrentByNode($this->node);
 

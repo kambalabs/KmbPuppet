@@ -32,6 +32,9 @@ class ServerShowWidgetAction extends AbstractWidgetAction
     /** @var  Service\NodeInterface */
     protected $nodeService;
 
+    /** @var  Service\GroupInterface */
+    protected $groupService;
+
     /**
      * @param ViewModel $model
      * @return WidgetActionInterface
@@ -40,6 +43,8 @@ class ServerShowWidgetAction extends AbstractWidgetAction
     {
         /** @var Model\Node $node */
         $node = $model->getVariable('node');
+
+        $model->setVariable('groups', $this->groupService->getAllByNode($node));
 
         $currentConfiguration = Yaml::dump($this->nodeService->getCurrentPuppetConfiguration($node), 20, 4);
         $model->setVariable('currentConfiguration', $currentConfiguration);
@@ -73,5 +78,27 @@ class ServerShowWidgetAction extends AbstractWidgetAction
     public function getNodeService()
     {
         return $this->nodeService;
+    }
+
+    /**
+     * Set GroupService.
+     *
+     * @param \KmbPuppet\Service\GroupInterface $groupService
+     * @return ServerShowWidgetAction
+     */
+    public function setGroupService($groupService)
+    {
+        $this->groupService = $groupService;
+        return $this;
+    }
+
+    /**
+     * Get GroupService.
+     *
+     * @return \KmbPuppet\Service\GroupInterface
+     */
+    public function getGroupService()
+    {
+        return $this->groupService;
     }
 }

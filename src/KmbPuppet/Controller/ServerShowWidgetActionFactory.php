@@ -20,6 +20,7 @@
  */
 namespace KmbPuppet\Controller;
 
+use KmbPuppet\Service\Group;
 use KmbPuppet\Service\Node;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -39,6 +40,10 @@ class ServerShowWidgetActionFactory implements FactoryInterface
         /** @var Node $nodeService */
         $nodeService = $serviceLocator->get('KmbPuppet\Service\Node');
         $serverShowWidgetAction->setNodeService($nodeService);
+
+        /** @var Group $groupService */
+        $groupService = $serviceLocator->get('KmbPuppet\Service\Group');
+        $serverShowWidgetAction->setGroupService($groupService);
 
         return $serverShowWidgetAction;
     }

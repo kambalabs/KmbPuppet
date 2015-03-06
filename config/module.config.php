@@ -330,7 +330,9 @@ return [
             'KmbPuppet\Listener\RevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
         ],
         'factories' => [
+            'KmbPuppet\Service\Environment' => 'KmbPuppet\Service\EnvironmentFactory',
             'KmbPuppet\Service\Node' => 'KmbPuppet\Service\NodeFactory',
+            'KmbPuppet\Service\Group' => 'KmbPuppet\Service\GroupFactory',
             'KmbPuppet\Service\GroupClass' => 'KmbPuppet\Service\GroupClassFactory',
             'KmbPuppet\Controller\ServerShowWidgetAction' => 'KmbPuppet\Controller\ServerShowWidgetActionFactory',
         ],
