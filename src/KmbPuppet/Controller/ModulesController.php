@@ -74,7 +74,7 @@ class ModulesController extends AbstractActionController implements Authenticate
         /** @var Service\PuppetModuleInterface $puppetModuleService */
         $puppetModuleService = $this->getServiceLocator()->get('pmProxyPuppetModuleService');
 
-        $puppetModule = $puppetModuleService->getInstalledByEnvironmentAndName($environment, $this->params()->fromRoute('name'));
+        $puppetModule = $puppetModuleService->getInstalledByEnvironmentAndName($environment, $this->params()->fromRoute('moduleName'));
         if ($puppetModule === null) {
             return $this->notFoundAction();
         }
@@ -87,6 +87,8 @@ class ModulesController extends AbstractActionController implements Authenticate
                 $classesErrors[$class->getName()] = count($validator->getMessages());
             }
         }
+
+        $this->getServiceLocator()->get('breadcrumb')->findBy('id', 'module')->setLabel($puppetModule->getName());
 
         return new ViewModel([
             'environment' => $environment,
@@ -132,6 +134,9 @@ class ModulesController extends AbstractActionController implements Authenticate
                 $parametersErrors[$parameter] = $message;
             }
         }
+
+        $this->getServiceLocator()->get('breadcrumb')->findBy('id', 'module')->setLabel($puppetModule->getName());
+        $this->getServiceLocator()->get('breadcrumb')->findBy('id', 'module-class')->setLabel($class->getName());
 
         if (!empty($parametersErrors)) {
             $this->globalMessenger()->addDangerMessage($this->translate("Parameters are in error, please check the template and the class definition"));

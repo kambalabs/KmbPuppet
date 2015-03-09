@@ -94,6 +94,8 @@ class GroupController extends AbstractActionController implements AuthenticatedC
 
         $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));
 
+        $this->getServiceLocator()->get('breadcrumb')->findBy('id', 'group')->setLabel($group->getName());
+
         $back = $this->params()->fromQuery('back');
         return new ViewModel([
             'environment' => $environment,

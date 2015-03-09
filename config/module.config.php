@@ -55,11 +55,11 @@ return [
             'puppet-module' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '[/env/:envId]/puppet/module/:name[/:action]',
+                    'route' => '[/env/:envId]/puppet/module/:moduleName[/:action]',
                     'constraints' => [
                         'envId' => '[0-9]+',
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'name' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'moduleName' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         'controller' => 'KmbPuppet\Controller\Modules',
@@ -272,6 +272,83 @@ return [
                         'action' => 'index',
                         'useRouteMatch' => true,
                         'tabindex' => 64,
+                    ],
+                ],
+            ],
+        ],
+        'breadcrumb' => [
+            'home' => [
+                'pages' => [
+                    'puppet' => [
+                        'label' => $translate('Puppet'),
+                        'route' => 'puppet',
+                        'controller' => 'reports',
+                        'action' => 'index',
+                        'useRouteMatch' => true,
+                        'pages' => [
+                            [
+                                'label' => $translate('Day reports'),
+                                'route' => 'puppet',
+                                'controller' => 'reports',
+                                'action' => 'index',
+                                'useRouteMatch' => true,
+                            ],
+                            [
+                                'label' => $translate('Environments'),
+                                'route' => 'puppet',
+                                'controller' => 'environments',
+                                'action' => 'index',
+                                'useRouteMatch' => true,
+                            ],
+                            [
+                                'label' => $translate('Modules'),
+                                'route' => 'puppet',
+                                'controller' => 'modules',
+                                'action' => 'index',
+                                'useRouteMatch' => true,
+                                'pages' => [
+                                    [
+                                        'id' => 'module',
+                                        'label' => $translate('Module'),
+                                        'route' => 'puppet-module',
+                                        'action' => 'show',
+                                        'useRouteMatch' => true,
+                                        'pages' => [
+                                            'puppet-module-class' => [
+                                                'id' => 'module-class',
+                                                'label' => $translate('Class'),
+                                                'route' => 'puppet-module-class',
+                                                'action' => 'show-class',
+                                                'useRouteMatch' => true,
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            [
+                                'label' => $translate('Groups'),
+                                'route' => 'puppet',
+                                'controller' => 'groups',
+                                'action' => 'index',
+                                'useRouteMatch' => true,
+                                'pages' => [
+                                    [
+                                        'id' => 'group',
+                                        'label' => $translate('Group'),
+                                        'route' => 'puppet-group',
+                                        'action' => 'show',
+                                        'useRouteMatch' => true,
+                                    ],
+                                ]
+                            ],
+                            [
+                                'label' => $translate('Changes'),
+                                'route' => 'puppet',
+                                'controller' => 'revisions',
+                                'action' => 'index',
+                                'useRouteMatch' => true,
+                            ],
+                        ],
                     ],
                 ],
             ],
