@@ -94,11 +94,13 @@ class GroupController extends AbstractActionController implements AuthenticatedC
 
         $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));
 
+        $back = $this->params()->fromQuery('back');
         return new ViewModel([
             'environment' => $environment,
             'group' => $group,
             'serversCount' => count($nodes),
-            'selectedClass' => $selectedClass
+            'selectedClass' => $selectedClass,
+            'back' => $back ?: $this->url()->fromRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true),
         ]);
     }
 

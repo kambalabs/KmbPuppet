@@ -25,7 +25,7 @@
                             <tr id="groups-<?php echo $group->getId() ?>">
                                 <td class="module-name" style="width: 100%">
                                 <?php if ($linkToGroup): ?>
-                                    <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['back' => $this->url('server', [], [], true)]], true) ?>" title="<?php echo $this->translate('View group') ?>"><span class="glyphicon glyphicon-search grey" style="margin-right: 6px"></span><?php echo $group->getName() ?></a>
+                                    <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], ['query' => ['back' => $this->url('server', [], ['fragment' => 'puppet-config'], true)]], true) ?>" title="<?php echo $this->translate('View group') ?>"><span class="glyphicon glyphicon-search grey" style="margin-right: 6px"></span><?php echo $group->getName() ?></a>
                                 <?php else: ?>
                                     <?php echo $group->getName() ?>
                                 <?php endif ?>
