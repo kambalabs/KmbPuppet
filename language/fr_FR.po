@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-06 17:22+0100\n"
-"PO-Revision-Date: 2015-03-06 17:22+0100\n"
+"POT-Creation-Date: 2015-03-09 11:10+0100\n"
+"PO-Revision-Date: 2015-03-09 11:10+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -104,10 +104,6 @@ msgstr "L'environnement racine %s existe déjà !"
 
 #: ../src/KmbPuppet/Controller/GroupClassController.php:63
 #: ../src/KmbPuppet/Controller/GroupClassController.php:74
-#: ../src/KmbPuppet/Controller/GroupController.php:180
-#: ../src/KmbPuppet/Controller/GroupController.php:240
-#: ../src/KmbPuppet/Controller/GroupController.php:282
-#: ../src/KmbPuppet/Controller/GroupController.php:350
 #: ../src/KmbPuppet/Controller/GroupParameterController.php:70
 #: ../src/KmbPuppet/Controller/GroupParameterController.php:142
 #: ../src/KmbPuppet/Controller/GroupParameterController.php:194
@@ -141,15 +137,27 @@ msgstr "Ajout du paramètre %s à la classe %s du groupe %s"
 #, php-format
 msgid ""
 "You have been redirected to the last current revision of this group because "
-"last changes has been recently saved by <strong>%s</strong>."
+"last changes has been recently saved by %s."
 msgstr ""
 "Vous avez été redirigé vers la dernière version courante de ce groupe car "
-"les derniers changements ont été récemment enregistrés par <strong>%s</"
-"strong>."
+"les derniers changements ont été récemment enregistrés par %s."
 
 #: ../src/KmbPuppet/Controller/GroupController.php:136
 msgid "An error occured while reaching PuppetDB !"
 msgstr "Une erreur est survenue lors de l'appel à PuppetDB !"
+
+#: ../src/KmbPuppet/Controller/GroupController.php:180
+#: ../src/KmbPuppet/Controller/GroupController.php:240
+#: ../src/KmbPuppet/Controller/GroupController.php:282
+#: ../src/KmbPuppet/Controller/GroupController.php:350
+#, php-format
+msgid ""
+"You have been redirected to the last current revision of this group because "
+"last changes has been recently saved by %s. Please try again !"
+msgstr ""
+"Vous avez été redirigé vers la dernière version courante de ce groupe car "
+"les derniers changements ont été récemment enregistrés par %s. Merci de "
+"réitérer votre action !"
 
 #: ../src/KmbPuppet/Controller/GroupController.php:188
 #, php-format
@@ -807,12 +815,12 @@ msgid "You are about to remove <strong>%s</strong> group."
 msgstr "Vous êtes sur le point de supprimer le groupe <strong>%s</strong>."
 
 #: ../view/kmb-puppet/groups/index.phtml:28
-#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:26
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:28
 msgid "View group"
 msgstr "Consulter le groupe"
 
 #: ../view/kmb-puppet/groups/index.phtml:35
-#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:33
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:38
 msgid "No groups"
 msgstr "Aucun groupe"
 
@@ -1191,7 +1199,7 @@ msgstr "Configuration active"
 msgid "Groups of %s environment"
 msgstr "Groupes de l'environnement %s"
 
-#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:43
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:48
 msgid "No changes"
 msgstr "Aucun changement"
 
