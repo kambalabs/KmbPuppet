@@ -1,57 +1,55 @@
-<div class="panel">
-    <div class="row">
-        <div class="col-md-12">
-            <div><?php echo $this->translate('Detailed informations on class') ?></div>
-            <div class="date"><?php echo $this->escapeHtml($this->class->getName()) ?></div>
+<div class="row">
+    <div class="col-md-12">
+        <div><?php echo $this->translate('Detailed informations on class') ?></div>
+        <div class="date"><?php echo $this->escapeHtml($this->class->getName()) ?></div>
+    </div>
+</div>
+<div class="row">
+    <?php if (isset($this->back)): ?>
+        <div class="col-md-2 info-bar pull-left">
+            <div>&nbsp;</div>
+            <div class="stats-title"><a href="<?php echo $this->escapeHtmlAttr($this->back) ?>" class="btn btn-info"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('back') ?></a></div>
+        </div>
+    <?php endif ?>
+</div>
+<hr/>
+<div class="col-sm-6">
+    <div class="panel panel-default" style="min-height: 370px">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+            <span>
+                <?php echo sprintf($this->translate('Parameters of class %s'), $this->class->getName()) ?>
+            </span>
+        </div>
+        <div class="panel-body">
+            <?php if ($this->class->hasParametersTemplates()): ?>
+            <div class="tree">
+                <a href="#" class="btn btn-default collapse-all pull-right">
+                    <span class="glyphicon glyphicon-minus-sign"></span>
+                    <?php echo $this->translate('Collapse all') ?>
+                </a>
+                <a href="#" class="btn btn-default expand-all pull-right" style="display:none">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    <?php echo $this->translate('Expand all') ?>
+                </a>
+                <?php echo $this->partial('kmb-puppet/modules/parameters-templates', ['parametersTemplates' => $this->class->getParametersTemplates(), 'errors' => $this->parametersErrors]) ?>
+            </div>
+            <?php else: ?>
+            <h4><?php echo $this->translate('No parameters !') ?></h4>
+            <?php endif ?>
+            <p class="note pull-right"><strong class="red">*</strong> <?php echo $this->translate('required parameter') ?></p>
         </div>
     </div>
-    <div class="row">
-        <?php if (isset($this->back)): ?>
-            <div class="col-md-2 info-bar pull-left">
-                <div>&nbsp;</div>
-                <div class="stats-title"><a href="<?php echo $this->escapeHtmlAttr($this->back) ?>" class="btn btn-info"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('back') ?></a></div>
-            </div>
-        <?php endif ?>
-    </div>
-    <hr/>
-    <div class="col-sm-6">
-        <div class="panel panel-default" style="min-height: 370px">
-            <div class="panel-heading">
-                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
-                <span>
-                    <?php echo sprintf($this->translate('Parameters of class %s'), $this->class->getName()) ?>
-                </span>
-            </div>
-            <div class="panel-body">
-                <?php if ($this->class->hasParametersTemplates()): ?>
-                <div class="tree">
-                    <a href="#" class="btn btn-default collapse-all pull-right">
-                        <span class="glyphicon glyphicon-minus-sign"></span>
-                        <?php echo $this->translate('Collapse all') ?>
-                    </a>
-                    <a href="#" class="btn btn-default expand-all pull-right" style="display:none">
-                        <span class="glyphicon glyphicon-plus-sign"></span>
-                        <?php echo $this->translate('Expand all') ?>
-                    </a>
-                    <?php echo $this->partial('kmb-puppet/modules/parameters-templates', ['parametersTemplates' => $this->class->getParametersTemplates(), 'errors' => $this->parametersErrors]) ?>
-                </div>
-                <?php else: ?>
-                <h4><?php echo $this->translate('No parameters !') ?></h4>
-                <?php endif ?>
-                <p class="note pull-right"><strong class="red">*</strong> <?php echo $this->translate('required parameter') ?></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <h1><?php echo $this->translate('Documentation') ?></h1>
-        <blockquote style="font-size: 1em; min-height: 300px">
-        <?php if (isset($this->environment)): ?>
-        <?php if ($this->class->getDocumentation() != ''): ?>
-            <p><?php echo $this->markdownToHtml($this->class->getDocumentation()) ?></p>
-        <?php else: ?>
-            <p><?php echo $this->translate('Documention should be provided in the puppetdoc of the class.') ?></p>
-        <?php endif ?>
-        <?php endif ?>
-        </blockquote>
-    </div>
+</div>
+<div class="col-sm-6">
+    <h1><?php echo $this->translate('Documentation') ?></h1>
+    <blockquote style="font-size: 1em; min-height: 300px">
+    <?php if (isset($this->environment)): ?>
+    <?php if ($this->class->getDocumentation() != ''): ?>
+        <p><?php echo $this->markdownToHtml($this->class->getDocumentation()) ?></p>
+    <?php else: ?>
+        <p><?php echo $this->translate('Documention should be provided in the puppetdoc of the class.') ?></p>
+    <?php endif ?>
+    <?php endif ?>
+    </blockquote>
 </div>

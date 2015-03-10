@@ -1,90 +1,88 @@
 <?php $this->inlineScript()->prependFile($this->basePath() . '/js/kmb.puppet.js'); ?>
-<div class="panel">
-    <div class="row">
-        <div class="col-md-12">
-            <div><?php echo $this->translate('Detailed informations on module') ?></div>
-            <div class="date"><?php echo $this->escapeHtml($this->module->getName()) ?></div>
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        <div><?php echo $this->translate('Detailed informations on module') ?></div>
+        <div class="date"><?php echo $this->escapeHtml($this->module->getName()) ?></div>
     </div>
-    <div class="row">
-        <div class="col-md-2 info-bar pull-left">
-            <div>&nbsp;</div>
-            <div class="stats-title"><a href="<?php echo $this->escapeHtmlAttr($this->back) ?>" class="btn btn-info"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('back') ?></a></div>
-        </div>
-        <?php if ($this->module->getAuthor() != null): ?>
-        <div class="col-md-2 info-bar pull-right">
-            <div class="yellow"><?php echo $this->translate('author') ?></div>
-            <div class="stats-title"><button class="btn btn-success btn-disabled" id="module_author"><?php echo $this->escapeHtml($this->module->getAuthor()) ?></button></div>
-        </div>
-        <?php endif ?>
-        <?php if ($this->module->getLicense() != null): ?>
-        <div class="col-md-2 info-bar pull-right">
-            <div class="yellow"><?php echo $this->translate('license') ?></div>
-            <div class="stats-title"><button class="btn btn-primary btn-disabled" id="module_license"><?php echo $this->escapeHtml($this->module->getLicense()) ?></button></div>
-        </div>
-        <?php endif ?>
-        <div class="col-md-2 info-bar pull-right">
-            <div class="yellow"><?php echo $this->translate('version') ?></div>
-            <div class="stats-title"><button class="btn btn-warning btn-disabled" id="module_version"><?php echo $this->escapeHtml($this->module->getVersion()) ?: '-' ?></button></div>
-        </div>
-        <?php echo $this->widget('puppetModuleShowInfoBar')->render($this->viewModel()->getCurrent()); ?>
+</div>
+<div class="row">
+    <div class="col-md-2 info-bar pull-left">
+        <div>&nbsp;</div>
+        <div class="stats-title"><a href="<?php echo $this->escapeHtmlAttr($this->back) ?>" class="btn btn-info"><i class="glyphicon glyphicon-chevron-left"></i> <?php echo $this->translate('back') ?></a></div>
     </div>
-    <hr />
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
-                    <span>
-                        <?php echo sprintf($this->translate('Classes of module %s'), $this->module->getName()) ?>
-                    </span>
-                </div>
-                <div class="panel-body">
-                    <?php if ($this->module->hasClasses()): ?>
-                    <table class="table table-striped" id="classes">
-                        <tbody>
-                        <?php foreach ($this->module->getClasses() as $class): ?>
-                            <tr>
-                                <td style="width: 90%">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                    <a href="<?php echo $this->url('puppet-module-class', ['action' => 'show-class', 'moduleName' => $this->module->getName(), 'className' => $class->getName()], ['query' => ['back' => $this->url('puppet-module', ['action' => 'show', 'moduleName' => $this->module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true)]], true) ?>" title="<?php echo $this->translate('View more details on class') ?>"><?php echo $class->getName() ?></a>
-                                </td>
-                                <td class="text-right">
-                                <?php if (isset($this->classesErrors[$class->getName()])): ?>
-                                    <span class="label label-uniform label-danger">
-                                        <?php echo $this->translate('Error') ?>
-                                        <span class="badge alert-danger" data-rel="tooltip" data-placement="top" data-original-title="errors"><?php echo $this->classesErrors[$class->getName()] ?></span>
-                                    </span>
-                                <?php endif ?>
-                                </td>
-                            </tr>
-                        <?php endforeach ?>
-                        </tbody>
-                    </table>
-                    <?php else: ?>
-                    <h4><?php echo $this->translate('No classes available !') ?></h4>
-                    <?php endif ?>
-                </div>
+    <?php if ($this->module->getAuthor() != null): ?>
+    <div class="col-md-2 info-bar pull-right">
+        <div class="yellow"><?php echo $this->translate('author') ?></div>
+        <div class="stats-title"><button class="btn btn-success btn-disabled" id="module_author"><?php echo $this->escapeHtml($this->module->getAuthor()) ?></button></div>
+    </div>
+    <?php endif ?>
+    <?php if ($this->module->getLicense() != null): ?>
+    <div class="col-md-2 info-bar pull-right">
+        <div class="yellow"><?php echo $this->translate('license') ?></div>
+        <div class="stats-title"><button class="btn btn-primary btn-disabled" id="module_license"><?php echo $this->escapeHtml($this->module->getLicense()) ?></button></div>
+    </div>
+    <?php endif ?>
+    <div class="col-md-2 info-bar pull-right">
+        <div class="yellow"><?php echo $this->translate('version') ?></div>
+        <div class="stats-title"><button class="btn btn-warning btn-disabled" id="module_version"><?php echo $this->escapeHtml($this->module->getVersion()) ?: '-' ?></button></div>
+    </div>
+    <?php echo $this->widget('puppetModuleShowInfoBar')->render($this->viewModel()->getCurrent()); ?>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span>
+                    <?php echo sprintf($this->translate('Classes of module %s'), $this->module->getName()) ?>
+                </span>
+            </div>
+            <div class="panel-body">
+                <?php if ($this->module->hasClasses()): ?>
+                <table class="table table-striped" id="classes">
+                    <tbody>
+                    <?php foreach ($this->module->getClasses() as $class): ?>
+                        <tr>
+                            <td style="width: 90%">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <a href="<?php echo $this->url('puppet-module-class', ['action' => 'show-class', 'moduleName' => $this->module->getName(), 'className' => $class->getName()], ['query' => ['back' => $this->url('puppet-module', ['action' => 'show', 'moduleName' => $this->module->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true)]], true) ?>" title="<?php echo $this->translate('View more details on class') ?>"><?php echo $class->getName() ?></a>
+                            </td>
+                            <td class="text-right">
+                            <?php if (isset($this->classesErrors[$class->getName()])): ?>
+                                <span class="label label-uniform label-danger">
+                                    <?php echo $this->translate('Error') ?>
+                                    <span class="badge alert-danger" data-rel="tooltip" data-placement="top" data-original-title="errors"><?php echo $this->classesErrors[$class->getName()] ?></span>
+                                </span>
+                            <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                <h4><?php echo $this->translate('No classes available !') ?></h4>
+                <?php endif ?>
             </div>
         </div>
-        <div class="col-sm-6">
-            <ul class="nav nav-pills pull-right">
-                <?php if ($this->module->getProjectPage() != null): ?>
-                    <li><a href="<?php echo $this->module->getProjectPage() ?>"><?php echo $this->translate('project page') ?></a></li>
-                <?php endif ?>
-                <?php if ($this->module->getSource() != null): ?>
-                    <li><a href="<?php echo $this->module->getSource() ?>"><?php echo $this->translate('sources') ?></a></li>
-                <?php endif ?>
-                <?php if ($this->module->getIssuesUrl() != null): ?>
-                    <li><a href="<?php echo $this->module->getIssuesUrl() ?>"><?php echo $this->translate('issues') ?></a></li>
-                <?php endif ?>
-            </ul>
-            <?php if (isset($this->environment) && $this->module->getSummary() != ''): ?>
-                <h1><?php echo $this->translate('Summary') ?></h1>
-                <blockquote>
-                    <p><?php echo $this->module->getSummary() ?></p>
-                </blockquote>
+    </div>
+    <div class="col-sm-6">
+        <ul class="nav nav-pills pull-right">
+            <?php if ($this->module->getProjectPage() != null): ?>
+                <li><a href="<?php echo $this->module->getProjectPage() ?>"><?php echo $this->translate('project page') ?></a></li>
             <?php endif ?>
-        </div>
+            <?php if ($this->module->getSource() != null): ?>
+                <li><a href="<?php echo $this->module->getSource() ?>"><?php echo $this->translate('sources') ?></a></li>
+            <?php endif ?>
+            <?php if ($this->module->getIssuesUrl() != null): ?>
+                <li><a href="<?php echo $this->module->getIssuesUrl() ?>"><?php echo $this->translate('issues') ?></a></li>
+            <?php endif ?>
+        </ul>
+        <?php if (isset($this->environment) && $this->module->getSummary() != ''): ?>
+            <h1><?php echo $this->translate('Summary') ?></h1>
+            <blockquote>
+                <p><?php echo $this->module->getSummary() ?></p>
+            </blockquote>
+        <?php endif ?>
     </div>
 </div>
