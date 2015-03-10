@@ -93,7 +93,7 @@ class ModulesController extends AbstractActionController implements Authenticate
         return new ViewModel([
             'environment' => $environment,
             'module' => $puppetModule,
-            'back' => $this->params()->fromQuery('back'),
+            'back' => $this->params()->fromQuery('back') ?: $this->url()->fromRoute('puppet', ['controller' => 'modules', 'action' => 'index'], [], true),
             'classesErrors' => $classesErrors,
         ]);
     }
