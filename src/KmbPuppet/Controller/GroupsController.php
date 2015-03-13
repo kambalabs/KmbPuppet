@@ -24,6 +24,8 @@ use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\Group;
 use KmbDomain\Model\GroupRepositoryInterface;
+use KmbPmProxy\Hydrator\GroupHydratorInterface;
+use KmbPmProxy\Service\PuppetModuleInterface;
 use KmbPuppet\Service;
 use KmbPuppet\Validator\GroupClassValidator;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -51,16 +53,25 @@ class GroupsController extends AbstractActionController implements Authenticated
             return new ViewModel();
         }
 
-        $groups = $currentRevision->getGroups();
+        /** @var GroupHydratorInterface $groupHydrator */
+        $groupHydrator = $this->serviceLocator->get('pmProxyGroupHydrator');
+        /** @var PuppetModuleInterface $puppetModuleService */
+        $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
+        $modules = $puppetModuleService->getAllInstalledByEnvironment($environment);
+
         $errors = [];
-        foreach ($groups as $group) {
-            $errors[$group->getName()] = 0;
-            if ($group->hasClasses()) {
-                foreach ($group->getClasses() as $class) {
-                    /** @var GroupClassValidator $classValidator */
-                    $classValidator = $this->serviceLocator->get('KmbPuppet\Validator\GroupClassValidator');
-                    if (!$classValidator->isValid($class)) {
-                        $errors[$group->getName()]++;
+        $groups = $currentRevision->getGroups();
+        if (!empty($groups)) {
+            foreach ($groups as $group) {
+                $groupHydrator->hydrate($modules, $group);
+                $errors[$group->getName()] = 0;
+                if ($group->hasClasses()) {
+                    foreach ($group->getClasses() as $class) {
+                        /** @var GroupClassValidator $classValidator */
+                        $classValidator = $this->serviceLocator->get('KmbPuppet\Validator\GroupClassValidator');
+                        if (!$classValidator->isValid($class)) {
+                            $errors[$group->getName()]++;
+                        }
                     }
                 }
             }
