@@ -79,13 +79,12 @@
                             <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                             <a href="#" title="<?php echo $this->translate('Remove class') ?>" data-href="<?php echo $this->url('puppet-group-remove-class', ['id' => $this->group->getId(), 'className' => $class->getName()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> class.'), $class->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
                             <?php endif ?>
-                            <a href="#" title="<?php echo $this->translate('View class parameters') ?>" data-class-id="<?php echo $class->getId() ?>" class="class-name"><span class="glyphicon glyphicon-search darkgrey" style="margin-right: 6px"></span><?php echo $class->getName() ?></a>
+                            <a href="#" title="<?php echo $this->translate('View class parameters') ?>" data-class-id="<?php echo $class->getId() ?>" class="class-name<?php if (isset($this->errors[$class->getName()])): ?> red<?php endif ?>"><span class="glyphicon glyphicon-search darkgrey" style="margin-right: 6px"></span><?php echo $class->getName() ?></a>
                         </td>
                         <td class="text-right">
-                        <?php if (isset($this->classesErrors[$class->getName()])): ?>
+                        <?php if (isset($this->errors[$class->getName()])): ?>
                             <span class="label label-uniform label-danger">
                                 <?php echo $this->translate('Error') ?>
-                                <span class="badge alert-danger" data-rel="tooltip" data-placement="top" data-original-title="errors"><?php echo $this->classesErrors[$class->getName()] ?></span>
                             </span>
                         <?php endif ?>
                         </td>
@@ -188,6 +187,11 @@
         </div>
         <div class="panel-body">
             <div class="tree">
+                <?php if (isset($this->errors[$class->getName()]['global'])): ?>
+                <div class="alert alert-danger" style="padding: 8px 16px; margin-bottom: 12px" role="alert">
+                    <?php echo $this->errors[$class->getName()]['global'] ?>
+                </div>
+                <?php endif ?>
                 <a href="#" class="btn btn-default collapse-all pull-right">
                     <span class="glyphicon glyphicon-minus-sign"></span>
                     <?php echo $this->translate('Collapse all') ?>
@@ -196,7 +200,7 @@
                     <span class="glyphicon glyphicon-plus-sign"></span>
                     <?php echo $this->translate('Expand all') ?>
                 </a>
-                <?php echo $this->partial('kmb-puppet/group/parameters', ['environment' => $this->environment, 'group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $class->getAvailableParameters()]) ?>
+                <?php echo $this->partial('kmb-puppet/group/parameters', ['environment' => $this->environment, 'group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $class->getAvailableParameters(), 'errors' => isset($this->errors[$class->getName()]['parameters']) ? $this->errors[$class->getName()]['parameters']: []]) ?>
             </div>
         </div>
     </div>

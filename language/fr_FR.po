@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-10 09:56+0100\n"
-"PO-Revision-Date: 2015-03-10 09:56+0100\n"
+"POT-Creation-Date: 2015-03-13 22:49+0100\n"
+"PO-Revision-Date: 2015-03-13 22:49+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -148,7 +148,7 @@ msgstr "Impossible de trouver un template associé au paramètre"
 msgid "Add parameter %s to class %s on group %s"
 msgstr "Ajout du paramètre %s à la classe %s du groupe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:74
+#: ../src/KmbPuppet/Controller/GroupController.php:75
 #, php-format
 msgid ""
 "You have been redirected to the last current revision of this group because "
@@ -157,14 +157,14 @@ msgstr ""
 "Vous avez été redirigé vers la dernière version courante de ce groupe car "
 "les derniers changements ont été récemment enregistrés par %s."
 
-#: ../src/KmbPuppet/Controller/GroupController.php:140
+#: ../src/KmbPuppet/Controller/GroupController.php:150
 msgid "An error occured while reaching PuppetDB !"
 msgstr "Une erreur est survenue lors de l'appel à PuppetDB !"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:184
-#: ../src/KmbPuppet/Controller/GroupController.php:244
-#: ../src/KmbPuppet/Controller/GroupController.php:286
-#: ../src/KmbPuppet/Controller/GroupController.php:354
+#: ../src/KmbPuppet/Controller/GroupController.php:194
+#: ../src/KmbPuppet/Controller/GroupController.php:254
+#: ../src/KmbPuppet/Controller/GroupController.php:296
+#: ../src/KmbPuppet/Controller/GroupController.php:364
 #, php-format
 msgid ""
 "You have been redirected to the last current revision of this group because "
@@ -174,52 +174,52 @@ msgstr ""
 "les derniers changements ont été récemment enregistrés par %s. Merci de "
 "réitérer votre action !"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:192
+#: ../src/KmbPuppet/Controller/GroupController.php:202
 #, php-format
 msgid "Update group name %s to %s"
 msgstr "Modification du nom du groupe %s en %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:198
+#: ../src/KmbPuppet/Controller/GroupController.php:208
 #, php-format
 msgid "Update include pattern of group %s"
 msgstr "Modification du pattern d'inclusion du groupe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:203
+#: ../src/KmbPuppet/Controller/GroupController.php:213
 #, php-format
 msgid "Update exclude pattern of group %s"
 msgstr "Modification du pattern d'exclusion du groupe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:250
+#: ../src/KmbPuppet/Controller/GroupController.php:260
 #, php-format
 msgid "Remove group %s"
 msgstr "Suppression du groupe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:296
+#: ../src/KmbPuppet/Controller/GroupController.php:306
 #, php-format
 msgid "Group already has the class %s"
 msgstr "Le groupe a déjà la classe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:302
+#: ../src/KmbPuppet/Controller/GroupController.php:312
 #, php-format
 msgid "Unknown class %s"
 msgstr "La classe %s n'existe pas"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:318
+#: ../src/KmbPuppet/Controller/GroupController.php:328
 #, php-format
 msgid "Add class %s to group %s"
 msgstr "Ajout de la classe %s au groupe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:365
+#: ../src/KmbPuppet/Controller/GroupController.php:375
 #, php-format
 msgid "Group doesn't have class %s"
 msgstr "Le groupe n'a pas la classe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:370
+#: ../src/KmbPuppet/Controller/GroupController.php:380
 #, php-format
 msgid "Remove class %s from group %s"
 msgstr "Suppression de la classe %s du groupe %s"
 
-#: ../src/KmbPuppet/Controller/GroupController.php:372
+#: ../src/KmbPuppet/Controller/GroupController.php:382
 #, php-format
 msgid "Class %s has been succesfully removed"
 msgstr "La classe %s a bien été supprimée !"
@@ -358,6 +358,14 @@ msgstr "il y a %s secondes"
 msgid "one second ago"
 msgstr "il y a une seconde"
 
+#: ../src/KmbPuppet/Validator/GroupClassValidator.php:38
+msgid "Following parameters are required : %value%"
+msgstr "Les paramètres suivant sont requis : %value%"
+
+#: ../src/KmbPuppet/Validator/GroupClassValidator.php:39
+msgid "This parameter does not exists in the class template"
+msgstr "Ce paramètre n'existe pas dans le template de classe"
+
 #: ../src/KmbPuppet/View/Decorator/ReportHourDecorator.php:33
 msgid "Hour"
 msgstr "Heure"
@@ -436,8 +444,8 @@ msgid "Remove environment"
 msgstr "Supprimer l'environnement"
 
 #: ../view/kmb-puppet/environments/index.phtml:8
-#: ../view/kmb-puppet/group/show.phtml:137
-#: ../view/kmb-puppet/group/show.phtml:157
+#: ../view/kmb-puppet/group/show.phtml:136
+#: ../view/kmb-puppet/group/show.phtml:156
 #: ../view/kmb-puppet/groups/index.phtml:45
 #: ../view/kmb-puppet/revisions/index.phtml:151
 msgid "Confirm Remove"
@@ -451,8 +459,8 @@ msgstr ""
 "irréversible."
 
 #: ../view/kmb-puppet/environments/index.phtml:13
-#: ../view/kmb-puppet/group/show.phtml:142
-#: ../view/kmb-puppet/group/show.phtml:162
+#: ../view/kmb-puppet/group/show.phtml:141
+#: ../view/kmb-puppet/group/show.phtml:161
 #: ../view/kmb-puppet/groups/index.phtml:50
 #: ../view/kmb-puppet/revisions/index.phtml:157
 msgid "Do you want to proceed ?"
@@ -464,9 +472,9 @@ msgstr "Êtes-vous sûr de vouloir continuer ?"
 #: ../view/kmb-puppet/group/parameter-new.phtml:20
 #: ../view/kmb-puppet/group/parameter.phtml:36
 #: ../view/kmb-puppet/group/show.phtml:10
-#: ../view/kmb-puppet/group/show.phtml:125
-#: ../view/kmb-puppet/group/show.phtml:146
-#: ../view/kmb-puppet/group/show.phtml:166
+#: ../view/kmb-puppet/group/show.phtml:124
+#: ../view/kmb-puppet/group/show.phtml:145
+#: ../view/kmb-puppet/group/show.phtml:165
 #: ../view/kmb-puppet/group/value-new.phtml:25
 #: ../view/kmb-puppet/group/value.phtml:51
 #: ../view/kmb-puppet/groups/index.phtml:54
@@ -478,8 +486,8 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: ../view/kmb-puppet/environments/index.phtml:18
-#: ../view/kmb-puppet/group/show.phtml:147
-#: ../view/kmb-puppet/group/show.phtml:167
+#: ../view/kmb-puppet/group/show.phtml:146
+#: ../view/kmb-puppet/group/show.phtml:166
 #: ../view/kmb-puppet/groups/index.phtml:55
 #: ../view/kmb-puppet/revisions/index.phtml:162
 msgid "Remove"
@@ -576,7 +584,7 @@ msgid "Select users"
 msgstr "Choisir des utilisateurs"
 
 #: ../view/kmb-puppet/environments/index.phtml:130
-#: ../view/kmb-puppet/group/show.phtml:126
+#: ../view/kmb-puppet/group/show.phtml:125
 msgid "Add"
 msgstr "Ajouter"
 
@@ -597,19 +605,19 @@ msgid "Search"
 msgstr "Rechercher"
 
 #: ../view/kmb-puppet/environments/index.phtml:176
-#: ../view/kmb-puppet/group/show.phtml:193
+#: ../view/kmb-puppet/group/show.phtml:197
 #: ../view/kmb-puppet/modules/show-class.phtml:29
 msgid "Collapse all"
 msgstr "Tout replier"
 
 #: ../view/kmb-puppet/environments/index.phtml:180
-#: ../view/kmb-puppet/group/show.phtml:197
+#: ../view/kmb-puppet/group/show.phtml:201
 #: ../view/kmb-puppet/modules/show-class.phtml:33
 msgid "Expand all"
 msgstr "Tout déplier"
 
 #: ../view/kmb-puppet/environments/index.phtml:188
-#: ../view/kmb-puppet/group/show.phtml:214
+#: ../view/kmb-puppet/group/show.phtml:218
 #: ../view/kmb-puppet/groups/index.phtml:86
 #: ../view/kmb-puppet/modules/index.phtml:77
 #: ../view/kmb-puppet/revisions/diff.phtml:33
@@ -680,10 +688,6 @@ msgstr "Supprimer l'entrée"
 msgid "You are about to remove <strong>%s</strong> parameter."
 msgstr "Vous êtes sur le point de supprimer le paramètre <strong>%s</strong>."
 
-#: ../view/kmb-puppet/group/parameters.phtml:13
-msgid "This parameter does not exists in the class template"
-msgstr "Ce paramètre n'existe pas dans le template de classe"
-
 #: ../view/kmb-puppet/group/show.phtml:5
 msgid "Detailed informations on group"
 msgstr "Informations détaillées du groupe"
@@ -722,7 +726,7 @@ msgid "Group %s"
 msgstr "Groupe %s"
 
 #: ../view/kmb-puppet/group/show.phtml:68
-#: ../view/kmb-puppet/group/show.phtml:107
+#: ../view/kmb-puppet/group/show.phtml:106
 msgid "Add a class"
 msgstr "Ajouter une classe"
 
@@ -744,48 +748,48 @@ msgstr "Voir les paramètres de la classe"
 msgid "Error"
 msgstr "Erreur"
 
-#: ../view/kmb-puppet/group/show.phtml:97
+#: ../view/kmb-puppet/group/show.phtml:96
 #: ../view/kmb-puppet/modules/show.phtml:64
 msgid "No classes available !"
 msgstr "Aucune classe disponible !"
 
-#: ../view/kmb-puppet/group/show.phtml:112
+#: ../view/kmb-puppet/group/show.phtml:111
 msgid "Select a class"
 msgstr "Choisir une classe"
 
-#: ../view/kmb-puppet/group/show.phtml:180
+#: ../view/kmb-puppet/group/show.phtml:179
 #, php-format
 msgid "Class %s"
 msgstr "Classe %s"
 
-#: ../view/kmb-puppet/group/show.phtml:185
+#: ../view/kmb-puppet/group/show.phtml:184
 msgid "Add a parameter"
 msgstr "Ajouter un paramètre"
 
-#: ../view/kmb-puppet/group/show.phtml:208
+#: ../view/kmb-puppet/group/show.phtml:212
 msgid "edit"
 msgstr "éditer"
 
-#: ../view/kmb-puppet/group/show.phtml:210
+#: ../view/kmb-puppet/group/show.phtml:214
 msgid "Description"
 msgstr "Description"
 
-#: ../view/kmb-puppet/group/show.phtml:212
+#: ../view/kmb-puppet/group/show.phtml:216
 msgid "No description yet provided for this group."
 msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
 
-#: ../view/kmb-puppet/group/show.phtml:216
+#: ../view/kmb-puppet/group/show.phtml:220
 msgid "Click on the servers count to preview the list of assigned servers."
 msgstr ""
 "Cliquez sur le nombre de serveurs pour prévisualiser la liste des serveurs "
 "affectés."
 
-#: ../view/kmb-puppet/group/show.phtml:217
+#: ../view/kmb-puppet/group/show.phtml:221
 msgid "View the detail configuration of a class by clicking on its name."
 msgstr ""
 "Accéder au détail de la configuration d'une classe en cliquant sur son nom."
 
-#: ../view/kmb-puppet/group/show.phtml:218
+#: ../view/kmb-puppet/group/show.phtml:222
 msgid "Click on a parameter or a value to update it."
 msgstr "Cliquer sur un paramètre ou une valeur pour le (ou la) modifier."
 

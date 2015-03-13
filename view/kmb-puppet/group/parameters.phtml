@@ -10,7 +10,7 @@
             'type' => $parameter->hasTemplate() ? $parameter->getTemplate()->type : null,
             'hasMultipleValues' => $parameter->hasTemplate() ? $parameter->getTemplate()->multiple_values : null,
             'availableParameters' => $this->availableParameters,
-            'error' => !$parameter->hasTemplate() ? $this->translate('This parameter does not exists in the class template') : '',
+            'error' => isset($this->errors[$parameter->getName()]['global']) ? $this->errors[$parameter->getName()]['global'] : '',
         ]) ?>
         <?php if ($parameter->hasTemplate() && $parameter->getTemplate()->type == \KmbDomain\Model\GroupParameterType::EDITABLE_HASHTABLE): ?>
         <ul style="clear:both">
@@ -33,6 +33,7 @@
                     'parameters' => $child->getChildren(),
                     'parent' => $child,
                     'availableParameters' => $child->getAvailableChildren(),
+                    'errors' => isset($this->errors[$child->getName()]['parameters']) ? $this->errors[$child->getName()]['parameters'] : [],
                 ]) ?>
             </li>
             <?php endforeach ?>
@@ -54,7 +55,8 @@
                 'class' => $this->class,
                 'parameters' => $parameter->getChildren(),
                 'parent' => $parameter,
-                'availableParameters' => $parameter->getAvailableChildren()
+                'availableParameters' => $parameter->getAvailableChildren(),
+                'errors' => isset($this->errors[$parameter->getName()]['parameters']) ? $this->errors[$parameter->getName()]['parameters'] : [],
             ]) ?>
         <?php endif ?>
     </li>

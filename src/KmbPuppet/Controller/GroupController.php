@@ -31,6 +31,7 @@ use KmbPmProxy\Hydrator\GroupHydratorInterface;
 use KmbPmProxy\Service\PuppetClass;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
+use KmbPuppet\Validator\GroupClassValidator;
 use KmbPuppetDb\Exception\RuntimeException;
 use KmbPuppetDb\Model\NodeInterface;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -93,6 +94,16 @@ class GroupController extends AbstractActionController implements AuthenticatedC
         $groupHydrator->hydrate($modules, $group);
 
         $selectedClass = $group->getClassByName($this->params()->fromQuery('selectedClass'));
+        $errors = [];
+        if ($group->hasClasses()) {
+            foreach ($group->getClasses() as $class) {
+                /** @var GroupClassValidator $classValidator */
+                $classValidator = $this->serviceLocator->get('KmbPuppet\Validator\GroupClassValidator');
+                if (!$classValidator->isValid($class)) {
+                    $errors[$class->getName()] = $classValidator->getMessages();
+                }
+            }
+        }
 
         $this->getServiceLocator()->get('breadcrumb')->findBy('id', 'group')->setLabel($group->getName());
 
@@ -102,6 +113,7 @@ class GroupController extends AbstractActionController implements AuthenticatedC
             'group' => $group,
             'serversCount' => count($nodes),
             'selectedClass' => $selectedClass,
+            'errors' => $errors,
             'back' => $back ?: $this->url()->fromRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true),
         ]);
     }

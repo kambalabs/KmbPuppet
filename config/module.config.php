@@ -406,6 +406,7 @@ return [
     'service_manager' => [
         'invokables' => [
             'KmbPuppet\Listener\RevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
+            'KmbPuppet\Validator\GroupClassValidator' => 'KmbPuppet\Validator\GroupClassValidator',
         ],
         'factories' => [
             'KmbPuppet\Service\Environment' => 'KmbPuppet\Service\EnvironmentFactory',
@@ -416,6 +417,9 @@ return [
         ],
         'aliases' => [
             'kmbRevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
+        ],
+        'shared' => [
+            'KmbPuppet\Validator\GroupClassValidator' => false,
         ],
     ],
     'listeners' => [
