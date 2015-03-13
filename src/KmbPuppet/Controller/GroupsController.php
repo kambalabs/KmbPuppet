@@ -69,7 +69,7 @@ class GroupsController extends AbstractActionController implements Authenticated
                         /** @var GroupClassValidator $classValidator */
                         $classValidator = $this->serviceLocator->get('KmbPuppet\Validator\GroupClassValidator');
                         if (!$classValidator->isValid($class)) {
-                            $errors[$group->getName()] = isset($errors[$group->getName()]) ? $errors[$group->getName()]+1 : 0;
+                            $errors[$group->getName()] = isset($errors[$group->getName()]) ? $errors[$group->getName()]+1 : 1;
                         }
                     }
                 }
