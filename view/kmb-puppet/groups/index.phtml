@@ -20,12 +20,20 @@
                     <tbody>
                     <?php foreach ($this->groups as $group): ?>
                     <tr id="groups-<?php echo $group->getId() ?>">
-                        <td class="module-name" style="width: 100%">
+                        <td class="module-name" style="width: 90%">
                             <span class="glyphicon glyphicon-th grab" title="<?php echo $this->translate('Sort groups') ?>"></span>
                             <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
                             <a href="#" title="<?php echo $this->translate('Remove group') ?>" data-href="<?php echo $this->url('puppet-group', ['action' => 'remove', 'id' => $group->getId()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> group.'), $group->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
                             <?php endif ?>
-                            <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true) ?>" title="<?php echo $this->translate('View group') ?>"><span class="glyphicon glyphicon-search grey" style="margin-right: 6px"></span><?php echo $group->getName() ?></a>
+                            <a href="<?php echo $this->url('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true) ?>" <?php if (isset($this->errors[$group->getName()])): ?>class="red"<?php endif ?> title="<?php echo $this->translate('View group') ?>"><span class="glyphicon glyphicon-search grey" style="margin-right: 6px"></span><?php echo $group->getName() ?></a>
+                        </td>
+                        <td class="text-right">
+                            <?php if (isset($this->errors[$group->getName()])): ?>
+                                <span class="label label-uniform label-danger">
+                                    <?php echo $this->translate('Error') ?>
+                                    <span class="badge alert-danger" data-rel="tooltip" data-placement="top" data-original-title="errors"><?php echo $this->errors[$group->getName()] ?></span>
+                                </span>
+                            <?php endif ?>
                         </td>
                     </tr>
                     <?php endforeach ?>

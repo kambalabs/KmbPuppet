@@ -25,6 +25,7 @@ use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\Group;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPuppet\Service;
+use KmbPuppet\Validator\GroupClassValidator;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -50,9 +51,25 @@ class GroupsController extends AbstractActionController implements Authenticated
             return new ViewModel();
         }
 
+        $groups = $currentRevision->getGroups();
+        $errors = [];
+        foreach ($groups as $group) {
+            $errors[$group->getName()] = 0;
+            if ($group->hasClasses()) {
+                foreach ($group->getClasses() as $class) {
+                    /** @var GroupClassValidator $classValidator */
+                    $classValidator = $this->serviceLocator->get('KmbPuppet\Validator\GroupClassValidator');
+                    if (!$classValidator->isValid($class)) {
+                        $errors[$group->getName()]++;
+                    }
+                }
+            }
+        }
+
         return new ViewModel([
-            'groups' => $currentRevision->getGroups(),
+            'groups' => $groups,
             'environment' => $environment,
+            'errors' => $errors,
         ]);
     }
 

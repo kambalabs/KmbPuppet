@@ -21,6 +21,7 @@
 namespace KmbPuppet\Validator;
 
 use KmbDomain\Model\GroupClass;
+use KmbDomain\Model\GroupClassInterface;
 use KmbDomain\Model\GroupParameterInterface;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\Exception;
@@ -48,7 +49,7 @@ class GroupClassValidator extends AbstractValidator
      * getMessages() will return an array of messages that explain why the
      * validation failed.
      *
-     * @param  GroupClass $value
+     * @param  GroupClassInterface $value
      * @return bool
      * @throws Exception\RuntimeException If validation of $value is impossible
      */
