@@ -362,6 +362,7 @@ return [
             'formatAncestorsNames' => 'KmbPuppet\View\Helper\FormatAncestorsNames',
             'printParameterType' => 'KmbPuppet\View\Helper\PrintParameterType',
             'puppetModuleLabelClass' => 'KmbPuppet\View\Helper\PuppetModuleLabelClass',
+            'formatModuleVersion' => 'KmbPuppet\View\Helper\FormatModuleVersion',
         ],
         'factories' => [
             'KmbPuppet\View\Helper\EnvironmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelectFactory',

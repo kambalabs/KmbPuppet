@@ -26,7 +26,7 @@
                             <a href="<?php echo $this->url('puppet-module', ['action' => 'show', 'moduleName' => $puppetModule->getName()], ['query' => ['back' => $this->url('puppet', ['controller' => 'modules', 'action' => 'index'], [], true)]], true) ?>" title="<?php echo $this->translate('View module') ?>"><span class="glyphicon glyphicon-search darkgrey" style="margin-right: 6px"></span><?php echo $puppetModule->getName() ?></a>
                         </td>
                         <td>
-                            <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $puppetModule->getVersion() ?></span>
+                            <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $this->formatModuleVersion($puppetModule->getVersion()) ?></span>
                             <?php echo $this->widget('puppetModuleRowRight')->render(['puppetModule' => $puppetModule]); ?>
                         </td>
                     </tr>
@@ -62,7 +62,7 @@
                                     <?php echo $puppetModule->getName() ?>
                                 </td>
                                 <td>
-                                    <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $puppetModule->getVersion() ?></span>
+                                    <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $this->formatModuleVersion($puppetModule->getVersion()) ?></span>
                                 </td>
                             </tr>
                         <?php endforeach ?>
