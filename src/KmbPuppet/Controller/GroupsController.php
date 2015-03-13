@@ -64,13 +64,12 @@ class GroupsController extends AbstractActionController implements Authenticated
         if (!empty($groups)) {
             foreach ($groups as $group) {
                 $groupHydrator->hydrate($modules, $group);
-                $errors[$group->getName()] = 0;
                 if ($group->hasClasses()) {
                     foreach ($group->getClasses() as $class) {
                         /** @var GroupClassValidator $classValidator */
                         $classValidator = $this->serviceLocator->get('KmbPuppet\Validator\GroupClassValidator');
                         if (!$classValidator->isValid($class)) {
-                            $errors[$group->getName()]++;
+                            $errors[$group->getName()] = isset($errors[$group->getName()]) ? $errors[$group->getName()]+1 : 0;
                         }
                     }
                 }
