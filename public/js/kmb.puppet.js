@@ -202,4 +202,15 @@ $(window).load(function () {
         $(this).closest('.class-parameters').removeClass('active').hide();
         $('#group-description').show();
     });
+
+    $('#duplicate-group').on('show.bs.modal', function (e) {
+        $(this).find('form').attr('action', $(e.relatedTarget).data('href'));
+        var groupName = $('#duplicate-group-name');
+        groupName.val($(e.relatedTarget).attr('data-group-name'));
+        setTimeout(function() { groupName.focus(); groupName.select(); }, 500);
+    });
+
+    $('#new-group').on('show.bs.modal', function () {
+        setTimeout(function() { $('#create-group-name').focus(); }, 500);
+    });
 });

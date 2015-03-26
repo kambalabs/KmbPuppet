@@ -26,7 +26,9 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
         $environment->setCurrentRevision(new Revision());
         $environmentRepository->expects($this->any())
             ->method('getById')
-            ->will($this->returnValue($environment));
+            ->will($this->returnCallback(function ($id) use ($environment) {
+                return $environment->setId($id);
+            }));
         $environmentRepository->expects($this->any())
             ->method('getAllRoots')
             ->will($this->returnValue([]));
@@ -82,10 +84,19 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
     /** @test */
     public function canUpdate()
     {
-        $this->dispatch('/env/1/puppet/group/1/update', 'POST', ['name']);
+        $this->dispatch('/env/1/puppet/group/1/update', 'POST', ['name' => 'web']);
 
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/group/1');
+    }
+
+    /** @test */
+    public function canDuplicate()
+    {
+        $this->dispatch('/env/1/puppet/group/1/duplicate', 'POST', ['targetEnvId' => 2, 'name' => 'web']);
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/env/2/puppet/groups');
     }
 
     /** @test */

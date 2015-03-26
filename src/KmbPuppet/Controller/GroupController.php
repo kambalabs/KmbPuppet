@@ -222,6 +222,57 @@ class GroupController extends AbstractActionController implements AuthenticatedC
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
     }
 
+    public function duplicateAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->notFoundAction();
+        }
+        /** @var EnvironmentInterface $targetEnvironment */
+        $targetEnvironment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromPost('targetEnvId'));
+        if ($targetEnvironment == null) {
+            return $this->notFoundAction();
+        }
+        if (!$this->isGranted('manageEnv', $targetEnvironment)) {
+            throw new UnauthorizedException();
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('id'));
+
+        if ($group == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $revision = $targetEnvironment->getCurrentRevision();
+        $newGroup = clone $group;
+        $newGroup->setRevision($revision);
+
+        $name = $this->params()->fromPost('name');
+        if (empty($name)) {
+            $this->flashMessenger()->addErrorMessage($this->translate('You must choose a name for the new group'));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        } elseif ($revision->hasGroupWithName($name)) {
+            $this->flashMessenger()->addErrorMessage(sprintf($this->translate('The group %s already exists in environment %s, choose a different name'), $name, $targetEnvironment->getNormalizedName()));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+        $newGroup->setName($name);
+        $groupRepository->add($newGroup);
+        $this->writeRevisionLog($revision, sprintf($this->translate('Duplicate group %s to %s in %s environment'), $group->getName(), $newGroup->getName(), $targetEnvironment->getNormalizedName()));
+
+        if ($environment->getId() != $targetEnvironment->getId()) {
+            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("You've been redirect to %s environment"), $targetEnvironment->getNormalizedName()));
+        }
+        return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index', 'envId' => $targetEnvironment->getId()], [], true);
+    }
+
     public function removeAction()
     {
         /** @var EnvironmentInterface $environment */
