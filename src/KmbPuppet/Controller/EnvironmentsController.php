@@ -24,12 +24,18 @@ use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\Environment;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\Revision;
+use KmbDomain\Model\RevisionInterface;
 use KmbDomain\Model\UserInterface;
 use KmbDomain\Model\UserRepositoryInterface;
+use KmbPmProxy\Model\PuppetModule;
+use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPmProxy\Exception\ExceptionInterface;
 use KmbPmProxy\Exception\NotFoundException;
 use KmbPmProxy\Exception\RuntimeException;
+use KmbPmProxy\Hydrator\RevisionHydratorInterface;
+use Symfony\Component\Yaml\Yaml;
 use Zend\Authentication\AuthenticationService;
 use Zend\I18n\Validator\Alnum;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -206,9 +212,24 @@ class EnvironmentsController extends AbstractActionController implements Authent
             return $this->notFoundAction();
         }
 
+        /** @var RevisionHydratorInterface $revisionHydrator */
+        $revisionHydrator = $this->serviceLocator->get('pmProxyRevisionHydrator');
+        /** @var PuppetModuleService $puppetModuleService */
+        $puppetModuleService = $this->serviceLocator->get('pmProxyPuppetModuleService');
+        $fromModules = $puppetModuleService->getAllInstalledByEnvironment($from);
+        $toModules = $puppetModuleService->getAllInstalledByEnvironment($to);
+
+        $fromRevision = $from->getCurrentRevision();
+        $revisionHydrator->hydrate($fromModules, $fromRevision);
+        $toRevision = $to->getCurrentRevision();
+        $revisionHydrator->hydrate($toModules, $toRevision);
+
         return new ViewModel([
             'from' => $from,
             'to' => $to,
+            'modulesDiff' => $this->diffModules($fromModules, $toModules),
+            'groupsOrderingDiff' => $this->diffOrderingGroupsRevisions($fromRevision, $toRevision),
+            'groupsDiffs' => $this->diffsGroupsRevisions($fromRevision, $toRevision),
         ]);
     }
 
@@ -437,5 +458,94 @@ class EnvironmentsController extends AbstractActionController implements Authent
                 $this->signLastReleasedRevisions($child);
             }
         }
+    }
+
+    /**
+     * @param PuppetModule[] $from
+     * @param PuppetModule[] $to
+     * @return \Diff
+     */
+    protected function diffModules($from, $to)
+    {
+        $fromModules = isset($from) ? array_values(array_map(function (PuppetModule $module) {
+            return $module->getName() . ' ' . $module->getVersion();
+        }, $from)) : [];
+        $toModules = isset($to) ? array_values(array_map(function (PuppetModule $module) {
+            return $module->getName() . ' ' . $module->getVersion();
+        }, $to)) : [];
+        $diff = new \Diff($fromModules, $toModules);
+        return $diff->render(new \Diff_Renderer_Html_SideBySide());
+    }
+
+    /**
+     * @param RevisionInterface $from
+     * @param RevisionInterface $to
+     * @return \Diff
+     */
+    protected function diffOrderingGroupsRevisions($from, $to)
+    {
+        $fromGroups = isset($from) ? array_map(function (GroupInterface $group) {
+            return $group->getName();
+        }, $from->getGroups()) : [];
+        $toGroups = isset($to) ? array_map(function (GroupInterface $group) {
+            return $group->getName();
+        }, $to->getGroups()) : [];
+        $diff = new \Diff($fromGroups, $toGroups);
+        return $diff->render(new \Diff_Renderer_Html_SideBySide());
+    }
+
+    /**
+     * @param RevisionInterface $from
+     * @param RevisionInterface $to
+     * @return \Diff[]
+     */
+    protected function diffsGroupsRevisions($from, $to)
+    {
+        $diffs = [];
+        if (isset($to) && $to->hasGroups()) {
+            foreach ($to->getGroups() as $toGroup) {
+                if (isset($from)) {
+                    $fromGroup = $from->getGroupByName($toGroup->getName());
+                    if (isset($fromGroup)) {
+                        $diff = new \Diff($this->dumpGroup($fromGroup), $this->dumpGroup($toGroup));
+                    } else {
+                        $diff = new \Diff([], $this->dumpGroup($toGroup));
+                    }
+                    $render = $diff->render(new \Diff_Renderer_Html_SideBySide());
+                    if (!empty($render)) {
+                        $diffs[$toGroup->getName()] = $render;
+                    }
+                }
+            }
+        }
+        if (isset($from) && $from->hasGroups()) {
+            foreach ($from->getGroups() as $fromGroup) {
+                if (isset($to)) {
+                    $toGroup = $to->getGroupByName($fromGroup->getName());
+                    if (!isset($toGroup)) {
+                        $diff = new \Diff($this->dumpGroup($fromGroup), []);
+                        $render = $diff->render(new \Diff_Renderer_Html_SideBySide());
+                        if (!empty($render)) {
+                            $diffs[$fromGroup->getName()] = $render;
+                        }
+                    }
+                }
+            }
+        }
+        return $diffs;
+    }
+
+    /**
+     * @param GroupInterface $group
+     * @return array
+     */
+    protected function dumpGroup($group)
+    {
+        $fullDump = [
+            $this->translate('include') . ': ' . $group->getIncludePattern(),
+            $this->translate('exclude') . ': ' . $group->getExcludePattern(),
+            $this->translate('classes') . ': ',
+        ];
+        return array_merge($fullDump, explode(PHP_EOL, Yaml::dump($group->dump(), 20, 4)));
     }
 }

@@ -39,8 +39,10 @@ class EnvironmentSelect extends AbstractHelper
             'environments' => $environments,
             'permission' => $permission,
         ];
-        if ($selectEnvId && $this->routeMatch !== null) {
+        if ($selectEnvId === true && $this->routeMatch !== null) {
             $data['envId'] = $this->routeMatch->getParam('envId', null);
+        } elseif (is_int($selectEnvId)) {
+            $data['envId'] = $selectEnvId;
         }
         return $this->getView()->partial('kmb-puppet/environments/environments-options', $data);
     }

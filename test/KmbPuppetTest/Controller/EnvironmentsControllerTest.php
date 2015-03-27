@@ -1,7 +1,6 @@
 <?php
 namespace KmbPuppetTest\Controller;
 
-use KmbDomain\Model\Environment;
 use KmbDomain\Model\UserInterface;
 use KmbPuppetDb\Model;
 use KmbPuppetTest\Bootstrap;
@@ -29,6 +28,9 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
         $this->connection = $dbAdapter->getDriver()->getConnection()->getResource();
         static::initSchema($this->connection);
         static::initFixtures($this->connection);
+        $serviceManager = $this->getApplicationServiceLocator();
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('pmProxyPuppetModuleService', $this->getMock('KmbPmProxy\Service\PuppetModuleInterface'));
     }
 
     /** @test */

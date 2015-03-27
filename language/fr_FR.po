@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 18:09+0100\n"
-"PO-Revision-Date: 2015-03-27 18:09+0100\n"
+"POT-Creation-Date: 2015-03-27 23:04+0100\n"
+"PO-Revision-Date: 2015-03-27 23:04+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -56,68 +56,85 @@ msgstr "Classe"
 msgid "Group"
 msgstr "Groupe"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:56
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:62
 msgid "<h4>Warning !</h4><p>You should choose a default environment !</p>"
 msgstr ""
 "<h4>Attention !</h4><p>Vous devez choisir un environnement par défaut !</p>"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:83
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:119
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:89
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:125
 #, php-format
 msgid "Environment %s has been successfully created !"
 msgstr "L'environnement %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:87
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:123
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:93
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:129
 #, php-format
 msgid "Environment %s could no be created on the puppet master"
 msgstr "L'environnement %s n'a pas pu être créé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:156
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:162
 #, php-format
 msgid "Environment %s has been successfully updated !"
 msgstr "L'environnement %s a bien été modifié !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:159
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:165
 #, php-format
 msgid "Environment %s could no be updated on the puppet master"
 msgstr "L'environnement %s n'a pas pu être modifié sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:187
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:193
 #, php-format
 msgid "Environment %s has been successfully removed !"
 msgstr "L'environnement %s a bien été supprimé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:190
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:196
 #, php-format
 msgid "Environment %s could no be removed on the puppet master"
 msgstr "L'environnement %s n'a pas pu être supprimé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:397
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:418
 #, php-format
 msgid "'%s' is not a valid name (alphanumeric only) !"
 msgstr "'%s' n'est pas un nom valide (alphanumérique uniquement) !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:401
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:422
 #, php-format
 msgid "For obvious reasons, environment %s can't be the parent of %s !"
 msgstr ""
 "Pour des raisons évidentes, l'environnement %s ne peut pas être le parent de "
 "%s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:410
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:431
 #, php-format
 msgid "Environment %s has already a child named %s !"
 msgstr "L'environnement %s a déjà un enfant nommé %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:416
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:437
 #, php-format
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:433
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:454
 msgid "Initialization"
 msgstr "Initialisation"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:545
+#: ../src/KmbPuppet/Controller/RevisionsController.php:214
+#: ../view/kmb-puppet/group/show.phtml:25
+msgid "include"
+msgstr "inclus"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:546
+#: ../src/KmbPuppet/Controller/RevisionsController.php:215
+#: ../view/kmb-puppet/group/show.phtml:21
+msgid "exclude"
+msgstr "exclus"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:547
+#: ../src/KmbPuppet/Controller/RevisionsController.php:216
+msgid "classes"
+msgstr "classes"
 
 #: ../src/KmbPuppet/Controller/GroupClassController.php:63
 #: ../src/KmbPuppet/Controller/GroupClassController.php:74
@@ -309,20 +326,6 @@ msgstr ""
 msgid "You must enter a comment"
 msgstr "Vous devez saisir un commentaire"
 
-#: ../src/KmbPuppet/Controller/RevisionsController.php:214
-#: ../view/kmb-puppet/group/show.phtml:25
-msgid "include"
-msgstr "inclus"
-
-#: ../src/KmbPuppet/Controller/RevisionsController.php:215
-#: ../view/kmb-puppet/group/show.phtml:21
-msgid "exclude"
-msgstr "exclus"
-
-#: ../src/KmbPuppet/Controller/RevisionsController.php:216
-msgid "classes"
-msgstr "classes"
-
 #: ../src/KmbPuppet/Listener/RevisionLogsListener.php:80
 msgid "Warning !"
 msgstr "Attention !"
@@ -448,36 +451,50 @@ msgstr "hashtable éditable"
 msgid "back"
 msgstr "retour"
 
-#: ../view/kmb-puppet/environments/diff.phtml:13
+#: ../view/kmb-puppet/environments/diff.phtml:10
+#: ../view/kmb-puppet/environments/diff.phtml:26
+msgid "Compare environments"
+msgstr "Comparer les environnements"
+
+#: ../view/kmb-puppet/environments/diff.phtml:28
+#: ../view/kmb-puppet/environments/index.phtml:89
+#: ../view/kmb-puppet/environments/index.phtml:228
+#: ../view/kmb-puppet/revisions/index.phtml:23
+#: ../view/kmb-puppet/revisions/index.phtml:151
+#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:6
+msgid "Compare"
+msgstr "Comparer"
+
+#: ../view/kmb-puppet/environments/diff.phtml:38
 msgid "Installed modules"
 msgstr "Modules installés"
 
-#: ../view/kmb-puppet/environments/diff.phtml:19
-#: ../view/kmb-puppet/environments/diff.phtml:32
-#: ../view/kmb-puppet/environments/diff.phtml:48
+#: ../view/kmb-puppet/environments/diff.phtml:44
+#: ../view/kmb-puppet/environments/diff.phtml:57
+#: ../view/kmb-puppet/environments/diff.phtml:73
 #: ../view/kmb-puppet/revisions/diff.phtml:19
 #: ../view/kmb-puppet/revisions/diff.phtml:35
 msgid "No differences"
 msgstr "Aucune différence"
 
-#: ../view/kmb-puppet/environments/diff.phtml:26
+#: ../view/kmb-puppet/environments/diff.phtml:51
 #: ../view/kmb-puppet/revisions/diff.phtml:13
 msgid "Groups ordering"
 msgstr "Ordre des groupes"
 
-#: ../view/kmb-puppet/environments/diff.phtml:39
+#: ../view/kmb-puppet/environments/diff.phtml:64
 #: ../view/kmb-puppet/revisions/diff.phtml:26
 msgid "Groups content"
 msgstr "Contenu des groupes"
 
-#: ../view/kmb-puppet/environments/diff.phtml:44
+#: ../view/kmb-puppet/environments/diff.phtml:69
 #: ../view/kmb-puppet/group/show.phtml:63
 #: ../view/kmb-puppet/revisions/diff.phtml:31
 #, php-format
 msgid "Group %s"
 msgstr "Groupe %s"
 
-#: ../view/kmb-puppet/environments/diff.phtml:54
+#: ../view/kmb-puppet/environments/diff.phtml:79
 #: ../view/kmb-puppet/environments/index.phtml:255
 #: ../view/kmb-puppet/group/show.phtml:218
 #: ../view/kmb-puppet/groups/index.phtml:127
@@ -487,17 +504,17 @@ msgstr "Groupe %s"
 msgid "Help"
 msgstr "Aide"
 
-#: ../view/kmb-puppet/environments/diff.phtml:56
+#: ../view/kmb-puppet/environments/diff.phtml:81
 #: ../view/kmb-puppet/revisions/diff.phtml:43
 msgid "Insert"
 msgstr "Ajout"
 
-#: ../view/kmb-puppet/environments/diff.phtml:57
+#: ../view/kmb-puppet/environments/diff.phtml:82
 #: ../view/kmb-puppet/revisions/diff.phtml:44
 msgid "Replace"
 msgstr "Modification"
 
-#: ../view/kmb-puppet/environments/diff.phtml:58
+#: ../view/kmb-puppet/environments/diff.phtml:83
 #: ../view/kmb-puppet/revisions/diff.phtml:45
 msgid "Delete"
 msgstr "Suppression"
@@ -656,14 +673,6 @@ msgstr "1er environnement"
 #: ../view/kmb-puppet/environments/index.phtml:80
 msgid "2nd environment"
 msgstr "2ème environnement"
-
-#: ../view/kmb-puppet/environments/index.phtml:89
-#: ../view/kmb-puppet/environments/index.phtml:228
-#: ../view/kmb-puppet/revisions/index.phtml:23
-#: ../view/kmb-puppet/revisions/index.phtml:151
-#: ../view/kmb-puppet/server/puppetconfig.tab.content.phtml:6
-msgid "Compare"
-msgstr "Comparer"
 
 #: ../view/kmb-puppet/environments/index.phtml:100
 msgid "Duplicate an environment"

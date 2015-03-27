@@ -7,7 +7,32 @@
                 <?php echo $this->translate('back') ?>
             </a>
         </p>
-        <div class="panel panel-default">
+        <h3><?php echo $this->translate('Compare environments') ?></h3>
+        <form class="" role="form" action="<?php echo $this->url('puppet', ['controller' => 'environments', 'action' => 'diff'], [], true) ?>" method="get">
+        <table style="width: 100%">
+            <thead>
+                <tr>
+                    <td style="width: 45%; padding: 10px 10px 20px 0">
+                        <select class="form-control" name="from" data-rel="chosen" style="display: none;">
+                            <?php echo $this->environmentSelect('readEnv', $this->from->getId()) ?>
+                        </select>
+                    </td>
+                    <td style="width: 45%; padding: 10px 10px 20px">
+                        <select class="form-control" name="to" data-rel="chosen" style="display: none;">
+                            <?php echo $this->environmentSelect('readEnv', $this->to->getId()) ?>
+                        </select>
+                    </td>
+                    <td style="width: 10%; padding: 10px 0 20px 10px">
+                        <button class="btn btn-grey" title="<?php echo $this->translate('Compare environments') ?>">
+                            <span class="glyphicon glyphicon-transfer"></span>
+                            <?php echo $this->translate('Compare') ?>
+                        </button>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        </form>
+        <div class="panel panel-default" style="clear: left">
             <div class="panel-heading" data-toggle="collapse" data-target="#modules">
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span><?php echo $this->translate('Installed modules') ?></span>
