@@ -8,20 +8,20 @@
             </a>
         </p>
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading" data-toggle="collapse" data-target="#groups-ordering">
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span><?php echo $this->translate('Groups ordering') ?></span>
             </div>
-            <div class="panel-body">
+            <div class="panel-body panel-collapse collapse in" id="groups-ordering">
                 <?php echo $this->groupsOrderingDiff ?>
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading" data-toggle="collapse" data-target="#groups-content">
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
                 <span><?php echo $this->translate('Groups content') ?></span>
             </div>
-            <div class="panel-body">
+            <div class="panel-body panel-collapse collapse in" id="groups-content">
             <?php foreach ($this->groupsDiffs as $group => $diff): ?>
                 <h5 class="DifferencesHeader"><?php echo sprintf($this->translate('Group %s'), $group) ?></h5>
                 <?php echo $diff ?>
