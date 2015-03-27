@@ -103,7 +103,8 @@
                 <form class="" role="form" action="" method="post">
                     <div class="modal-body">
                         <blockquote>
-                            <p><strong><?php echo $this->translate('REMINDER') ?></strong> : <?php echo $this->translate('The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
+                            <p><strong><?php echo $this->translate('REMINDER') ?></strong> : <?php echo $this->translate('The environment (and his children) will be duplicate within the same parent. The new environments will have the same configuration (groups and installed modules) than their clone.') ?></p>
+                            <p><?php echo $this->translate('Note that if the environment has unsaved changes, it will not be duplicated. The duplication is based only on the active configuration.') ?></p>
                         </blockquote>
                         <div class="form-group">
                             <label for="duplicate-environment-name"><?php echo $this->translate('Choose a name') ?></label>
