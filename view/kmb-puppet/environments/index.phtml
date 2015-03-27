@@ -92,6 +92,33 @@
             </div>
         </div>
     </div>
+    <div id="duplicate-environment" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="duplicateEnvironmentLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="duplicateEnvironmentLabel"><?php echo $this->translate('Duplicate an environment') ?></h1>
+                    <h4 class="lightgrey" id="current-environment-name"></h4>
+                </div>
+                <form class="" role="form" action="" method="post">
+                    <div class="modal-body">
+                        <blockquote>
+                            <p><strong><?php echo $this->translate('REMINDER') ?></strong> : <?php echo $this->translate('The environment will automatically inherits of all the modules (in the same version) presents in each of its ancestors.') ?></p>
+                        </blockquote>
+                        <div class="form-group">
+                            <label for="duplicate-environment-name"><?php echo $this->translate('Choose a name') ?></label>
+                            <p><?php echo $this->translate('The name must be <strong>alphanumeric</strong> only ! All special characters are forbidden (including underscore).') ?></p>
+                            <input type="text" class="form-control" name="name" id="duplicate-environment-name" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                        <button type="submit" class="btn btn-primary"><?php echo $this->translate('Save') ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="update-environment" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateEnvironmentLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -110,7 +137,7 @@
                             <select id="update-parent-select" class="form-control" name="parent" data-placeholder="<?php echo $this->translate('Select an environment') ?>" data-rel="chosen" style="display: none;">
                                 <option></option>
                                 <?php if ($this->hasRole(\KmbDomain\Model\UserInterface::ROLE_ROOT)): ?>
-                                <option value="0">&minus;</option>
+                                    <option value="0">&minus;</option>
                                 <?php endif ?>
                                 <?php echo $this->environmentSelect() ?>
                             </select>
@@ -121,16 +148,16 @@
                             <input type="text" class="form-control" name="name" id="update-environment-name" />
                         </div>
                         <?php if ($this->hasRole(\KmbDomain\Model\UserInterface::ROLE_ROOT)): ?>
-                        <div class="form-group">
-                            <label for="update-environment-default">
-                                <?php echo $this->translate('Default environment') ?>
-                            </label>
-                            <p><?php echo $this->translate('All servers which has not already been assigned to an environment will be automatically assigned to the default environment.') ?></p>
-                            <label>
-                                <input type="checkbox" name="default" id="update-environment-default" />
-                                <?php echo $this->translate('Mark this environment as default') ?>
-                            </label>
-                        </div>
+                            <div class="form-group">
+                                <label for="update-environment-default">
+                                    <?php echo $this->translate('Default environment') ?>
+                                </label>
+                                <p><?php echo $this->translate('All servers which has not already been assigned to an environment will be automatically assigned to the default environment.') ?></p>
+                                <label>
+                                    <input type="checkbox" name="default" id="update-environment-default" />
+                                    <?php echo $this->translate('Mark this environment as default') ?>
+                                </label>
+                            </div>
                         <?php endif ?>
                     </div>
                     <div class="modal-footer">

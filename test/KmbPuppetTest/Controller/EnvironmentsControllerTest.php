@@ -89,6 +89,16 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
     }
 
     /** @test */
+    public function canDuplicate()
+    {
+        $this->dispatch('/puppet/environment/1/duplicate', 'POST', ['name' => 'STABLE2']);
+
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/puppet/environments');
+        $this->assertEquals(31, intval($this->connection->query('SELECT COUNT(*) FROM environments')->fetchColumn()));
+    }
+
+    /** @test */
     public function canUpdate()
     {
         $this->dispatch('/puppet/environment/4/update', 'POST', ['parent' => 2, 'name' => 'PF4']);

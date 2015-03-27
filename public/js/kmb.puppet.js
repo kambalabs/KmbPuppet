@@ -92,6 +92,12 @@ $(window).load(function () {
         parentSelect.trigger('chosen:updated');
     });
 
+    $('#duplicate-environment').on('show.bs.modal', function (e) {
+        $(this).find('form').attr('action', $(e.relatedTarget).data('href'));
+        $('#current-environment-name').html($(e.relatedTarget).attr('data-full-name'));
+        setTimeout(function() { $('#duplicate-environment-name').focus(); }, 500);
+    });
+
     function refreshUserSelect(id) {
         $.ajax({
             url: prefixUri + "/puppet/environment/" + id + "/available-users",

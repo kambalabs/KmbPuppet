@@ -69,16 +69,10 @@ class EnvironmentsController extends AbstractActionController implements Authent
             throw new UnauthorizedException();
         }
 
-        /** @var AuthenticationService $authenticationService */
-        $authenticationService = $this->serviceLocator->get('Zend\Authentication\AuthenticationService');
-
         $aggregateRoot = new Environment();
         $aggregateRoot->setCurrentRevision(new Revision());
-        $lastReleasedRevision = new Revision();
-        $lastReleasedRevision->setReleasedAt(new \DateTime());
-        $lastReleasedRevision->setReleasedBy($authenticationService->getIdentity()->getName());
-        $lastReleasedRevision->setComment($this->translate('Initialization'));
-        $aggregateRoot->setLastReleasedRevision($lastReleasedRevision);
+        $aggregateRoot->setLastReleasedRevision(new Revision());
+        $this->signLastReleasedRevisions($aggregateRoot);
 
         if ($this->validate($aggregateRoot, $parent)) {
             $aggregateRoot->setName($this->params()->fromPost('name'));
@@ -86,11 +80,47 @@ class EnvironmentsController extends AbstractActionController implements Authent
             $this->environmentRepository->add($aggregateRoot);
             try {
                 $this->pmProxyEnvironmentService->save($aggregateRoot);
-                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getName()));
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getNormalizedName()));
             } catch (ExceptionInterface $e) {
                 $this->environmentRepository->remove($aggregateRoot);
                 $this->flashMessenger()->addErrorMessage(
-                    sprintf($this->translate("Environment %s could no be created on the puppet master"), $aggregateRoot->getName()) .
+                    sprintf($this->translate("Environment %s could no be created on the puppet master"), $aggregateRoot->getNormalizedName()) .
+                    ' : ' . $e->getMessage()
+                );
+            }
+        }
+
+        return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
+    }
+
+    public function duplicateAction()
+    {
+        /** @var EnvironmentInterface $cloneFrom */
+        $cloneFrom = $this->environmentRepository->getById(intval($this->params()->fromRoute('id')));
+        if ($cloneFrom == null) {
+            return $this->notFoundAction();
+        }
+        $parent = $cloneFrom->getParent();
+        if (
+            ($parent == null && !$this->isGranted('manageAllEnv')) ||
+            ($parent != null && !$this->isGranted('manageEnv', $parent))
+        ) {
+            throw new UnauthorizedException();
+        }
+
+        $aggregateRoot = clone $cloneFrom;
+        if ($this->validate($aggregateRoot, $parent)) {
+            $aggregateRoot->setName($this->params()->fromPost('name'));
+            $aggregateRoot->setParent($parent);
+            $this->signLastReleasedRevisions($aggregateRoot);
+            $this->environmentRepository->add($aggregateRoot);
+            try {
+                $this->pmProxyEnvironmentService->save($aggregateRoot, $cloneFrom);
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getNormalizedName()));
+            } catch (ExceptionInterface $e) {
+                $this->environmentRepository->remove($aggregateRoot);
+                $this->flashMessenger()->addErrorMessage(
+                    sprintf($this->translate("Environment %s could no be created on the puppet master"), $aggregateRoot->getNormalizedName()) .
                     ' : ' . $e->getMessage()
                 );
             }
@@ -387,5 +417,25 @@ class EnvironmentsController extends AbstractActionController implements Authent
         }
 
         return !$this->flashMessenger()->hasCurrentErrorMessages();
+    }
+
+    /**
+     * @param EnvironmentInterface $aggregateRoot
+     */
+    protected function signLastReleasedRevisions($aggregateRoot)
+    {
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->serviceLocator->get('Zend\Authentication\AuthenticationService');
+
+        $lastReleasedRevision = $aggregateRoot->getLastReleasedRevision();
+        $lastReleasedRevision->setReleasedAt(new \DateTime());
+        $lastReleasedRevision->setReleasedBy($authenticationService->getIdentity()->getName());
+        $lastReleasedRevision->setComment($this->translate('Initialization'));
+
+        if ($aggregateRoot->hasChildren()) {
+            foreach ($aggregateRoot->getChildren() as $child) {
+                $this->signLastReleasedRevisions($child);
+            }
+        }
     }
 }
