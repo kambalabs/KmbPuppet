@@ -2,11 +2,24 @@
 <div class="row">
     <div class="col-sm-9">
         <p>
-            <a class="btn btn-info" href="<?php echo $this->url('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true) ?>">
+            <a class="btn btn-info" href="<?php echo $this->url('puppet', ['controller' => 'environments', 'action' => 'index'], [], true) ?>">
                 <span class="glyphicon glyphicon-chevron-left"></span>
                 <?php echo $this->translate('back') ?>
             </a>
         </p>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-target="#modules">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span><?php echo $this->translate('Installed modules') ?></span>
+            </div>
+            <div class="panel-body panel-collapse collapse in" id="modules">
+                <?php if (!empty($this->modulesDiff)): ?>
+                <?php echo $this->modulesDiff ?>
+                <?php else: ?>
+                <?php echo $this->translate('No differences') ?>
+                <?php endif ?>
+            </div>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" data-target="#groups-ordering">
                 <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
@@ -14,9 +27,9 @@
             </div>
             <div class="panel-body panel-collapse collapse in" id="groups-ordering">
                 <?php if (!empty($this->groupsOrderingDiff)): ?>
-                <?php echo $this->groupsOrderingDiff ?>
+                    <?php echo $this->groupsOrderingDiff ?>
                 <?php else: ?>
-                <?php echo $this->translate('No differences') ?>
+                    <?php echo $this->translate('No differences') ?>
                 <?php endif ?>
             </div>
         </div>

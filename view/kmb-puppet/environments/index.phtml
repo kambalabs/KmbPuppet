@@ -57,6 +57,41 @@
             </div>
         </div>
     </div>
+    <div id="compare-environments" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="compareEnvironmentsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h1 class="modal-title" id="compareEnvironmentsLabel"><?php echo $this->translate('Compare two environments') ?></h1>
+                </div>
+                <form class="" role="form" action="<?php echo $this->url('puppet', ['controller' => 'environments', 'action' => 'diff'], [], true) ?>" method="get">
+                    <div class="modal-body">
+                        <blockquote style="margin-top: 16px">
+                            <p><?php echo $this->translate('You have to choose both environments you want to compare.') ?></p>
+                        </blockquote>
+                        <div class="form-group">
+                            <label for="from-select"><?php echo $this->translate('1st environment') ?></label>
+                            <select id="from-select" class="form-control" name="from" data-placeholder="<?php echo $this->translate('Select an environment') ?>" data-rel="chosen" style="display: none;">
+                                <option></option>
+                                <?php echo $this->environmentSelect('readEnv', true) ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="to-select"><?php echo $this->translate('2nd environment') ?></label>
+                            <select id="to-select" class="form-control" name="to" data-placeholder="<?php echo $this->translate('Select an environment') ?>" data-rel="chosen" style="display: none;">
+                                <option></option>
+                                <?php echo $this->environmentSelect() ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                        <button type="submit" class="btn btn-primary"><?php echo $this->translate('Compare') ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="update-environment" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="updateEnvironmentLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -155,11 +190,15 @@
                 <span class="panel-break"></span>
                 <?php echo $this->translate('Environments') ?>
                 <?php if ($this->hasRole(\KmbDomain\Model\UserInterface::ROLE_ROOT)): ?>
-                <a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#create-environment" data-parent-id="0">
+                <a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#create-environment" data-parent-id="0" title="<?php echo $this->translate('Add an environment') ?>">
                     <span class="glyphicon glyphicon-plus-sign"></span>
-                    <?php echo $this->translate('Create an environment') ?>
+                    <?php echo $this->translate('Add') ?>
                 </a>
                 <?php endif ?>
+                <a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#compare-environments" title="<?php echo $this->translate('Compare two environments') ?>" style="margin-right: 10px">
+                    <span class="glyphicon glyphicon-transfer"></span>
+                    <?php echo $this->translate('Compare') ?>
+                </a>
             </div>
             <div class="panel-body">
                 <form class="navbar-form" role="search">

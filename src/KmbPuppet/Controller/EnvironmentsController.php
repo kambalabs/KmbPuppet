@@ -165,6 +165,23 @@ class EnvironmentsController extends AbstractActionController implements Authent
         return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
     }
 
+    public function diffAction()
+    {
+        /** @var EnvironmentInterface $from */
+        $from = $this->environmentRepository->getById(intval($this->params()->fromQuery('from')));
+        /** @var EnvironmentInterface $to */
+        $to = $this->environmentRepository->getById(intval($this->params()->fromQuery('to')));
+
+        if ($from === null || $to === null) {
+            return $this->notFoundAction();
+        }
+
+        return new ViewModel([
+            'from' => $from,
+            'to' => $to,
+        ]);
+    }
+
     public function usersAction()
     {
         /** @var EnvironmentInterface $aggregateRoot */

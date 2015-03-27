@@ -1,6 +1,7 @@
 <?php
 namespace KmbPuppetTest\Controller;
 
+use KmbDomain\Model\Environment;
 use KmbDomain\Model\UserInterface;
 use KmbPuppetDb\Model;
 use KmbPuppetTest\Bootstrap;
@@ -37,6 +38,17 @@ class EnvironmentsControllerTest extends AbstractHttpControllerTestCase
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Environments');
+        $this->assertActionName('index');
+    }
+
+    /** @test */
+    public function canGetDiff()
+    {
+        $this->dispatch('/puppet/environments/diff', 'GET', ['from' => 1, 'to' => 2]);
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Environments');
+        $this->assertActionName('diff');
     }
 
     /** @test */
