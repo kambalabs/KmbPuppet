@@ -18,14 +18,14 @@
  * You should have received a copy of the GNU General Public License
  * along with Kamba.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace KmbPuppet\Controller;
+namespace KmbPuppet\Widget;
 
 use KmbPuppet\Service\Group;
 use KmbPuppet\Service\Node;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ServerShowWidgetActionFactory implements FactoryInterface
+class ServerTabContentWidgetActionFactory implements FactoryInterface
 {
     /**
      * Create service
@@ -35,16 +35,16 @@ class ServerShowWidgetActionFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $serverShowWidgetAction = new ServerShowWidgetAction();
+        $widgetAction = new ServerTabContentWidgetAction();
 
         /** @var Node $nodeService */
         $nodeService = $serviceLocator->get('KmbPuppet\Service\Node');
-        $serverShowWidgetAction->setNodeService($nodeService);
+        $widgetAction->setNodeService($nodeService);
 
         /** @var Group $groupService */
         $groupService = $serviceLocator->get('KmbPuppet\Service\Group');
-        $serverShowWidgetAction->setGroupService($groupService);
+        $widgetAction->setGroupService($groupService);
 
-        return $serverShowWidgetAction;
+        return $widgetAction;
     }
 }

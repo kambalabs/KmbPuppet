@@ -18,16 +18,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Kamba.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace KmbPuppet\Controller;
+namespace KmbPuppet\Widget;
 
-use KmbBase\Controller\Plugin\AbstractWidgetAction;
-use KmbBase\Controller\Plugin\WidgetActionInterface;
+use KmbBase\Widget\AbstractWidgetAction;
+use KmbBase\Widget\WidgetActionInterface;
 use KmbPuppet\Service;
 use KmbPuppetDb\Model;
 use Symfony\Component\Yaml\Yaml;
 use Zend\View\Model\ViewModel;
 
-class ServerShowWidgetAction extends AbstractWidgetAction
+class ServerTabContentWidgetAction extends AbstractWidgetAction
 {
     /** @var  Service\NodeInterface */
     protected $nodeService;
@@ -39,7 +39,7 @@ class ServerShowWidgetAction extends AbstractWidgetAction
      * @param ViewModel $model
      * @return WidgetActionInterface
      */
-    public function run(ViewModel $model = null)
+    public function call(ViewModel $model = null)
     {
         /** @var Model\Node $node */
         $node = $model->getVariable('node');
@@ -63,7 +63,7 @@ class ServerShowWidgetAction extends AbstractWidgetAction
      * Set NodeService.
      *
      * @param \KmbPuppet\Service\NodeInterface $nodeService
-     * @return ServerShowWidgetAction
+     * @return ServerTabContentWidgetAction
      */
     public function setNodeService($nodeService)
     {
@@ -85,7 +85,7 @@ class ServerShowWidgetAction extends AbstractWidgetAction
      * Set GroupService.
      *
      * @param \KmbPuppet\Service\GroupInterface $groupService
-     * @return ServerShowWidgetAction
+     * @return ServerTabContentWidgetAction
      */
     public function setGroupService($groupService)
     {

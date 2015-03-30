@@ -209,15 +209,6 @@ return [
             'writeRevisionLog' => 'KmbPuppet\Controller\Plugin\WriteRevisionLogFactory',
         ],
     ],
-    'controller_plugin_config' => [
-        'widget' => [
-            'serverTabContent' => [
-                'actions' => [
-                    'KmbPuppet\Controller\ServerShowWidgetAction',
-                ],
-            ],
-        ],
-    ],
     'asset_manager' => [
         'resolver_configs' => [
             'paths' => [
@@ -374,13 +365,14 @@ return [
     'view_helper_config' => [
         'widget' => [
             'serverTabTitle' => [
-                'partials' => [
-                    'kmb-puppet/server/puppetconfig.tab.title.phtml',
+                [
+                    'template' => 'kmb-puppet/server/puppetconfig.tab.title.phtml',
                 ],
             ],
             'serverTabContent' => [
-                'partials' => [
-                    'kmb-puppet/server/puppetconfig.tab.content.phtml',
+                [
+                    'action' => 'KmbPuppet\Widget\ServerTabContentWidgetAction',
+                    'template' => 'kmb-puppet/server/puppetconfig.tab.content.phtml',
                 ],
             ],
         ],
@@ -413,7 +405,7 @@ return [
             'KmbPuppet\Service\Node' => 'KmbPuppet\Service\NodeFactory',
             'KmbPuppet\Service\Group' => 'KmbPuppet\Service\GroupFactory',
             'KmbPuppet\Service\GroupClass' => 'KmbPuppet\Service\GroupClassFactory',
-            'KmbPuppet\Controller\ServerShowWidgetAction' => 'KmbPuppet\Controller\ServerShowWidgetActionFactory',
+            'KmbPuppet\Widget\ServerTabContentWidgetAction' => 'KmbPuppet\Widget\ServerTabContentWidgetActionFactory',
         ],
         'aliases' => [
             'kmbRevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',

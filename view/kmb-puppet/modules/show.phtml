@@ -26,7 +26,7 @@
         <div class="yellow"><?php echo $this->translate('version') ?></div>
         <div class="stats-title"><button class="btn btn-warning btn-disabled" id="module_version"><?php echo $this->formatModuleVersion($this->module->getVersion()) ?: '-' ?></button></div>
     </div>
-    <?php echo $this->widget('puppetModuleShowInfoBar')->render($this->viewModel()->getCurrent()); ?>
+    <?php echo $this->widget('puppetModuleShowInfoBar')->render(); ?>
 </div>
 <hr />
 <div class="row">
