@@ -30,7 +30,7 @@
                             <span class="glyphicon glyphicon-warning-sign yellow" title="<?php echo $this->translate('This module overrides the version installed in the parent environment'); ?>"></span>
                             <?php endif ?>
                         </td>
-                        <td class="txt-right">
+                        <td class="text-right">
                             <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $this->formatModuleVersion($puppetModule->getVersion()) ?></span>
                             <?php echo $this->widget('puppetModuleRowRight')->render(['puppetModule' => $puppetModule]); ?>
                         </td>
@@ -67,7 +67,7 @@
                             </td>
                             <td>
                             </td>
-                            <td class="txt-right">
+                            <td class="text-right">
                                 <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $this->formatModuleVersion($puppetModule->getVersion()) ?></span>
                             </td>
                         </tr>
