@@ -62,6 +62,9 @@
                                     <?php echo $puppetModule->getName() ?>
                                 </td>
                                 <td>
+                                    <?php if ($puppetModule->isOverride()): ?>
+                                    <span class="glyphicon glyphicon-warning-sign" title="<?php echo $this->translate('This module override the version installed in the parent environment'); ?>"></span>
+                                    <?php endif ?>
                                     <span class="label <?php echo $this->puppetModuleLabelClass($puppetModule) ?>"><?php echo $this->formatModuleVersion($puppetModule->getVersion()) ?></span>
                                 </td>
                             </tr>
