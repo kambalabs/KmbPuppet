@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-27 23:04+0100\n"
-"PO-Revision-Date: 2015-03-27 23:04+0100\n"
+"POT-Creation-Date: 2015-03-31 14:48+0100\n"
+"PO-Revision-Date: 2015-03-31 14:48+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -16,43 +16,43 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../config/module.config.php:231 ../config/module.config.php:283
+#: ../config/module.config.php:222 ../config/module.config.php:274
 msgid "Puppet"
 msgstr "Puppet"
 
-#: ../config/module.config.php:236 ../config/module.config.php:290
+#: ../config/module.config.php:227 ../config/module.config.php:281
 #: ../view/kmb-puppet/reports/index.phtml:3
 msgid "Day reports"
 msgstr "Rapports du jour"
 
-#: ../config/module.config.php:244 ../config/module.config.php:297
+#: ../config/module.config.php:235 ../config/module.config.php:288
 #: ../view/kmb-puppet/environments/index.phtml:219
 msgid "Environments"
 msgstr "Environnements"
 
-#: ../config/module.config.php:253 ../config/module.config.php:304
+#: ../config/module.config.php:244 ../config/module.config.php:295
 msgid "Modules"
 msgstr "Modules"
 
-#: ../config/module.config.php:261 ../config/module.config.php:329
+#: ../config/module.config.php:252 ../config/module.config.php:320
 #: ../view/kmb-puppet/groups/index.phtml:8
 msgid "Groups"
 msgstr "Groupes"
 
-#: ../config/module.config.php:269 ../config/module.config.php:345
+#: ../config/module.config.php:260 ../config/module.config.php:336
 msgid "Changes"
 msgstr "Changements"
 
-#: ../config/module.config.php:312
+#: ../config/module.config.php:303
 msgid "Module"
 msgstr "Module"
 
-#: ../config/module.config.php:319
+#: ../config/module.config.php:310
 #: ../src/KmbPuppet/View/Decorator/ReportClassNameDecorator.php:33
 msgid "Class"
 msgstr "Classe"
 
-#: ../config/module.config.php:337
+#: ../config/module.config.php:328
 msgid "Group"
 msgstr "Groupe"
 
@@ -314,7 +314,7 @@ msgstr "Création du groupe %s"
 msgid "The group %s has been successfully created !"
 msgstr "Le groupe %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/ModulesController.php:142
+#: ../src/KmbPuppet/Controller/ModulesController.php:145
 msgid ""
 "Parameters are in error, please check the template and the class definition"
 msgstr ""
@@ -498,7 +498,7 @@ msgstr "Groupe %s"
 #: ../view/kmb-puppet/environments/index.phtml:255
 #: ../view/kmb-puppet/group/show.phtml:218
 #: ../view/kmb-puppet/groups/index.phtml:127
-#: ../view/kmb-puppet/modules/index.phtml:77
+#: ../view/kmb-puppet/modules/index.phtml:82
 #: ../view/kmb-puppet/revisions/diff.phtml:41
 #: ../view/kmb-puppet/revisions/index.phtml:232
 msgid "Help"
@@ -1055,20 +1055,24 @@ msgstr "Aucun module"
 msgid "View module"
 msgstr "Consulter le module"
 
-#: ../view/kmb-puppet/modules/index.phtml:44
+#: ../view/kmb-puppet/modules/index.phtml:30
+msgid "This module overrides the version installed in the parent environment"
+msgstr "Ce module surcharge la version installée dans l'environnement parent"
+
+#: ../view/kmb-puppet/modules/index.phtml:49
 msgid "Inherited modules"
 msgstr "Modules hérités"
 
-#: ../view/kmb-puppet/modules/index.phtml:48
+#: ../view/kmb-puppet/modules/index.phtml:53
 #, php-format
 msgid "View modules list of %s environment"
 msgstr "Voir la liste des modules de l'environnement %s"
 
-#: ../view/kmb-puppet/modules/index.phtml:50
+#: ../view/kmb-puppet/modules/index.phtml:55
 msgid "View parent's modules"
 msgstr "Voir les modules du parent"
 
-#: ../view/kmb-puppet/modules/index.phtml:80
+#: ../view/kmb-puppet/modules/index.phtml:85
 #, php-format
 msgid ""
 "Here is the list of installed modules on environment <strong>%s</strong>."
@@ -1076,7 +1080,7 @@ msgstr ""
 "Voici la liste des modules installés dans l'environnement <strong>%s</"
 "strong>."
 
-#: ../view/kmb-puppet/modules/index.phtml:81
+#: ../view/kmb-puppet/modules/index.phtml:86
 msgid ""
 "When version of a module is red <span class=\"label label-danger\">1.0.0</"
 "span>, it means that at least one of its classes is in error."
@@ -1084,7 +1088,7 @@ msgstr ""
 "La version d'un module est rouge <span class=\"label label-danger\">1.0.0</"
 "span> lorsqu'au moins une de ses classes est en erreur."
 
-#: ../view/kmb-puppet/modules/index.phtml:82
+#: ../view/kmb-puppet/modules/index.phtml:87
 msgid ""
 "<strong>Note</strong> : The list of modules is refreshed every 5 minutes, "
 "but you can clear the cache manually by clicking on your name in the top "
