@@ -25,11 +25,12 @@ use KmbPuppetDb\Exception\InvalidArgumentException;
 use KmbPuppetDb\Model\NodeInterface;
 use Symfony\Component\Yaml\Yaml;
 use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Mvc\Controller\AbstractRestfulController;
+use Zend\View\Model\JsonModel;
 
-class ServerController extends AbstractActionController
+class ServerController extends AbstractRestfulController
 {
-    public function showAction()
+    public function getList()
     {
         /** @var \KmbPuppetDb\Service\NodeInterface $nodeService */
         $nodeService = $this->serviceLocator->get('KmbPuppetDb\Service\Node');
@@ -40,25 +41,13 @@ class ServerController extends AbstractActionController
         $response = $this->getResponse();
 
         $dump = [];
-        $hostname = $this->params()->fromRoute('hostname');
-        if (isset($hostname)) {
-            try {
-                $node = $nodeService->getByName($hostname);
-            } catch (InvalidArgumentException $exception) {
-                $response->setContent($exception->getMessage() . PHP_EOL);
-                return $response->setStatusCode(404);
-            }
-            $dump = $puppetNodeService->getActivePuppetConfiguration($node);
-            $filename = $node->getName() . '.yaml';
-        } else {
-            $nodes = $nodeService->getAll();
-            foreach ($nodes as $node) {
-                /** @var NodeInterface $node */
-                $dump[$node->getName()] = $puppetNodeService->getActivePuppetConfiguration($node);
-            }
-            ksort($dump);
-            $filename = 'kamba-active-puppet-configuration-' . date('Ymd-His') . '.yaml';
+        $nodes = $nodeService->getAll();
+        foreach ($nodes as $node) {
+            /** @var NodeInterface $node */
+            $dump[$node->getName()] = $puppetNodeService->getActivePuppetConfiguration($node);
         }
+        ksort($dump);
+        $filename = 'kamba-active-puppet-configuration-' . date('Ymd-His') . '.yaml';
 
         $content = Yaml::dump(
             $dump,
@@ -75,5 +64,47 @@ class ServerController extends AbstractActionController
             ->addHeaderLine('Content-Length', strlen($content));
 
         return $response;
+    }
+
+    public function get($id)
+    {
+        /** @var \KmbPuppetDb\Service\NodeInterface $nodeService */
+        $nodeService = $this->serviceLocator->get('KmbPuppetDb\Service\Node');
+        /** @var \KmbPuppet\Service\NodeInterface $puppetNodeService */
+        $puppetNodeService = $this->serviceLocator->get('KmbPuppet\Service\Node');
+
+        /** @var Response $response */
+        $response = $this->getResponse();
+
+        try {
+            $node = $nodeService->getByName($id);
+        } catch (InvalidArgumentException $exception) {
+            $response->setContent($exception->getMessage() . PHP_EOL);
+            return $response->setStatusCode(404);
+        }
+        $dump = $puppetNodeService->getActivePuppetConfiguration($node);
+        $filename = $node->getName() . '.yaml';
+
+        $content = Yaml::dump(
+            $dump,
+            20,
+            2
+        );
+
+        $response->setContent($content);
+
+        $headers = $response->getHeaders();
+        $headers->clearHeaders()
+            ->addHeaderLine('Content-Type', 'application/x-yaml')
+            ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->addHeaderLine('Content-Length', strlen($content));
+
+        return $response;
+    }
+
+    public function update($id, $data)
+    {
+        error_log(print_r($data, true));
+        return new JsonModel();
     }
 }

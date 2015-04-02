@@ -164,16 +164,15 @@ return [
                     ],
                 ],
             ],
-            'puppet-server' => [
+            'api-puppet-server' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/puppet/server[s][/:hostname]',
+                    'route' => '/api/puppet/server[s][/:id]',
                     'constraints' => [
-                        'hostname' => '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])',
+                        'id' => '(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])',
                     ],
                     'defaults' => [
                         'controller' => 'KmbPuppet\Controller\Server',
-                        'action' => 'show',
                     ],
                 ],
             ],

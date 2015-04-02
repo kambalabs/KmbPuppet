@@ -36,22 +36,32 @@ class ServerControllerTest extends AbstractHttpControllerTestCase
     }
 
     /** @test */
-    public function canShow()
+    public function canGet()
     {
-        $this->dispatch('/puppet/server/node1.local');
+        $this->dispatch('/api/puppet/server/node1.local');
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Server');
-        $this->assertActionName('show');
+        $this->assertActionName('get');
     }
 
     /** @test */
-    public function canShowAll()
+    public function canGetList()
     {
-        $this->dispatch('/puppet/servers');
+        $this->dispatch('/api/puppet/servers');
 
         $this->assertResponseStatusCode(200);
         $this->assertControllerName('KmbPuppet\Controller\Server');
-        $this->assertActionName('show');
+        $this->assertActionName('getList');
+    }
+
+    /** @test */
+    public function canUpdate()
+    {
+        $this->dispatch('/api/puppet/server/node1.local', 'PUT', []);
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Server');
+        $this->assertActionName('update');
     }
 }
