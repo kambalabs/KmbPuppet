@@ -34,11 +34,7 @@ use Symfony\Component\Yaml\Yaml;
 use Zend\Authentication\AuthenticationService;
 use Zend\Form\Factory;
 use Zend\Form\Form;
-use Zend\InputFilter\FileInput;
-use Zend\InputFilter\InputFilter;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Validator\File\Exists;
-use Zend\Validator\ValidatorChain;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
@@ -97,8 +93,8 @@ class RevisionsController extends AbstractActionController implements Authentica
             ],
             'input_filter' => [
                 'file' => [
-                    'name'       => 'file',
-                    'required'   => true,
+                    'name' => 'file',
+                    'required' => true,
                     'validators' => [
                         [
                             'name' => 'fileextension',

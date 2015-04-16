@@ -26,10 +26,18 @@ class FormatModuleVersion extends AbstractHelper
 {
     /**
      * @param string $version
+     * @param boolean $withCommit
      * @return string
      */
-    public function __invoke($version)
+    public function __invoke($version, $withCommit = false)
     {
-        return $this->view->escapeHtml(preg_replace('/^[0-9.]*-[0-9]*-/', '', $version));
+        preg_match('/^(?P<tag>[0-9.]*)(-[0-9]*)?(-(?P<commit>[a-fA-F0-9]{7}))?(-(?P<branch>.*))?$/', $version, $matches);
+        if (isset($matches['branch'])) {
+            if ($withCommit && !empty($matches['commit'])) {
+                return $this->view->escapeHtml($matches['branch'] . ' (' . $matches['commit'] . ')');
+            }
+            return $this->view->escapeHtml($matches['branch']);
+        }
+        return $this->view->escapeHtml($matches['tag']);
     }
 }

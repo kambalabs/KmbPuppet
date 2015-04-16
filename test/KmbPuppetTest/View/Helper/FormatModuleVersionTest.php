@@ -18,14 +18,25 @@ class FormatModuleVersionTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function canFormatBranchVersion()
     {
+        $this->assertEquals('## master ##', $this->formatModuleVersion('1.0.1-master'));
         $this->assertEquals('## master ##', $this->formatModuleVersion('1.0.1-23-master'));
+        $this->assertEquals('## master ##', $this->formatModuleVersion('1.0.1-23-a32f341-master'));
+    }
+
+    /** @test */
+    public function canFormatBranchVersionWithCommit()
+    {
+        $this->assertEquals('## master ##', $this->formatModuleVersion('1.0.1-master', true));
+        $this->assertEquals('## master ##', $this->formatModuleVersion('1.0.1-23-master', true));
+        $this->assertEquals('## master (a32f341) ##', $this->formatModuleVersion('1.0.1-23-a32f341-master', true));
     }
 
     /**
      * @param string $version
+     * @param boolean $withCommit
      * @return string
      */
-    private function formatModuleVersion($version)
+    private function formatModuleVersion($version, $withCommit = false)
     {
         $helpers = new HelperPluginManager();
         $helpers->setService('escapeHtml', new FakeEscapeHtmlHelper());
@@ -34,6 +45,6 @@ class FormatModuleVersionTest extends \PHPUnit_Framework_TestCase
         /** @var FormatModuleVersion $helper */
         $helper = Bootstrap::getServiceManager()->get('ViewHelperManager')->get('formatModuleVersion');
         $helper->setView($view);
-        return $helper($version);
+        return $helper($version, $withCommit);
     }
 }
