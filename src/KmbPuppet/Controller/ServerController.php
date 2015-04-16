@@ -104,7 +104,6 @@ class ServerController extends AbstractRestfulController
 
     public function update($id, $data)
     {
-        error_log(print_r($data, true));
         return new JsonModel();
     }
 }

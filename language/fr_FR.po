@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-31 14:48+0100\n"
-"PO-Revision-Date: 2015-03-31 14:48+0100\n"
+"POT-Creation-Date: 2015-04-16 12:42+0100\n"
+"PO-Revision-Date: 2015-04-16 12:42+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -16,43 +16,43 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../config/module.config.php:222 ../config/module.config.php:274
+#: ../config/module.config.php:221 ../config/module.config.php:273
 msgid "Puppet"
 msgstr "Puppet"
 
-#: ../config/module.config.php:227 ../config/module.config.php:281
+#: ../config/module.config.php:226 ../config/module.config.php:280
 #: ../view/kmb-puppet/reports/index.phtml:3
 msgid "Day reports"
 msgstr "Rapports du jour"
 
-#: ../config/module.config.php:235 ../config/module.config.php:288
+#: ../config/module.config.php:234 ../config/module.config.php:287
 #: ../view/kmb-puppet/environments/index.phtml:219
 msgid "Environments"
 msgstr "Environnements"
 
-#: ../config/module.config.php:244 ../config/module.config.php:295
+#: ../config/module.config.php:243 ../config/module.config.php:294
 msgid "Modules"
 msgstr "Modules"
 
-#: ../config/module.config.php:252 ../config/module.config.php:320
+#: ../config/module.config.php:251 ../config/module.config.php:319
 #: ../view/kmb-puppet/groups/index.phtml:8
 msgid "Groups"
 msgstr "Groupes"
 
-#: ../config/module.config.php:260 ../config/module.config.php:336
+#: ../config/module.config.php:259 ../config/module.config.php:335
 msgid "Changes"
 msgstr "Changements"
 
-#: ../config/module.config.php:303
+#: ../config/module.config.php:302
 msgid "Module"
 msgstr "Module"
 
-#: ../config/module.config.php:310
+#: ../config/module.config.php:309
 #: ../src/KmbPuppet/View/Decorator/ReportClassNameDecorator.php:33
 msgid "Class"
 msgstr "Classe"
 
-#: ../config/module.config.php:328
+#: ../config/module.config.php:327
 msgid "Group"
 msgstr "Groupe"
 
@@ -120,19 +120,19 @@ msgid "Initialization"
 msgstr "Initialisation"
 
 #: ../src/KmbPuppet/Controller/EnvironmentsController.php:545
-#: ../src/KmbPuppet/Controller/RevisionsController.php:214
+#: ../src/KmbPuppet/Controller/RevisionsController.php:266
 #: ../view/kmb-puppet/group/show.phtml:25
 msgid "include"
 msgstr "inclus"
 
 #: ../src/KmbPuppet/Controller/EnvironmentsController.php:546
-#: ../src/KmbPuppet/Controller/RevisionsController.php:215
+#: ../src/KmbPuppet/Controller/RevisionsController.php:267
 #: ../view/kmb-puppet/group/show.phtml:21
 msgid "exclude"
 msgstr "exclus"
 
 #: ../src/KmbPuppet/Controller/EnvironmentsController.php:547
-#: ../src/KmbPuppet/Controller/RevisionsController.php:216
+#: ../src/KmbPuppet/Controller/RevisionsController.php:268
 msgid "classes"
 msgstr "classes"
 
@@ -279,9 +279,9 @@ msgstr "Suppression du paramètre %s de la classe %s du groupe %s"
 #: ../src/KmbPuppet/Controller/RevisionController.php:45
 #: ../src/KmbPuppet/Controller/RevisionController.php:79
 #: ../src/KmbPuppet/Controller/RevisionController.php:104
-#: ../src/KmbPuppet/Controller/RevisionsController.php:47
-#: ../src/KmbPuppet/Controller/RevisionsController.php:67
-#: ../src/KmbPuppet/Controller/RevisionsController.php:116
+#: ../src/KmbPuppet/Controller/RevisionsController.php:52
+#: ../src/KmbPuppet/Controller/RevisionsController.php:72
+#: ../src/KmbPuppet/Controller/RevisionsController.php:168
 msgid "<h4>Warning !</h4><p>You have to select an environment first !</p>"
 msgstr ""
 "<h4>Attention !</h4><p>Vous devez d'abord choisir un environnement !</p>"
@@ -322,9 +322,12 @@ msgstr ""
 "définition de la classe"
 
 #: ../src/KmbPuppet/Controller/RevisionController.php:60
-#: ../src/KmbPuppet/Controller/RevisionsController.php:76
 msgid "You must enter a comment"
 msgstr "Vous devez saisir un commentaire"
+
+#: ../src/KmbPuppet/Controller/RevisionsController.php:135
+msgid "You must enter a comment at most 256 characters long"
+msgstr "Vous devez saisir un commentaire d'au plus 256 caractères de long"
 
 #: ../src/KmbPuppet/Listener/RevisionLogsListener.php:80
 msgid "Warning !"
@@ -496,7 +499,7 @@ msgstr "Groupe %s"
 
 #: ../view/kmb-puppet/environments/diff.phtml:79
 #: ../view/kmb-puppet/environments/index.phtml:255
-#: ../view/kmb-puppet/group/show.phtml:218
+#: ../view/kmb-puppet/group/show.phtml:211
 #: ../view/kmb-puppet/groups/index.phtml:127
 #: ../view/kmb-puppet/modules/index.phtml:82
 #: ../view/kmb-puppet/revisions/diff.phtml:41
@@ -909,30 +912,18 @@ msgstr "Classe %s"
 msgid "Add a parameter"
 msgstr "Ajouter un paramètre"
 
-#: ../view/kmb-puppet/group/show.phtml:212
-msgid "edit"
-msgstr "éditer"
-
-#: ../view/kmb-puppet/group/show.phtml:214
-msgid "Description"
-msgstr "Description"
-
-#: ../view/kmb-puppet/group/show.phtml:216
-msgid "No description yet provided for this group."
-msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
-
-#: ../view/kmb-puppet/group/show.phtml:220
+#: ../view/kmb-puppet/group/show.phtml:213
 msgid "Click on the servers count to preview the list of assigned servers."
 msgstr ""
 "Cliquez sur le nombre de serveurs pour prévisualiser la liste des serveurs "
 "affectés."
 
-#: ../view/kmb-puppet/group/show.phtml:221
+#: ../view/kmb-puppet/group/show.phtml:214
 msgid "View the detail configuration of a class by clicking on its name."
 msgstr ""
 "Accéder au détail de la configuration d'une classe en cliquant sur son nom."
 
-#: ../view/kmb-puppet/group/show.phtml:222
+#: ../view/kmb-puppet/group/show.phtml:215
 msgid "Click on a parameter or a value to update it."
 msgstr "Cliquer sur un paramètre ou une valeur pour le (ou la) modifier."
 
@@ -1384,6 +1375,15 @@ msgstr "Groupes de l'environnement %s"
 #: ../view/kmb-puppet/server/puppetconfig.tab.title.phtml:1
 msgid "Puppet configuration"
 msgstr "Configuration Puppet"
+
+#~ msgid "edit"
+#~ msgstr "éditer"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "No description yet provided for this group."
+#~ msgstr "Aucune description n'est pour l'instant disponible pour ce groupe."
 
 #~ msgid "Select the first environment"
 #~ msgstr "Choisir le 1er environnement"

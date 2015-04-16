@@ -32,8 +32,13 @@ use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;
 use Symfony\Component\Yaml\Yaml;
 use Zend\Authentication\AuthenticationService;
+use Zend\Form\Factory;
 use Zend\Form\Form;
+use Zend\InputFilter\FileInput;
+use Zend\InputFilter\InputFilter;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Validator\File\Exists;
+use Zend\Validator\ValidatorChain;
 use Zend\View\Model\ViewModel;
 use ZfcRbac\Exception\UnauthorizedException;
 
@@ -71,15 +76,40 @@ class RevisionsController extends AbstractActionController implements Authentica
             throw new UnauthorizedException();
         }
 
-        $comment = $this->params()->fromPost('comment');
-        if (empty($comment)) {
-            $this->flashMessenger()->addErrorMessage($this->translate('You must enter a comment'));
+        $comment = $this->params()->fromPost('comment', '');
+        if (strlen($comment) < 1 || strlen($comment) > 256) {
+            $this->flashMessenger()->addErrorMessage($this->translate('You must enter a comment at most 256 characters long'));
             return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
         }
 
         $request = $this->getRequest();
-        $form = new Form('import');
-        $form->add(['type' => 'Zend\Form\Element\File', 'name' => 'file']);
+
+        $formFactory = new Factory();
+        /** @var Form $form */
+        $form = $formFactory->createForm([
+            'elements' => [
+                [
+                    'spec' => [
+                        'name' => 'file',
+                        'type' => 'File',
+                    ]
+                ],
+            ],
+            'input_filter' => [
+                'file' => [
+                    'name'       => 'file',
+                    'required'   => true,
+                    'validators' => [
+                        [
+                            'name' => 'fileextension',
+                            'options' => [
+                                'extension' => 'yaml'
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
         $form->setData(array_merge_recursive($request->getPost()->toArray(), $request->getFiles()->toArray()));
 
         if (!$form->isValid()) {
