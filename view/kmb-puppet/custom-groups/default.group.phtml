@@ -1,0 +1,160 @@
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+            <span>
+                <?php echo sprintf($this->translate('Group %s'), $this->truncate($this->group->getName(), 45)) ?>
+            </span>
+            <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
+                <a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#add-class"<?php if (!$this->group->hasAvailableClasses()): ?> disabled="disabled"<?php endif ?>>
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    <?php echo $this->translate('Add a class') ?>
+                </a>
+            <?php endif ?>
+        </div>
+        <div class="panel-body">
+            <?php if ($this->group->hasClasses()): ?>
+                <table class="table table-striped">
+                    <tbody>
+                    <?php foreach ($this->group->getClasses() as $class): ?>
+                        <tr<?php if (isset($this->selectedClass) && $this->selectedClass->getId() === $class->getId()): ?> class="selected-class"<?php endif ?>>
+                            <td style="width: 90%">
+                                <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
+                                    <a href="#" title="<?php echo $this->translate('Remove class') ?>" data-href="<?php echo $this->url('puppet-group-remove-class', ['id' => $this->group->getId(), 'className' => $class->getName()], [], true) ?>" data-toggle="modal" data-target="#confirm-remove" data-confirm-param1="<?php echo sprintf($this->translate('You are about to remove <strong>%s</strong> class.'), $class->getName()) ?>"><i class="glyphicon glyphicon-remove red"></i></a>
+                                <?php endif ?>
+                                <a href="#" title="<?php echo $this->translate('View class parameters') ?>" data-class-id="<?php echo $class->getId() ?>" class="class-name<?php if (isset($this->errors[$class->getName()])): ?> red<?php endif ?>"><span class="glyphicon glyphicon-search darkgrey" style="margin-right: 6px"></span><?php echo $class->getName() ?></a>
+                            </td>
+                            <td class="text-right">
+                                <?php if (isset($this->errors[$class->getName()])): ?>
+                                    <span class="label label-uniform label-danger">
+                                <?php echo $this->translate('Error') ?>
+                            </span>
+                                <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <h4><?php echo $this->translate('No classes available !') ?></h4>
+            <?php endif ?>
+        </div>
+    </div>
+</div>
+<div id="add-class" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addClassLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h1 class="modal-title" id="addClassLabel"><?php echo $this->translate('Add a class') ?></h1>
+            </div>
+            <form class="" role="form" action="<?php echo $this->url('puppet-group', ['action' => 'add-class'], [], true) ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select id="class-select" class="form-control" name="class" data-placeholder="<?php echo $this->translate('Select a class') ?>" data-rel="chosen" style="display: none;">
+                            <option></option>
+                            <?php foreach ($this->group->getAvailableClasses() as $moduleName => $classes): ?>
+                                <optgroup label="<?php echo $moduleName ?>">
+                                    <?php foreach ($classes as $className): ?>
+                                        <option><?php echo $className ?></option>
+                                    <?php endforeach ?>
+                                </optgroup>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                    <button type="submit" class="btn btn-primary"><?php echo $this->translate('Add') ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="confirm-remove" class="modal fade confirm" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h1 class="modal-title" id="confirmRemoveLabel"><?php echo $this->translate('Confirm Remove') ?></h1>
+            </div>
+            <div class="modal-body">
+                <blockquote>
+                    <p class="confirm-param1"></p>
+                    <p><?php echo $this->translate('Do you want to proceed ?') ?></p>
+                </blockquote>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                <a href="#" class="btn btn-danger danger"><?php echo $this->translate('Remove') ?></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="confirm-remove-value" class="modal fade confirm" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveValueLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h1 class="modal-title" id="confirmRemoveValueLabel"><?php echo $this->translate('Confirm Remove') ?></h1>
+            </div>
+            <div class="modal-body">
+                <blockquote>
+                    <p class="confirm-text"></p>
+                    <p><?php echo $this->translate('Do you want to proceed ?') ?></p>
+                </blockquote>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Cancel') ?></button>
+                <a href="#" class="btn btn-danger danger"><?php echo $this->translate('Remove') ?></a>
+            </div>
+        </div>
+    </div>
+</div>
+<?php if ($this->group->hasClasses()): ?>
+    <?php foreach ($this->group->getClasses() as $class): ?>
+        <div data-class-id="<?php echo $class->getId() ?>" class="col-sm-6 class-parameters<?php if (isset($this->selectedClass) && $this->selectedClass->getId() === $class->getId()): ?> active<?php endif ?>">
+            <div class="panel panel-default" style="min-height: 370px">
+                <div class="panel-heading">
+                    <button type="button" class="close">&times;</button>
+                    <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+            <span>
+                <?php echo sprintf($this->translate('Class %s'), $this->truncate($class->getName(), 36)) ?>
+            </span>
+                    <?php if ($this->isGranted('manageEnv', $this->environment)): ?>
+                        <a href="#" class="add-parameter btn btn-info btn-xs pull-right"<?php if (!$class->hasAvailableParameters()): ?> disabled="disabled"<?php endif ?> style="margin-right: 10px">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            <?php echo $this->translate('Add a parameter') ?>
+                        </a>
+                    <?php endif ?>
+                </div>
+                <div class="panel-body">
+                    <div class="tree">
+                        <?php if (isset($this->errors[$class->getName()]['global'])): ?>
+                            <div class="alert alert-danger" style="padding: 8px 16px; margin-bottom: 12px" role="alert">
+                                <?php echo $this->errors[$class->getName()]['global'] ?>
+                            </div>
+                        <?php endif ?>
+                        <a href="#" class="btn btn-default collapse-all pull-right">
+                            <span class="glyphicon glyphicon-minus-sign"></span>
+                            <?php echo $this->translate('Collapse all') ?>
+                        </a>
+                        <a href="#" class="btn btn-default expand-all pull-right" style="display:none">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            <?php echo $this->translate('Expand all') ?>
+                        </a>
+                        <?php echo $this->partial('kmb-puppet/group/parameters', ['environment' => $this->environment, 'group' => $this->group, 'class' => $class, 'parameters' => $class->getParameters(), 'availableParameters' => $class->getAvailableParameters(), 'errors' => isset($this->errors[$class->getName()]['parameters']) ? $this->errors[$class->getName()]['parameters']: []]) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach ?>
+<?php endif ?>
+<div class="col-sm-6" id="group-description" <?php if (isset($this->selectedClass)): ?>style="display: none" <?php endif ?>>
+    <h1><?php echo $this->translate('Help') ?></h1>
+    <blockquote>
+        <p><?php echo $this->translate('Click on the servers count to preview the list of assigned servers.') ?></p>
+        <p><?php echo $this->translate('View the detail configuration of a class by clicking on its name.') ?></p>
+        <p><?php echo $this->translate('Click on a parameter or a value to update it.') ?></p>
+    </blockquote>
+</div>

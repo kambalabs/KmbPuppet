@@ -133,8 +133,12 @@ class GroupsController extends AbstractActionController implements Authenticated
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
+        $type = $this->params()->fromPost('type');
         $group = new Group($name);
         $group->setRevision($currentRevision);
+        if (!empty($type)) {
+            $group->setType($type);
+        }
         $groupRepository->add($group);
         $this->writeRevisionLog($currentRevision, sprintf($this->translate('Create group %s'), $name));
 

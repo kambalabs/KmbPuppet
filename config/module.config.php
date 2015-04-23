@@ -356,9 +356,11 @@ return [
         ],
         'factories' => [
             'KmbPuppet\View\Helper\EnvironmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelectFactory',
+            'KmbPuppet\View\Helper\CustomGroups' => 'KmbPuppet\View\Helper\CustomGroupsFactory',
         ],
         'aliases' => [
             'environmentSelect' => 'KmbPuppet\View\Helper\EnvironmentSelect',
+            'customGroups' => 'KmbPuppet\View\Helper\CustomGroups',
         ],
     ],
     'view_helper_config' => [
@@ -372,6 +374,15 @@ return [
                 [
                     'action' => 'KmbPuppet\Widget\ServerTabContentWidgetAction',
                     'template' => 'kmb-puppet/server/puppetconfig.tab.content.phtml',
+                ],
+            ],
+        ],
+        'custom_groups' => [
+            'default' => [
+                'label' => $translate('Add a group'),
+                'description' => $translate('A group allows to configure a set of Puppet classes and assigned them to a list of servers.'),
+                'widget' => [
+                    'template' => 'kmb-puppet/custom-groups/default.group.phtml',
                 ],
             ],
         ],
@@ -397,6 +408,7 @@ return [
     'service_manager' => [
         'invokables' => [
             'KmbPuppet\Listener\RevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
+            'KmbPuppet\Listener\CustomGroupsViewHelperListener' => 'KmbPuppet\Listener\CustomGroupsViewHelperListener',
             'KmbPuppet\Validator\GroupClassValidator' => 'KmbPuppet\Validator\GroupClassValidator',
         ],
         'factories' => [
@@ -408,6 +420,7 @@ return [
         ],
         'aliases' => [
             'kmbRevisionLogsListener' => 'KmbPuppet\Listener\RevisionLogsListener',
+            'customGroupsViewHelperListener' => 'KmbPuppet\Listener\CustomGroupsViewHelperListener',
         ],
         'shared' => [
             'KmbPuppet\Validator\GroupClassValidator' => false,
@@ -415,6 +428,7 @@ return [
     ],
     'listeners' => [
         'kmbRevisionLogsListener',
+        'customGroupsViewHelperListener',
     ],
     'zfc_rbac' => [
         'guards' => [

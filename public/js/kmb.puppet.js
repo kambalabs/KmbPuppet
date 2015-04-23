@@ -216,7 +216,10 @@ $(window).load(function () {
         setTimeout(function() { groupName.focus(); groupName.select(); }, 500);
     });
 
-    $('#new-group').on('show.bs.modal', function () {
+    $('#new-group').on('show.bs.modal', function (e) {
+        $('#newGroupLabel').html($(e.relatedTarget).attr('data-title'));
+        $('#new-group-description').html($(e.relatedTarget).attr('data-description'));
+        $('#new-group-type').val($(e.relatedTarget).attr('data-type'));
         setTimeout(function() { $('#create-group-name').focus(); }, 500);
     });
 });

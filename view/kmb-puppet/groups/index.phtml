@@ -7,10 +7,23 @@
                 <span>
                     <?php echo $this->translate('Groups') ?>
                     <?php if (isset($this->environment) && $this->isGranted('manageEnv', $this->environment)): ?>
-                    <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->groups)): ?> disabled<?php endif ?>" data-toggle="modal" data-target="#new-group" title="<?php echo $this->translate('Add a group') ?>">
+                    <?php if ($this->customGroups()->hasOnlyDefault()): ?>
+                    <a class="btn btn-info btn-xs pull-right<?php if (!isset($this->groups)): ?> disabled<?php endif ?>" data-toggle="modal" data-target="#new-group" data-title="<?php echo $this->translate('Add a group') ?>" data-description="<?php echo $this->translate('A group allows to configure a set of Puppet classes and assigned them to a list of servers.') ?>" title="<?php echo $this->translate('Add a group') ?>">
                         <span class="glyphicon glyphicon-plus-sign"></span>
                         <?php echo $this->translate('Add') ?>
                     </a>
+                    <?php else: ?>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-info btn-xs dropdown-toggle<?php if (!isset($this->groups)): ?> disabled<?php endif ?>" data-toggle="dropdown" aria-expanded="false">
+                            <?php echo $this->translate('Add') ?> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                        <?php foreach ($this->customGroups()->getConfig() as $type => $config): ?>
+                            <li><a href="#" data-toggle="modal" data-target="#new-group" data-title="<?php echo $this->translate($config['label']) ?>" data-description="<?php echo $this->translate($config['description']) ?>" data-type="<?php echo $type ?>"><?php echo $this->translate($config['label']) ?></a></li>
+                        <?php endforeach ?>
+                        </ul>
+                    </div>
+                    <?php endif ?>
                     <?php endif ?>
                 </span>
             </div>
@@ -103,12 +116,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h1 class="modal-title" id="newGroupLabel"><?php echo $this->translate('New group') ?></h1>
+                    <h1 class="modal-title" id="newGroupLabel"></h1>
                 </div>
                 <form role="form" action="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'create'], [], true) ?>" method="post">
+                    <input type="hidden" name="type" value="" id="new-group-type" />
                     <div class="modal-body">
-                        <blockquote style="margin-top: 16px">
-                            <p><?php echo $this->translate('A group allows to configure a set of Puppet classes and assigned them to a list of servers.') ?></p>
+                        <blockquote style="margin-top: 16px" id="new-group-description">
                         </blockquote>
                         <div class="form-group">
                             <label for="create-group-name"><?php echo $this->translate('Choose a name') ?></label>

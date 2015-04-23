@@ -20,4 +20,18 @@ return [
             'translate' => 'KmbBaseTest\Controller\Plugin\FakeTranslateFactory',
         ],
     ],
+    'view_helper_config' => [
+        'custom_groups' => [
+            'fake' => [
+                'label' => 'fake label',
+                'description' => 'fake description',
+                'unique' => true,
+                'required_modules' => ['fake-module'],
+                'widget' => [
+                    'action' => 'Fake\Widget\FakeWidgetAction',
+                    'template' => 'fake.phtml',
+                ],
+            ],
+        ],
+    ],
 ];
