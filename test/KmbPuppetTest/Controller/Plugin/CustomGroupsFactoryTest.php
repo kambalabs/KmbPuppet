@@ -1,19 +1,18 @@
 <?php
-namespace KmbPuppetTest\View\Helper;
+namespace KmbPuppetTest\Controller\Plugin;
 
-use KmbPuppet\View\Helper\CustomGroups;
+use KmbPuppet\Controller\Plugin\CustomGroups;
 use KmbPuppetTest\Bootstrap;
 
 class CustomGroupsFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function canCreateHelper()
+    public function canCreatePlugin()
     {
-        /** @var CustomGroups $helper */
-        $helper = Bootstrap::getServiceManager()->get('ViewHelperManager')->get('customGroups');
+        /** @var CustomGroups $plugin */
+        $plugin = Bootstrap::getServiceManager()->get('ControllerPluginManager')->get('customGroups');
 
-        $this->assertInstanceOf('KmbPuppet\View\Helper\CustomGroups', $helper);
-        $this->assertInstanceOf('Zend\ServiceManager\ServiceManager', $helper->getServiceLocator());
+        $this->assertInstanceOf('KmbPuppet\Controller\Plugin\CustomGroups', $plugin);
         $this->assertEquals([
             'default' => [
                 'label' => 'Add a group',
@@ -31,6 +30,6 @@ class CustomGroupsFactoryTest extends \PHPUnit_Framework_TestCase
                     'template' => 'fake.phtml',
                 ],
             ],
-        ], $helper->getConfig());
+        ], $plugin->getConfig());
     }
 }

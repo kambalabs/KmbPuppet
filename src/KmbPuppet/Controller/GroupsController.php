@@ -23,8 +23,11 @@ namespace KmbPuppet\Controller;
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\Group;
+use KmbDomain\Model\GroupClass;
+use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPmProxy\Hydrator\GroupHydratorInterface;
+use KmbPmProxy\Service\PuppetClassInterface;
 use KmbPmProxy\Service\PuppetModuleInterface;
 use KmbPuppet\Service;
 use KmbPuppet\Validator\GroupClassValidator;
@@ -69,7 +72,7 @@ class GroupsController extends AbstractActionController implements Authenticated
                         /** @var GroupClassValidator $classValidator */
                         $classValidator = $this->serviceLocator->get('KmbPuppet\Validator\GroupClassValidator');
                         if (!$classValidator->isValid($class)) {
-                            $errors[$group->getName()] = isset($errors[$group->getName()]) ? $errors[$group->getName()]+1 : 1;
+                            $errors[$group->getName()] = isset($errors[$group->getName()]) ? $errors[$group->getName()] + 1 : 1;
                         }
                     }
                 }
@@ -124,6 +127,9 @@ class GroupsController extends AbstractActionController implements Authenticated
             $this->flashMessenger()->addErrorMessage($this->translate('This environment is invalid, it has no current revision. Please contact administrator !'));
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
 
         $name = $this->params()->fromPost('name');
         /** @var GroupRepositoryInterface $groupRepository */
@@ -133,14 +139,37 @@ class GroupsController extends AbstractActionController implements Authenticated
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
-        $type = $this->params()->fromPost('type');
         $group = new Group($name);
         $group->setRevision($currentRevision);
+        $type = $this->params()->fromPost('type');
         if (!empty($type)) {
+            if (!$this->customGroups()->hasType($type)) {
+                $this->flashMessenger()->addErrorMessage(sprintf($this->translate('Unknown custom group type %s !'), $type));
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
             $group->setType($type);
         }
+
+        /** @var PuppetClassInterface $puppetClassService */
+        $puppetClassService = $this->serviceLocator->get('pmProxyPuppetClassService');
+        /** @var GroupParameterFactoryInterface $groupParameterFactory */
+        $groupParameterFactory = $this->serviceLocator->get('groupParameterFactory');
+        foreach ($this->customGroups()->defaultClasses($group->getType()) as $className) {
+            $pmProxyPuppetClass = $puppetClassService->getByEnvironmentAndName($environment, $className);
+            if (isset($pmProxyPuppetClass)) {
+                $parameters = $groupParameterFactory->createRequiredFromTemplates($pmProxyPuppetClass->getParametersTemplates());
+                $groupClass = new GroupClass();
+                $groupClass->setName($className);
+                $groupClass->setGroup($group);
+                $groupClass->setParameters($parameters);
+                $group->addClass($groupClass);
+            } else {
+                $this->serviceLocator->get('Logger')->warn("Unable to install default class '$className' for " . $group->getType() . " custom group !");
+            }
+        }
+
         $groupRepository->add($group);
-        $this->writeRevisionLog($currentRevision, sprintf($this->translate('Create group %s'), $name));
+        $this->writeRevisionLog($currentRevision, sprintf($this->translate('Create%s group %s'), !empty($type) ? ' ' . $type : '', $name));
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate('The group %s has been successfully created !'), $name));
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);

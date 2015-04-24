@@ -206,6 +206,7 @@ return [
     'controller_plugins' => [
         'factories' => [
             'writeRevisionLog' => 'KmbPuppet\Controller\Plugin\WriteRevisionLogFactory',
+            'customGroups' => 'KmbPuppet\Controller\Plugin\CustomGroupsFactory',
         ],
     ],
     'asset_manager' => [
@@ -377,15 +378,6 @@ return [
                 ],
             ],
         ],
-        'custom_groups' => [
-            'default' => [
-                'label' => $translate('Add a group'),
-                'description' => $translate('A group allows to configure a set of Puppet classes and assigned them to a list of servers.'),
-                'widget' => [
-                    'template' => 'kmb-puppet/custom-groups/default.group.phtml',
-                ],
-            ],
-        ],
     ],
     'view_manager' => [
         'strategies' => [
@@ -429,6 +421,15 @@ return [
     'listeners' => [
         'kmbRevisionLogsListener',
         'customGroupsViewHelperListener',
+    ],
+    'custom_groups' => [
+        'default' => [
+            'label' => $translate('Add a group'),
+            'description' => $translate('A group allows to configure a set of Puppet classes and assigned them to a list of servers.'),
+            'widget' => [
+                'template' => 'kmb-puppet/custom-groups/default.group.phtml',
+            ],
+        ],
     ],
     'zfc_rbac' => [
         'guards' => [

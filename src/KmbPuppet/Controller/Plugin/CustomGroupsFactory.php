@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Kamba.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace KmbPuppet\View\Helper;
+namespace KmbPuppet\Controller\Plugin;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -33,14 +33,11 @@ class CustomGroupsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $serviceManager = $serviceLocator->getServiceLocator();
-        $helper = new CustomGroups();
-        $helper->setServiceLocator($serviceManager);
-        $config = $serviceManager->get('Config');
+        $plugin = new CustomGroups();
+        $config = $serviceLocator->getServiceLocator()->get('Config');
         if (isset($config['custom_groups'])) {
-            $helper->setConfig($config['custom_groups']);
+            $plugin->setConfig($config['custom_groups']);
         }
-
-        return $helper;
+        return $plugin;
     }
 }
