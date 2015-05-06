@@ -130,6 +130,7 @@ class RevisionController extends AbstractActionController implements Authenticat
                 return [
                     'name' => $group->getName(),
                     'ordering' => $group->getOrdering(),
+                    'type' => $group->getType(),
                     'include_pattern' => $group->getIncludePattern(),
                     'exclude_pattern' => $group->getExcludePattern(),
                     'classes' => $group->dump(),
