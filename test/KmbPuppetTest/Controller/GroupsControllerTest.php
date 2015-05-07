@@ -88,4 +88,14 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/group/2');
     }
+
+    /** @test */
+    public function canImport()
+    {
+        $this->dispatch('/env/1/puppet/groups/import', 'POST', ['confirmFile' => 'kmb_abcd1234.yaml']);
+
+        echo $this->getResponse()->getContent();
+        $this->assertResponseStatusCode(302);
+        $this->assertRedirectTo('/env/1/puppet/groups');
+    }
 }

@@ -24,6 +24,8 @@ use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\Group;
 use KmbDomain\Model\GroupClass;
+use KmbDomain\Model\GroupFactoryInterface;
+use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\GroupParameterFactoryInterface;
 use KmbDomain\Model\GroupRepositoryInterface;
 use KmbPmProxy\Hydrator\GroupHydratorInterface;
@@ -31,6 +33,9 @@ use KmbPmProxy\Service\PuppetClassInterface;
 use KmbPmProxy\Service\PuppetModuleInterface;
 use KmbPuppet\Service;
 use KmbPuppet\Validator\GroupClassValidator;
+use Symfony\Component\Yaml\Yaml;
+use Zend\Form\Factory;
+use Zend\Form\Form;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -118,7 +123,7 @@ class GroupsController extends AbstractActionController implements Authenticated
         /** @var EnvironmentInterface $environment */
         $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            $this->globalMessenger()->addDangerMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
+            $this->flashMessenger()->addErrorMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
             return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
         }
 
@@ -169,9 +174,142 @@ class GroupsController extends AbstractActionController implements Authenticated
         }
 
         $groupRepository->add($group);
-        $this->writeRevisionLog($currentRevision, sprintf($this->translate('Create%s group %s'), !empty($type) ? ' ' . $type : '', $name));
+        $this->writeRevisionLog($currentRevision, sprintf($this->translate('Create%s group %s'), $group->isCustom() ? ' ' . $group->getType() : '', $group->getName()));
 
         $this->flashMessenger()->addSuccessMessage(sprintf($this->translate('The group %s has been successfully created !'), $name));
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
+    }
+
+    public function importAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->getServiceLocator()->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            $this->flashMessenger()->addErrorMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+        $currentRevision = $environment->getCurrentRevision();
+        if ($currentRevision == null) {
+            $this->flashMessenger()->addErrorMessage($this->translate('This environment is invalid, it has no current revision. Please contact administrator !'));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+        if (!$this->isGranted('manageEnv', $environment)) {
+            throw new UnauthorizedException();
+        }
+
+        $request = $this->getRequest();
+
+        $tmpdir = $this->getTmpDir();
+        $confirmFile = $this->params()->fromPost('confirmFile');
+        $confirmFileFullPath = '';
+        if ($confirmFile) {
+            if (!preg_match('/^[\w\.]+$/', $confirmFile)) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $confirmFileFullPath = $tmpdir . '/' . $confirmFile;
+            if (!file_exists($confirmFileFullPath)) {
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            if ($this->params()->fromPost('cancel')) {
+                unlink($confirmFileFullPath);
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+            $content = file_get_contents($confirmFileFullPath);
+        } else {
+            $formFactory = new Factory();
+            /** @var Form $form */
+            $form = $formFactory->createForm([
+                'elements' => [
+                    [
+                        'spec' => [
+                            'name' => 'file',
+                            'type' => 'File',
+                        ]
+                    ],
+                ],
+                'input_filter' => [
+                    'file' => [
+                        'name' => 'file',
+                        'required' => true,
+                        'validators' => [
+                            [
+                                'name' => 'fileextension',
+                                'options' => [
+                                    'extension' => 'yaml'
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
+            $form->setData(array_merge_recursive($request->getPost()->toArray(), $request->getFiles()->toArray()));
+
+            if (!$form->isValid()) {
+                foreach ($form->getMessages() as $message) {
+                    $this->flashMessenger()->addErrorMessage($message);
+                }
+                return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+            }
+
+            $formData = $form->getData();
+            $filename = $formData['file']['tmp_name'];
+            $content = file_get_contents($filename);
+        }
+        $data = Yaml::parse($content);
+
+        $revision = $environment->getCurrentRevision();
+        /** @var GroupFactoryInterface $groupFactory */
+        $groupFactory = $this->serviceLocator->get('groupFactory');
+        $group = $groupFactory->createFromImportedData($data);
+        $group->setRevision($revision);
+
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var EnvironmentInterface $environment */
+        $existingGroup = $groupRepository->getByNameAndRevision($group->getName(), $revision);
+        if (isset($existingGroup)) {
+            if (!$confirmFile) {
+                $diff = new \Diff($this->dumpGroup($existingGroup), $this->dumpGroup($group));
+                $render = $diff->render(new \Diff_Renderer_Html_SideBySide());
+                $destFile = uniqid('kmb_', true) . '.yaml';
+                move_uploaded_file($_FILES['file']['tmp_name'], $tmpdir . '/' . $destFile);
+                return new ViewModel(['group' => $group, 'groupDiff' => $render, 'confirmFile' => $destFile]);
+            }
+            $groupRepository->remove($existingGroup);
+        }
+        $groupRepository->add($group);
+        $this->writeRevisionLog($currentRevision, sprintf($this->translate('Import%s group %s'), $group->isCustom() ? ' ' . $group->getType() : '', $group->getName()));
+
+        if ($confirmFile) {
+            if (file_exists($confirmFileFullPath)) {
+                unlink($confirmFileFullPath);
+            }
+        }
+        return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+    }
+
+    /**
+     * @param GroupInterface $group
+     * @return array
+     */
+    protected function dumpGroup($group)
+    {
+        $fullDump = [
+            $this->translate('include') . ': ' . $group->getIncludePattern(),
+            $this->translate('exclude') . ': ' . $group->getExcludePattern(),
+            $this->translate('classes') . ': ',
+        ];
+        return array_merge($fullDump, explode(PHP_EOL, Yaml::dump($group->dump(), 20, 4)));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTmpDir()
+    {
+        $tmpdir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
+        if (strlen($tmpdir) <= 1) {
+            return '/tmp';
+        }
+        return rtrim($tmpdir, '/');
     }
 }

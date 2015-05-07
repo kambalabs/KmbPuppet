@@ -125,4 +125,14 @@ class GroupControllerTest extends AbstractHttpControllerTestCase
         $this->assertResponseStatusCode(302);
         $this->assertRedirectTo('/env/1/puppet/group/1');
     }
+
+    /** @test */
+    public function canExport()
+    {
+        $this->dispatch('/env/1/puppet/group/1/export');
+
+        $this->assertResponseStatusCode(200);
+        $this->assertControllerName('KmbPuppet\Controller\Group');
+        $this->assertActionName('export');
+    }
 }

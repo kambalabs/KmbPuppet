@@ -68,7 +68,7 @@ class RevisionsController extends AbstractActionController implements Authentica
             $this->globalMessenger()->addDangerMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
             return new ViewModel();
         }
-        if (!$this->isGranted('readEnv', $environment)) {
+        if (!$this->isGranted('manageEnv', $environment)) {
             throw new UnauthorizedException();
         }
 

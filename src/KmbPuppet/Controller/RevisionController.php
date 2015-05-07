@@ -101,8 +101,8 @@ class RevisionController extends AbstractActionController implements Authenticat
         /** @var EnvironmentInterface $environment */
         $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
         if ($environment == null) {
-            $this->globalMessenger()->addDangerMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
-            return new ViewModel();
+            $this->flashMessenger()->addErrorMessage($this->translate('<h4>Warning !</h4><p>You have to select an environment first !</p>'));
+            return $this->redirect()->toRoute('puppet', ['controller' => 'revisions', 'action' => 'index'], [], true);
         }
         if (!$this->isGranted('manageEnv', $environment)) {
             throw new UnauthorizedException();
@@ -127,14 +127,7 @@ class RevisionController extends AbstractActionController implements Authenticat
             'released_by' => $revision->getReleasedBy() ? : '',
             'comment' => $revision->getComment() ? : '',
             'groups' => array_map(function (GroupInterface $group) {
-                return [
-                    'name' => $group->getName(),
-                    'ordering' => $group->getOrdering(),
-                    'type' => $group->getType(),
-                    'include_pattern' => $group->getIncludePattern(),
-                    'exclude_pattern' => $group->getExcludePattern(),
-                    'classes' => $group->dump(),
-                ];
+                return $group->extract();
             }, $groups),
         ];
         $content = Yaml::dump($data, 20, 4);

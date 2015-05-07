@@ -37,7 +37,9 @@ use KmbPuppetDb\Model\NodeInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Zend\Http\Response;
 use ZfcRbac\Exception\UnauthorizedException;
+use Symfony\Component\Yaml\Yaml;
 
 class GroupController extends AbstractActionController implements AuthenticatedControllerInterface
 {
@@ -220,6 +222,44 @@ class GroupController extends AbstractActionController implements AuthenticatedC
         }
 
         return $this->redirect()->toRoute('puppet-group', ['action' => 'show', 'id' => $group->getId()], [], true);
+    }
+
+    public function exportAction()
+    {
+        /** @var EnvironmentInterface $environment */
+        $environment = $this->serviceLocator->get('EnvironmentRepository')->getById($this->params()->fromRoute('envId'));
+        if ($environment == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        /** @var GroupRepositoryInterface $groupRepository */
+        $groupRepository = $this->getServiceLocator()->get('GroupRepository');
+        /** @var GroupInterface $group */
+        $group = $groupRepository->getById($this->params()->fromRoute('id'));
+
+        if ($group == null) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        if ($group->getEnvironment()->getId() != $environment->getId()) {
+            return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
+        }
+
+        $content = Yaml::dump($group->extract(), 20, 4);
+
+        /** @var Response $response */
+        $response = $this->getResponse();
+        $response->setContent($content);
+
+        $filename = $group->getName() . '-' . date('Ymd-His') . '.yaml';
+
+        $headers = $response->getHeaders();
+        $headers->clearHeaders()
+            ->addHeaderLine('Content-Type', 'application/x-yaml')
+            ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->addHeaderLine('Content-Length', strlen($content));
+
+        return $response;
     }
 
     public function duplicateAction()

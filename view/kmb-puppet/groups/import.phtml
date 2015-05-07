@@ -1,0 +1,32 @@
+<?php $this->inlineScript()->prependFile($this->basePath() . '/js/kmb.puppet.js'); ?>
+<div class="row">
+    <div class="col-sm-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-cog"></span><span class="panel-break"></span>
+                <span><?php echo $this->translate('Import a group') ?></span>
+                <form class="inline-form pull-right" action="<?php echo $this->url('puppet', ['controller' => 'groups', 'action' => 'import'], [], true) ?>" method="post">
+                    <input type="hidden" name="confirmFile" value="<?php echo $this->confirmFile ?>" />
+                    <button type="submit" class="btn btn-default btn-xs" name="cancel"><?php echo $this->translate('Cancel') ?></button>
+                    <button type="submit" class="btn btn-primary btn-xs" name="confirm"><?php echo $this->translate('Confirm') ?></button>
+                </form>
+            </div>
+            <div class="panel-body">
+            <h4 class="red text-center"><?php echo sprintf($this->translate('Group %s already exists ! Are you sure you want to replace it ?'), $this->group->getName()) ?></h4>
+            <?php if (!empty($this->groupDiff)): ?>
+                <?php echo $this->groupDiff ?>
+            <?php else: ?>
+            <?php echo $this->translate('No differences') ?>
+            <?php endif ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <h1><?php echo $this->translate('Help') ?></h1>
+        <blockquote>
+            <p><span class="DifferencesLegend ChangeInsert">&nbsp;</span>&nbsp;: <?php echo $this->translate('Insert') ?>.</p>
+            <p><span class="DifferencesLegend ChangeReplace">&nbsp;</span>&nbsp;: <?php echo $this->translate('Replace') ?>.</p>
+            <p><span class="DifferencesLegend ChangeDelete">&nbsp;</span>&nbsp;: <?php echo $this->translate('Delete') ?>.</p>
+        </blockquote>
+    </div>
+</div>
