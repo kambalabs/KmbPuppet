@@ -21,7 +21,7 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
         $serviceManager = $this->getApplicationServiceLocator();
         $serviceManager->setAllowOverride(true);
 
-        $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $environmentRepository = $this->getMock('KmbDomain\Service\EnvironmentRepositoryInterface');
         $environment = new Environment();
         $environment->setCurrentRevision(new Revision());
         $environmentRepository->expects($this->any())
@@ -32,9 +32,9 @@ class GroupsControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
-        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
+        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Service\RevisionRepositoryInterface'));
 
-        $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
+        $groupRepository = $this->getMock('KmbDomain\Service\GroupRepositoryInterface');
         $group = new Group('dns');
         $group->setEnvironment($environment);
         $groupRepository->expects($this->any())

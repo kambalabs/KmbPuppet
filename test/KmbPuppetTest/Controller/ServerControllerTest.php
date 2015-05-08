@@ -28,7 +28,7 @@ class ServerControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([new Model\Node('node1.local')]));
         $serviceManager->setService('KmbPuppetDb\Service\Node', $nodeService);
         $serviceManager->setService('KmbPuppet\Service\GroupClass', $this->getMock('KmbPuppet\Service\GroupClass'));
-        $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $environmentRepository = $this->getMock('KmbDomain\Service\EnvironmentRepositoryInterface');
         $environmentRepository->expects($this->any())
             ->method('getDefault')
             ->will($this->returnValue(new Environment('DEFAULT')));

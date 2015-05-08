@@ -20,10 +20,10 @@
  */
 namespace KmbPuppet\Service;
 
-use KmbDomain\Model\UserRepositoryInterface;
+use KmbDomain\Service\UserRepositoryInterface;
 use KmbPuppet\Controller\EnvironmentsController;
 use KmbPmProxy\Service;
-use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbDomain\Service\EnvironmentRepositoryInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;

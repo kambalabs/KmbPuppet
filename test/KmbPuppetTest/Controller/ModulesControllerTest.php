@@ -20,7 +20,7 @@ class ModulesControllerTest extends AbstractHttpControllerTestCase
 
         $serviceManager = $this->getApplicationServiceLocator();
         $serviceManager->setAllowOverride(true);
-        $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $environmentRepository = $this->getMock('KmbDomain\Service\EnvironmentRepositoryInterface');
         $environmentRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue(new Environment()));

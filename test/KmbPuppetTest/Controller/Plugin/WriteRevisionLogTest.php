@@ -57,7 +57,7 @@ class WriteRevisionLogTest extends \PHPUnit_Framework_TestCase
             ->method('getIdentity')
             ->will($this->returnValue($this->user));
 
-        $revisionRepository = $this->getMock('KmbDomain\Model\RevisionRepositoryInterface');
+        $revisionRepository = $this->getMock('KmbDomain\Service\RevisionRepositoryInterface');
         $revisionRepository->expects($this->once())
             ->method('update');
 

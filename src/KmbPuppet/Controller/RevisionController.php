@@ -24,7 +24,7 @@ use KmbAuthentication\Controller\AuthenticatedControllerInterface;
 use KmbDomain\Model\EnvironmentInterface;
 use KmbDomain\Model\GroupInterface;
 use KmbDomain\Model\RevisionInterface;
-use KmbDomain\Model\RevisionServiceInterface;
+use KmbDomain\Service\RevisionServiceInterface;
 use KmbPmProxy\Hydrator\RevisionHydratorInterface;
 use KmbPmProxy\Service\PuppetModule as PuppetModuleService;
 use KmbPuppet\Service;

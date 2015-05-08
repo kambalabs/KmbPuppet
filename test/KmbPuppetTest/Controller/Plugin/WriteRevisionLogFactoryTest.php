@@ -14,7 +14,7 @@ class WriteRevisionLogFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('KmbPuppet\Controller\Plugin\WriteRevisionLog', $service);
         $this->assertInstanceOf('Zend\Authentication\AuthenticationService', $service->getAuthenticationService());
-        $this->assertInstanceOf('KmbDomain\Model\RevisionRepositoryInterface', $service->getRevisionRepository());
+        $this->assertInstanceOf('KmbDomain\Service\RevisionRepositoryInterface', $service->getRevisionRepository());
         $this->assertInstanceOf('KmbBase\DateTimeFactoryInterface', $service->getDateTimeFactory());
     }
 }

@@ -20,7 +20,7 @@
  */
 namespace KmbPuppet\View\Helper;
 
-use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbDomain\Service\EnvironmentRepositoryInterface;
 use Zend\Mvc\Router\RouteMatch;
 use Zend\View\Helper\AbstractHelper;
 

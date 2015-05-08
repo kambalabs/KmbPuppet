@@ -20,7 +20,6 @@
  */
 namespace KmbPuppet\Validator;
 
-use KmbDomain\Model\GroupClass;
 use KmbDomain\Model\GroupClassInterface;
 use KmbDomain\Model\GroupParameterInterface;
 use Zend\Validator\AbstractValidator;

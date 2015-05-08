@@ -14,6 +14,6 @@ class ReportsControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $controller = $controllerManager->get('KmbPuppet\Controller\Reports');
 
         $this->assertInstanceOf('KmbPuppet\Controller\ReportsController', $controller);
-        $this->assertInstanceOf('KmbDomain\Model\EnvironmentRepositoryInterface', $controller->getEnvironmentRepository());
+        $this->assertInstanceOf('KmbDomain\Service\EnvironmentRepositoryInterface', $controller->getEnvironmentRepository());
     }
 }

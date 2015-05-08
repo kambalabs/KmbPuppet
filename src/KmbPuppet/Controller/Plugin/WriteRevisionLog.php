@@ -23,7 +23,7 @@ namespace KmbPuppet\Controller\Plugin;
 use KmbBase\DateTimeFactoryInterface;
 use KmbDomain\Model\RevisionInterface;
 use KmbDomain\Model\RevisionLog;
-use KmbDomain\Model\RevisionRepositoryInterface;
+use KmbDomain\Service\RevisionRepositoryInterface;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 
@@ -81,7 +81,7 @@ class WriteRevisionLog extends AbstractPlugin
     /**
      * Set RevisionRepository.
      *
-     * @param \KmbDomain\Model\RevisionRepositoryInterface $revisionRepository
+     * @param \KmbDomain\Service\RevisionRepositoryInterface $revisionRepository
      * @return WriteRevisionLog
      */
     public function setRevisionRepository($revisionRepository)
@@ -93,7 +93,7 @@ class WriteRevisionLog extends AbstractPlugin
     /**
      * Get RevisionRepository.
      *
-     * @return \KmbDomain\Model\RevisionRepositoryInterface
+     * @return \KmbDomain\Service\RevisionRepositoryInterface
      */
     public function getRevisionRepository()
     {

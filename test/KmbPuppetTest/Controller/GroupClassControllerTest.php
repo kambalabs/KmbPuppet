@@ -35,7 +35,7 @@ class GroupClassControllerTest extends AbstractHttpControllerTestCase
         $groupClass->setName('dns');
         $groupClass->setGroup($group);
         $group->addClass($groupClass);
-        $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $environmentRepository = $this->getMock('KmbDomain\Service\EnvironmentRepositoryInterface');
         $environmentRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue($environment));
@@ -44,13 +44,13 @@ class GroupClassControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
-        $groupClassRepository = $this->getMock('KmbDomain\Model\GroupClassRepositoryInterface');
+        $groupClassRepository = $this->getMock('KmbDomain\Service\GroupClassRepositoryInterface');
         $groupClassRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue($groupClass));
         $serviceManager->setService('GroupClassRepository', $groupClassRepository);
 
-        $groupParameterRepository = $this->getMock('KmbDomain\Model\GroupParameterRepositoryInterface');
+        $groupParameterRepository = $this->getMock('KmbDomain\Service\GroupParameterRepositoryInterface');
         $groupParameterRepository->expects($this->any())
             ->method('add')
             ->will($this->returnCallback(function ($groupParameter) {
@@ -58,7 +58,7 @@ class GroupClassControllerTest extends AbstractHttpControllerTestCase
             }));
         $serviceManager->setService('GroupParameterRepository', $groupParameterRepository);
 
-        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
+        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Service\RevisionRepositoryInterface'));
 
         $puppetModuleService = $this->getMock('KmbPmProxy\Service\PuppetModuleInterface');
         $puppetModule = new PuppetModule('apache', '2.1.4');

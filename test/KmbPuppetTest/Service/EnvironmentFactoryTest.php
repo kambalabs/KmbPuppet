@@ -13,6 +13,6 @@ class EnvironmentFactoryTest extends \PHPUnit_Framework_TestCase
         $service = Bootstrap::getServiceManager()->get('KmbPuppet\Service\Environment');
 
         $this->assertInstanceOf('KmbPuppet\Service\Environment', $service);
-        $this->assertInstanceOf('KmbDomain\Model\EnvironmentRepositoryInterface', $service->getEnvironmentRepository());
+        $this->assertInstanceOf('KmbDomain\Service\EnvironmentRepositoryInterface', $service->getEnvironmentRepository());
     }
 }

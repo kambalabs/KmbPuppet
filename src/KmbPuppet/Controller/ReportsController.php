@@ -22,7 +22,7 @@ namespace KmbPuppet\Controller;
 
 use GtnDataTables\Service\DataTable;
 use KmbAuthentication\Controller\AuthenticatedControllerInterface;
-use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbDomain\Service\EnvironmentRepositoryInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
@@ -63,7 +63,7 @@ class ReportsController extends AbstractActionController implements Authenticate
     /**
      * Set EnvironmentRepository.
      *
-     * @param \KmbDomain\Model\EnvironmentRepositoryInterface $environmentRepository
+     * @param \KmbDomain\Service\EnvironmentRepositoryInterface $environmentRepository
      * @return ReportsController
      */
     public function setEnvironmentRepository($environmentRepository)
@@ -75,7 +75,7 @@ class ReportsController extends AbstractActionController implements Authenticate
     /**
      * Get EnvironmentRepository.
      *
-     * @return \KmbDomain\Model\EnvironmentRepositoryInterface
+     * @return \KmbDomain\Service\EnvironmentRepositoryInterface
      */
     public function getEnvironmentRepository()
     {

@@ -15,7 +15,7 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $this->environmentRepository = $this->getMock('KmbDomain\Service\EnvironmentRepositoryInterface');
         $this->environmentService = new PuppetService\Environment();
         $this->environmentService->setEnvironmentRepository($this->environmentRepository);
     }

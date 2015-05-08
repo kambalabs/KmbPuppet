@@ -21,7 +21,7 @@
 namespace KmbPuppet\Controller\Plugin;
 
 use KmbBase\DateTimeFactoryInterface;
-use KmbDomain\Model\RevisionRepositoryInterface;
+use KmbDomain\Service\RevisionRepositoryInterface;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\PluginManager;
 use Zend\ServiceManager\FactoryInterface;

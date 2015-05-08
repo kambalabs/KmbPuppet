@@ -20,12 +20,13 @@
  */
 namespace KmbPuppet\Service;
 
+use KmbDomain\Service\EnvironmentRepositoryInterface;
 use KmbDomain\Model as DomainModel;
 use KmbPuppetDb\Model as PuppetDbModel;
 
 class Environment implements EnvironmentInterface
 {
-    /** @var  DomainModel\EnvironmentRepositoryInterface */
+    /** @var  EnvironmentRepositoryInterface */
     protected $environmentRepository;
 
     /**
@@ -49,7 +50,7 @@ class Environment implements EnvironmentInterface
     /**
      * Set EnvironmentRepository.
      *
-     * @param \KmbDomain\Model\EnvironmentRepositoryInterface $environmentRepository
+     * @param \KmbDomain\Service\EnvironmentRepositoryInterface $environmentRepository
      * @return Environment
      */
     public function setEnvironmentRepository($environmentRepository)
@@ -61,7 +62,7 @@ class Environment implements EnvironmentInterface
     /**
      * Get EnvironmentRepository.
      *
-     * @return \KmbDomain\Model\EnvironmentRepositoryInterface
+     * @return \KmbDomain\Service\EnvironmentRepositoryInterface
      */
     public function getEnvironmentRepository()
     {

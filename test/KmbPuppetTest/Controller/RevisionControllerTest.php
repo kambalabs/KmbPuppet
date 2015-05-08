@@ -20,7 +20,7 @@ class RevisionControllerTest extends AbstractHttpControllerTestCase
         $serviceManager = $this->getApplicationServiceLocator();
         $serviceManager->setAllowOverride(true);
 
-        $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $environmentRepository = $this->getMock('KmbDomain\Service\EnvironmentRepositoryInterface');
         $environment = new Environment();
         $environment->setCurrentRevision(new Revision());
         $environment->setLastReleasedRevision(new Revision());
@@ -33,13 +33,13 @@ class RevisionControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
-        $revisionRepository = $this->getMock('KmbDomain\Model\RevisionRepositoryInterface');
+        $revisionRepository = $this->getMock('KmbDomain\Service\RevisionRepositoryInterface');
         $revisionRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue(new Revision($environment)));
         $serviceManager->setService('RevisionRepository', $revisionRepository);
 
-        $serviceManager->setService('revisionService', $this->getMock('KmbDomain\Model\RevisionServiceInterface'));
+        $serviceManager->setService('revisionService', $this->getMock('KmbDomain\Service\RevisionServiceInterface'));
         $serviceManager->setService('pmProxyPuppetModuleService', $this->getMock('KmbPmProxy\Service\PuppetModuleInterface'));
     }
 

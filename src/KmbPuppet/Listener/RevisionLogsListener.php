@@ -22,7 +22,7 @@ namespace KmbPuppet\Listener;
 
 use KmbBase\Controller\Plugin\GlobalMessenger;
 use KmbDomain\Model\EnvironmentInterface;
-use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbDomain\Service\EnvironmentRepositoryInterface;
 use Zend\Authentication\AuthenticationService;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;

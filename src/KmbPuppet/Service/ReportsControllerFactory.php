@@ -20,7 +20,7 @@
  */
 namespace KmbPuppet\Service;
 
-use KmbDomain\Model\EnvironmentRepositoryInterface;
+use KmbDomain\Service\EnvironmentRepositoryInterface;
 use KmbPmProxy\Service;
 use KmbPuppet\Controller\ReportsController;
 use Zend\ServiceManager\FactoryInterface;

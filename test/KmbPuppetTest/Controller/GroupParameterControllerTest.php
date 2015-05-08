@@ -39,7 +39,7 @@ class GroupParameterControllerTest extends AbstractHttpControllerTestCase
         $groupParameter->setId(1);
         $groupParameter->setName('server');
         $groupParameter->setClass($groupClass);
-        $environmentRepository = $this->getMock('KmbDomain\Model\EnvironmentRepositoryInterface');
+        $environmentRepository = $this->getMock('KmbDomain\Service\EnvironmentRepositoryInterface');
         $environmentRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue($environment));
@@ -48,15 +48,15 @@ class GroupParameterControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue([]));
         $serviceManager->setService('EnvironmentRepository', $environmentRepository);
 
-        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Model\RevisionRepositoryInterface'));
+        $serviceManager->setService('RevisionRepository', $this->getMock('KmbDomain\Service\RevisionRepositoryInterface'));
 
-        $groupRepository = $this->getMock('KmbDomain\Model\GroupRepositoryInterface');
+        $groupRepository = $this->getMock('KmbDomain\Service\GroupRepositoryInterface');
         $groupRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue($group));
         $serviceManager->setService('GroupRepository', $groupRepository);
 
-        $parameterRepository = $this->getMock('KmbDomain\Model\GroupParameterRepositoryInterface');
+        $parameterRepository = $this->getMock('KmbDomain\Service\GroupParameterRepositoryInterface');
         $parameterRepository->expects($this->any())
             ->method('getById')
             ->will($this->returnValue($groupParameter));
