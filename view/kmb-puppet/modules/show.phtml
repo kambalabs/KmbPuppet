@@ -16,12 +16,6 @@
         <div class="stats-title"><button class="btn btn-success btn-disabled" id="module_author"><?php echo $this->escapeHtml($this->module->getAuthor()) ?></button></div>
     </div>
     <?php endif ?>
-    <?php if ($this->module->getLicense() != null): ?>
-    <div class="col-md-2 info-bar pull-right">
-        <div class="yellow"><?php echo $this->translate('license') ?></div>
-        <div class="stats-title"><button class="btn btn-primary btn-disabled" id="module_license"><?php echo $this->escapeHtml($this->module->getLicense()) ?></button></div>
-    </div>
-    <?php endif ?>
     <div class="col-md-2 info-bar pull-right">
         <div class="yellow"><?php echo $this->translate('version') ?></div>
         <div class="stats-title"><button class="btn btn-warning btn-disabled" id="module_version"><?php echo $this->formatModuleVersion($this->module->getVersion(), true) ?: '-' ?></button></div>
