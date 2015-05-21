@@ -35,10 +35,7 @@ class Environment implements EnvironmentInterface
      */
     public function getByNode(PuppetDbModel\NodeInterface $node)
     {
-        $names = explode('_', $node->getEnvironment());
-        $environmentRootName = array_shift($names);
-        $environmentRoot = $this->environmentRepository->getRootByName($environmentRootName);
-        $environment = $environmentRoot != null ? $environmentRoot->getDescendantByNormalizedName($node->getEnvironment()) : null;
+        $environment = $this->environmentRepository->getByNormalizedName($node->getEnvironment());
         if ($environment == null) {
             $defaultEnvironment = $this->environmentRepository->getDefault();
             $node->setEnvironment($defaultEnvironment->getNormalizedName());

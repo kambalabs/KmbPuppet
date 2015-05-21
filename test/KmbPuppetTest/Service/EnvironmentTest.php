@@ -29,8 +29,8 @@ class EnvironmentTest extends \PHPUnit_Framework_TestCase
         $node = new PuppetDbModel\Node('node1.local');
         $node->setEnvironment('STABLE_PF1');
         $this->environmentRepository->expects($this->any())
-            ->method('getRootByName')
-            ->will($this->returnValue($root));
+            ->method('getByNormalizedName')
+            ->will($this->returnValue($environment));
 
         $this->assertEquals($environment, $this->environmentService->getByNode($node));
     }
