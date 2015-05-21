@@ -5,7 +5,7 @@
     <?php endif ?>
     <?php if ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
         <span class="inline-editable-clickable darkgrey"><?php echo $this->printBoolean($this->value) ?></span>
-    <?php elseif (empty($this->value)): ?>
+    <?php elseif (strlen($this->value) == 0): ?>
         <i class="inline-editable-clickable lightgrey"><?php echo $this->translate('click to update') ?></i>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>
         <span class="inline-editable-clickable darkgrey"><?php echo $this->truncate(str_repeat('*', strlen($this->value)), 32) ?></span>
@@ -17,7 +17,7 @@
 <span class="tree-item">
     <?php if ($this->type == \KmbDomain\Model\GroupParameterType::BOOLEAN): ?>
         <span class="darkgrey"><?php echo $this->printBoolean($this->value) ?></span>
-    <?php elseif (empty($this->value)): ?>
+    <?php elseif (strlen($this->value) == 0): ?>
         <i class="lightgrey"><?php echo $this->translate('no value') ?></i>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>
         <span class="darkgrey"><?php echo $this->truncate(str_repeat('*', strlen($this->value)), 32) ?></span>
