@@ -75,9 +75,11 @@ class GroupClass implements GroupClassInterface
                 $classes[$class->getName()] = $class;
             }
         }
-        foreach ($groups as $group) {
-            foreach ($group->getClasses() as $class) {
-                $classes[$class->getName()] = $class;
+        if (!empty($groups)) {
+            foreach ($groups as $group) {
+                foreach ($group->getClasses() as $class) {
+                    $classes[$class->getName()] = $class;
+                }
             }
         }
         return array_values($classes);
