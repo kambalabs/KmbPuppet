@@ -9,7 +9,7 @@
                     <?php if (isset($this->environment) && $this->isGranted('manageEnv', $this->environment)): ?>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-xs dropdown-toggle<?php if (!isset($this->groups)): ?> disabled<?php endif ?>" data-toggle="dropdown" aria-expanded="false">
-                            <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+                            <i class="glyphicon glyphicon-plus"></i> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#" data-toggle="modal" data-target="#import-group"><?php echo $this->translate('Import a group') ?></a></li>
@@ -160,7 +160,7 @@
         <?php if (isset($this->environment)): ?>
         <blockquote>
             <p><?php echo sprintf($this->translate("Here is the list of groups on environment <strong>%s</strong>."), $this->environment->getNormalizedName()) ?></p>
-            <p><?php echo $this->translate('Add or import a group by clicking on menu <span class="btn btn-default btn-xs"><i class="glyphicon glyphicon-cog"></i> <i class="caret"></i></span>.') ?></p>
+            <p><?php echo $this->translate('Add or import a group by clicking on menu <span class="btn btn-default btn-xs"><i class="glyphicon glyphicon-plus"></i> <i class="caret"></i></span>.') ?></p>
             <p><?php echo $this->translate("You can see the details of a group by clicking on its name.") ?></p>
             <p><?php echo $this->translate("<strong>Caution</strong> : The order of groups is important ! When a server is associated to two groups which implements the same class, it's the class configuration of the lower group that will be sustained.") ?></p>
             <p><?php echo $this->translate("You can sort the groups by grabing the icon <span class=\"glyphicon glyphicon-th grab\"></span>.") ?></p>
