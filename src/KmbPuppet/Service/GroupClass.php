@@ -77,8 +77,10 @@ class GroupClass implements GroupClassInterface
         }
         if (!empty($groups)) {
             foreach ($groups as $group) {
-                foreach ($group->getClasses() as $class) {
-                    $classes[$class->getName()] = $class;
+                if ($group->hasClasses()) {
+                    foreach ($group->getClasses() as $class) {
+                        $classes[$class->getName()] = $class;
+                    }
                 }
             }
         }
