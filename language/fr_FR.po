@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-07 15:39+0100\n"
-"PO-Revision-Date: 2015-05-07 15:39+0100\n"
+"POT-Creation-Date: 2015-05-22 17:57+0100\n"
+"PO-Revision-Date: 2015-05-22 17:57+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -413,11 +413,11 @@ msgstr "il y a %s secondes"
 msgid "one second ago"
 msgstr "il y a une seconde"
 
-#: ../src/KmbPuppet/Validator/GroupClassValidator.php:39
+#: ../src/KmbPuppet/Validator/GroupClassValidator.php:38
 msgid "Following parameters are required : %value%"
 msgstr "Les paramètres suivant sont requis : %value%"
 
-#: ../src/KmbPuppet/Validator/GroupClassValidator.php:40
+#: ../src/KmbPuppet/Validator/GroupClassValidator.php:39
 msgid "This parameter does not exists in the class template"
 msgstr "Ce paramètre n'existe pas dans le template de classe"
 
@@ -500,12 +500,12 @@ msgstr "Voir les paramètres de la classe"
 
 #: ../view/kmb-puppet/custom-groups/default.group.phtml:30
 #: ../view/kmb-puppet/groups/index.phtml:42
-#: ../view/kmb-puppet/modules/show.phtml:54
+#: ../view/kmb-puppet/modules/show.phtml:48
 msgid "Error"
 msgstr "Erreur"
 
 #: ../view/kmb-puppet/custom-groups/default.group.phtml:39
-#: ../view/kmb-puppet/modules/show.phtml:64
+#: ../view/kmb-puppet/modules/show.phtml:58
 msgid "No classes available !"
 msgstr "Aucune classe disponible !"
 
@@ -1066,11 +1066,11 @@ msgstr "Voici la liste des groupes de l'environnement <strong>%s</strong>."
 #: ../view/kmb-puppet/groups/index.phtml:163
 msgid ""
 "Add or import a group by clicking on menu <span class=\"btn btn-default btn-"
-"xs\"><i class=\"glyphicon glyphicon-cog\"></i> <i class=\"caret\"></i></"
+"xs\"><i class=\"glyphicon glyphicon-plus\"></i> <i class=\"caret\"></i></"
 "span>."
 msgstr ""
 "Ajouter ou importer un groupe en cliquant sur le menu <span class=\"btn btn-"
-"default btn-xs\"><i class=\"glyphicon glyphicon-cog\"></i> <i class=\"caret"
+"default btn-xs\"><i class=\"glyphicon glyphicon-plus\"></i> <i class=\"caret"
 "\"></i></span>."
 
 #: ../view/kmb-puppet/groups/index.phtml:164
@@ -1205,36 +1205,32 @@ msgstr "Informations détaillées du module"
 msgid "author"
 msgstr "auteur"
 
-#: ../view/kmb-puppet/modules/show.phtml:21
-msgid "license"
-msgstr "licence"
-
-#: ../view/kmb-puppet/modules/show.phtml:26
+#: ../view/kmb-puppet/modules/show.phtml:20
 msgid "version"
 msgstr "version"
 
-#: ../view/kmb-puppet/modules/show.phtml:38
+#: ../view/kmb-puppet/modules/show.phtml:32
 #, php-format
 msgid "Classes of module %s"
 msgstr "Classes du module %s"
 
-#: ../view/kmb-puppet/modules/show.phtml:49
+#: ../view/kmb-puppet/modules/show.phtml:43
 msgid "View more details on class"
 msgstr "Voir les détails de la classe"
 
-#: ../view/kmb-puppet/modules/show.phtml:72
+#: ../view/kmb-puppet/modules/show.phtml:66
 msgid "project page"
 msgstr "page du projet"
 
-#: ../view/kmb-puppet/modules/show.phtml:75
+#: ../view/kmb-puppet/modules/show.phtml:69
 msgid "sources"
 msgstr "sources"
 
-#: ../view/kmb-puppet/modules/show.phtml:78
+#: ../view/kmb-puppet/modules/show.phtml:72
 msgid "issues"
 msgstr "issues"
 
-#: ../view/kmb-puppet/modules/show.phtml:82
+#: ../view/kmb-puppet/modules/show.phtml:76
 msgid "Summary"
 msgstr "Résumé"
 
@@ -1424,6 +1420,9 @@ msgstr "Groupes de l'environnement %s"
 #: ../view/kmb-puppet/server/puppetconfig.tab.title.phtml:1
 msgid "Puppet configuration"
 msgstr "Configuration Puppet"
+
+#~ msgid "license"
+#~ msgstr "licence"
 
 #~ msgid "Actions"
 #~ msgstr "Actions"
