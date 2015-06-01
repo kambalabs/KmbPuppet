@@ -1,0 +1,7 @@
+<?php $this->inlineScript()->prependFile($this->basePath() . '/js/kmb.puppet.js'); ?>
+<div class="panel panel-default">
+    <div class="panel-heading"><span class="glyphicon glyphicon-tasks"></span><span class="panel-break"></span><?php echo $this->translate('Logs') ?></div>
+    <div class="panel-body">
+        <?php echo $this->datatable('logs_datatable')->renderHtml(); ?>
+    </div>
+</div>

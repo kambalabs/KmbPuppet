@@ -42,6 +42,26 @@ $(window).load(function () {
         return false;
     });
 
+    $('#logs').dataTable($.extend({}, DATATABLES_NPROGRESS_DEFAULT_SETTINGS, {
+        "columns": [
+            { "width": "15%" },
+            { "width": "20%" },
+            { "width": "70%" }
+        ],
+        "serverSide": true,
+        "ajax": {
+            "url": window.location,
+            "complete": function() {
+                NProgress.done();
+            },
+            "error": function (cause) {
+                console.log('Could not get logs : ' + cause.statusText);
+                $('#logs_processing').hide();
+                NProgress.done();
+            }
+        }
+    }));
+
     $('#reports').dataTable($.extend({}, DATATABLES_NPROGRESS_DEFAULT_SETTINGS, {
         "serverSide": true,
         "ajax": {

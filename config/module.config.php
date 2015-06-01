@@ -197,6 +197,7 @@ return [
             'KmbPuppet\Controller\Revisions' => 'KmbPuppet\Controller\RevisionsController',
             'KmbPuppet\Controller\Revision' => 'KmbPuppet\Controller\RevisionController',
             'KmbPuppet\Controller\Server' => 'KmbPuppet\Controller\ServerController',
+            'KmbPuppet\Controller\Logs' => 'KmbPuppet\Controller\LogsController',
         ],
         'factories' => [
             'KmbPuppet\Controller\Reports' => 'KmbPuppet\Service\ReportsControllerFactory',
@@ -205,6 +206,7 @@ return [
     ],
     'controller_plugins' => [
         'factories' => [
+            'writeLog' => 'KmbPuppet\Controller\Plugin\WriteLogFactory',
             'writeRevisionLog' => 'KmbPuppet\Controller\Plugin\WriteRevisionLogFactory',
             'customGroups' => 'KmbPuppet\Controller\Plugin\CustomGroupsFactory',
         ],
@@ -263,6 +265,14 @@ return [
                         'action' => 'index',
                         'useRouteMatch' => true,
                         'tabindex' => 64,
+                    ],
+                    [
+                        'label' => $translate('Logs'),
+                        'route' => 'puppet',
+                        'controller' => 'logs',
+                        'action' => 'index',
+                        'useRouteMatch' => true,
+                        'tabindex' => 65,
                     ],
                 ],
             ],
@@ -336,6 +346,13 @@ return [
                                 'label' => $translate('Changes'),
                                 'route' => 'puppet',
                                 'controller' => 'revisions',
+                                'action' => 'index',
+                                'useRouteMatch' => true,
+                            ],
+                            [
+                                'label' => $translate('Logs'),
+                                'route' => 'puppet',
+                                'controller' => 'logs',
                                 'action' => 'index',
                                 'useRouteMatch' => true,
                             ],
@@ -526,6 +543,25 @@ return [
                 [
                     'decorator' => 'KmbPuppet\View\Decorator\ReportNodeNameDecorator',
                     'key' => 'certname',
+                ],
+            ],
+        ],
+        'logs_datatable' => [
+            'id' => 'logs',
+            'classes' => ['table', 'table-striped', 'table-hover', 'table-condensed', 'bootstrap-datatable'],
+            'collectorFactory' => 'KmbPuppet\Service\LogCollectorFactory',
+            'columns' => [
+                [
+                    'decorator' => 'KmbPuppet\View\Decorator\LogCreatedAtDecorator',
+                    'key' => 'created_at',
+                ],
+                [
+                    'decorator' => 'KmbPuppet\View\Decorator\CreatedByDecorator',
+                    'key' => 'created_by',
+                ],
+                [
+                    'decorator' => 'KmbPuppet\View\Decorator\LogMessageDecorator',
+                    'key' => 'comment',
                 ],
             ]
         ]

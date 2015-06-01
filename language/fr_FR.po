@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Kamba\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-22 17:57+0100\n"
-"PO-Revision-Date: 2015-05-22 17:57+0100\n"
+"POT-Creation-Date: 2015-06-01 16:07+0100\n"
+"PO-Revision-Date: 2015-06-01 16:07+0100\n"
 "Last-Translator: Emmanuel Bouton <goten4@gmail.com>\n"
 "Language-Team: Kamba Contibutors <devteam@kamba.org>\n"
 "Language: fr_FR\n"
@@ -16,51 +16,56 @@ msgstr ""
 "X-Generator: Poedit 1.6.10\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../config/module.config.php:222 ../config/module.config.php:274
+#: ../config/module.config.php:224 ../config/module.config.php:284
 msgid "Puppet"
 msgstr "Puppet"
 
-#: ../config/module.config.php:227 ../config/module.config.php:281
+#: ../config/module.config.php:229 ../config/module.config.php:291
 #: ../view/kmb-puppet/reports/index.phtml:3
 msgid "Day reports"
 msgstr "Rapports du jour"
 
-#: ../config/module.config.php:235 ../config/module.config.php:288
+#: ../config/module.config.php:237 ../config/module.config.php:298
 #: ../view/kmb-puppet/environments/index.phtml:219
 msgid "Environments"
 msgstr "Environnements"
 
-#: ../config/module.config.php:244 ../config/module.config.php:295
+#: ../config/module.config.php:246 ../config/module.config.php:305
 msgid "Modules"
 msgstr "Modules"
 
-#: ../config/module.config.php:252 ../config/module.config.php:320
+#: ../config/module.config.php:254 ../config/module.config.php:330
 #: ../view/kmb-puppet/groups/index.phtml:8
 msgid "Groups"
 msgstr "Groupes"
 
-#: ../config/module.config.php:260 ../config/module.config.php:336
+#: ../config/module.config.php:262 ../config/module.config.php:346
 msgid "Changes"
 msgstr "Changements"
 
-#: ../config/module.config.php:303
+#: ../config/module.config.php:270 ../config/module.config.php:353
+#: ../view/kmb-puppet/logs/index.phtml:3
+msgid "Logs"
+msgstr "Historique"
+
+#: ../config/module.config.php:313
 msgid "Module"
 msgstr "Module"
 
-#: ../config/module.config.php:310
+#: ../config/module.config.php:320
 #: ../src/KmbPuppet/View/Decorator/ReportClassNameDecorator.php:33
 msgid "Class"
 msgstr "Classe"
 
-#: ../config/module.config.php:328
+#: ../config/module.config.php:338
 msgid "Group"
 msgstr "Groupe"
 
-#: ../config/module.config.php:427
+#: ../config/module.config.php:444
 msgid "Add a group"
 msgstr "Ajouter un groupe"
 
-#: ../config/module.config.php:428
+#: ../config/module.config.php:445
 msgid ""
 "A group allows to configure a set of Puppet classes and assigned them to a "
 "list of servers."
@@ -73,79 +78,111 @@ msgid "<h4>Warning !</h4><p>You should choose a default environment !</p>"
 msgstr ""
 "<h4>Attention !</h4><p>Vous devez choisir un environnement par défaut !</p>"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:89
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:125
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:90
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:128
 #, php-format
 msgid "Environment %s has been successfully created !"
 msgstr "L'environnement %s a bien été créé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:93
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:129
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:91
+#, php-format
+msgid "Add environment %s"
+msgstr "Ajout de l'environnement %s"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:95
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:133
 #, php-format
 msgid "Environment %s could no be created on the puppet master"
 msgstr "L'environnement %s n'a pas pu être créé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:162
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:129
+#, php-format
+msgid "Duplicate environment %s"
+msgstr "Duplication de l'environnement %s"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:167
 #, php-format
 msgid "Environment %s has been successfully updated !"
 msgstr "L'environnement %s a bien été modifié !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:165
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:168
+#, php-format
+msgid "Update environment %s"
+msgstr "Modification de l'environnement %s"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:171
 #, php-format
 msgid "Environment %s could no be updated on the puppet master"
 msgstr "L'environnement %s n'a pas pu être modifié sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:193
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:200
 #, php-format
 msgid "Environment %s has been successfully removed !"
 msgstr "L'environnement %s a bien été supprimé !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:196
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:201
+#, php-format
+msgid "Remove environment %s"
+msgstr "Suppression de l'environnement %s"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:204
 #, php-format
 msgid "Environment %s could no be removed on the puppet master"
 msgstr "L'environnement %s n'a pas pu être supprimé sur le puppet master"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:418
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:327
+#, php-format
+msgid "Add user to environment %s (%s)"
+msgid_plural "Add users to environment %s (%s)"
+msgstr[0] "Ajout d'un utilisateur dans l'environnement %s (%s)"
+msgstr[1] "Ajout d'utilisateurs dans l'environnement %s (%s)"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:351
+#, php-format
+msgid "Remove %s from environment %s"
+msgstr "Retrait de %s de l'environnement %s"
+
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:434
 #, php-format
 msgid "'%s' is not a valid name (alphanumeric only) !"
 msgstr "'%s' n'est pas un nom valide (alphanumérique uniquement) !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:422
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:438
 #, php-format
 msgid "For obvious reasons, environment %s can't be the parent of %s !"
 msgstr ""
 "Pour des raisons évidentes, l'environnement %s ne peut pas être le parent de "
 "%s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:431
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:447
 #, php-format
 msgid "Environment %s has already a child named %s !"
 msgstr "L'environnement %s a déjà un enfant nommé %s !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:437
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:453
 #, php-format
 msgid "Root environment %s already exists !"
 msgstr "L'environnement racine %s existe déjà !"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:454
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:470
 msgid "Initialization"
 msgstr "Initialisation"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:545
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:561
 #: ../src/KmbPuppet/Controller/GroupsController.php:297
 #: ../src/KmbPuppet/Controller/RevisionsController.php:240
 #: ../view/kmb-puppet/group/show.phtml:25
 msgid "include"
 msgstr "inclus"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:546
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:562
 #: ../src/KmbPuppet/Controller/GroupsController.php:298
 #: ../src/KmbPuppet/Controller/RevisionsController.php:241
 #: ../view/kmb-puppet/group/show.phtml:21
 msgid "exclude"
 msgstr "exclus"
 
-#: ../src/KmbPuppet/Controller/EnvironmentsController.php:547
+#: ../src/KmbPuppet/Controller/EnvironmentsController.php:563
 #: ../src/KmbPuppet/Controller/GroupsController.php:299
 #: ../src/KmbPuppet/Controller/RevisionsController.php:242
 msgid "classes"
@@ -421,10 +458,18 @@ msgstr "Les paramètres suivant sont requis : %value%"
 msgid "This parameter does not exists in the class template"
 msgstr "Ce paramètre n'existe pas dans le template de classe"
 
+#: ../src/KmbPuppet/View/Decorator/CreatedByDecorator.php:32
+#: ../view/kmb-puppet/revisions/index.phtml:58
+#: ../view/kmb-puppet/revisions/index.phtml:122
+msgid "User"
+msgstr "Utilisateur"
+
+#: ../src/KmbPuppet/View/Decorator/LogCreatedAtDecorator.php:32
 #: ../src/KmbPuppet/View/Decorator/ReportHourDecorator.php:33
 msgid "Hour"
 msgstr "Heure"
 
+#: ../src/KmbPuppet/View/Decorator/LogMessageDecorator.php:33
 #: ../src/KmbPuppet/View/Decorator/ReportMessageDecorator.php:33
 msgid "Message"
 msgstr "Message"
@@ -1298,11 +1343,6 @@ msgstr "Liste des changements"
 #: ../view/kmb-puppet/revisions/index.phtml:121
 msgid "Date"
 msgstr "Date"
-
-#: ../view/kmb-puppet/revisions/index.phtml:58
-#: ../view/kmb-puppet/revisions/index.phtml:122
-msgid "User"
-msgstr "Utilisateur"
 
 #: ../view/kmb-puppet/revisions/index.phtml:59
 #: ../view/kmb-puppet/revisions/index.phtml:123

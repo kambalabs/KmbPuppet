@@ -18,6 +18,7 @@ return [
     'controller_plugins' => [
         'factories' => [
             'translate' => 'KmbBaseTest\Controller\Plugin\FakeTranslateFactory',
+            'translatePlural' => 'KmbBaseTest\Controller\Plugin\FakeTranslatePluralFactory',
         ],
     ],
     'custom_groups' => [

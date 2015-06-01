@@ -86,7 +86,9 @@ class EnvironmentsController extends AbstractActionController implements Authent
             $this->environmentRepository->add($aggregateRoot);
             try {
                 $this->pmProxyEnvironmentService->save($aggregateRoot);
-                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getNormalizedName()));
+                $normalizedName = $aggregateRoot->getNormalizedName();
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $normalizedName));
+                $this->writeLog(sprintf($this->translate("Add environment %s"), $normalizedName));
             } catch (ExceptionInterface $e) {
                 $this->environmentRepository->remove($aggregateRoot);
                 $this->flashMessenger()->addErrorMessage(
@@ -122,7 +124,9 @@ class EnvironmentsController extends AbstractActionController implements Authent
             $this->environmentRepository->add($aggregateRoot);
             try {
                 $this->pmProxyEnvironmentService->save($aggregateRoot, $cloneFrom);
-                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $aggregateRoot->getNormalizedName()));
+                $normalizedName = $aggregateRoot->getNormalizedName();
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully created !"), $normalizedName));
+                $this->writeLog(sprintf($this->translate("Duplicate environment %s"), $normalizedName));
             } catch (ExceptionInterface $e) {
                 $this->environmentRepository->remove($aggregateRoot);
                 $this->flashMessenger()->addErrorMessage(
@@ -159,7 +163,9 @@ class EnvironmentsController extends AbstractActionController implements Authent
             try {
                 $this->environmentRepository->update($aggregateRoot);
                 $this->pmProxyEnvironmentService->save($aggregateRoot);
-                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $aggregateRoot->getName()));
+                $normalizedName = $aggregateRoot->getNormalizedName();
+                $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully updated !"), $normalizedName));
+                $this->writeLog(sprintf($this->translate("Update environment %s"), $normalizedName));
             } catch (ExceptionInterface $e) {
                 $this->flashMessenger()->addErrorMessage(
                     sprintf($this->translate("Environment %s could no be updated on the puppet master"), $aggregateRoot->getName()) .
@@ -185,12 +191,14 @@ class EnvironmentsController extends AbstractActionController implements Authent
         }
 
         try {
+            $normalizedName = $aggregateRoot->getNormalizedName();
             try {
                 $this->pmProxyEnvironmentService->remove($aggregateRoot);
             } catch (NotFoundException $e) {
             }
             $this->environmentRepository->remove($aggregateRoot);
-            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $aggregateRoot->getName()));
+            $this->flashMessenger()->addSuccessMessage(sprintf($this->translate("Environment %s has been successfully removed !"), $normalizedName));
+            $this->writeLog(sprintf($this->translate("Remove environment %s"), $normalizedName));
         } catch (RuntimeException $e) {
             $this->flashMessenger()->addErrorMessage(
                 sprintf($this->translate("Environment %s could no be removed on the puppet master"), $aggregateRoot->getName()) .
@@ -315,6 +323,8 @@ class EnvironmentsController extends AbstractActionController implements Authent
 
         $aggregateRoot->addUsers($users);
         $this->environmentRepository->update($aggregateRoot);
+        $usersList = implode(', ', array_map(function ($user) { return $user->getName(); }, $users));
+        $this->writeLog(sprintf($this->translatePlural("Add user to environment %s (%s)", "Add users to environment %s (%s)", count($usersList)), $aggregateRoot->getNormalizedName(), $usersList));
         return new JsonModel();
     }
 
@@ -332,8 +342,14 @@ class EnvironmentsController extends AbstractActionController implements Authent
             throw new UnauthorizedException();
         }
 
-        $aggregateRoot->removeUserById(intval($this->params()->fromRoute('userId')));
-        $this->environmentRepository->update($aggregateRoot);
+        $userId = intval($this->params()->fromRoute('userId'));
+        /** @var UserInterface $user */
+        $user = $this->userRepository->getById($userId);
+        if ($user) {
+            $aggregateRoot->removeUserById($userId);
+            $this->environmentRepository->update($aggregateRoot);
+            $this->writeLog(sprintf($this->translate("Remove %s from environment %s"), $user->getName(), $aggregateRoot->getNormalizedName()));
+        }
 
         return $this->redirect()->toRoute('puppet', ['controller' => 'environments', 'action' => 'index'], [], true);
     }
