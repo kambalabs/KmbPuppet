@@ -210,7 +210,7 @@ class GroupsController extends AbstractActionController implements Authenticated
             if (!file_exists($confirmFileFullPath)) {
                 return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
             }
-            if ($this->params()->fromPost('cancel')) {
+            if ($this->params()->fromPost('cancel') !== null) {
                 unlink($confirmFileFullPath);
                 return $this->redirect()->toRoute('puppet', ['controller' => 'groups', 'action' => 'index'], [], true);
             }
