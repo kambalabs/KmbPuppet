@@ -15,11 +15,11 @@
             <option value="0"><?php echo $this->printBoolean(false) ?></option>
         </select>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::TEXT): ?>
-        <textarea style="resize:vertical" disabled="disabled" class="form-control custom-control" name="values[]"></textarea>
+        <textarea style="resize:vertical" disabled="disabled" class="form-control custom-control" name="values[]" maxlength="4000"></textarea>
     <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>
-        <input type="password" disabled="disabled" class="form-control" name="values[]" value="" />
+        <input type="password" disabled="disabled" class="form-control" name="values[]" value="" maxlength="4000" />
     <?php else: ?>
-        <input type="text" disabled="disabled" class="form-control" name="values[]" value="" />
+        <input type="text" disabled="disabled" class="form-control" name="values[]" value="" maxlength="4000" />
     <?php endif ?>
     <div class="input-group-<?php echo $this->type == \KmbDomain\Model\GroupParameterType::TEXT ? 'addon' : 'btn' ?>">
         <button class="btn btn-default" title="<?php echo $this->translate('Cancel') ?>" type="reset"><i class="glyphicon glyphicon-remove"></i></button>

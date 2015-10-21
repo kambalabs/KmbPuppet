@@ -41,11 +41,11 @@
                 <option value="0"<?php if (!$this->value): ?> selected="selected"<?php endif ?>><?php echo $this->printBoolean(false) ?></option>
             </select>
         <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::TEXT): ?>
-            <textarea style="resize:vertical" class="form-control custom-control" name="values[]"><?php echo $this->escapeHtml($this->value) ?></textarea>
+            <textarea style="resize:vertical" class="form-control custom-control" name="values[]" maxlength="4000"><?php echo $this->escapeHtml($this->value) ?></textarea>
         <?php elseif ($this->type == \KmbDomain\Model\GroupParameterType::PASSWORD): ?>
-            <input type="password" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($this->value) ?>" />
+            <input type="password" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($this->value) ?>" maxlength="4000" />
         <?php else: ?>
-            <input type="text" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($this->value) ?>" />
+            <input type="text" class="form-control" name="values[]" value="<?php echo $this->escapeHtml($this->value) ?>" maxlength="4000" />
         <?php endif ?>
         <div class="input-group-<?php echo ($this->type == \KmbDomain\Model\GroupParameterType::TEXT ? 'addon' : 'btn') ?>">
             <button class="btn btn-default" title="<?php echo $this->translate('Cancel') ?>" type="reset"><i class="glyphicon glyphicon-remove"></i></button>
